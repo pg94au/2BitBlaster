@@ -1,0 +1,39 @@
+{
+  "name": "blasterts",
+  "version": "1.0.0",
+  "description": "2-Bit Blaster in TypeScript",
+  "main": "main.ts",
+  "scripts": {
+    "build": "npx webpack --config webpack.config.js",
+    "test": "npx ts-mocha --reporter spec test/**/*.spec.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pg94au/BlasterTS.git"
+  },
+  "author": "Paul Grebenc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pg94au/BlasterTS/issues"
+  },
+  "homepage": "https://github.com/pg94au/BlasterTS#readme",
+  "devDependencies": {
+    "@types/chai": "^4.2.13",
+    "@types/mocha": "^8.0.3",
+    "@types/node": "^14.11.8",
+    "chai": "^4.2.0",
+    "mocha": "^8.1.3",
+    "ts-loader": "^8.0.5",
+    "ts-mocha": "^7.0.0",
+    "ts-mockito": "^2.6.1",
+    "typescript": "^4.0.3",
+    "webpack": "^5.1.0",
+    "webpack-cli": "^4.0.0"
+  },
+  "dependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/underscore": "^1.10.24",
+    "debug": "^4.2.0",
+    "underscore": "^1.11.0"
+  }
+}
