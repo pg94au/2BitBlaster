@@ -1,6 +1,5 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:SecondWave');
-var util = require('util');
 
 var Probe = require('../enemies/Probe');
 

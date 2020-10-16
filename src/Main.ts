@@ -11,7 +11,7 @@ Debug.disable();
 
 console.log('Hello world');
 
-export class Main {
+export default class Main {
     // @ts-ignore
     public AudioPlayer: AudioPlayer = AudioPlayer;
     // @ts-ignore
@@ -22,4 +22,12 @@ export class Main {
     public Joystick: Joystick = Joystick;
     // @ts-ignore
     public Renderer: Renderer = Renderer;
+
+    constructor() {
+        debug("Constructor called.")
+    }
+
+    sayHello(): void {
+        console.log('Hi there');
+    }
 }

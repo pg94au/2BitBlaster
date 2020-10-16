@@ -1,5 +1,4 @@
 var debug = require('debug')('Blaster:Level');
-var util = require('util');
 
 function Level(waves) {
     debug('Level constructor');

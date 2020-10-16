@@ -1,7 +1,6 @@
 var debug = require('debug')('Blaster:LevelManager');
 var Enum = require('enum');
 var events = require('events');
-var util = require('util');
 
 var Level = require('./Level');
 var Scheduler = require('./timing/Scheduler').Scheduler;
