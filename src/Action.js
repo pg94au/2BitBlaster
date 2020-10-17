@@ -1,9 +1,8 @@
 "use strict";
 
-var Enum = require('enum');
-
-var Action = new Enum(
-    ['Move', 'Fire']
-);
+var Action = {
+    Move: 1,
+    Fire: 2
+};
 
 module.exports = Action;

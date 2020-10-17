@@ -1,9 +1,10 @@
 var debug = require('debug')('Blaster:HitArbiter');
-var Enum = require('enum');
 
-var HitResult = new Enum(
-    ['Miss', 'Ineffective', 'Effective']
-);
+var HitResult = {
+    Miss: 1,
+    Ineffective: 2,
+    Effective: 3
+};
 
 function HitArbiter(shot) {
     debug('HitArbiter constructor');

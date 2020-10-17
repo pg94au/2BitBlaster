@@ -1,5 +1,4 @@
 var debug = require('debug')('Blaster:LevelManager');
-var Enum = require('enum');
 var events = require('events');
 
 var Level = require('./Level');
@@ -7,9 +6,11 @@ var Scheduler = require('./timing/Scheduler').Scheduler;
 var Text = require('./Text');
 var TextInterlude = require('./TextInterlude');
 
-var LevelState = new Enum(
-    ['Intro', 'Play', 'Win']
-);
+var LevelState = {
+    Intro: 1,
+    Play: 2,
+    Win: 3
+};
 
 function LevelManager(audioPlayer, world, clock, levels) {
     debug('LevelManager constructor');
@@ -35,6 +36,8 @@ function LevelManager(audioPlayer, world, clock, levels) {
     this._state = LevelState.Intro;
     this._active = true;
 }
+
+LevelManager.States = LevelState;
 
 LevelManager.prototype.getCurrentLevel = function() {
     return this._currentLevel + 1;

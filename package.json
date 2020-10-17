@@ -35,7 +35,6 @@
     "@types/underscore": "^1.10.24",
     "b-spline": "^1.0.5",
     "debug": "^4.2.0",
-    "enum": "^3.0.4",
     "events": "^3.2.0",
     "node-uuid": "^1.4.8",
     "pixi.js": "^5.3.3",

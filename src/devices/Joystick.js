@@ -116,19 +116,19 @@ Joystick.prototype.getCurrentDirection = function() {
             var second = directionsWithoutConflicts[1].direction;
             if (((first == Direction.Up) && (second == Direction.Left)) ||
                 ((first == Direction.Left) && (second == Direction.Up))) {
-                return Direction.get('Up | Left');
+                return Direction.Up | Direction.Left;
             }
             if (((first == Direction.Up) && (second == Direction.Right)) ||
                 ((first == Direction.Right) && (second == Direction.Up))) {
-                return Direction.get('Up | Right');
+                return Direction.Up | Direction.Right;
             }
             if (((first == Direction.Down) && (second == Direction.Left)) ||
                 ((first == Direction.Left) && (second == Direction.Down))) {
-                return Direction.get('Down | Left');
+                return Direction.Down | Direction.Left;
             }
             if (((first == Direction.Down) && (second == Direction.Right)) ||
                 ((first == Direction.Right) && (second == Direction.Down))) {
-                return Direction.get('Down | Right');
+                return Direction.Down | Direction.Right;
             }
         }
     }
@@ -138,22 +138,21 @@ Joystick.prototype.getCurrentDirection = function() {
 };
 
 function removeConflictingDirectionStates(directionStates) {
-    var acceptedDirections = {
-        "Up": false,
-        "Down": false,
-        "Left": false,
-        "Right": false
-    };
+    var acceptedDirections = {};
+    acceptedDirections[Direction.Up] = false;
+    acceptedDirections[Direction.Down] = false;
+    acceptedDirections[Direction.Left] = false;
+    acceptedDirections[Direction.Right] = false;
 
     var directionStatesWithoutConflicts = directionStates.filter(
         function(directionState) {
             if (
-                ((directionState.direction === Direction.Up) && !acceptedDirections["Down"]) ||
-                ((directionState.direction === Direction.Down) && !acceptedDirections["Up"]) ||
-                ((directionState.direction === Direction.Left) && !acceptedDirections["Right"]) ||
-                ((directionState.direction === Direction.Right) && !acceptedDirections["Left"])
+                ((directionState.direction === Direction.Up) && !acceptedDirections[Direction.Down]) ||
+                ((directionState.direction === Direction.Down) && !acceptedDirections[Direction.Up]) ||
+                ((directionState.direction === Direction.Left) && !acceptedDirections[Direction.Right]) ||
+                ((directionState.direction === Direction.Right) && !acceptedDirections[Direction.Left])
             ) {
-                acceptedDirections[directionState.direction.key] = true;
+                acceptedDirections[directionState.direction] = true;
 
                 return true;
             }

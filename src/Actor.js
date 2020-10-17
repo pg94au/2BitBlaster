@@ -19,16 +19,16 @@ Actor.prototype.getId = function() {
 };
 
 Actor.prototype.move = function(direction) {
-    if (direction.has('Up')) {
+    if (direction & Direction.Up) {
         this._y--;
     }
-    if (direction.has('Down')) {
+    if (direction & Direction.Down) {
         this._y++;
     }
-    if (direction.has('Left')) {
+    if (direction & Direction.Left) {
         this._x--;
     }
-    if (direction.has('Right')) {
+    if (direction & Direction.Right) {
         this._x++;
     }
 };

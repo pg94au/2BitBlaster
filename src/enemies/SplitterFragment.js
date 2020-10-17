@@ -1,6 +1,5 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:SplitterFragment');
-var Enum = require('enum');
 var util = require('util');
 
 var Action = require('../Action');
@@ -10,9 +9,10 @@ var Scheduler = require('../timing/Scheduler').Scheduler;
 var Shrapnel = require('../shots/Shrapnel');
 var SplinePath = require('../SplinePath');
 
-var Side = new Enum(
-    ['Left', 'Right']
-);
+var Side = {
+    Left: 1,
+    Right: 2
+};
 
 function SplitterFragment(audioPlayer, world, clock, side, startX, startY) {
     debug('SplitterFragment constructor');

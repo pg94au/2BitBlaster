@@ -84,19 +84,19 @@ var testData = [
     // Direction event which form a diagonal.
     {
         events: ['startUp', 'startLeft'],
-        result: Direction.get('Up | Left')
+        result: Direction.Up | Direction.Left
     },
     {
         events: ['startUp', 'startRight'],
-        result: Direction.get('Up | Right')
+        result: Direction.Up | Direction.Right
     },
     {
         events: ['startDown', 'startLeft'],
-        result: Direction.get('Down | Left')
+        result: Direction.Down | Direction.Left
     },
     {
         events: ['startDown', 'startRight'],
-        result: Direction.get('Down | Right')
+        result: Direction.Down | Direction.Right
     },
     // Repeated start events are ignored.
     {
@@ -119,7 +119,7 @@ describe('Joystick', function() {
                         }
                     );
 
-                    expect(joystick.getCurrentDirection().key).to.equal(testInput.result.key);
+                    expect(joystick.getCurrentDirection()).to.be.equal(testInput.result);
                 }
             );
         });

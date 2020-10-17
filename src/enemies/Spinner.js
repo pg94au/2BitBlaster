@@ -1,6 +1,5 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Spinner');
-var Enum = require('enum');
 var util = require('util');
 
 var Action = require('../Action');
@@ -10,9 +9,10 @@ var HitArbiter = require('../HitArbiter');
 var Scheduler = require('../timing/Scheduler').Scheduler;
 var SplinePath = require('../SplinePath');
 
-var Bias = new Enum(
-    ['Left', 'Right']
-);
+var Bias = {
+    Left: 1,
+    Right: 2
+};
 
 function Spinner(audioPlayer, world, clock, startX, startY, path, bias) {
     debug('Spinner constructor');

@@ -173,7 +173,7 @@ describe('LevelManager', function() {
             clock.addSeconds(100);
             levelManager.tick(); // Clears intro.
             levelManager.tick(); // Ticks level.
-            expect(levelManager._state.key).to.be.equal('Win');
+            expect(levelManager._state).to.be.equal(LevelManager.States.Win);
         });
 
         it('removes game win text and becomes inactive when the game win sequence ends', function() {
