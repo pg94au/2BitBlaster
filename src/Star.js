@@ -57,7 +57,7 @@ Star.prototype.tick = function() {
 
     Star.super_.prototype.tick.call(this);
 
-    _(1).times(function() { Star.super_.prototype.move.call(self, Direction.Down) });
+    _.times(1, function() { Star.super_.prototype.move.call(self, Direction.Down) });
 
     if (this._y > this._world.getDimensions().height) {
         // When the star leaves the world, it becomes inactive.

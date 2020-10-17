@@ -17,10 +17,7 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ],
-        fallback: {
-            "crypto": false
-        }
+        extensions: [ '.tsx', '.ts', '.js' ]
     },
     output: {
         filename: 'blaster.js',
@@ -33,5 +30,8 @@ module.exports = {
             BLASTER_VERSION: JSON.stringify(true),
         })
     ],
-    target: "web"
+    target: "web",
+    node: {
+        fs: 'empty'
+    }
 };
