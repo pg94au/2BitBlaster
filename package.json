@@ -41,7 +41,6 @@
     "resource-loader": "^1.8.0",
     "superagent": "^6.1.0",
     "underscore": "^1.11.0",
-    "uniq": "^1.0.1",
-    "util": "^0.12.3"
+    "uniq": "^1.0.1"
   }
 }
