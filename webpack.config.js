@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/Main.ts',
@@ -28,6 +29,13 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('scooby'),
             BLASTER_VERSION: JSON.stringify(true),
+        }),
+        new CopyPlugin({
+            patterns: [
+                { from: 'index.html', to: '.' },
+                { from: 'images', to: 'images' },
+                { from: 'sounds', to: 'sounds' }
+            ]
         })
     ],
     target: "web",

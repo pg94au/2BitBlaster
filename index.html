@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script type="text/javascript" src="src/blaster.js"></script>
+    <script type="text/javascript" src="blaster.js"></script>
     <meta name="viewport" content="width=800, user-scalable=0">
     <style>
         body {
@@ -69,11 +69,12 @@
         });
 
         var gameElement = document.getElementById('gameDiv');
-        renderer = new Blaster.Renderer(gameElement);
-        audioPlayer = new Blaster.AudioPlayer();
-        joystick = new Blaster.Joystick();
-        var clock = new Blaster.Clock();
-        game = new Blaster.Game(joystick, renderer, audioPlayer, clock);
+        var blaster = new Blaster.default();
+        renderer = new blaster.Renderer(gameElement);
+        audioPlayer = new blaster.AudioPlayer();
+        joystick = new blaster.Joystick();
+        var clock = new blaster.Clock();
+        game = new blaster.Game(joystick, renderer, audioPlayer, clock);
 
         var images = [
             { name: 'bomb', url: 'images/bomb.png' },

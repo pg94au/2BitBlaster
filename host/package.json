@@ -1,13 +1,13 @@
 {
-  "name": "retro-blaster-host",
+  "name": "blaster-host",
   "version": "0.0.1",
-  "description": "Hosting app for retro space blaster type game.",
+  "description": "Hosting app for 2-Bit Blaster.",
   "dependencies": {
     "express": "^4.14.0",
     "fs": "0.0.2"
   },
   "main": "app.js",
-  "author": "pg94au",
+  "author": "Paul Grebenc",
   "license": "Private",
   "devDependencies": {}
 }

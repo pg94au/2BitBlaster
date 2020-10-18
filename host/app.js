@@ -3,7 +3,7 @@ var fs = require('fs');
 
 var app = express();
 
-app.use(express.static('public'));
+app.use(express.static('../dist'));
 
 app.get('/test', function (req, res) {
     res.send('Hello World!');
@@ -19,14 +19,14 @@ app.put('/highScore', function(req, res) {
         //req.send("You posted " + data);
         console.log('You posted ' + data);
         var incomingHighScore = parseInt(data);
-        fs.readFile('./public/highScore', function(error, data) {
+        fs.readFile('./highScore', function(error, data) {
             if (error) { return; }
 
             var currentHighScore = parseInt(data);
 
             if (incomingHighScore > currentHighScore) {
                 currentHighScore = incomingHighScore;
-                fs.writeFile('./public/highScore', currentHighScore.toString(), function(error) {
+                fs.writeFile('./highScore', currentHighScore.toString(), function(error) {
                     if (error) {
                         console.log('Failed to write new high score ' + currentHighScore);
                     }
