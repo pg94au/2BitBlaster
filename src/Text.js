@@ -1,11 +1,11 @@
 "use strict";
 
 var debug = require('debug')('Blaster:Text');
-var uuid = require('node-uuid');
+const { v4: uuidv4 } = require('uuid');
 
 var Text = function(content, font, color, startX, startY) {
     debug('Text constructor');
-    this._id = uuid.v1();
+    this._id = uuidv4();
     this._content = content;
     this._font = font;
     this._color = color;

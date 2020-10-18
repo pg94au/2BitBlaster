@@ -1,13 +1,13 @@
 "use strict";
 
 var debug = require('debug')('Blaster:Actor');
-var uuid = require('node-uuid');
+const { v4: uuidv4 } = require('uuid');
 
 var Direction = require('./devices/Direction');
 
 var Actor = function(world, startX, startY) {
     debug('Actor constructor');
-    this._id = uuid.v1();
+    this._id = uuidv4();
     this._world = world;
     this._x = startX;
     this._y = startY;
