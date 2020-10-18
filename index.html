@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="src/blaster.js"></script>
+    <meta name="viewport" content="width=800, user-scalable=0">
+    <style>
+        body {
+            color: white;
+        }
+    </style>
+</head>
+<body style="overflow: hidden;" bgcolor="black">
+<div id="containerDiv" style="height: 640px;">
+    <div style="display: inline-block;">
+        <span id="titleSpan" style="font-size: 75px; font-family: Monaco, Verdana, Sans-Serif; color: red;">
+            B<br/>L<br/>A<br/>S<br/>T<br/>E<br/>R
+        </span>
+    </div>
+    <div style="width: 10px; display: inline-block;"></div>
+    <div id="gameDiv" style="width: 480px; height: 640px; border: 3px solid darkcyan; display: inline-block; vertical-align: top;"></div>
+    <div style="width: 10px; display: inline-block;"></div>
+    <div id="scoreBoardDiv" style="position: relative; display: inline-block; vertical-align: top; height: 100%; width: 300px;">
+        <div style="vertical-align: top;">
+            <span id="statusSpan" style="font-size: 30px; font-family: Monaco, Verdana, Sans-serif;">
+                High Score: <label id="highScoreLabel"></label><br/>
+                Score: <label id="scoreLabel"></label><br/>
+                Level: <label id="levelLabel"></label><br/>
+                <br/>
+                <span id="health"></span><br/>
+                <span id="numLives"></span>
+            </span>
+        </div>
+        <div style="position: absolute; bottom: 0;">
+            <button id="start"
+                    onclick="$('#start').prop('disabled', true).css('color', 'grey').css('border-color', 'white'); game.start()"
+                    style="font-size: 48px; color: red; background-color: black; border-color: yellow;"
+                    disabled>
+                START
+            </button><br/>
+        </div>
+    </div>
+</div>
+<br/>
+<span>
+    &nbsp;&nbsp;Copyright ©2016 Paul Grebenc
+</span>
+<br/>
+<div id="touchJoystick" style="-webkit-touch-callout: none; position: relative; background-image: url('images/joystick_background.png'); width: 300px; height: 300px; display: none;">
+    <div id="joystickBall" style="-webkit-touch-callout: none; background-image: url('images/joystick_ball.png'); position: absolute; top: 72px; left: 72px; width: 156px; height: 156px;">
+    </div>
+</div>
+<div id="touchFireButton" style="-webkit-touch-callout: none; width: 300px; height: 300px; background-image: url('images/joystick_button.png'); display: none;">
+</div>
+<script>
+    $(document).ready(function() {
+        window.addEventListener('resize', resizeDisplay);
+        resizeDisplay();
+
+        $(document.body).keydown(keyDownHandler);
+        $(document.body).keyup(keyUpHandler);
+
+        // Only show touch controls if a touch event started the game.
+        $('#start').on('touchstart', function(event) {
+            $('#touchJoystick').css('display', 'inline-block');
+            $('#touchFireButton').css('display', 'inline-block');
+        });
+
+        var gameElement = document.getElementById('gameDiv');
+        renderer = new Blaster.Renderer(gameElement);
+        audioPlayer = new Blaster.AudioPlayer();
+        joystick = new Blaster.Joystick();
+        var clock = new Blaster.Clock();
+        game = new Blaster.Game(joystick, renderer, audioPlayer, clock);
+
+        var images = [
+            { name: 'bomb', url: 'images/bomb.png' },
+            { name: 'bomber', url: 'images/bomber.png' },
+            { name: 'bullet', url: 'images/bullet.png' },
+            { name: 'grenade', url: 'images/grenade.png' },
+            { name: 'grenade_explosion', url: 'images/grenade_explosion.png' },
+            { name: 'player', url: 'images/player.png' },
+            { name: 'player_explosion', url: 'images/player_explosion.png' },
+            { name: 'probe', url: 'images/probe.png' },
+            { name: 'probe_explosion', url: 'images/probe_explosion.png' },
+            { name: 'saucer', url: 'images/saucer.png' },
+            { name: 'saucer_explosion', url: 'images/saucer_explosion.png' },
+            { name: 'spinner', url: 'images/spinner.png' },
+            { name: 'splitter', url: 'images/splitter.png' },
+            { name: 'splitter_fragment', url: 'images/splitter_fragment.png' },
+            { name: 'splitter_left_separation', url: 'images/splitter_left_separation.png' },
+            { name: 'splitter_right_separation', url: 'images/splitter_right_separation.png' },
+            { name: 'star', url: 'images/star.png' }
+        ];
+        renderer.preLoadImages(images, onImagesLoaded);
+
+        var touchJoystick = $('#touchJoystick')[0];
+        touchJoystick.addEventListener('touchstart', joystickTouchEventHandler, false);
+        touchJoystick.addEventListener('touchmove', joystickTouchEventHandler, false);
+        touchJoystick.addEventListener('touchend', joystickTouchEventHandler, false);
+
+        var touchFireButton = $('#touchFireButton')[0];
+        touchFireButton.addEventListener('touchstart', fireButtonTouchEventHandler, false);
+        touchFireButton.addEventListener('touchmove', fireButtonTouchEventHandler, false);
+        touchFireButton.addEventListener('touchend', fireButtonTouchEventHandler, false);
+    });
+
+    function resizeDisplay() {
+        if (window.innerHeight > 690) {
+            $('#containerDiv').height(640);
+            $('#titleSpan').css('fontSize', '75px');
+            $('#gameDiv').width(480).height(640);
+            $('#statusSpan').css('fontSize', '30px');
+            $('#start').css('fontSize', '48px');
+            $('#health').find('*').css('width', '30px').css('height', '30px');
+            $('#numLives').find('*').css('background-size', '200px').width(50).height(70);
+        }
+        else {
+            var scale = Math.max(window.innerHeight / 640, .5);
+            var scaledHeight = Math.floor(640 * scale) - 50;
+            var scaledWidth = Math.floor(scaledHeight/640 * 480);
+
+            $('#containerDiv').height(scaledHeight);
+            $('#titleSpan').css('fontSize', (75 * scale) - 5 + 'px');
+            $('#gameDiv').width(scaledWidth).height(scaledHeight);
+            $('#statusSpan').css('fontSize', (30 * scale) + 'px');
+            $('#start').css('fontSize', (48 * scale) + 'px');
+            $('#health').find('*').css('width', scale*30.0 + 'px').css('height', scale*30 + 'px');
+            $('#numLives').find('*').css('background-size', scale*200 + 'px').width(scale*50).height(scale*70);
+        }
+    }
+
+    function onImagesLoaded() {
+        var sounds = [
+            { name: 'bomb_drop', url: 'sounds/bomb_drop.mp3' },
+            { name: 'bullet_fire', url: 'sounds/bullet_fire.mp3' },
+            { name: 'congratulations', url: 'sounds/congratulations.mp3' },
+            { name: 'level_start', url: 'sounds/level_start.mp3' },
+            { name: 'player_explosion', url: 'sounds/player_explosion.mp3' },
+            { name: 'player_hit', url: 'sounds/player_hit.mp3' },
+            { name: 'probe_explosion', url: 'sounds/probe_explosion.mp3' },
+            { name: 'saucer_explosion', url: 'sounds/saucer_explosion.mp3' }
+        ];
+        audioPlayer.preLoadSounds(sounds, onSoundsLoaded, function(errors) {
+            alert('Failed to load sounds: ' + JSON.stringify(errors));
+        });
+    }
+
+    function onSoundsLoaded() {
+        game.on('gameOver', function() {
+            renderer.destroy();
+
+            $('#health').empty();
+            $('#numLives').empty();
+            $('#start').prop('disabled', false).css('color', 'red').css('border-color', 'yellow');
+        });
+        game.on('health', function(health) {
+            $('#health').empty();
+            for (var i=0; i < health; i++) {
+                $('#health').append("<span style=\"background-color: green; width: 30px; height: 30px; display: inline-block;\"></span>");
+            }
+            for (var i=health; i < 5; i++) {
+                $('#health').append("<span style=\"background-color: red; width: 30px; height: 30px; display: inline-block;\"></span>");
+            }
+            resizeDisplay();
+        });
+        game.on('level', function(level) {
+            $('#levelLabel').text(level);
+        });
+        game.on('remainingLives', function(remainingLives) {
+            setTimeout(function() {
+                $('#numLives').empty();
+                for (var i=0; i < remainingLives; i++) {
+                    $('#numLives').append("<span style=\"background-image: url('images/player.png'); width: 50px; height: 70px; display: inline-block;\"></span>");
+                }
+                resizeDisplay();
+            }, 1000);
+        });
+        game.on('score', function(score) {
+            $('#scoreLabel').text(score);
+        });
+        game.on('highScore', function(highScore) {
+            $('#highScoreLabel').text(highScore);
+        });
+
+        // Everything is now set up for the game to start.
+        $('#start').prop('disabled', false);
+    }
+
+    function keyDownHandler(event) {
+        var key = event.keyCode || event.which;
+        //UP = 38
+        //DOWN = 40
+        //LEFT = 37
+        //RIGHT = 39
+        switch(key) {
+            case 32:
+                joystick.startFire();
+                break;
+            case 38:
+                joystick.startUp();
+                break;
+            case 40:
+                joystick.startDown();
+                break;
+            case 37:
+                joystick.startLeft();
+                break;
+            case 39:
+                joystick.startRight();
+                break;
+        }
+    }
+
+    function keyUpHandler(event) {
+        var key = event.keyCode || event.which;
+        switch(key) {
+            case 32:
+                joystick.stopFire();
+                break;
+            case 38:
+                joystick.stopUp();
+                break;
+            case 40:
+                joystick.stopDown();
+                break;
+            case 37:
+                joystick.stopLeft();
+                break;
+            case 39:
+                joystick.stopRight();
+                break;
+        }
+    }
+
+    function joystickTouchEventHandler(event) {
+        console.log('type = ' + event.type);
+        event.stopPropagation();
+
+        var boundingRect = $('#touchJoystick')[0].getBoundingClientRect();
+
+        // Only the first touch found in the joystick div is considered.
+        for (var i = 0; i < event.touches.length; i++) {
+            if (
+                    (event.touches[i].pageX >= boundingRect.left) &&
+                    (event.touches[i].pageX <= boundingRect.right) &&
+                    (event.touches[i].pageY >= boundingRect.top) &&
+                    (event.touches[i].pageY <= boundingRect.bottom)
+            ) {
+                // Determine the offset from the center of the joystick div.
+                var deltaX = event.touches[i].pageX - 150 - boundingRect.left;
+                var deltaY = event.touches[i].pageY - 150 - boundingRect.top;
+
+                // Ignore touches that are outside range.
+                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+                if ((distance <= 150) && (distance >= 30)) {
+                    acceptJoystickTouch(deltaX, deltaY);
+
+                    return;
+                }
+            }
+        }
+
+        // The joystick div is not being touched.
+        joystick.stopUp();
+        joystick.stopDown();
+        joystick.stopLeft();
+        joystick.stopRight();
+        $('#joystickBall').css('left', '72px').css('top', '72px');
+    }
+
+    function acceptJoystickTouch(deltaX, deltaY) {
+        var joystickBall = $('#joystickBall');
+        var divSize = $('#touchJoystick').width();
+        var ballSize = joystickBall.width();
+        var centerPoint = (divSize - ballSize) / 2;
+
+        var throwDistance = centerPoint + 10;
+        var diagonalThrowOffset = Math.cos(45 * Math.PI / 180) * throwDistance;
+
+        var rad = Math.atan2(deltaY, deltaX);
+        var deg = rad * 180.0 / Math.PI;
+        if ((0 < deg) && (deg <= 22.5)) {
+            joystick.stopUp();
+            joystick.stopDown();
+            joystick.stopLeft();
+            joystick.startRight();
+            joystickBall.css('left', (centerPoint + throwDistance) + 'px');
+            joystickBall.css('top', centerPoint + 'px');
+        }
+        else if ((22.5 < deg) && (deg <= 3 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopLeft();
+            joystick.startDown();
+            joystick.startRight();
+            joystickBall.css('left', (centerPoint + diagonalThrowOffset) + 'px');
+            joystickBall.css('top', (centerPoint + diagonalThrowOffset) + 'px');
+        }
+        else if ((3 * 22.5 < deg) && (deg <= 5 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopLeft();
+            joystick.stopRight();
+            joystick.startDown();
+            joystickBall.css('left', centerPoint + 'px');
+            joystickBall.css('top', (centerPoint + throwDistance) + 'px');
+        }
+        else if ((5 * 22.5 < deg) && (deg <= 7 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopRight();
+            joystick.startDown();
+            joystick.startLeft();
+            joystickBall.css('left', (centerPoint - diagonalThrowOffset) + 'px');
+            joystickBall.css('top', (centerPoint + diagonalThrowOffset) + 'px');
+        }
+        else if ((7 * 22.5 < deg) && (deg <= 8 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopDown();
+            joystick.stopRight();
+            joystick.startLeft();
+            joystickBall.css('left', (centerPoint - throwDistance) + 'px');
+            joystickBall.css('top', centerPoint + 'px');
+        }
+        else if ((0 >= deg) && (deg >= -1 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopDown();
+            joystick.stopLeft();
+            joystick.startRight();
+            joystickBall.css('left', (centerPoint + throwDistance) + 'px');
+            joystickBall.css('top', centerPoint + 'px');
+        }
+        else if ((-1 * 22.5 >= deg) && (deg >= -3 * 22.5)) {
+            joystick.stopDown();
+            joystick.stopLeft();
+            joystick.startUp();
+            joystick.startRight();
+            joystickBall.css('left', (centerPoint + diagonalThrowOffset) + 'px');
+            joystickBall.css('top', (centerPoint - diagonalThrowOffset) + 'px');
+        }
+        else if ((-3 * 22.5 >= deg) && (deg >= -5 * 22.5)) {
+            joystick.stopDown();
+            joystick.stopLeft();
+            joystick.stopRight();
+            joystick.startUp();
+            joystickBall.css('left', centerPoint + 'px');
+            joystickBall.css('top', (centerPoint - throwDistance) + 'px');
+        }
+        else if ((-5 * 22.5 >= deg) && (deg >= -7 * 22.5)) {
+            joystick.stopRight();
+            joystick.stopDown();
+            joystick.startUp();
+            joystick.startLeft();
+            joystickBall.css('left', (centerPoint - diagonalThrowOffset) + 'px');
+            joystickBall.css('top', (centerPoint - diagonalThrowOffset) + 'px');
+        }
+        else if ((-7 * 22.5 >= deg) && (deg >= -8 * 22.5)) {
+            joystick.stopUp();
+            joystick.stopDown();
+            joystick.stopRight();
+            joystick.startLeft();
+            joystickBall.css('left', (centerPoint - throwDistance) + 'px');
+            joystickBall.css('top', centerPoint + 'px');
+        }
+    }
+
+    function fireButtonTouchEventHandler(event) {
+        console.log('type = ' + event.type);
+        event.stopPropagation();
+
+        var touchFireButton = $('#touchFireButton');
+        var boundingRect = touchFireButton[0].getBoundingClientRect();
+
+        // Check if there is a touch within the fire button div.
+        var fireTouched = false;
+        for (var i = 0; i < event.touches.length; i++) {
+            if (
+                    (event.touches[i].pageX >= boundingRect.left) &&
+                    (event.touches[i].pageX <= boundingRect.right) &&
+                    (event.touches[i].pageY >= boundingRect.top) &&
+                    (event.touches[i].pageY <= boundingRect.bottom)
+            )
+            {
+                // Determine the offset from the center of the fire button div.
+                var deltaX = event.touches[i].pageX - 150 - boundingRect.left;
+                var deltaY = event.touches[i].pageY - 150 - boundingRect.top;
+
+                // Ignore touches that are outside range.
+                var distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
+                if (distance <= 150) {
+                    fireTouched = true;
+                }
+            }
+        }
+
+        if (fireTouched) {
+            joystick.startFire();
+            touchFireButton.css('background-image', "url('images/joystick_button_pressed.png')");
+        }
+        else {
+            joystick.stopFire();
+            touchFireButton.css('background-image', "url('images/joystick_button.png')");
+        }
+    }
+</script>
+</body>
+</html>
