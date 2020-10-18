@@ -1,0 +1,13 @@
+{
+  "name": "blaster-host",
+  "version": "0.0.1",
+  "description": "Hosting app for 2-Bit Blaster.",
+  "dependencies": {
+    "express": "^4.14.0",
+    "fs": "0.0.2"
+  },
+  "main": "app.js",
+  "author": "Paul Grebenc",
+  "license": "Private",
+  "devDependencies": {}
+}
