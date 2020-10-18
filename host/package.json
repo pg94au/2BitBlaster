@@ -1,0 +1,13 @@
+{
+  "name": "retro-blaster-host",
+  "version": "0.0.1",
+  "description": "Hosting app for retro space blaster type game.",
+  "dependencies": {
+    "express": "^4.14.0",
+    "fs": "0.0.2"
+  },
+  "main": "app.js",
+  "author": "pg94au",
+  "license": "Private",
+  "devDependencies": {}
+}
