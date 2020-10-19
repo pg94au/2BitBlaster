@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var TextInterlude = require('../src/TextInterlude');
+var TextInterlude = require('../src/TextInterlude').TextInterlude;
 
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
 var WorldStubBuilder = require('./builders/WorldStubBuilder');
@@ -12,7 +12,7 @@ describe('TextInterlude', function() {
             var clock = new ClockStubBuilder().build();
             var textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 3, 4, 5);
 
-            expect(textInterlude.isActive()).to.be.true;
+            expect(textInterlude.active).to.be.true;
         });
     });
 
@@ -25,7 +25,7 @@ describe('TextInterlude', function() {
             var textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 2000, 4000, 2000);
             textInterlude.tick();
 
-            expect(textInterlude.isActive()).to.be.true;
+            expect(textInterlude.active).to.be.true;
             expect(textAdded).to.be.false;
         });
 
@@ -39,7 +39,7 @@ describe('TextInterlude', function() {
             clock.addSeconds(3);
             textInterlude.tick();
 
-            expect(textInterlude.isActive()).to.be.true;
+            expect(textInterlude.active).to.be.true;
             expect(addedText).to.be.not.undefined;
             expect(addedText.active).to.be.true;
         });
@@ -56,7 +56,7 @@ describe('TextInterlude', function() {
             clock.addSeconds(3);
             textInterlude.tick();
 
-            expect(textInterlude.isActive()).to.be.true;
+            expect(textInterlude.active).to.be.true;
             expect(addedText.active).to.be.false;
         });
 
@@ -73,7 +73,7 @@ describe('TextInterlude', function() {
             clock.addSeconds(3);
             textInterlude.tick();
 
-            expect(textInterlude.isActive()).to.be.false;
+            expect(textInterlude.active).to.be.false;
         });
     });
 });

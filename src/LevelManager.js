@@ -4,7 +4,7 @@ var events = require('events');
 var Level = require('./Level');
 var Scheduler = require('./timing/Scheduler').Scheduler;
 var Text = require('./Text');
-var TextInterlude = require('./TextInterlude');
+var TextInterlude = require('./TextInterlude').TextInterlude;
 
 var LevelState = {
     Intro: 1,
@@ -99,7 +99,7 @@ LevelManager.prototype.tickWithinLevelIntro = function() {
     }
 
     this._textInterlude.tick();
-    if (!this._textInterlude.isActive()) {
+    if (!this._textInterlude.active) {
         this._textInterlude = null;
         this._state = LevelState.Play;
     }
@@ -141,7 +141,7 @@ LevelManager.prototype.tickWithinWinnerSequence = function() {
     }
 
     this._textInterlude.tick();
-    if (!this._textInterlude.isActive()) {
+    if (!this._textInterlude.active) {
         this._textInterlude = null;
         this._state = LevelState.Play;
         this._active = false;
