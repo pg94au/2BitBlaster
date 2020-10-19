@@ -39,7 +39,7 @@ World.prototype.addActor = function(actor) {
 
 World.prototype.addText = function(text) {
     debug('World.addText: %o', text);
-    if (_.find(this._texts, function(existing) { return existing.getId() == text.getId()})) {
+    if (_.find(this._texts, function(existing) { return existing.id == text.id})) {
         throw new Error('Cannot add same text twice.');
     }
     this._texts.push(text);
@@ -109,7 +109,7 @@ World.prototype.cleanUp = function() {
     debug('World.cleanUp: before is %o', this._actors);
 
     this._actors =  _.filter(this._actors, function(actor) { return actor.isActive(); });
-    this._texts = _.filter(this._texts, function(text) { return text.isActive(); });
+    this._texts = _.filter(this._texts, function(text) { return text.active; });
 
     debug('World.cleanUp: after is %o', this._actors);
 };
