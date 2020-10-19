@@ -141,16 +141,16 @@ Renderer.prototype.addAnyUnrenderedNewTextToStage = function() {
 
     // Add any text that hasn't yet been rendered.
     this._world.getTexts().forEach(function(text) {
-        var pixiText = self._activeTexts[text.getId()];
+        var pixiText = self._activeTexts[text.id];
         if (pixiText == null) {
-            pixiText = new PIXI.Text(text.getContent(), {font: text.getFont(), fill: text.getColor()});
+            pixiText = new PIXI.Text(text.content, {font: text.font, fill: text.color});
             pixiText.anchor.x = 0.5;
             pixiText.anchor.y = 0.5;
-            var textCoordinates = text.getCoordinates();
+            var textCoordinates = text.coordinates;
             pixiText.position.x = textCoordinates.x;
             pixiText.position.y = textCoordinates.y;
             pixiText.zIndex = 1000000; // Always on top
-            self._activeTexts[text.getId()] = pixiText;
+            self._activeTexts[text.id] = pixiText;
             self._stage.addChild(pixiText);
         }
     });
@@ -178,7 +178,7 @@ Renderer.prototype.cleanUpInactiveText = function() {
     for (var textId in self._activeTexts) {
         if (self._activeTexts.hasOwnProperty(textId)) {
             // Check if there exists a text with id == textId.
-            if (!_.find(self._world.getTexts(), function(textItem) { return textItem.getId() == textId })) {
+            if (!_.find(self._world.getTexts(), function(textItem) { return textItem.id == textId })) {
                 self._stage.removeChild(self._activeTexts[textId]);
                 delete self._activeTexts[textId];
             }

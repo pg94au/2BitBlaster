@@ -41,7 +41,7 @@ describe('TextInterlude', function() {
 
             expect(textInterlude.isActive()).to.be.true;
             expect(addedText).to.be.not.undefined;
-            expect(addedText.isActive()).to.be.true;
+            expect(addedText.active).to.be.true;
         });
 
         it('removes text after it has been displayed for a period of time', function() {
@@ -57,7 +57,7 @@ describe('TextInterlude', function() {
             textInterlude.tick();
 
             expect(textInterlude.isActive()).to.be.true;
-            expect(addedText.isActive()).to.be.false;
+            expect(addedText.active).to.be.false;
         });
 
         it('becomes inactive after a period after text is removed', function() {

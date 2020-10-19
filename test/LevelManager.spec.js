@@ -77,7 +77,7 @@ describe('LevelManager', function() {
             levelManager.tick(); // Tick to display text.
             clock.addSeconds(6);
             levelManager.tick();
-            expect(addedText.isActive()).to.be.false;
+            expect(addedText.active).to.be.false;
             expect(levelManager._textInterlude).to.be.null;
         });
 

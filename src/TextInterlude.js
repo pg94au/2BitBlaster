@@ -3,7 +3,7 @@
 var debug = require('debug')('Blaster:TextInterlude');
 
 var Scheduler = require('./timing/Scheduler').Scheduler;
-var Text = require('./Text');
+var Text = require('./Text').Text;
 
 var TextInterlude = function(world, clock, textContent, font, color, xPosition, yPosition,
                              preDisplayTimeInMillis, displayTimeInMillis, postDisplayTimeInMillis) {
