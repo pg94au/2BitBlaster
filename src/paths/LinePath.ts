@@ -4,7 +4,7 @@ import {ScheduledAction} from "./ScheduledAction";
 import {PathEntry} from "./PathEntry";
 import {PathAction} from "./PathAction";
 
-const debug = Debug("Blaster:Path:LinePath");
+const debug = Debug("Blaster:Paths:LinePath");
 
 export class LinePath {
     private readonly _start: Point;
