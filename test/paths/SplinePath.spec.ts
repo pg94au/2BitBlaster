@@ -130,7 +130,7 @@ describe('SplinePath', () => {
             let mirroredPath = SplinePath.mirrorPath(path);
 
             for (let i=0; i < path.length; i++) {
-                expect(path[i].location!.x).to.be.equal(-mirroredPath[i].location!.y);
+                expect(path[i].location!.x).to.be.equal(-mirroredPath[i].location!.x);
             }
         });
 
