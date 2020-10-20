@@ -85,7 +85,7 @@ SplinePath.prototype.getPath  = function(numberOfSteps) {
     var stepSize = 1.0 / numberOfSteps;
     for (var currentStep = 0; currentStep <= numberOfSteps; currentStep++) {
         var t = currentStep * stepSize;
-        var point = bspline(t, this._order, this._points, this._knots);
+        var point = bspline(t, this._order - 1, this._points, this._knots);
         var pathEntry = {
             action: Action.Move,
             location: point
