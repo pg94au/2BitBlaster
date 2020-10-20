@@ -3,11 +3,11 @@ import {expect} from 'chai';
 
 import {every} from 'underscore';
 
-import Action from '../../src/Action';
 import {LinePath} from "../../src/paths/LinePath";
 import {Point} from "../../src/Point";
 import {ScheduledAction} from "../../src/paths/ScheduledAction";
 import {PathEntry} from "../../src/paths/PathEntry";
+import {PathAction} from "../../src/paths/PathAction";
 
 describe('LinePath', () => {
     describe('#getPath()', () => {
@@ -27,7 +27,9 @@ describe('LinePath', () => {
             let path = linePath.getPath(10);
 
             // All steps that are movements.
-            let movements = path.filter((value: PathEntry): boolean => { return value.action == Action.Move });
+            console.log(path);
+            let movements = path.filter((value: PathEntry): boolean => { return value.action === PathAction.Move });
+            console.log(movements);
 
             expect(movements.length).to.be.equal(path.length);
         });
@@ -48,14 +50,14 @@ describe('LinePath', () => {
             let linePath = new LinePath(
                 new Point(0.0, 0.0),
                 new Point(100.0, 100.0),
-                [new ScheduledAction(0.50, Action.Fire)]);
+                [new ScheduledAction(0.50, PathAction.Fire)]);
 
             let path = linePath.getPath(10);
 
             // One extra step for the fire action.
             expect(path.length).to.be.equal(12);
 
-            expect(path[5].action).to.be.equal(Action.Fire);
+            expect(path[5].action).to.be.equal(PathAction.Fire);
         });
 
         it('only generates coordinates between the start and end points', () => {
