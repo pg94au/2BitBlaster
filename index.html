@@ -237,7 +237,6 @@
     }
 
     function joystickTouchEventHandler(event) {
-        console.log('type = ' + event.type);
         event.stopPropagation();
 
         var boundingRect = $('#touchJoystick')[0].getBoundingClientRect();
@@ -366,7 +365,6 @@
     }
 
     function fireButtonTouchEventHandler(event) {
-        console.log('type = ' + event.type);
         event.stopPropagation();
 
         var touchFireButton = $('#touchFireButton');

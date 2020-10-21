@@ -8,13 +8,13 @@ var LevelManager = require('./LevelManager');
 var Player = require('./Player');
 var SecondWave = require('./waves/SecondWave');
 var Scheduler = require('./timing/Scheduler').Scheduler;
-var ScoreCounter = require('./ScoreCounter');
+var ScoreCounter = require('./ScoreCounter').ScoreCounter;
 var SimpleWave = require('./waves/SimpleWave');
 var SpinnerWave = require('./waves/SpinnerWave');
 var SpinnerWave2 = require('./waves/SpinnerWave2');
 var SplitterWave = require('./waves/SplitterWave');
 var StarField = require('./StarField');
-var TextInterlude = require('./TextInterlude');
+var TextInterlude = require('./TextInterlude').TextInterlude;
 var World = require('./World');
 
 var Game = function(joystick, renderer, audioPlayer, clock) {
@@ -193,7 +193,7 @@ Game.prototype.tickWithinGameOver = function() {
     }
 
     this._textInterlude.tick();
-    if (!this._textInterlude.isActive()) {
+    if (!this._textInterlude.active) {
         debug('Game.ticker: Emitting gameOver event.');
         this._textInterlude = null;
         this._isActive = false;

@@ -27,9 +27,7 @@ describe('LinePath', () => {
             let path = linePath.getPath(10);
 
             // All steps that are movements.
-            console.log(path);
             let movements = path.filter((value: PathEntry): boolean => { return value.action === PathAction.Move });
-            console.log(movements);
 
             expect(movements.length).to.be.equal(path.length);
         });
