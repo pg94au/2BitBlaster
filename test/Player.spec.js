@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Clock = require('../src/timing/Clock').Clock;
 var Direction = require('../src/devices/Direction');
 var Player = require('../src/Player');
-var ScoreCounter = require('../src/ScoreCounter');
+var ScoreCounter = require('../src/ScoreCounter').ScoreCounter;
 var World = require('../src/World');
 
 var AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');

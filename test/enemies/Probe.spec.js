@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
 var Probe = require('../../src/enemies/Probe');
-var ScoreCounter = require('../../src/ScoreCounter');
+var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
 var WorldStubBuilder = require('../builders/WorldStubBuilder');
@@ -86,7 +86,7 @@ describe('Probe', function() {
             );
             probe.hitBy({}, 1000);
             probe.tick();
-            expect(scoreCounter.getCurrentScore()).to.be.above(0);
+            expect(scoreCounter.currentScore).to.be.above(0);
         });
     });
 });

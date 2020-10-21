@@ -1,4 +1,4 @@
-var ScoreCounter = require('../../src/ScoreCounter');
+var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 
 function WorldStubBuilder() {

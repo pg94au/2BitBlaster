@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Bomber = require('../../src/enemies/Bomber');
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
-var ScoreCounter = require('../../src/ScoreCounter');
+var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
@@ -63,7 +63,7 @@ describe('Bomber', function() {
             );
             bomber.hitBy({}, 1000);
             bomber.tick();
-            expect(scoreCounter.getCurrentScore()).to.be.above(0);
+            expect(scoreCounter.currentScore).to.be.above(0);
         });
 
         it('should become inactive when it disappears of the side of the screen', function() {

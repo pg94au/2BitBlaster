@@ -1,5 +1,5 @@
 var Enemy = require('../../src/enemies/Enemy');
-var ScoreCounter = require('../../src/ScoreCounter');
+var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 var AudioPlayerStubBuilder = require('./AudioPlayerStubBuilder');
 
