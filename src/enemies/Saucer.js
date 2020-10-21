@@ -7,7 +7,7 @@ var Bomb = require('../shots/Bomb');
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter');
 var Scheduler = require('../timing/Scheduler').Scheduler;
-var SplinePath = require('../SplinePath');
+var SplinePath = require('../paths/SplinePath').SplinePath;
 
 function Saucer(audioPlayer, world, clock, startX, startY) {
     debug('Saucer constructor');

@@ -7,7 +7,7 @@ var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter');
 var Scheduler = require('../timing/Scheduler').Scheduler;
 var Shrapnel = require('../shots/Shrapnel');
-var SplinePath = require('../SplinePath');
+var SplinePath = require('../paths/SplinePath').SplinePath;
 var SplitterFragment = require('./SplitterFragment');
 
 function Splitter(audioPlayer, world, clock, startX, startY) {

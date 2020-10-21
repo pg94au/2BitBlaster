@@ -8,7 +8,7 @@ var Enemy = require('./Enemy');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter');
 var Scheduler = require('../timing/Scheduler').Scheduler;
-var SplinePath = require('../SplinePath');
+var SplinePath = require('../paths/SplinePath').SplinePath;
 
 function Probe(audioPlayer, world, clock, startX, startY) {
     debug('Probe constructor');
