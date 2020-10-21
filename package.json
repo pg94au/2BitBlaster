@@ -18,9 +18,12 @@
   },
   "homepage": "https://github.com/pg94au/BlasterTS#readme",
   "devDependencies": {
+    "@types/b-spline": "^2.0.0",
     "@types/chai": "^4.2.13",
+    "@types/debug": "^4.1.5",
     "@types/mocha": "^8.0.3",
     "@types/node": "^14.11.8",
+    "@types/underscore": "^1.10.24",
     "@types/uuid": "^8.3.0",
     "chai": "^4.2.0",
     "copy-webpack-plugin": "^6.2.1",
@@ -33,9 +36,7 @@
     "webpack-cli": "^4.0.0"
   },
   "dependencies": {
-    "@types/debug": "^4.1.5",
-    "@types/underscore": "^1.10.24",
-    "b-spline": "^1.0.5",
+    "b-spline": "^2.0.1",
     "debug": "^4.2.0",
     "events": "^3.2.0",
     "pixi.js": "^3.0.11",

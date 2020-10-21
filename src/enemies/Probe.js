@@ -2,13 +2,16 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Probe');
 var util = require('util');
 
-var Action = require('../Action');
 var Bomb = require('../shots/Bomb');
 var Enemy = require('./Enemy');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter');
+var PathAction = require('../paths/PathAction').PathAction;
+var PathTemplate = require('../paths/PathTemplate').PathTemplate;
+var Point = require('../Point').Point;
+var ScheduledAction = require('../paths/ScheduledAction').ScheduledAction;
 var Scheduler = require('../timing/Scheduler').Scheduler;
-var SplinePath = require('../SplinePath');
+var SplinePath = require('../paths/SplinePath').SplinePath;
 
 function Probe(audioPlayer, world, clock, startX, startY) {
     debug('Probe constructor');
@@ -97,7 +100,7 @@ Probe.prototype.advanceCurrentFrame = function() {
 };
 
 Probe.prototype.move = function() {
-    // Choose the next path to follow once we've reach the end of the current path.
+    // Choose the next path to follow if we've reached the end of the current path.
     if (this._pathPosition >= this._currentPath.length) {
         var proto = Object.getPrototypeOf(this);
 
@@ -120,12 +123,12 @@ Probe.prototype.move = function() {
 
     // Follow the current path.
     switch(this._currentPath[this._pathPosition].action) {
-        case Action.Move:
+        case PathAction.Move:
             var point = this._currentPath[this._pathPosition].location;
-            this._x = point[0];
-            this._y = point[1];
+            this._x = point.x;
+            this._y = point.y;
             break;
-        case Action.Fire:
+        case PathAction.Fire:
             this.dropBomb();
             break;
     }
@@ -135,61 +138,61 @@ Probe.prototype.move = function() {
 Probe.prototype.calculatePaths = function() {
     var proto = Object.getPrototypeOf(this);
     if (!proto._pathsCalculated) {
-        var introPath = new SplinePath({
-            points: [
-                [0.0, 0.0],
-                [50.0, 100.0],
-                [100.0, 200.0],
-                [150.0, 300.0],
-                [100.0, 400.0],
-                [-25.0, 450.0],
-                [-125.0, 400.0],
-                [-175.0, 300.0],
-                [-125.0, 200.0],
-                [-75.0, 100.0],
-                [-25.0, 50.0],
-                [0.0, 50.0]
+        var introPath = new SplinePath(new PathTemplate(
+            [
+                new Point(0.0, 0.0),
+                new Point(50.0, 100.0),
+                new Point(100.0, 200.0),
+                new Point(150.0, 300.0),
+                new Point(100.0, 400.0),
+                new Point(-25.0, 450.0),
+                new Point(-125.0, 400.0),
+                new Point(-175.0, 300.0),
+                new Point(-125.0, 200.0),
+                new Point(-75.0, 100.0),
+                new Point(-25.0, 50.0),
+                new Point(0.0, 50.0)
             ],
-            actions: [
-                [0.50, Action.Fire]
+            [
+                new ScheduledAction(0.50, PathAction.Fire)
             ]
-        });
+        ));
         proto._introPathTemplate = introPath.getPath(100);
 
-        var diveRightPath = new SplinePath({
-            points: [
-                [0.0, 0.0],
-                [-40.0, 50.0],
-                [-10.0, 200.0],
-                [30.0, 300.0],
-                [50.0, 400.0],
-                [80.0, 300.0],
-                [40.0, 200.0],
-                [80.0, 50.0],
-                [100.0, 0.0]
+        var diveRightPath = new SplinePath(new PathTemplate(
+            [
+                new Point(0.0, 0.0),
+                new Point(-40.0, 50.0),
+                new Point(-10.0, 200.0),
+                new Point(30.0, 300.0),
+                new Point(50.0, 400.0),
+                new Point(80.0, 300.0),
+                new Point(40.0, 200.0),
+                new Point(80.0, 50.0),
+                new Point(100.0, 0.0)
             ],
-            actions: [
-                [0.01, Action.Fire]
+            [
+                new ScheduledAction(0.01, PathAction.Fire)
             ]
-        });
+        ));
         proto._diveRightPathTemplate = diveRightPath.getPath(100);
 
-        var diveLeftPath = new SplinePath({
-            points: [
-                [0.0, 0.0],
-                [40.0, 50.0],
-                [10.0, 200.0],
-                [-30.0, 300.0],
-                [-50.0, 400.0],
-                [-80.0, 300.0],
-                [-40.0, 200.0],
-                [-80.0, 50.0],
-                [-100.0, 0.0]
+        var diveLeftPath = new SplinePath(new PathTemplate(
+            [
+                new Point(0.0, 0.0),
+                new Point(40.0, 50.0),
+                new Point(10.0, 200.0),
+                new Point(-30.0, 300.0),
+                new Point(-50.0, 400.0),
+                new Point(-80.0, 300.0),
+                new Point(-40.0, 200.0),
+                new Point(-80.0, 50.0),
+                new Point(-100.0, 0.0)
             ],
-            actions: [
-                [0.01, Action.Fire]
+            [
+                new ScheduledAction(0.01, PathAction.Fire)
             ]
-        });
+        ))
         proto._diveLeftPathTemplate = diveLeftPath.getPath(100);
     }
 };

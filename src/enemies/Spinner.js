@@ -2,12 +2,14 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Spinner');
 var util = require('util');
 
-var Action = require('../Action');
 var Bomb = require('../shots/Bomb');
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter');
+var PathAction = require('../paths/PathAction').PathAction;
+var PathTemplate = require('../paths/PathTemplate').PathTemplate;
+var Point = require('../Point').Point;
 var Scheduler = require('../timing/Scheduler').Scheduler;
-var SplinePath = require('../SplinePath');
+var SplinePath = require('../paths/SplinePath').SplinePath;
 
 var Bias = {
     Left: 1,
@@ -167,12 +169,12 @@ Spinner.prototype.move = function() {
 
     // Follow the current path.
     switch(this._currentPath[this._pathPosition].action) {
-        case Action.Move:
+        case PathAction.Move:
             var point = this._currentPath[this._pathPosition].location;
-            this._x = point[0];
-            this._y = point[1];
+            this._x = point.x;
+            this._y = point.y;
             break;
-        case Action.Fire:
+        case PathAction.Fire:
             this.dropBomb();
             break;
     }
@@ -183,72 +185,74 @@ Spinner.prototype.calculatePaths  = function() {
     var proto = Object.getPrototypeOf(this);
 
     proto._rightPathTemplates = [
-        new SplinePath({
-            points: [
-                [0, 0],
-                [-25, 100],
-                [0, 200], // Start of first loop
-                [100, 300],
-                [200, 200],
-                [100, 100],
-                [0, 200],
-                [0, 300], // Start of second loop
-                [100, 400],
-                [200, 300],
-                [100, 200],
-                [0, 300],
-                [0, 400], // Drop out of sight
-                [-100, 450],
-                [-150, 500],
-                [-225, 550],
-                [-225, 700],
+        new SplinePath(new PathTemplate(
+            [
+                new Point(0, 0),
+                new Point(-25, 100),
+                new Point(0, 200), // Start of first loop
+                new Point(100, 300),
+                new Point(200, 200),
+                new Point(100, 100),
+                new Point(0, 200),
+                new Point(0, 300), // Start of second loop
+                new Point(100, 400),
+                new Point(200, 300),
+                new Point(100, 200),
+                new Point(0, 300),
+                new Point(0, 400), // Drop out of sight
+                new Point(-100, 450),
+                new Point(-150, 500),
+                new Point(-225, 550),
+                new Point(-225, 700),
 
-                [-350, 800],
-                [-350, 750],
-                [-350, 700],
-                [-350, 500],
-                [-200, 450],
-                [-150, 350],
-                [-150, 300],
-                [-50, 200],
-                [50, 300],
-                [-50, 400],
-                [-150, 300],
-                [-250, 250],
-                [-250, 150],
-                [-200, 50],
-                [-100, 0],
-                [-100, -50],
-                [-100, -100]
-            ]
-        }).getPath(350),
+                new Point(-350, 800),
+                new Point(-350, 750),
+                new Point(-350, 700),
+                new Point(-350, 500),
+                new Point(-200, 450),
+                new Point(-150, 350),
+                new Point(-150, 300),
+                new Point(-50, 200),
+                new Point(50, 300),
+                new Point(-50, 400),
+                new Point(-150, 300),
+                new Point(-250, 250),
+                new Point(-250, 150),
+                new Point(-200, 50),
+                new Point(-100, 0),
+                new Point(-100, -50),
+                new Point(-100, -100)
+            ],
+            []
+        )).getPath(350),
 
-        new SplinePath({
-            points: [
-                [0, 0],
-                [-50, 50],
-                [-100, 100],
-                [-150, 150],
-                [-200, 200],
-                [-250, 250],
-                [-300, 300],
-                [-250, 350],
-                [-200, 300],
-                [-150, 250],
-                [-100, 200],
-                [-50, 150],
-                [0, 100],
-                [50, 150],
-                [100, 250],
-                [100, 300],
-                [50, 400],
-                [-50, 450],
-                [-150, 350],
-                [-250, 300],
-                [-350, 200],
-                [-400, 100]
-            ]
-        }).getPath(120)
+        new SplinePath(new PathTemplate(
+            [
+                new Point(0, 0),
+                new Point(-50, 50),
+                new Point(-100, 100),
+                new Point(-150, 150),
+                new Point(-200, 200),
+                new Point(-250, 250),
+                new Point(-300, 300),
+                new Point(-250, 350),
+                new Point(-200, 300),
+                new Point(-150, 250),
+                new Point(-100, 200),
+                new Point(-50, 150),
+                new Point(0, 100),
+                new Point(50, 150),
+                new Point(100, 250),
+                new Point(100, 300),
+                new Point(50, 400),
+                new Point(-50, 450),
+                new Point(-150, 350),
+                new Point(-250, 300),
+                new Point(-350, 200),
+                new Point(-400, 100)
+            ],
+            []
+        )).getPath(120)
     ];
 
     // Build mirror image path for left swoop.
