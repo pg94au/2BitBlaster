@@ -1,41 +1,40 @@
-var expect = require('chai').expect;
+import {describe} from 'mocha';
+import {expect} from 'chai';
 
-var ScoreCounter = require('../src/ScoreCounter');
+import {ScoreCounter} from '../src/ScoreCounter';
 
-describe('ScoreCounter', function() {
+describe('ScoreCounter', () => {
     // Stub out high score synchronization to keep tests from making remote calls.
-    ScoreCounter.prototype.synchronizeHighScore = function() {}
+    ScoreCounter.prototype.synchronizeHighScore = () => {};
 
-    describe('#ctor()', function () {
-        it('starts with zero score', function () {
-            var scoreCounter = new ScoreCounter();
-            expect(scoreCounter.getCurrentScore()).to.be.equal(0);
+    describe('#ctor()', () => {
+        it('starts with zero score', () => {
+            let scoreCounter = new ScoreCounter();
+            expect(scoreCounter.currentScore).to.be.equal(0);
         });
     });
 
-    describe('#increment()', function() {
-        it('increments the score by a specified amount', function() {
-            var scoreCounter = new ScoreCounter();
+    describe('#increment()', () => {
+        it('increments the score by a specified amount', () => {
+            let scoreCounter = new ScoreCounter();
             scoreCounter.increment(3);
-            expect(scoreCounter.getCurrentScore()).to.be.equal(3);
+            expect(scoreCounter.currentScore).to.be.equal(3);
         });
 
-        it('emits a score event with the new score', function() {
-            var scoreUpdate = null;
-            var scoreCounter = new ScoreCounter();
-            scoreCounter.on('score', function(score) { scoreUpdate = score; });
+        it('emits a score event with the new score', () => {
+            let scoreUpdate: number | null = null;
+            let scoreCounter = new ScoreCounter();
+            scoreCounter.on('score', (score: number): void => { scoreUpdate = score; });
             scoreCounter.increment(3);
             expect(scoreUpdate).to.be.equal(3);
         });
     });
 
-    describe('#on()', function() {
-        it('immediately emits a score event', function() {
-            var scoreUpdate = null;
-            var scoreCounter = new ScoreCounter();
-            scoreCounter.on('score', function(score) {
-                scoreUpdate = score;
-            });
+    describe('#on()', () => {
+        it('immediately emits a score event', () => {
+            let scoreUpdate: number | null = null;
+            let scoreCounter = new ScoreCounter();
+            scoreCounter.on('score', (score: number): void => { scoreUpdate = score; });
             expect(scoreUpdate).to.be.equal(0);
         });
     });

@@ -1,37 +1,21 @@
-var debug = require('debug')('Blaster:ScoreCounter');
-var events = require('events');
-var superagent = require('superagent');
+import Debug from "debug";
+import {EventEmitter} from 'events';
+import {get, put, Response} from 'superagent';
 
-function ScoreCounter() {
-    debug('ScoreCounter constructor');
-    this._eventEmitter = new events.EventEmitter();
-    this._currentScore = 0;
-    this._highScore = 0;
-    this.synchronizeHighScore();
-}
+const debug = Debug("Blaster:ScoreCounter");
 
-ScoreCounter.prototype.getCurrentScore = function() {
-    return this._currentScore;
-};
+export class ScoreCounter {
+    private _eventEmitter: EventEmitter = new EventEmitter();
+    private _currentScore: number = 0;
+    private _highScore: number = 0;
 
-ScoreCounter.prototype.increment = function(amount) {
-    debug('ScoreCounter.increment');
-
-    this._currentScore += amount;
-    this._eventEmitter.emit('score', this._currentScore);
-
-    if (this._currentScore > this._highScore) {
-        this._highScore = this._currentScore;
-        this._eventEmitter.emit('highScore', this._highScore);
+    constructor() {
+        this.synchronizeHighScore();
     }
-};
 
-ScoreCounter.prototype.synchronizeHighScore = function() {
-    var self = this;
-
-    var remoteHighScore;
-    superagent.get('highScore').end(
-        function(error, result) {
+    synchronizeHighScore(): void {
+        let remoteHighScore: number;
+        get('highScore').end(((error: any, result: Response): void => {
             if (error || !result.ok) {
                 debug('Unable to retrieve high score from server.');
                 remoteHighScore = 0;
@@ -40,39 +24,51 @@ ScoreCounter.prototype.synchronizeHighScore = function() {
                 remoteHighScore = parseInt(result.text);
             }
 
-            if (self._highScore > remoteHighScore) {
-                superagent.put('highScore')
+            if (this._highScore > remoteHighScore) {
+                put('highScore')
                     .set('Content-Type', 'text/plain')
-                    .send(self._highScore)
-                    .end(
-                        function(error, result) {
-                            if (error || !result.ok) {
-                                debug('Failed to submit high score to server.');
-                            }
+                    .send(this._highScore.toString())
+                    .end((error: any, result: Response): void => {
+                        if (error || !result.ok) {
+                            debug('Failed to submit high score to server.');
                         }
-                    );
+                    });
             }
             else {
-                self._highScore = remoteHighScore;
+                this._highScore = remoteHighScore;
             }
 
-            self._eventEmitter.emit('highScore', self._highScore);
-        }
-    );
-};
-
-ScoreCounter.prototype.on = function(e, f) {
-    debug('ScoreCounter.on');
-    this._eventEmitter.on(e, f);
-
-    switch(e) {
-        case 'score':
-            this._eventEmitter.emit('score', this._currentScore);
-            break;
-        case 'highScore':
             this._eventEmitter.emit('highScore', this._highScore);
-            break;
+        }));
     }
-};
 
-module.exports = ScoreCounter;
+    get currentScore(): number {
+        return this._currentScore;
+    }
+
+    increment(amount: number): void {
+        debug('ScoreCounter.increment');
+
+        this._currentScore += amount;
+        this._eventEmitter.emit('score', this._currentScore);
+
+        if (this._currentScore > this._highScore) {
+            this._highScore = this._currentScore;
+            this._eventEmitter.emit('highScore', this._highScore);
+        }
+    }
+
+    on(e: string | symbol, f: (...args: any[]) => void): void {
+        debug('ScoreCounter.on');
+        this._eventEmitter.on(e, f);
+
+        switch(e) {
+            case 'score':
+                this._eventEmitter.emit('score', this._currentScore);
+                break;
+            case 'highScore':
+                this._eventEmitter.emit('highScore', this._highScore);
+                break;
+        }
+    }
+}

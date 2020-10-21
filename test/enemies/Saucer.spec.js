@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
 var Saucer = require('../../src/enemies/Saucer');
-var ScoreCounter = require('../../src/ScoreCounter');
+var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
 
@@ -59,7 +59,7 @@ describe('Saucer', function() {
                 5, 10);
             saucer.hitBy({}, 1);
             saucer.tick();
-            expect(scoreCounter.getCurrentScore()).to.be.above(0);
+            expect(scoreCounter.currentScore).to.be.above(0);
         });
     });
 });
