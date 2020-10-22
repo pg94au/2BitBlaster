@@ -3,7 +3,7 @@ var debug = require('debug')('Blaster:Splitter');
 var util = require('util');
 
 var Enemy = require('./Enemy');
-var HitArbiter = require('../HitArbiter');
+var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
