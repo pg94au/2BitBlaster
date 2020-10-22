@@ -1,11 +1,10 @@
-import {HitResult} from "../HitResult";
-
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Bullet');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var HitResult = require('../HitResult').HitResult;
 var Shot = require('./Shot');
 
 function Bullet(audioPlayer, world, startX, startY) {

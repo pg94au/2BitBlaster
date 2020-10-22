@@ -4,6 +4,7 @@ var debug = require('debug')('Blaster:Actor');
 const { v4: uuidv4 } = require('uuid');
 
 var Direction = require('./devices/Direction');
+var Point = require('./Point').Point;
 
 var Actor = function(world, startX, startY) {
     debug('Actor constructor');
@@ -34,7 +35,7 @@ Actor.prototype.move = function(direction) {
 };
 
 Actor.prototype.getCoordinates = function() {
-    return {x: this._x, y: this._y};
+    return new Point(this._x, this._y);
 };
 
 Actor.prototype.getZIndex = function() {

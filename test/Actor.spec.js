@@ -1,3 +1,5 @@
+import {Point} from "../src/Point";
+
 var expect = require('chai').expect;
 
 var Actor = require('../src/Actor');
@@ -12,7 +14,7 @@ describe('Actor', function() {
 
         it('should start at specified coordinates', function() {
             var actor = new Actor({}, 12, 23);
-            expect(actor.getCoordinates()).to.eql({ x: 12, y: 23 });
+            expect(actor.getCoordinates()).to.eql(new Point(12, 23));
         });
     });
 

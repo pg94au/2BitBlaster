@@ -1,3 +1,5 @@
+import {Point} from "../src/Point";
+
 var expect = require('chai').expect;
 
 var Clock = require('../src/timing/Clock').Clock;
@@ -101,7 +103,7 @@ describe('Player', function() {
 
             var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
             player.tick();
-            expect(player.getCoordinates()).to.be.eql({x:10, y:10});
+            expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
         });
 
         it('moves player when joystick has direction set', function() {
@@ -134,7 +136,7 @@ describe('Player', function() {
 
                 var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
                 player.tick();
-                expect(player.getCoordinates()).to.be.eql({x:10, y:10});
+                expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
             })
         });
 
