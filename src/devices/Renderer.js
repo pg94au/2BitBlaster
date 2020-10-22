@@ -3,6 +3,7 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Renderer');
 var Pixi = require('pixi.js');
+var Point = require('../Point').Point;
 
 var Renderer = function(containerElement) {
     this._containerElement = containerElement;

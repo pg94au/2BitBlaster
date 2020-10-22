@@ -6,9 +6,10 @@ var Actor = require('./Actor');
 var Bullet = require('./shots/Bullet');
 var Explosion = require('./Explosion');
 var HitArbiter = require('./HitArbiter').HitArbiter;
+var Point = require('./Point').Point;
 var Scheduler = require('./timing/Scheduler').Scheduler;
 
-function Player(joystick, audioPlayer, world, startX, startY, bounds, clock) {
+function Player(joystick, audioPlayer, world, startingPoint, bounds, clock) {
     debug('Player constructor');
     if (joystick === undefined) {
         throw new Error('joystick cannot be undefined');
@@ -18,12 +19,6 @@ function Player(joystick, audioPlayer, world, startX, startY, bounds, clock) {
     }
     if (world === undefined) {
         throw new Error('world cannot be undefined');
-    }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
     }
     if (bounds === undefined) {
         throw new Error('bounds cannot be undefined');
@@ -51,7 +46,7 @@ function Player(joystick, audioPlayer, world, startX, startY, bounds, clock) {
         self._vulnerable = true;
     });
 
-    Actor.apply(this, [world, startX, startY]);
+    Actor.apply(this, [world, startingPoint]);
 }
 
 util.inherits(Player, Actor);
@@ -193,7 +188,7 @@ Player.prototype.tick = function () {
     if (this._joystick.getFireState()) {
         if (this._canFireBullet) {
             this._canFireBullet = false;
-            var bullet = new Bullet(this._audioPlayer, this._world, this._x, this._y);
+            var bullet = new Bullet(this._audioPlayer, this._world, new Point(this._x, this._y));
             this._world.addActor(bullet);
 
             // Another bullet cannot be fired until a fixed time period.

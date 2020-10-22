@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:SplitterWave');
 var util = require('util');
 
+var Point = require('../Point').Point;
 var Splitter = require('../enemies/Splitter');
 
 function SplitterWave(audioPlayer, world, clock) {
@@ -40,9 +41,11 @@ SplitterWave.prototype.tick = function() {
             this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
             var worldDimensions = this._world.getDimensions();
-            var splitterStartX = Math.floor(_.random(100 + 50, worldDimensions.width - 100 - 50));
-            var splitterStartY = -20;
-            var _splitter = new Splitter(this._audioPlayer, this._world, this._clock, splitterStartX, splitterStartY);
+            var splitterStartingPoint = new Point(
+                Math.floor(_.random(100 + 50, worldDimensions.width - 100 - 50)),
+                -20
+            );
+            var _splitter = new Splitter(this._audioPlayer, this._world, this._clock, splitterStartingPoint);
             this._world.addActor(_splitter);
 
             this._numberOfEnemiesLeftToDeploy--;

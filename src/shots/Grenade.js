@@ -6,12 +6,13 @@ var Direction = require('../devices/Direction');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 var Shrapnel = require('./Shrapnel');
 
-function Grenade(audioPlayer, world, startX, startY) {
+function Grenade(audioPlayer, world, startingPoint) {
     debug('Grenade constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -19,7 +20,7 @@ function Grenade(audioPlayer, world, startX, startY) {
     this._audioPlayer = audioPlayer;
 
     this.currentFrame = 0;
-    this._initialHeight = startY;
+    this._initialHeight = startingPoint.y;
     this._firstTick = true;
 }
 
@@ -100,13 +101,13 @@ Grenade.prototype.tick = function () {
                 );
                 this._world.addActor(explosion);
 
-                var downShrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 270);
+                var downShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 270);
                 this._world.addActor(downShrapnel);
 
-                var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 250);
+                var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 250);
                 this._world.addActor(leftShrapnel);
 
-                var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 290);
+                var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 290);
                 this._world.addActor(rightShrapnel);
             }
             else {

@@ -13,9 +13,9 @@ var ScheduledAction = require('../paths/ScheduledAction').ScheduledAction;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 var SplinePath = require('../paths/SplinePath').SplinePath;
 
-function Probe(audioPlayer, world, clock, startX, startY) {
+function Probe(audioPlayer, world, clock, startingPoint) {
     debug('Probe constructor');
-    Enemy.apply(this, [audioPlayer, world, startX, startY]);
+    Enemy.apply(this, [audioPlayer, world, startingPoint]);
     this.health = 3;
     this._currentFrame = 0;
     this._scheduler = new Scheduler(clock);
@@ -89,7 +89,7 @@ Probe.prototype.tick = function () {
 };
 
 Probe.prototype.dropBomb = function() {
-    var bomb = new Bomb(this._audioPlayer, this._world, this._x, this._y);
+    var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
     this._world.addActor(bomb);
 };
 

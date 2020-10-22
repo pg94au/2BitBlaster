@@ -1,5 +1,6 @@
 var expect = require('chai').expect;
 
+var Point = require('../src/Point').Point;
 var Star = require('../src/Star');
 
 var WorldStubBuilder = require('./builders/WorldStubBuilder');
@@ -8,11 +9,11 @@ describe('Star', function() {
     describe('#tick()', function () {
         it('moves star downwards', function () {
             var world = new WorldStubBuilder().build();
-            var star = new Star(world, 1, 1);
+            var star = new Star(world, new Point(1, 1));
 
             star.tick();
 
-            expect(star._y).to.be.above(1);
+            expect(star.getCoordinates().y).to.be.above(1);
         });
 
         // it('cycles image frames to sparkle the star', function() {
@@ -34,7 +35,7 @@ describe('Star', function() {
 
         it('sets the star inactive when it leaves the world', function() {
             var world = new WorldStubBuilder().build();
-            var star = new Star(world, 1, world.getDimensions().height);
+            var star = new Star(world, new Point(1, world.getDimensions().height));
 
             star.tick();
 

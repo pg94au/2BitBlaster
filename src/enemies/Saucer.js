@@ -12,7 +12,7 @@ var ScheduledAction = require('../paths/ScheduledAction').ScheduledAction;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 var SplinePath = require('../paths/SplinePath').SplinePath;
 
-function Saucer(audioPlayer, world, clock, startX, startY) {
+function Saucer(audioPlayer, world, clock, startingPoint) {
     debug('Saucer constructor');
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -23,14 +23,8 @@ function Saucer(audioPlayer, world, clock, startX, startY) {
     if (clock === undefined) {
         throw new Error('clock cannot be undefined');
     }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
-    }
 
-    Enemy.apply(this, [audioPlayer, world, startX, startY]);
+    Enemy.apply(this, [audioPlayer, world, startingPoint]);
 
     this.health = 1;
     this._currentFrame = 0;
@@ -111,7 +105,7 @@ Saucer.prototype.advanceCurrentFrame = function() {
 };
 
 Saucer.prototype.dropBomb = function() {
-    var bomb = new Bomb(this._audioPlayer, this._world, this._x, this._y);
+    var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
     this._world.addActor(bomb);
 };
 

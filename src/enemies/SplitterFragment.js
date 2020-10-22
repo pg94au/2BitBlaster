@@ -17,7 +17,7 @@ var Side = {
     Right: 2
 };
 
-function SplitterFragment(audioPlayer, world, clock, side, startX, startY) {
+function SplitterFragment(audioPlayer, world, clock, side, startingPoint) {
     debug('SplitterFragment constructor');
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -31,14 +31,8 @@ function SplitterFragment(audioPlayer, world, clock, side, startX, startY) {
     if (side === undefined) {
         throw new Error('side cannot be undefined');
     }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
-    }
 
-    Enemy.apply(this, [audioPlayer, world, startX, startY]);
+    Enemy.apply(this, [audioPlayer, world, startingPoint]);
 
     this._side = side;
     this.health = 1;
@@ -143,7 +137,7 @@ SplitterFragment.prototype.scheduleNextBombDrop = function() {
 };
 
 SplitterFragment.prototype.dropBomb = function() {
-    var shrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 270);
+    var shrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 270);
     this._world.addActor(shrapnel);
 };
 

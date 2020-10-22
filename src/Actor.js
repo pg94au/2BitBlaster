@@ -6,12 +6,12 @@ const { v4: uuidv4 } = require('uuid');
 var Direction = require('./devices/Direction');
 var Point = require('./Point').Point;
 
-var Actor = function(world, startX, startY) {
+var Actor = function(world, startCoordinates) {
     debug('Actor constructor');
     this._id = uuidv4();
     this._world = world;
-    this._x = startX;
-    this._y = startY;
+    this._x = startCoordinates.x;
+    this._y = startCoordinates.y;
     this._active = true;
 };
 

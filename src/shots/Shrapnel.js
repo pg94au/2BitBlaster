@@ -5,11 +5,12 @@ var util = require('util');
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
-function Shrapnel(audioPlayer, world, startX, startY, trajectory) {
+function Shrapnel(audioPlayer, world, startingPoint, trajectory) {
     debug('Shrapnel constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -23,8 +24,8 @@ function Shrapnel(audioPlayer, world, startX, startY, trajectory) {
     this.currentFrame = 0;
     this._firstTick = true;
 
-    this._exactX = startX;
-    this._exactY = startY;
+    this._exactX = startingPoint.x;
+    this._exactY = startingPoint.y;
 }
 
 util.inherits(Shrapnel, Shot);

@@ -4,6 +4,7 @@ var Actor = require('../../src/Actor');
 var Bullet = require('../../src/shots/Bullet');
 var Clock = require('../../src/timing/Clock').Clock;
 var Enemy = require('../../src/enemies/Enemy');
+var Point = require('../../src/Point').Point;
 var Saucer = require('../../src/enemies/Saucer');
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
@@ -16,7 +17,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().build(),
-                5, 10
+                new Point(5, 10)
             );
             bullet.tick();
             expect(bullet.getCoordinates().x).to.be.equal(5);
@@ -27,7 +28,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().build(),
-                5, 10
+                new Point(5, 10)
             );
             expect(bullet.getImageDetails().currentFrame).to.be.equal(0);
             bullet.tick();
@@ -38,7 +39,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().build(),
-                5, 10
+                new Point(5, 10)
             );
             var numberOfFrames = bullet.getImageDetails().numberOfFrames;
             for (var i=0; i < numberOfFrames-1; i++) {
@@ -53,7 +54,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().build(),
-                5, 10
+                new Point(5, 10)
             );
             bullet.tick();
             expect(bullet.isActive()).to.be.true;
@@ -63,7 +64,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().build(),
-                5, 0
+                new Point(5, 0)
             );
             bullet.tick();
             expect(bullet.isActive()).to.be.false;
@@ -78,7 +79,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([enemy]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(hit).to.be.true;
@@ -94,7 +95,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([enemy]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(hit).to.be.false;
@@ -109,7 +110,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([enemy]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(actualDamage).to.be.equal(1);
@@ -120,11 +121,11 @@ describe('Bullet', function() {
                 new AudioPlayerStubBuilder().build(),
                 {},
                 new Clock(),
-                10, 10);
+                new Point(10, 10));
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([saucer]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(bullet.isActive()).to.be.false;
@@ -138,7 +139,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([enemy]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(bullet.isActive()).to.be.false;
@@ -158,7 +159,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 new AudioPlayerStubBuilder().build(),
                 new WorldStubBuilder().returningActiveEnemies([enemy1, enemy2]).build(),
-                10, 10
+                new Point(10, 10)
             );
             bullet.tick();
             expect(enemy1Hit).to.not.be.equal(enemy2Hit);
@@ -169,7 +170,7 @@ describe('Bullet', function() {
             var bullet = new Bullet(
                 audioPlayer,
                 new WorldStubBuilder().build(),
-                5, 10
+                new Point(5, 10)
             );
             bullet.tick();
 

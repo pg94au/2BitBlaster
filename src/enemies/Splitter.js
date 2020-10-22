@@ -13,7 +13,7 @@ var Shrapnel = require('../shots/Shrapnel');
 var SplinePath = require('../paths/SplinePath').SplinePath;
 var SplitterFragment = require('./SplitterFragment');
 
-function Splitter(audioPlayer, world, clock, startX, startY) {
+function Splitter(audioPlayer, world, clock, startingPoint) {
     debug('Splitter constructor');
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -24,14 +24,8 @@ function Splitter(audioPlayer, world, clock, startX, startY) {
     if (clock === undefined) {
         throw new Error('clock cannot be undefined');
     }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
-    }
 
-    Enemy.apply(this, [audioPlayer, world, startX, startY]);
+    Enemy.apply(this, [audioPlayer, world, startingPoint]);
 
     this._clock = clock;
     this.health = 1;
@@ -107,10 +101,10 @@ Splitter.prototype.tick = function () {
     }
 
     if (this.health <= 0) {
-        var leftSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Left, this._x - 40, this._y);
+        var leftSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Left, new Point(this._x - 40, this._y));
         this._world.addActor(leftSplitterFragment);
 
-        var rightSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Right, this._x + 40, this._y);
+        var rightSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Right, new Point(this._x + 40, this._y));
         this._world.addActor(rightSplitterFragment);
     }
 };
@@ -127,10 +121,10 @@ Splitter.prototype.scheduleNextBombDrop = function() {
 };
 
 Splitter.prototype.dropBomb = function() {
-    var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 267);
+    var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 267);
     this._world.addActor(leftShrapnel);
 
-    var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._x, this._y, 273);
+    var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 273);
     this._world.addActor(rightShrapnel);
 };
 

@@ -5,11 +5,12 @@ var util = require('util');
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
-function Bullet(audioPlayer, world, startX, startY) {
+function Bullet(audioPlayer, world, startingPoint) {
     debug('Bullet constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');

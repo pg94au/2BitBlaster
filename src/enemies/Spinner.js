@@ -16,7 +16,7 @@ var Bias = {
     Right: 2
 };
 
-function Spinner(audioPlayer, world, clock, startX, startY, path, bias) {
+function Spinner(audioPlayer, world, clock, startingPoint, path, bias) {
     debug('Spinner constructor');
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -26,12 +26,6 @@ function Spinner(audioPlayer, world, clock, startX, startY, path, bias) {
     }
     if (clock === undefined) {
         throw new Error('clock cannot be undefined');
-    }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
     }
     if (path === undefined) {
         throw new Error('path cannot be undefined');
@@ -43,7 +37,7 @@ function Spinner(audioPlayer, world, clock, startX, startY, path, bias) {
         throw new Error('bias cannot be undefined');
     }
 
-    Enemy.apply(this, [audioPlayer, world, startX, startY]);
+    Enemy.apply(this, [audioPlayer, world, startingPoint]);
 
     this.health = 1;
     this._currentFrame = 0;
@@ -150,7 +144,7 @@ Spinner.prototype.dropBomb = function() {
     if (this._x > 0 && this._x < worldCoordinates.width && this._y > 0 && this._y < worldCoordinates.height) {
         // Don't drop a bomb if we're too low.  Not very fair.
         if (this._y < (worldCoordinates.height / 2)) {
-            var bomb = new Bomb(this._audioPlayer, this._world, this._x, this._y);
+            var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
             this._world.addActor(bomb);
         }
     }

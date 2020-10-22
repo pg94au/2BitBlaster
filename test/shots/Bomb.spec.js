@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 
 var Actor = require('../../src/Actor');
 var Bomb = require('../../src/shots/Bomb');
+var Point = require('../../src/Point').Point;
 var Player = require('../../src/Player');
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
@@ -14,7 +15,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 5, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(5, 10));
             bomb.tick();
             expect(bomb.getCoordinates().x).to.be.equal(5);
             expect(bomb.getCoordinates().y).to.be.above(10);
@@ -24,7 +25,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 5, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(5, 10));
             expect(bomb.getImageDetails().currentFrame).to.be.equal(0);
             bomb.tick();
             expect(bomb.getImageDetails().currentFrame).to.be.equal(1);
@@ -34,7 +35,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 5, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(5, 10));
             var numberOfFrames = bomb.getImageDetails().numberOfFrames;
             for (var i=0; i < numberOfFrames-1; i++) {
                 bomb.tick();
@@ -48,7 +49,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 5, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(5, 10));
             bomb.tick();
             expect(bomb.isActive()).to.be.true;
         });
@@ -57,7 +58,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 5, worldStub.getDimensions().height - 1);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(5, worldStub.getDimensions().height - 1));
             bomb.tick();
             expect(bomb.isActive()).to.be.false;
         });
@@ -68,7 +69,7 @@ describe('Bomb', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(playerStub.hitFor).to.not.be.empty;
         });
@@ -79,7 +80,7 @@ describe('Bomb', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(1000, 1000).build();
             worldStub.addActor(playerStub);
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(playerStub.hitFor).to.be.empty;
         });
@@ -90,7 +91,7 @@ describe('Bomb', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(playerStub.hitFor).to.be.eql([1]);
         });
@@ -101,7 +102,7 @@ describe('Bomb', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(bomb.isActive()).to.be.false;
         });
@@ -112,7 +113,7 @@ describe('Bomb', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).ignoringHits().build();
             worldStub.addActor(playerStub);
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(bomb.isActive()).to.be.false;
         });
@@ -121,7 +122,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(bomb.isActive()).to.be.true;
         });
@@ -130,7 +131,7 @@ describe('Bomb', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var bomb = new Bomb(audioPlayer, worldStub, 10, 10);
+            var bomb = new Bomb(audioPlayer, worldStub, new Point(10, 10));
             bomb.tick();
             expect(audioPlayer.getPlayedSounds().length).to.be.above(0);
         });

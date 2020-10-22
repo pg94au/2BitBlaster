@@ -6,6 +6,7 @@ var Action = require('../Action');
 var Enemy = require('./Enemy');
 var Grenade = require('../shots/Grenade');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var Point = require('../Point').Point;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 
 function Bomber(audioPlayer, world, clock, startY) {
@@ -19,11 +20,8 @@ function Bomber(audioPlayer, world, clock, startY) {
     if (clock === undefined) {
         throw new Error('clock cannot be undefined');
     }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
-    }
 
-    Enemy.apply(this, [audioPlayer, world, -40, startY]);
+    Enemy.apply(this, [audioPlayer, world, new Point(-40, startY)]);
 
     this.health = 1;
     this._frameIndices = [0, 1, 2, 3, 4, 5, 5, 5, 4, 3, 2, 1];
@@ -101,7 +99,7 @@ Bomber.prototype.advanceCurrentFrame = function() {
 };
 
 Bomber.prototype.dropGrenade = function() {
-    var grenade = new Grenade(this._audioPlayer, this._world, this._x + 10, this._y + 30);
+    var grenade = new Grenade(this._audioPlayer, this._world, new Point(this._x + 10, this._y + 30));
     this._world.addActor(grenade);
 };
 

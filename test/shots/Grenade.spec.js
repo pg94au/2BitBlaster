@@ -4,6 +4,7 @@ var expect = require('chai').expect;
 var Actor = require('../../src/Actor');
 var Grenade = require('../../src/shots/Grenade');
 var Player = require('../../src/Player');
+var Point = require('../../src/Point').Point;
 var Shrapnel = require('../../src/shots/Shrapnel');
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
@@ -16,7 +17,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
             grenade.tick();
             expect(grenade.getCoordinates().x).to.be.equal(5);
             expect(grenade.getCoordinates().y).to.be.above(10);
@@ -26,7 +27,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
             expect(grenade.getImageDetails().currentFrame).to.be.equal(0);
             grenade.tick();
             expect(grenade.getImageDetails().currentFrame).to.be.equal(1);
@@ -36,7 +37,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
             grenade.tick();
             expect(grenade.isActive()).to.be.true;
         });
@@ -45,7 +46,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
             while (grenade._y < 210) {
                 grenade.tick();
             }
@@ -57,7 +58,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
             while (grenade._y < 210) {
                 grenade.tick();
             }
@@ -71,7 +72,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 5, worldStub.getDimensions().height);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(5, worldStub.getDimensions().height));
             grenade.tick();
             expect(grenade.isActive()).to.be.false;
         });
@@ -82,7 +83,7 @@ describe('Grenade', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(playerStub.hitFor).to.not.be.empty;
         });
@@ -93,7 +94,7 @@ describe('Grenade', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(1000, 1000).build();
             worldStub.addActor(playerStub);
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(playerStub.hitFor).to.be.empty;
         });
@@ -104,7 +105,7 @@ describe('Grenade', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(playerStub.hitFor).to.be.eql([3]);
         });
@@ -115,7 +116,7 @@ describe('Grenade', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(grenade.isActive()).to.be.false;
         });
@@ -126,7 +127,7 @@ describe('Grenade', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).ignoringHits().build();
             worldStub.addActor(playerStub);
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(grenade.isActive()).to.be.false;
         });
@@ -135,7 +136,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(grenade.isActive()).to.be.true;
         });
@@ -144,7 +145,7 @@ describe('Grenade', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var grenade = new Grenade(audioPlayer, worldStub, 10, 10);
+            var grenade = new Grenade(audioPlayer, worldStub, new Point(10, 10));
             grenade.tick();
             expect(audioPlayer.getPlayedSounds().length).to.be.above(0);
         });

@@ -7,9 +7,9 @@ var util = require('util');
 var Actor = require('../Actor');
 var Explosion = require('../Explosion');
 
-function Enemy(audioPlayer, world, startX, startY) {
+function Enemy(audioPlayer, world, startingPoint) {
     debug('Enemy constructor');
-    Actor.apply(this, [world, startX, startY]);
+    Actor.apply(this, [world, startingPoint]);
     this._audioPlayer = audioPlayer;
 
     this.getExplosionProperties = function() {
@@ -43,7 +43,7 @@ Enemy.prototype.tick = function () {
             explosionProperties,
             this._audioPlayer,
             this._world,
-            saucerCoordinates.x, saucerCoordinates.y
+            saucerCoordinates
         );
         this._world.addActor(saucerExplosion);
     }

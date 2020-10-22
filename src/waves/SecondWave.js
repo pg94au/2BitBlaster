@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:SecondWave');
 
+var Point = require('../Point').Point;
 var Probe = require('../enemies/Probe');
 
 function SecondWave(audioPlayer, world, clock) {
@@ -38,9 +39,8 @@ SecondWave.prototype.tick = function() {
             this._addNextEnemyAt = new Date();
             this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
-            var probeStartX = 240;
-            var probeStartY = -10;
-            var _probe = new Probe(this._audioPlayer, this._world, this._clock, probeStartX, probeStartY);
+            var probeStartingPoint = new Point(240, -10);
+            var _probe = new Probe(this._audioPlayer, this._world, this._clock, probeStartingPoint);
             this._world.addActor(_probe);
 
             this._numberOfEnemiesLeftToDeploy--;

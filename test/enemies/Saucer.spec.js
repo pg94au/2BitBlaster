@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
+var Point = require('../../src/Point').Point;
 var Saucer = require('../../src/enemies/Saucer');
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
@@ -10,7 +11,7 @@ var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
 describe('Saucer', function() {
     describe('#hitBy()', function () {
         it('should return true', function () {
-            var saucer = new Saucer({}, {}, new Clock(), 5, 10);
+            var saucer = new Saucer({}, {}, new Clock(), new Point(5, 10));
             expect(saucer.hitBy({}, 1)).to.be.true;
         });
     });
@@ -21,7 +22,7 @@ describe('Saucer', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, new ScoreCounter()),
                 new Clock(),
-                5, 10);
+                new Point(5, 10));
             saucer.hitBy({}, 1);
             saucer.tick();
             expect(saucer.isActive()).to.be.false;
@@ -32,7 +33,7 @@ describe('Saucer', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, new ScoreCounter()),
                 new Clock(),
-                5, 10);
+                new Point(5, 10));
             saucer.hitBy({}, 0.5);
             saucer.tick();
             expect(saucer.isActive()).to.be.true;
@@ -44,7 +45,7 @@ describe('Saucer', function() {
                 new AudioPlayerStubBuilder().build(),
                 world,
                 new Clock(),
-                5, 10);
+                new Point(5, 10));
             saucer.hitBy({}, 1);
             saucer.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
@@ -56,7 +57,7 @@ describe('Saucer', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, scoreCounter),
                 new Clock(),
-                5, 10);
+                new Point(5, 10));
             saucer.hitBy({}, 1);
             saucer.tick();
             expect(scoreCounter.currentScore).to.be.above(0);

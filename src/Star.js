@@ -4,21 +4,16 @@ var _ = require('underscore');
 
 var Actor = require('./Actor');
 var Direction = require('./devices/Direction');
+var Point = require('./Point').Point;
 
-function Star(world, startX, startY) {
+function Star(world, startingPoint) {
     debug('Star constructor');
     if (world === undefined) {
         throw new Error('world cannot be undefined');
     }
-    if (startX === undefined) {
-        throw new Error('startX cannot be undefined');
-    }
-    if (startY === undefined) {
-        throw new Error('startY cannot be undefined');
-    }
     this._world = world;
 
-    Actor.apply(this, [world, startX, startY]);
+    Actor.apply(this, [world, startingPoint]);
 
     this._flashRate = _.random(5, 10);
     this._flashCounter = 0;
