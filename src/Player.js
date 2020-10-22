@@ -5,7 +5,7 @@ var util = require('util');
 var Actor = require('./Actor');
 var Bullet = require('./shots/Bullet');
 var Explosion = require('./Explosion');
-var HitArbiter = require('./HitArbiter');
+var HitArbiter = require('./HitArbiter').HitArbiter;
 var Scheduler = require('./timing/Scheduler').Scheduler;
 
 function Player(joystick, audioPlayer, world, startX, startY, bounds, clock) {

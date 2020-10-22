@@ -5,7 +5,7 @@ var util = require('util');
 var Action = require('../Action');
 var Enemy = require('./Enemy');
 var Grenade = require('../shots/Grenade');
-var HitArbiter = require('../HitArbiter');
+var HitArbiter = require('../HitArbiter').HitArbiter;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 
 function Bomber(audioPlayer, world, clock, startY) {

@@ -4,7 +4,7 @@ var util = require('util');
 
 var Bomb = require('../shots/Bomb');
 var Enemy = require('./Enemy');
-var HitArbiter = require('../HitArbiter');
+var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;

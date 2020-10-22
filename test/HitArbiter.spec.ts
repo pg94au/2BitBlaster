@@ -1,10 +1,13 @@
-var expect = require('chai').expect;
+import {describe} from 'mocha';
+import {expect} from 'chai';
 
-var HitArbiter = require('../src/HitArbiter');
+import {HitArbiter} from "../src/HitArbiter";
+import {HitResult} from "../src/HitResult";
 
-var ActorStubBuilder = require('./builders/ActorStubBuilder');
+let ActorStubBuilder = require('./builders/ActorStubBuilder');
 
-var testData = [
+
+let testData = [
     {
         // Two areas are completely disjoint.
         area1: [{ left: 1, right: 2, top: 1, bottom: 2 }],
@@ -74,55 +77,55 @@ var testData = [
 ];
 
 
-describe('HitArbiter', function() {
-    describe('#areasCollide()', function() {
+describe('HitArbiter', () => {
+    describe('#areasCollide()', () => {
         testData.forEach(function(testParameters) {
             it('should result in ' + testParameters.result +
                 ', with area1=' + JSON.stringify(testParameters.area1) +
                 ' and area2=' + JSON.stringify(testParameters.area2), function() {
-                var hitArbiter = new HitArbiter({});
-                var result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
+                let hitArbiter = new HitArbiter({});
+                let result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
                 expect(result).to.be.equal(testParameters.result);
             });
         });
     });
 
-    describe('#attemptToHit()', function() {
-        it('returns false if the shot misses the actor', function() {
-            var shot = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
-            var actor = new ActorStubBuilder().withCoordinates(1000, 1000).withCollisionMask(-10, 10, -10, 10).build();
-            var hitArbiter = new HitArbiter(shot);
-            var result = hitArbiter.attemptToHit(actor);
-            expect(result).to.be.equal(HitArbiter.HitResult.Miss);
+    describe('#attemptToHit()', () => {
+        it('returns false if the shot misses the actor', () => {
+            let shot = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
+            let actor = new ActorStubBuilder().withCoordinates(1000, 1000).withCollisionMask(-10, 10, -10, 10).build();
+            let hitArbiter = new HitArbiter(shot);
+            let result = hitArbiter.attemptToHit(actor);
+            expect(result).to.be.equal(HitResult.Miss);
         });
 
-        it('hits actor for shot damage when shot collides with actor', function() {
-            var shot = new ActorStubBuilder()
+        it('hits actor for shot damage when shot collides with actor', () => {
+            let shot = new ActorStubBuilder()
                 .withCoordinates(1, 1)
                 .withCollisionMask(-10, 10, -10, 10)
                 .inflictsDamage(10)
                 .build();
-            var actor = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
-            var hitArbiter = new HitArbiter(shot);
-            var result = hitArbiter.attemptToHit(actor);
-            expect(result).to.be.equal(HitArbiter.HitResult.Effective);
+            let actor = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
+            let hitArbiter = new HitArbiter(shot);
+            let result = hitArbiter.attemptToHit(actor);
+            expect(result).to.be.equal(HitResult.Effective);
             expect(actor.getSustainedDamage()).to.be.equal(10);
         });
 
-        it('indicates to shot when actor declines damage', function() {
-            var shot = new ActorStubBuilder()
+        it('indicates to shot when actor declines damage', () => {
+            let shot = new ActorStubBuilder()
                 .withCoordinates(1, 1)
                 .withCollisionMask(-10, 10, -10, 10)
                 .inflictsDamage(10)
                 .build();
-            var actor = new ActorStubBuilder()
+            let actor = new ActorStubBuilder()
                 .withCoordinates(1, 1)
                 .withCollisionMask(-10, 10, -10, 10)
                 .declinesDamage()
                 .build();
-            var hitArbiter = new HitArbiter(shot);
-            var result = hitArbiter.attemptToHit(actor);
-            expect(result).to.be.equal(HitArbiter.HitResult.Ineffective);
+            let hitArbiter = new HitArbiter(shot);
+            let result = hitArbiter.attemptToHit(actor);
+            expect(result).to.be.equal(HitResult.Ineffective);
         });
     });
 });

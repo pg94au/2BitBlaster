@@ -1,10 +1,12 @@
+import {HitResult} from "../HitResult";
+
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Grenade');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
 var Explosion = require('../Explosion');
-var HitArbiter = require('../HitArbiter');
+var HitArbiter = require('../HitArbiter').HitArbiter;
 var Shot = require('./Shot');
 var Shrapnel = require('./Shrapnel');
 
@@ -74,7 +76,7 @@ Grenade.prototype.tick = function () {
             if (player) {
                 var hitArbiter = new HitArbiter(self);
                 //TODO: Do something if the hit is ineffective.
-                if (hitArbiter.attemptToHit(player) !== HitArbiter.HitResult.Miss) {
+                if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
                     self._active = false;
                 }
             }

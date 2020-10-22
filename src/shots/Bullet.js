@@ -1,9 +1,11 @@
+import {HitResult} from "../HitResult";
+
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Bullet');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
-var HitArbiter = require('../HitArbiter');
+var HitArbiter = require('../HitArbiter').HitArbiter;
 var Shot = require('./Shot');
 
 function Bullet(audioPlayer, world, startX, startY) {
@@ -73,7 +75,7 @@ Bullet.prototype.tick = function () {
             activeEnemies.forEach(function(enemy) {
                 //TODO: Do something if the hit is ineffective.
                 if (self._active) {
-                    if (hitArbiter.attemptToHit(enemy) !== HitArbiter.HitResult.Miss) {
+                    if (hitArbiter.attemptToHit(enemy) !== HitResult.Miss) {
                         self._active = false;
                     }
                 }
