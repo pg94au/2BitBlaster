@@ -117,7 +117,6 @@ Spinner.prototype.tick = function () {
 
     this.move();
 
-//    this._scheduler.scheduleOperation('dropBomb', _.random(3000, 8000), _.bind(this.dropBomb, this));
     this.scheduleNextBombDrop();
 
     // Check if this spinner has collided with any active enemies.
@@ -141,10 +140,11 @@ Spinner.prototype.scheduleNextBombDrop = function() {
 Spinner.prototype.dropBomb = function() {
     var worldCoordinates = this._world.getDimensions();
 
-    if (this._x > 0 && this._x < worldCoordinates.width && this._y > 0 && this._y < worldCoordinates.height) {
+    if (this._location.x > 0 && this._location.x < worldCoordinates.width
+        && this._location.y > 0 && this._location.y < worldCoordinates.height) {
         // Don't drop a bomb if we're too low.  Not very fair.
-        if (this._y < (worldCoordinates.height / 2)) {
-            var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
+        if (this._location.y < (worldCoordinates.height / 2)) {
+            var bomb = new Bomb(this._audioPlayer, this._world, this._location);
             this._world.addActor(bomb);
         }
     }
@@ -164,9 +164,7 @@ Spinner.prototype.move = function() {
     // Follow the current path.
     switch(this._currentPath[this._pathPosition].action) {
         case PathAction.Move:
-            var point = this._currentPath[this._pathPosition].location;
-            this._x = point.x;
-            this._y = point.y;
+            this._location = this._currentPath[this._pathPosition].location;
             break;
         case PathAction.Fire:
             this.dropBomb();
@@ -260,7 +258,7 @@ Spinner.prototype.calculatePaths  = function() {
 
 Spinner.prototype.prepareNextPath = function(pathTemplate) {
     this._currentPathTemplate = pathTemplate;
-    this._currentPath = SplinePath.translatePath(pathTemplate, this._x, this._y);
+    this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
     this._pathPosition = 0;
 };
 

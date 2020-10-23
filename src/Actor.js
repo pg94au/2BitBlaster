@@ -10,8 +10,7 @@ var Actor = function(world, startCoordinates) {
     debug('Actor constructor');
     this._id = uuidv4();
     this._world = world;
-    this._x = startCoordinates.x;
-    this._y = startCoordinates.y;
+    this._location = startCoordinates;
     this._active = true;
 };
 
@@ -21,21 +20,21 @@ Actor.prototype.getId = function() {
 
 Actor.prototype.move = function(direction) {
     if (direction & Direction.Up) {
-        this._y--;
+        this._location = this._location.translate(0, -1);
     }
     if (direction & Direction.Down) {
-        this._y++;
+        this._location = this._location.translate(0, 1);
     }
     if (direction & Direction.Left) {
-        this._x--;
+        this._location = this._location.translate(-1, 0);
     }
     if (direction & Direction.Right) {
-        this._x++;
+        this._location = this._location.translate(1, 0);
     }
 };
 
 Actor.prototype.getCoordinates = function() {
-    return new Point(this._x, this._y);
+    return this._location;
 };
 
 Actor.prototype.getZIndex = function() {

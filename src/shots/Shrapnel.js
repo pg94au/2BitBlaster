@@ -69,7 +69,7 @@ Shrapnel.prototype.tick = function () {
     for (var step = 0; step < speed; step++) {
         this.moveOneStepInDefinedTrajectory();
 
-        if (this._y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.getDimensions().height) {
             // When this shrapnel piece leaves the world, it becomes inactive.
             debug('De-activating shrapnel ' + this._id);
             this._active = false;
@@ -101,8 +101,7 @@ Shrapnel.prototype.moveOneStepInDefinedTrajectory = function() {
     this._exactX += xOffset;
     this._exactY -= yOffset;
 
-    this._x = Math.round(this._exactX);
-    this._y = Math.round(this._exactY);
+    this._location = new Point(Math.round(this._exactX), Math.round(this._exactY));
 };
 
 module.exports = Shrapnel;

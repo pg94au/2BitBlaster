@@ -2,7 +2,6 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Bomber');
 var util = require('util');
 
-var Action = require('../Action');
 var Enemy = require('./Enemy');
 var Grenade = require('../shots/Grenade');
 var HitArbiter = require('../HitArbiter').HitArbiter;
@@ -86,7 +85,7 @@ Bomber.prototype.tick = function () {
     for (var i = 0; i < 3; i++) {
         this.move();
 
-        if (this._x === this._grenadeDropPosition) {
+        if (this._location.x === this._grenadeDropPosition) {
             this.dropGrenade();
         }
     }
@@ -99,15 +98,15 @@ Bomber.prototype.advanceCurrentFrame = function() {
 };
 
 Bomber.prototype.dropGrenade = function() {
-    var grenade = new Grenade(this._audioPlayer, this._world, new Point(this._x + 10, this._y + 30));
+    var grenade = new Grenade(this._audioPlayer, this._world, this._location.translate(10, 30));
     this._world.addActor(grenade);
 };
 
 Bomber.prototype.move = function() {
     // Move across the screen toward the right side.
-    this._x++;
+    this._location = this._location.translate(1, 0);
 
-    if (this._x > this._world.getDimensions().width + 40) {
+    if (this._location.x > this._world.getDimensions().width + 40) {
         this._active = false;
     }
 };

@@ -60,9 +60,9 @@ Bomb.prototype.tick = function () {
 
     var speed = 10;
     for (var step = 0; step < speed; step++) {
-        this._y++;
+        this._location = this._location.translate(0, 1);
 
-        if (this._y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.getDimensions().height) {
             // When the bomb leaves the world, it becomes inactive.
             debug('De-activating bomb ' + this._id);
             this._active = false;

@@ -105,7 +105,7 @@ Saucer.prototype.advanceCurrentFrame = function() {
 };
 
 Saucer.prototype.dropBomb = function() {
-    var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
+    var bomb = new Bomb(this._audioPlayer, this._world, this._location);
     this._world.addActor(bomb);
 };
 
@@ -117,7 +117,7 @@ Saucer.prototype.move = function() {
         var nextPath;
         if (this._currentPathTemplate === proto._floatAroundPathTemplate) {
             if (_.random(0, 1) > 0.5) {
-                if (this._x < this._world.getDimensions().width / 2) {
+                if (this._location.x < this._world.getDimensions().width / 2) {
                     nextPath = proto._flyRightPathTemplate;
                 }
                 else {
@@ -125,12 +125,12 @@ Saucer.prototype.move = function() {
                 }
             }
             else {
-                if (this._y < this._world.getDimensions().height / 2) {
+                if (this._location.y < this._world.getDimensions().height / 2) {
                     if (_.random(0, 1) > 0.5) {
                         nextPath = proto._flyDownPathTemplate;
                     }
                     else {
-                        if (this._x < this._world.getDimensions().width / 2) {
+                        if (this._location.x < this._world.getDimensions().width / 2) {
                             nextPath = proto._diveRightPathTemplate;
                         }
                         else {
@@ -153,9 +153,7 @@ Saucer.prototype.move = function() {
     // Follow the current path.
     switch(this._currentPath[this._pathPosition].action) {
         case PathAction.Move:
-            var point = this._currentPath[this._pathPosition].location;
-            this._x = point.x;
-            this._y = point.y;
+            this._location = this._currentPath[this._pathPosition].location;
             break;
         case PathAction.Fire:
             this.dropBomb();
@@ -305,7 +303,7 @@ Saucer.prototype.calculatePaths = function() {
 
 Saucer.prototype.prepareNextPath = function(pathTemplate) {
     this._currentPathTemplate = pathTemplate;
-    this._currentPath = SplinePath.translatePath(pathTemplate, this._x, this._y);
+    this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
     this._pathPosition = 0;
 };
 

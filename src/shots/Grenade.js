@@ -63,9 +63,9 @@ Grenade.prototype.tick = function () {
 
     var speed = 5;
     for (var step = 0; step < speed; step++) {
-        this._y++;
+        this._location = this._location.translate(0, 1);
 
-        if (this._y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.getDimensions().height) {
             // If the grenade leaves the world, it becomes inactive.
             debug('De-activating grenade ' + this._id);
             this._active = false;
@@ -82,7 +82,7 @@ Grenade.prototype.tick = function () {
             }
 
             // If this grenade has fallen far enough, it explodes into shrapnel.
-            var distanceCovered = this._y - this._initialHeight;
+            var distanceCovered = this._location.y - this._initialHeight;
             if (distanceCovered >= 200) {
                 self._active = false;
 
@@ -97,17 +97,17 @@ Grenade.prototype.tick = function () {
                     },
                     this._audioPlayer,
                     this._world,
-                    this._x, this._y
+                    this._location
                 );
                 this._world.addActor(explosion);
 
-                var downShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 270);
+                var downShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
                 this._world.addActor(downShrapnel);
 
-                var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 250);
+                var leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 250);
                 this._world.addActor(leftShrapnel);
 
-                var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, new Point(this._x, this._y), 290);
+                var rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 290);
                 this._world.addActor(rightShrapnel);
             }
             else {

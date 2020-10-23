@@ -47,7 +47,7 @@ describe('Grenade', function() {
             var worldStub = new WorldStubBuilder().build();
 
             var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
-            while (grenade._y < 210) {
+            while (grenade._location.y < 210) {
                 grenade.tick();
             }
 
@@ -59,7 +59,7 @@ describe('Grenade', function() {
             var worldStub = new WorldStubBuilder().build();
 
             var grenade = new Grenade(audioPlayer, worldStub, new Point(5, 10));
-            while (grenade._y < 210) {
+            while (grenade._location.y < 210) {
                 grenade.tick();
             }
 

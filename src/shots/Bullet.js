@@ -60,9 +60,9 @@ Bullet.prototype.tick = function () {
 
     var speed = 10;
     for (var step = 0; step < speed; step++) {
-        this._y--;
+        this._location = this._location.translate(0, -1);
 
-        if (this._y < 0) {
+        if (this._location.y < 0) {
             // When the bullet leaves the world, it becomes inactive.
             debug('De-activating bullet ' + this._id);
             this._active = false;

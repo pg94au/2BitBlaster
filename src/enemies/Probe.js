@@ -89,7 +89,7 @@ Probe.prototype.tick = function () {
 };
 
 Probe.prototype.dropBomb = function() {
-    var bomb = new Bomb(this._audioPlayer, this._world, new Point(this._x, this._y));
+    var bomb = new Bomb(this._audioPlayer, this._world, this._location);
     this._world.addActor(bomb);
 };
 
@@ -105,10 +105,10 @@ Probe.prototype.move = function() {
         var proto = Object.getPrototypeOf(this);
 
         var nextPath;
-        if (this._x < 120) {
+        if (this._location.x < 120) {
             nextPath = proto._diveRightPathTemplate;
         }
-        else if (this._x > this._world.getDimensions().width - 120) {
+        else if (this._location.x > this._world.getDimensions().width - 120) {
             nextPath = proto._diveLeftPathTemplate;
         }
         else if (_.random(0, 1) > 0.5) {
@@ -124,9 +124,7 @@ Probe.prototype.move = function() {
     // Follow the current path.
     switch(this._currentPath[this._pathPosition].action) {
         case PathAction.Move:
-            var point = this._currentPath[this._pathPosition].location;
-            this._x = point.x;
-            this._y = point.y;
+            this._location = this._currentPath[this._pathPosition].location;
             break;
         case PathAction.Fire:
             this.dropBomb();
@@ -199,7 +197,7 @@ Probe.prototype.calculatePaths = function() {
 
 Probe.prototype.prepareNextPath = function(pathTemplate) {
     this._currentPathTemplate = pathTemplate;
-    this._currentPath = SplinePath.translatePath(pathTemplate, this._x, this._y);
+    this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
     this._pathPosition = 0;
 };
 
