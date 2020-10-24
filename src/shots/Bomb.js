@@ -1,16 +1,16 @@
-import {HitResult} from "../HitResult";
-
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Bomb');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
-function Bomb(audioPlayer, world, startX, startY) {
+function Bomb(audioPlayer, world, startingPoint) {
     debug('Bomb constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -60,9 +60,9 @@ Bomb.prototype.tick = function () {
 
     var speed = 10;
     for (var step = 0; step < speed; step++) {
-        this._y++;
+        this._location = this._location.down();
 
-        if (this._y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.getDimensions().height) {
             // When the bomb leaves the world, it becomes inactive.
             debug('De-activating bomb ' + this._id);
             this._active = false;

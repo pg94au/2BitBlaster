@@ -1,5 +1,6 @@
 import Debug from "debug";
 import {HitResult} from "./HitResult";
+import {Point} from "./Point";
 
 const debug = Debug("Blaster:HitArbiter");
 
@@ -19,8 +20,8 @@ export class HitArbiter {
         let actorCollisionMasks = actor.getCollisionMask(this._shot);
         let shotCollisionMasks = this._shot.getCollisionMask(actor);
 
-        let actorCoordinates = actor.getCoordinates();
-        let shotCoordinates = this._shot.getCoordinates();
+        let actorCoordinates: Point = actor.getCoordinates();
+        let shotCoordinates: Point = this._shot.getCoordinates();
 
         // Offset collision masks to the current positions before testing for collision.
         let actorCollisionAreas = [];

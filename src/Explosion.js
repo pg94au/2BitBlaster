@@ -6,9 +6,9 @@ var util = require('util');
 
 var Actor = require('./Actor');
 
-function Explosion(explosionProperties, audioPlayer, world, startX, startY) {
+function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
     debug('Explosion constructor for ' + explosionProperties.imageName);
-    Actor.apply(this, [world, startX, startY]);
+    Actor.apply(this, [world, startingPoint]);
 
     if (explosionProperties === undefined) {
         throw new Error('explosionProperties cannot be undefined');

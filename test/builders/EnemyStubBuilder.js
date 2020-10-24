@@ -1,4 +1,5 @@
 var Enemy = require('../../src/enemies/Enemy');
+var Point = require('../../src/Point').Point;
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 var AudioPlayerStubBuilder = require('./AudioPlayerStubBuilder');
@@ -40,7 +41,7 @@ EnemyStubBuilder.prototype.build = function() {
     var scoreCounter = new ScoreCounter();
     var world = new World(this._width, this._height, scoreCounter);
     var audioPlayer = new AudioPlayerStubBuilder().build();
-    var enemy = new Enemy(audioPlayer, world, this._startX, this._startY);
+    var enemy = new Enemy(audioPlayer, world, new Point(this._startX, this._startY));
 
     enemy.getCollisionMask = function() { return self._collisionMask; };
     enemy.hitBy = function(shot, damage) {

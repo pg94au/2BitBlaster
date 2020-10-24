@@ -6,9 +6,9 @@ var util = require('util');
 
 var Actor = require('../Actor');
 
-function Shot(world, startX, startY) {
+function Shot(world, startingPoint) {
     debug('Shot constructor');
-    Actor.apply(this, [world, startX, startY]);
+    Actor.apply(this, [world, startingPoint]);
 }
 
 util.inherits(Shot, Actor);

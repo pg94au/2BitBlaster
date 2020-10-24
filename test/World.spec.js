@@ -4,7 +4,8 @@ var Actor = require('../src/Actor');
 var Clock = require('../src/timing/Clock').Clock;
 var Enemy = require('../src/enemies/Enemy');
 var Explosion = require('../src/Explosion');
-var Player= require('../src/Player');
+var Player = require('../src/Player');
+var Point = require('../src/Point').Point;
 var World = require('../src/World');
 
 describe('World', function() {
@@ -19,14 +20,14 @@ describe('World', function() {
         it('should increase the number of actors', function() {
             var world = new World(100, 200, {});
             var initialNumberOfActors = world.getActors().length;
-            var actor = new Actor();
+            var actor = new Actor(world, new Point(1,1));
             world.addActor(actor);
             expect(world.getActors()).to.have.members([actor]);
         });
 
         it('should not allow the same actor to be added more than once', function() {
             var world = new World(100, 200, {});
-            var actor = new Actor();
+            var actor = new Actor(world, new Point(1,1));
             world.addActor(actor);
             expect(function() { world.addActor(actor); }).to.throw('Cannot add same actor twice.');
         });
@@ -84,7 +85,7 @@ describe('World', function() {
 
         it('should return the player if present', function() {
             var world = new World(20, 10, {});
-            var player = new Player({}, {}, {}, {}, {}, {}, new Clock());
+            var player = new Player({}, {}, {}, {}, {}, new Clock());
             world.addActor(player);
             expect(world.getPlayer()).to.be.eql(player);
         })

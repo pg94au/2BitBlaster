@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:SimpleWave');
 var util = require('util');
 
+var Point = require('../Point').Point;
 var Saucer = require('../enemies/Saucer');
 
 function SimpleWave(audioPlayer, world, clock) {
@@ -41,9 +42,11 @@ SimpleWave.prototype.tick = function() {
             this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
             var worldDimensions = this._world.getDimensions();
-            var saucerStartX = Math.floor(_.random(100 + 50, worldDimensions.width - 100 - 50));
-            var saucerStartY = -20;
-            var _saucer = new Saucer(this._audioPlayer, this._world, this._clock, saucerStartX, saucerStartY);
+            var saucerStartingPoint = new Point(
+                Math.floor(_.random(100 + 50, worldDimensions.width - 100 - 50)),
+                -20
+            );
+            var _saucer = new Saucer(this._audioPlayer, this._world, this._clock, saucerStartingPoint);
             this._world.addActor(_saucer);
 
             this._numberOfEnemiesLeftToDeploy--;

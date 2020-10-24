@@ -6,6 +6,7 @@ var events = require('events');
 var Level = require('./Level');
 var LevelManager = require('./LevelManager');
 var Player = require('./Player');
+var Point = require('./Point').Point;
 var SecondWave = require('./waves/SecondWave');
 var Scheduler = require('./timing/Scheduler').Scheduler;
 var ScoreCounter = require('./ScoreCounter').ScoreCounter;
@@ -104,14 +105,12 @@ var Game = function(joystick, renderer, audioPlayer, clock) {
             minY: 490,
             maxY: 590
         };
-        var playerStartX = (playerBounds.minX + playerBounds.maxX) / 2;
-        var playerStartY = (playerBounds.minY + playerBounds.maxY) / 2;
+        var playerStartingPoint = new Point((playerBounds.minX + playerBounds.maxX) / 2, (playerBounds.minY + playerBounds.maxY) / 2);
         this._player = new Player(
             this._joystick,
             this._audioPlayer,
             this._world,
-            playerStartX,
-            playerStartY,
+            playerStartingPoint,
             playerBounds,
             this._clock
         );

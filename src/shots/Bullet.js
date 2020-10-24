@@ -1,16 +1,16 @@
-import {HitResult} from "../HitResult";
-
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Bullet');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
-function Bullet(audioPlayer, world, startX, startY) {
+function Bullet(audioPlayer, world, startingPoint) {
     debug('Bullet constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -60,9 +60,9 @@ Bullet.prototype.tick = function () {
 
     var speed = 10;
     for (var step = 0; step < speed; step++) {
-        this._y--;
+        this._location = this._location.up();
 
-        if (this._y < 0) {
+        if (this._location.y < 0) {
             // When the bullet leaves the world, it becomes inactive.
             debug('De-activating bullet ' + this._id);
             this._active = false;

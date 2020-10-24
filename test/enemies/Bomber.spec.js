@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var Bomber = require('../../src/enemies/Bomber');
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
+var Point = require('../../src/Point').Point;
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
 
@@ -72,7 +73,7 @@ describe('Bomber', function() {
 
             var lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
 
-            bomber._x = lastVisiblePosition;
+            bomber._location = bomber._location.withX(lastVisiblePosition);
 
             bomber.tick();
 
