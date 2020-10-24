@@ -4,13 +4,13 @@ var debug = require('debug')('Blaster:Actor');
 const { v4: uuidv4 } = require('uuid');
 
 var Direction = require('./devices/Direction');
+var Point = require('./Point').Point;
 
-var Actor = function(world, startX, startY) {
+var Actor = function(world, startCoordinates) {
     debug('Actor constructor');
     this._id = uuidv4();
     this._world = world;
-    this._x = startX;
-    this._y = startY;
+    this._location = startCoordinates;
     this._active = true;
 };
 
@@ -20,21 +20,21 @@ Actor.prototype.getId = function() {
 
 Actor.prototype.move = function(direction) {
     if (direction & Direction.Up) {
-        this._y--;
+        this._location = this._location.up();
     }
     if (direction & Direction.Down) {
-        this._y++;
+        this._location = this._location.down();
     }
     if (direction & Direction.Left) {
-        this._x--;
+        this._location = this._location.left();
     }
     if (direction & Direction.Right) {
-        this._x++;
+        this._location = this._location.right();
     }
 };
 
 Actor.prototype.getCoordinates = function() {
-    return {x: this._x, y: this._y};
+    return this._location;
 };
 
 Actor.prototype.getZIndex = function() {

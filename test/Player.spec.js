@@ -3,6 +3,7 @@ var expect = require('chai').expect;
 var Clock = require('../src/timing/Clock').Clock;
 var Direction = require('../src/devices/Direction');
 var Player = require('../src/Player');
+var Point = require('../src/Point').Point;
 var ScoreCounter = require('../src/ScoreCounter').ScoreCounter;
 var World = require('../src/World');
 
@@ -14,7 +15,7 @@ var WorldStubBuilder = require('./builders/WorldStubBuilder.js');
 describe('Player', function() {
     describe('#ctor()', function() {
         it('should start active', function () {
-            var player = new Player({}, {}, {}, 1, 2, {}, new Clock());
+            var player = new Player({}, {}, {}, new Point(1, 2), {}, new Clock());
             expect(player.isActive()).to.be.true;
         });
     });
@@ -25,7 +26,7 @@ describe('Player', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var world = new WorldStubBuilder().build();
             var clock = new ClockStubBuilder().build();
-            var player = new Player(joystick, audioPlayer, world, 1, 2, {}, clock);
+            var player = new Player(joystick, audioPlayer, world, new Point(1, 2), {}, clock);
 
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
@@ -42,7 +43,7 @@ describe('Player', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var world = new WorldStubBuilder().build();
             var clock = new ClockStubBuilder().build();
-            var player = new Player(joystick, audioPlayer, world, 1, 2, {}, clock);
+            var player = new Player(joystick, audioPlayer, world, new Point(1, 2), {}, clock);
 
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
@@ -62,7 +63,7 @@ describe('Player', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var world = new WorldStubBuilder().build();
             var clock = new ClockStubBuilder().build();
-            var player = new Player(joystick, audioPlayer, world, 1, 2, {}, clock);
+            var player = new Player(joystick, audioPlayer, world, new Point(1, 2), {}, clock);
 
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
@@ -76,7 +77,7 @@ describe('Player', function() {
     describe('#on()', function() {
         it('immediately emits a health event', function() {
             var healthUpdate = null;
-            var player = new Player({}, {}, {}, 1, 2, {}, new Clock());
+            var player = new Player({}, {}, {}, new Point(1, 2), {}, new Clock());
             player.on('health', function(currentHealth) {
                 healthUpdate = currentHealth;
             });
@@ -99,9 +100,9 @@ describe('Player', function() {
                 maxY: 20
             };
 
-            var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
+            var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
             player.tick();
-            expect(player.getCoordinates()).to.be.eql({x:10, y:10});
+            expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
         });
 
         it('moves player when joystick has direction set', function() {
@@ -113,7 +114,7 @@ describe('Player', function() {
             var world = new World(480, 640, new ScoreCounter());
             var bounds = { minX: 0, maxX: 20, minY: 0, maxY: 20 };
 
-            var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
+            var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
             player.tick();
             expect(player.getCoordinates().x).to.be.above(10);
         });
@@ -132,9 +133,9 @@ describe('Player', function() {
                 var world = new World(480, 640, new ScoreCounter());
                 var bounds = {minX: 10, maxX: 10, minY: 10, maxY: 10};
 
-                var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
+                var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
                 player.tick();
-                expect(player.getCoordinates()).to.be.eql({x:10, y:10});
+                expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
             })
         });
 
@@ -149,7 +150,7 @@ describe('Player', function() {
             world.addActor = function(actor) { addedActor = actor; }
             var bounds = { minX: 0, maxX: 10, minY: 0, maxY: 20 };
 
-            var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
+            var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
             player.tick();
             expect(addedActor).is.not.null;
         });
@@ -165,7 +166,7 @@ describe('Player', function() {
             world.addActor = function(actor) { addedActors.push(actor); };
             var bounds = { minX: 0, maxX: 10, minY: 0, maxY: 20 };
 
-            var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, new Clock());
+            var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
             player.tick();
             player.tick();
             expect(addedActors).is.have.length(1);
@@ -183,7 +184,7 @@ describe('Player', function() {
             var bounds = { minX: 0, maxX: 10, minY: 0, maxY: 20 };
             var clock = new ClockStubBuilder().build();
 
-            var player = new Player(joystickMock, audioPlayer, world, 10, 10, bounds, clock);
+            var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
             clock.addSeconds(1000);
             player.tick();

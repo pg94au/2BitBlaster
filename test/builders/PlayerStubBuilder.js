@@ -1,6 +1,7 @@
 var Clock = require('../../src/timing/Clock').Clock;
 var Joystick = require('../../src/devices/Joystick');
 var Player = require('../../src/Player');
+var Point = require('../../src/Point').Point;
 var AudioPlayerStubBuilder = require('./AudioPlayerStubBuilder');
 var WorldStubBuilder = require('./WorldStubBuilder');
 
@@ -31,7 +32,7 @@ PlayerStubBuilder.prototype.build = function() {
     var joystick = new Joystick();
     var clock = new Clock();
     var bounds = { minX: 0, maxX: 10, minY: 0, maxY: 20 };
-    var player = new Player(joystick, this._audioPlayer, this._world, this._startX, this._startY, bounds, clock);
+    var player = new Player(joystick, this._audioPlayer, this._world, new Point(this._startX, this._startY), bounds, clock);
 
     var self = this;
 

@@ -1,16 +1,16 @@
-import {HitResult} from "../HitResult";
-
 var _ = require('underscore');
 var debug = require('debug')('Blaster:Shrapnel');
 var util = require('util');
 
 var Direction = require('../devices/Direction');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var HitResult = require('../HitResult').HitResult;
+var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
-function Shrapnel(audioPlayer, world, startX, startY, trajectory) {
+function Shrapnel(audioPlayer, world, startingPoint, trajectory) {
     debug('Shrapnel constructor');
-    Shot.apply(this, [world, startX, startY]);
+    Shot.apply(this, [world, startingPoint]);
 
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
@@ -24,8 +24,8 @@ function Shrapnel(audioPlayer, world, startX, startY, trajectory) {
     this.currentFrame = 0;
     this._firstTick = true;
 
-    this._exactX = startX;
-    this._exactY = startY;
+    this._exactX = startingPoint.x;
+    this._exactY = startingPoint.y;
 }
 
 util.inherits(Shrapnel, Shot);
@@ -69,7 +69,7 @@ Shrapnel.prototype.tick = function () {
     for (var step = 0; step < speed; step++) {
         this.moveOneStepInDefinedTrajectory();
 
-        if (this._y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.getDimensions().height) {
             // When this shrapnel piece leaves the world, it becomes inactive.
             debug('De-activating shrapnel ' + this._id);
             this._active = false;
@@ -101,8 +101,7 @@ Shrapnel.prototype.moveOneStepInDefinedTrajectory = function() {
     this._exactX += xOffset;
     this._exactY -= yOffset;
 
-    this._x = Math.round(this._exactX);
-    this._y = Math.round(this._exactY);
+    this._location = new Point(Math.round(this._exactX), Math.round(this._exactY));
 };
 
 module.exports = Shrapnel;

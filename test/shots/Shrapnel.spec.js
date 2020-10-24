@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 
 var Actor = require('../../src/Actor');
 var Player = require('../../src/Player');
+var Point = require('../../src/Point').Point;
 var Shrapnel = require('../../src/shots/Shrapnel');
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
@@ -14,7 +15,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 10), 270);
             shrapnel.tick();
             expect(shrapnel.getCoordinates().x).to.be.equal(5);
             expect(shrapnel.getCoordinates().y).to.be.above(10);
@@ -24,7 +25,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 10, 0);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 10), 0);
             shrapnel.tick();
             expect(shrapnel.getCoordinates().x).to.be.above(5);
             expect(shrapnel.getCoordinates().y).to.be.equal(10);
@@ -34,7 +35,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 135);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 135);
             shrapnel.tick();
             expect(shrapnel.getCoordinates().x).to.be.below(10);
             expect(shrapnel.getCoordinates().y).to.be.below(10);
@@ -45,7 +46,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 10), 270);
             expect(shrapnel.getImageDetails().currentFrame).to.be.equal(0);
             shrapnel.tick();
             expect(shrapnel.getImageDetails().currentFrame).to.be.equal(1);
@@ -55,7 +56,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 10), 270);
             var numberOfFrames = shrapnel.getImageDetails().numberOfFrames;
             for (var i=0; i < numberOfFrames-1; i++) {
                 shrapnel.tick();
@@ -69,7 +70,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 10), 270);
             shrapnel.tick();
             expect(shrapnel.isActive()).to.be.true;
         });
@@ -78,7 +79,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 5, 640, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(5, 640), 270);
             shrapnel.tick();
             expect(shrapnel.isActive()).to.be.false;
         });
@@ -89,7 +90,7 @@ describe('Shrapnel', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(playerStub.hitFor).to.not.be.empty;
         });
@@ -100,7 +101,7 @@ describe('Shrapnel', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(1000, 1000).build();
             worldStub.addActor(playerStub);
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(playerStub.hitFor).to.be.empty;
         });
@@ -111,7 +112,7 @@ describe('Shrapnel', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(playerStub.hitFor).to.be.eql([1]);
         });
@@ -122,7 +123,7 @@ describe('Shrapnel', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).build();
             worldStub.addActor(playerStub);
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(shrapnel.isActive()).to.be.false;
         });
@@ -133,7 +134,7 @@ describe('Shrapnel', function() {
             var playerStub = new PlayerStubBuilder().withCoordinates(10, 10).ignoringHits().build();
             worldStub.addActor(playerStub);
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(shrapnel.isActive()).to.be.false;
         });
@@ -142,7 +143,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(shrapnel.isActive()).to.be.true;
         });
@@ -151,7 +152,7 @@ describe('Shrapnel', function() {
             var audioPlayer = new AudioPlayerStubBuilder().build();
             var worldStub = new WorldStubBuilder().build();
 
-            var shrapnel = new Shrapnel(audioPlayer, worldStub, 10, 10, 270);
+            var shrapnel = new Shrapnel(audioPlayer, worldStub, new Point(10, 10), 270);
             shrapnel.tick();
             expect(audioPlayer.getPlayedSounds()).to.be.eql(['bomb_drop']);
         });

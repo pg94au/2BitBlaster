@@ -2,6 +2,7 @@ var expect = require('chai').expect;
 
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion');
+var Point = require('../../src/Point').Point;
 var Probe = require('../../src/enemies/Probe');
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
 var World = require('../../src/World');
@@ -11,20 +12,20 @@ var WorldStubBuilder = require('../builders/WorldStubBuilder');
 describe('Probe', function() {
     describe('#getImageDetails', function () {
         it('should return zero frame index when probe is at full health', function() {
-            var probe = new Probe({}, {}, new Clock(), 5, 10);
+            var probe = new Probe({}, {}, new Clock(), new Point(5, 10));
 
             expect(probe.getImageDetails().currentFrame).equal(0);
         });
 
         it('should increment frame index as health decreases', function () {
-            var probe = new Probe({}, {}, new Clock(), 5, 10);
+            var probe = new Probe({}, {}, new Clock(), new Point(5, 10));
             probe.health = probe.health / 2;
 
             expect(probe.getImageDetails().currentFrame).above(0);
         });
 
         it('should not increment frame index further upon reaching zero health', function() {
-            var probe = new Probe({}, {}, new Clock(), 5, 10);
+            var probe = new Probe({}, {}, new Clock(), new Point(5, 10));
             probe.health = 1;
             var initialFrame = probe.getImageDetails().currentFrame;
             probe.health = 0;
@@ -36,7 +37,7 @@ describe('Probe', function() {
     describe('#hitBy()', function () {
         it('should return true', function () {
             var world = new WorldStubBuilder().build();
-            var probe = new Probe({}, world, new Clock(), 5, 10);
+            var probe = new Probe({}, world, new Clock(), new Point(5, 10));
             expect(probe.hitBy({}, 1)).to.be.true;
         });
     });
@@ -47,7 +48,7 @@ describe('Probe', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, new ScoreCounter()),
                 new Clock(),
-                5, 10
+                new Point(5, 10)
             );
             probe.hitBy({}, 3);
             probe.tick();
@@ -59,7 +60,7 @@ describe('Probe', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, new ScoreCounter()),
                 new Clock(),
-                5, 10
+                new Point(5, 10)
             );
             probe.hitBy({}, 2.5);
             probe.tick();
@@ -68,7 +69,7 @@ describe('Probe', function() {
 
         it('should add a new explosion to the world', function() {
             var world = new WorldStubBuilder().build();
-            var probe = new Probe({}, world, new Clock(), 5, 10);
+            var probe = new Probe({}, world, new Clock(), new Point(5, 10));
 
             probe.hitBy({}, probe.health);
             probe.tick();
@@ -82,7 +83,7 @@ describe('Probe', function() {
                 new AudioPlayerStubBuilder().build(),
                 new World(480, 640, scoreCounter),
                 new Clock(),
-                5, 10
+                new Point(5, 10)
             );
             probe.hitBy({}, 1000);
             probe.tick();
