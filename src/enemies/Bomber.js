@@ -104,7 +104,7 @@ Bomber.prototype.dropGrenade = function() {
 
 Bomber.prototype.move = function() {
     // Move across the screen toward the right side.
-    this._location = this._location.translate(1, 0);
+    this._location = this._location.right();
 
     if (this._location.x > this._world.getDimensions().width + 40) {
         this._active = false;

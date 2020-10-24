@@ -101,10 +101,10 @@ Splitter.prototype.tick = function () {
     }
 
     if (this.health <= 0) {
-        var leftSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Left, this._location.translate(-40, 0));
+        var leftSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Left, this._location.left(40));
         this._world.addActor(leftSplitterFragment);
 
-        var rightSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Right, this._location.translate(40, 0));
+        var rightSplitterFragment = new SplitterFragment(this._audioPlayer, this._world, this._clock, SplitterFragment.Side.Right, this._location.right(40));
         this._world.addActor(rightSplitterFragment);
     }
 };

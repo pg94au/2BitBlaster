@@ -27,6 +27,22 @@ export class Point {
         return new Point(this._x + x, this._y + y);
     }
 
+    up(count: number = 1): Point {
+        return new Point(this._x, this._y - count);
+    }
+
+    down(count: number = 1): Point {
+        return new Point(this._x, this._y + count);
+    }
+
+    left(count: number = 1): Point {
+        return new Point(this._x - count, this._y);
+    }
+
+    right(count: number = 1): Point {
+        return new Point(this._x + count, this._y);
+    }
+
     toString(): string {
         return 'Point(x=' + this._x + ', y=' + this._y + ')';
     }

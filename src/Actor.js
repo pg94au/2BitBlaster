@@ -20,16 +20,16 @@ Actor.prototype.getId = function() {
 
 Actor.prototype.move = function(direction) {
     if (direction & Direction.Up) {
-        this._location = this._location.translate(0, -1);
+        this._location = this._location.up();
     }
     if (direction & Direction.Down) {
-        this._location = this._location.translate(0, 1);
+        this._location = this._location.down();
     }
     if (direction & Direction.Left) {
-        this._location = this._location.translate(-1, 0);
+        this._location = this._location.left();
     }
     if (direction & Direction.Right) {
-        this._location = this._location.translate(1, 0);
+        this._location = this._location.right();
     }
 };
 
