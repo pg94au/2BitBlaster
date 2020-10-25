@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:SplitterFragment');
 var util = require('util');
 
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
@@ -69,12 +70,7 @@ util.inherits(SplitterFragment, Enemy);
 SplitterFragment.Side = Side;
 
 SplitterFragment.prototype.getCollisionMask = function() {
-    return [{
-        left: -25,
-        right: 25,
-        top: -15,
-        bottom: 15
-    }];
+    return [new Bounds(-15, 15, -25, 25)];
 };
 
 SplitterFragment.prototype.getDamageAgainst = function(actor) {

@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Splitter');
 var util = require('util');
 
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
@@ -60,12 +61,7 @@ function Splitter(audioPlayer, world, clock, startingPoint) {
 util.inherits(Splitter, Enemy);
 
 Splitter.prototype.getCollisionMask = function() {
-    return [{
-        left: -40,
-        right: 40,
-        top: -20,
-        bottom: 20
-    }];
+    return [new Bounds(-20, 20, -40, 40)];
 };
 
 Splitter.prototype.getDamageAgainst = function(actor) {
