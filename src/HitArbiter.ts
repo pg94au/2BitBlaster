@@ -26,23 +26,13 @@ export class HitArbiter {
         // Offset collision masks to the current positions before testing for collision.
         let actorCollisionAreas = [];
         for (let i=0; i < actorCollisionMasks.length; i++) {
-            let actorCollisionArea = {
-                left: actorCollisionMasks[i].left + actorCoordinates.x,
-                right: actorCollisionMasks[i].right + actorCoordinates.x,
-                top: actorCollisionMasks[i].top + actorCoordinates.y,
-                bottom: actorCollisionMasks[i].bottom + actorCoordinates.y
-            };
+            let actorCollisionArea = actorCollisionMasks[i].translate(actorCoordinates);
             actorCollisionAreas.push(actorCollisionArea);
         }
 
         let shotCollisionAreas = [];
         for (let i=0; i < shotCollisionMasks.length; i++) {
-            let shotCollisionArea = {
-                left: shotCollisionMasks[i].left + shotCoordinates.x,
-                right: shotCollisionMasks[i].right + shotCoordinates.x,
-                top: shotCollisionMasks[i].top + shotCoordinates.y,
-                bottom: shotCollisionMasks[i].bottom + shotCoordinates.y
-            };
+            let shotCollisionArea = shotCollisionMasks[i].translate(shotCoordinates);
             shotCollisionAreas.push(shotCollisionArea);
         }
 
@@ -65,31 +55,12 @@ export class HitArbiter {
     areasCollide(areas1: any, areas2: any): boolean {
         for (let area1Index = 0; area1Index < areas1.length; area1Index++) {
             for (let area2Index = 0; area2Index < areas2.length; area2Index++) {
-                if (this.singleAreasCollide(areas1[area1Index], areas2[area2Index])) {
+                if (areas1[area1Index].collidesWith(areas2[area2Index])) {
                     return true;
                 }
             }
         }
 
         return false;
-    }
-
-    singleAreasCollide(area1: any, area2: any): boolean {
-        let collision = (
-            (
-                ((area1.left >= area2.left) && (area1.left <= area2.right)) ||
-                ((area1.right >= area2.left) && (area1.right <= area2.right)) ||
-                ((area1.left <= area2.left) && (area1.right >= area2.right)) ||
-                ((area1.left >= area2.left) && (area1.right <= area2.right))
-            )
-            &&
-            (
-                ((area1.top >= area2.top) && (area1.top <= area2.bottom)) ||
-                ((area1.bottom >= area2.top) && (area1.bottom <= area2.bottom)) ||
-                ((area1.top <= area2.top) && (area1.bottom >= area2.bottom)) ||
-                ((area1.top >= area2.top) && (area1.bottom <= area2.bottom))
-            )
-        );
-        return collision;
     }
 }
