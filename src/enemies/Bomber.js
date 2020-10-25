@@ -51,7 +51,7 @@ function Bomber(audioPlayer, world, clock, startY) {
 util.inherits(Bomber, Enemy);
 
 Bomber.prototype.getCollisionMask = function() {
-    return [new Bounds(-19, 19, -35, 45)];
+    return [new Bounds(-35, 45, -19, 19)];
 };
 
 Bomber.prototype.getDamageAgainst = function(actor) {

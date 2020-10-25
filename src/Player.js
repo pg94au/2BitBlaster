@@ -57,7 +57,7 @@ Player.prototype.getCollisionMask = function() {
         return [new Bounds(-20, 20, -20, 20)];
     }
     else {
-        return [new Bounds(-35, 35, -25, 25)];
+        return [new Bounds(-25, 25, -35, 35)];
     }
 }
 

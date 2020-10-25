@@ -70,7 +70,7 @@ util.inherits(SplitterFragment, Enemy);
 SplitterFragment.Side = Side;
 
 SplitterFragment.prototype.getCollisionMask = function() {
-    return [new Bounds(-15, 15, -25, 25)];
+    return [new Bounds(-25, 25, -15, 15)];
 };
 
 SplitterFragment.prototype.getDamageAgainst = function(actor) {

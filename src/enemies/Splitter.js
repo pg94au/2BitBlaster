@@ -61,7 +61,7 @@ function Splitter(audioPlayer, world, clock, startingPoint) {
 util.inherits(Splitter, Enemy);
 
 Splitter.prototype.getCollisionMask = function() {
-    return [new Bounds(-20, 20, -40, 40)];
+    return [new Bounds(-40, 40, -20, 20)];
 };
 
 Splitter.prototype.getDamageAgainst = function(actor) {
