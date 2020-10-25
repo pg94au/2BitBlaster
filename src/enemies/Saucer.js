@@ -3,6 +3,7 @@ var debug = require('debug')('Blaster:Saucer');
 var util = require('util');
 
 var Bomb = require('../shots/Bomb');
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
@@ -57,12 +58,7 @@ function Saucer(audioPlayer, world, clock, startingPoint) {
 util.inherits(Saucer, Enemy);
 
 Saucer.prototype.getCollisionMask = function() {
-    return [{
-        left: -20,
-        right: 20,
-        top: -20,
-        bottom: 20
-    }];
+    return [new Bounds(-20, 20, -20, 20)];
 };
 
 Saucer.prototype.getDamageAgainst = function(actor) {

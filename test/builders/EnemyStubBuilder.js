@@ -1,3 +1,4 @@
+var Bounds = require('../../src/Bounds').Bounds;
 var Enemy = require('../../src/enemies/Enemy');
 var Point = require('../../src/Point').Point;
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
@@ -9,12 +10,12 @@ function EnemyStubBuilder() {
     this._height = 640;
     this._startX = 1;
     this._startY = 1;
-    this._collisionMask = [{ left:-1, right:1, top:-1, bottom:1 }];
+    this._collisionMask = [new Bounds(-1, 1, -1, 1)];
     this._acceptHits = true;
 }
 
 EnemyStubBuilder.prototype.withCollisionMask = function(left, right, top, bottom) {
-    this._collisionMask = [{ left:left, right:right, top:top, bottom:bottom }];
+    this._collisionMask = [new Bounds(left, right, top, bottom)];
     return this;
 };
 

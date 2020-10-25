@@ -3,6 +3,7 @@ var debug = require('debug')('Blaster:Probe');
 var util = require('util');
 
 var Bomb = require('../shots/Bomb');
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter').HitArbiter;
@@ -46,12 +47,7 @@ function Probe(audioPlayer, world, clock, startingPoint) {
 util.inherits(Probe, Enemy);
 
 Probe.prototype.getCollisionMask = function() {
-    return [{
-        left: -20,
-        right: 20,
-        top: -20,
-        bottom: 20
-    }];
+    return [new Bounds(-20, 20, -20, 20)];
 };
 
 Probe.prototype.getDamageAgainst = function(actor) {

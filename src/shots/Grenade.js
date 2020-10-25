@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Grenade');
 var util = require('util');
 
+var Bounds = require('../Bounds').Bounds;
 var Direction = require('../devices/Direction');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter').HitArbiter;
@@ -27,12 +28,7 @@ function Grenade(audioPlayer, world, startingPoint) {
 util.inherits(Grenade, Shot);
 
 Grenade.prototype.getCollisionMask = function() {
-    return [{
-        left: -12,
-        right: 12,
-        top: -12,
-        bottom: 12
-    }];
+    return [new Bounds(-12, 12, -12, 12)];
 };
 
 Grenade.prototype.getDamageAgainst = function(actor) {

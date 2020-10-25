@@ -1,3 +1,5 @@
+var Bounds = require('../../src/Bounds').Bounds;
+
 function ActorStubBuilder() {
     this._acceptsDamage = true;
 }
@@ -27,7 +29,7 @@ ActorStubBuilder.prototype.inflictsDamage = function(damage) {
 };
 
 ActorStubBuilder.prototype.withCollisionMask = function(left, right, top, bottom) {
-    this._collisionMask = [{ left: left, right: right, top: top, bottom: bottom }];
+    this._collisionMask = [new Bounds(left, right, top, bottom)];
     return this;
 };
 

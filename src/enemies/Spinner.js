@@ -3,6 +3,7 @@ var debug = require('debug')('Blaster:Spinner');
 var util = require('util');
 
 var Bomb = require('../shots/Bomb');
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var PathAction = require('../paths/PathAction').PathAction;
@@ -83,12 +84,7 @@ Spinner.Bias = Bias;
 util.inherits(Spinner, Enemy);
 
 Spinner.prototype.getCollisionMask = function() {
-    return [{
-        left: -30,
-        right: 30,
-        top: -30,
-        bottom: 30
-    }];
+    return [new Bounds(-30, 30, -30, 30)];
 };
 
 Spinner.prototype.getDamageAgainst = function(actor) {

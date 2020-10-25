@@ -3,6 +3,7 @@ var events = require('events');
 var util = require('util');
 
 var Actor = require('./Actor');
+var Bounds = require('./Bounds').Bounds;
 var Bullet = require('./shots/Bullet');
 var Explosion = require('./Explosion');
 var HitArbiter = require('./HitArbiter').HitArbiter;
@@ -53,22 +54,12 @@ util.inherits(Player, Actor);
 
 Player.prototype.getCollisionMask = function() {
     if (this._vulnerable) {
-        return [{
-            left: -20,
-            right: 20,
-            top: -20,
-            bottom: 20
-        }];
+        return [new Bounds(-20, 20, -20, 20)];
     }
     else {
-        return [{
-            left: -25,
-            right: 25,
-            top: -35,
-            bottom: 35
-        }];
+        return [new Bounds(-25, 25, -35, 35)];
     }
-};
+}
 
 Player.prototype.getDamageAgainst = function(actor) {
     return 5;

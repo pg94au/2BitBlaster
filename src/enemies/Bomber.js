@@ -2,6 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Bomber');
 var util = require('util');
 
+var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var Grenade = require('../shots/Grenade');
 var HitArbiter = require('../HitArbiter').HitArbiter;
@@ -50,12 +51,7 @@ function Bomber(audioPlayer, world, clock, startY) {
 util.inherits(Bomber, Enemy);
 
 Bomber.prototype.getCollisionMask = function() {
-    return [{
-        left: -35,
-        right: 45,
-        top: -19,
-        bottom: 19
-    }];
+    return [new Bounds(-35, 45, -19, 19)];
 };
 
 Bomber.prototype.getDamageAgainst = function(actor) {
