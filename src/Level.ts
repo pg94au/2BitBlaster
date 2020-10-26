@@ -1,32 +1,36 @@
-var debug = require('debug')('Blaster:Level');
+import Debug from "debug";
 
-function Level(waves) {
-    debug('Level constructor');
-    if (waves === undefined) {
-        throw new Error('waves cannot be undefined');
+const debug = Debug("Blaster:Level");
+
+export class Level {
+    private _active: boolean = true;
+    private _currentWave: number = 0;
+    private _waves: any[];
+
+    constructor(waves: any[]) {
+        debug('Level constructor');
+        if (waves === undefined) {
+            throw new Error('waves cannot be undefined');
+        }
+        this._waves = waves;
     }
-    this._active = true;
-    this._currentWave = 0;
-    this._waves = waves;
-}
 
-Level.prototype.isActive = function() {
-    return this._active;
-};
+    get active(): boolean {
+        return this._active;
+    }
 
-Level.prototype.tick = function () {
-    debug('Level.tick');
+    tick(): void {
+        debug('Level.tick');
 
-    if (this._currentWave < this._waves.length) {
-        this._waves[this._currentWave].tick();
+        if (this._currentWave < this._waves.length) {
+            this._waves[this._currentWave].tick();
 
-        if (!this._waves[this._currentWave].isActive()) {
-            this._currentWave++;
+            if (!this._waves[this._currentWave].isActive()) {
+                this._currentWave++;
+            }
+        }
+        else {
+            this._active = false;
         }
     }
-    else {
-        this._active = false;
-    }
-};
-
-module.exports = Level;
+}

@@ -3,7 +3,7 @@
 var debug = require('debug')('Blaster:Game');
 var events = require('events');
 
-var Level = require('./Level');
+var Level = require('./Level').Level;
 var LevelManager = require('./LevelManager');
 var Player = require('./Player');
 var Point = require('./Point').Point;
