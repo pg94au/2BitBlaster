@@ -5,6 +5,7 @@ var debug = require('debug')('Blaster:Explosion');
 var util = require('util');
 
 var Actor = require('./Actor');
+var ExplosionProperties = require('./ExplosionProperties').ExplosionProperties;
 var ImageDetails = require('./ImageDetails').ImageDetails;
 
 function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
@@ -17,11 +18,7 @@ function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
     if (audioPlayer === undefined) {
         throw new Error('audioPlayer cannot be undefined');
     }
-    this._imageName = explosionProperties.imageName;
-    this._numberOfFrames = explosionProperties.numberOfFrames;
-    this._frameWidth = explosionProperties.frameWidth;
-    this._frameSpeed = explosionProperties.frameSpeed;
-    this._soundName = explosionProperties.soundName;
+    this._explosionProperties = explosionProperties;
 
     this._audioPlayer = audioPlayer;
 
@@ -32,7 +29,12 @@ function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
 util.inherits(Explosion, Actor);
 
 Explosion.prototype.getImageDetails = function() {
-    return new ImageDetails(this._imageName, this._numberOfFrames, this._frameWidth, Math.floor(this._currentFrame));
+    return new ImageDetails(
+        this._explosionProperties.imageName,
+        this._explosionProperties.numberOfFrames,
+        this._explosionProperties.frameWidth,
+        Math.floor(this._currentFrame)
+    );
 };
 
 Explosion.prototype.getZIndex = function() {
@@ -46,15 +48,15 @@ Explosion.prototype.tick = function () {
     Explosion.super_.prototype.tick.call(this);
 
     if (this._firstTick) {
-        if (this._soundName) {
-            this._audioPlayer.play(this._soundName);
+        if (this._explosionProperties.soundName) {
+            this._audioPlayer.play(this._explosionProperties.soundName);
         }
         this._firstTick = false;
     }
 
-    this._currentFrame = this._currentFrame + this._frameSpeed;
+    this._currentFrame = this._currentFrame + this._explosionProperties.frameSpeed;
 
-    if (this._currentFrame >= this._numberOfFrames) {
+    if (this._currentFrame >= this._explosionProperties.numberOfFrames) {
         // When the explosion has run its course, de-active it.
         debug('De-activating explosion ' + this._id);
         this._active = false;
