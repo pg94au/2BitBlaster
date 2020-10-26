@@ -108,7 +108,7 @@ LevelManager.prototype.tickWithinLevelIntro = function() {
 LevelManager.prototype.tickWithinLevel = function() {
     this._levels[this._currentLevel].tick();
 
-    if (!this._levels[this._currentLevel].isActive()) {
+    if (!this._levels[this._currentLevel].active) {
         if (this._currentLevel < this._levels.length-1) {
             this._currentLevel++;
             this._state = LevelState.Intro;
