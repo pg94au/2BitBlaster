@@ -5,6 +5,7 @@ var util = require('util');
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
@@ -84,20 +85,10 @@ SplitterFragment.prototype.getImageDetails = function() {
         var currentFrame = Math.round(this._pathPosition / this._currentPath.length * 9);
         var imageName = (this._side === Side.Left) ? 'splitter_left_separation' : 'splitter_right_separation';
 
-        return {
-            name: imageName,
-            numberOfFrames: 10,
-            frameWidth: 60,
-            currentFrame: currentFrame
-        };
+        return new ImageDetails(imageName, 10, 60, currentFrame);
     }
     else {
-        return {
-            name: 'splitter_fragment',
-            numberOfFrames: 6,
-            frameWidth: 60,
-            currentFrame: this._frameIndices[this._currentFrame]
-        };
+        return new ImageDetails('splitter_fragment', 6, 60, this._frameIndices[this._currentFrame]);
     }
 };
 

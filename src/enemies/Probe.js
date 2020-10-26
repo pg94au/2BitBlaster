@@ -7,6 +7,7 @@ var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
@@ -55,12 +56,7 @@ Probe.prototype.getDamageAgainst = function(actor) {
 };
 
 Probe.prototype.getImageDetails = function() {
-    return {
-        name: 'probe',
-        numberOfFrames: 3,
-        frameWidth: 70,
-        currentFrame: Math.min(3 - this.health, 2)
-    };
+    return new ImageDetails('probe', 3, 70, Math.min(3 - this.health, 2));
 };
 
 Probe.prototype.hitBy = function(actor, damage) {

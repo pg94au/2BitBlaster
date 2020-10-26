@@ -5,6 +5,7 @@ var util = require('util');
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
@@ -69,12 +70,7 @@ Splitter.prototype.getDamageAgainst = function(actor) {
 };
 
 Splitter.prototype.getImageDetails = function() {
-    return {
-        name: 'splitter',
-        numberOfFrames: 6,
-        frameWidth: 100,
-        currentFrame: this._frameIndices[this._currentFrame]
-    };
+    return new ImageDetails('splitter', 6, 100, this._frameIndices[this._currentFrame]);
 };
 
 Splitter.prototype.hitBy = function(actor, damage) {

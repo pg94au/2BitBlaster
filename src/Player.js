@@ -7,6 +7,7 @@ var Bounds = require('./Bounds').Bounds;
 var Bullet = require('./shots/Bullet');
 var Explosion = require('./Explosion');
 var HitArbiter = require('./HitArbiter').HitArbiter;
+var ImageDetails = require('./ImageDetails').ImageDetails;
 var Point = require('./Point').Point;
 var Scheduler = require('./timing/Scheduler').Scheduler;
 
@@ -67,12 +68,7 @@ Player.prototype.getDamageAgainst = function(actor) {
 
 Player.prototype.getImageDetails = function() {
     if (this._vulnerable) {
-        return {
-            name: 'player',
-            numberOfFrames: 4,
-            frameWidth: 50,
-            currentFrame: this._displayingInjury ? 1 : 0
-        };
+        return new ImageDetails('player', 4, 50, this._displayingInjury ? 1 : 0);
     }
     else {
         if (this._currentInvulnerableFrameIndex < this._invulnerableFrames.length - 1) {
@@ -83,12 +79,7 @@ Player.prototype.getImageDetails = function() {
         }
         var currentFrame = this._invulnerableFrames[this._currentInvulnerableFrameIndex];
 
-        return {
-            name: 'player',
-            numberOfFrames: 4,
-            frameWidth: 50,
-            currentFrame: currentFrame
-        };
+        return new ImageDetails('player', 4, 50, currentFrame);
     }
 };
 

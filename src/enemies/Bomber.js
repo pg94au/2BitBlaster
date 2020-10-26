@@ -6,6 +6,7 @@ var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var Grenade = require('../shots/Grenade');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var Point = require('../Point').Point;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 
@@ -59,12 +60,7 @@ Bomber.prototype.getDamageAgainst = function(actor) {
 };
 
 Bomber.prototype.getImageDetails = function() {
-    return {
-        name: 'bomber',
-        numberOfFrames: 6,
-        frameWidth: 80,
-        currentFrame: this._frameIndices[this._currentFrame]
-    };
+    return new ImageDetails('bomber', 6, 80, this._frameIndices[this._currentFrame]);
 };
 
 Bomber.prototype.hitBy = function(actor, damage) {
