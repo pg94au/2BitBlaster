@@ -1,4 +1,4 @@
-var Direction = require('../../src/devices/Direction');
+var Direction = require('../../src/devices/Direction').Direction;
 
 function JoystickStubBuilder() {}
 

@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Clock = require('../src/timing/Clock').Clock;
-var Direction = require('../src/devices/Direction');
+var Direction = require('../src/devices/Direction').Direction;
 var Player = require('../src/Player');
 var Point = require('../src/Point').Point;
 var ScoreCounter = require('../src/ScoreCounter').ScoreCounter;

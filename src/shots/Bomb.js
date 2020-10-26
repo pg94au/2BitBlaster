@@ -3,7 +3,7 @@ var debug = require('debug')('Blaster:Bomb');
 var util = require('util');
 
 var Bounds = require('../Bounds').Bounds;
-var Direction = require('../devices/Direction');
+var Direction = require('../devices/Direction').Direction;
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
 var Point = require('../Point').Point;

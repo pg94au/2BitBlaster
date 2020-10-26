@@ -2,7 +2,7 @@
 
 var debug = require('debug')('Blaster:Joystick');
 
-var Direction = require('./Direction');
+var Direction = require('./Direction').Direction;
 
 var Joystick = function() {
     debug('Joystick constructor');

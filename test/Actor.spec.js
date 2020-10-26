@@ -3,7 +3,7 @@ import {Point} from "../src/Point";
 var expect = require('chai').expect;
 
 var Actor = require('../src/Actor');
-var Direction = require('../src/devices/Direction');
+var Direction = require('../src/devices/Direction').Direction;
 
 describe('Actor', function() {
     describe('#ctor()', function() {

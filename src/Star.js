@@ -3,7 +3,7 @@ var util = require('util');
 var _ = require('underscore');
 
 var Actor = require('./Actor');
-var Direction = require('./devices/Direction');
+var Direction = require('./devices/Direction').Direction;
 var Point = require('./Point').Point;
 
 function Star(world, startingPoint) {
