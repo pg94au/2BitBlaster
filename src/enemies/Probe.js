@@ -6,6 +6,7 @@ var Bomb = require('../shots/Bomb');
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var Explosion = require('../Explosion');
+var ExplosionProperties = require('../ExplosionProperties').ExplosionProperties;
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
@@ -30,14 +31,7 @@ function Probe(audioPlayer, world, clock, startingPoint) {
     this.prepareNextPath(proto._introPathTemplate);
 
     this.getExplosionProperties = function() {
-        var explosionProperties = {
-            imageName: 'probe_explosion',
-            numberOfFrames: 4,
-            frameWidth: 75,
-            frameSpeed: 0.8,
-            soundName: 'probe_explosion'
-        };
-        return explosionProperties;
+        return new ExplosionProperties('probe_explosion', 4, 75, 0.8, 'probe_explosion');
     };
 
     this.getScoreTotal = function() {

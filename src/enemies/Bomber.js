@@ -4,6 +4,7 @@ var util = require('util');
 
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
+var ExplosionProperties = require('../ExplosionProperties').ExplosionProperties;
 var Grenade = require('../shots/Grenade');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var ImageDetails = require('../ImageDetails').ImageDetails;
@@ -34,14 +35,7 @@ function Bomber(audioPlayer, world, clock, startY) {
     this.advanceCurrentFrame();
 
     this.getExplosionProperties = function() {
-        var explosionProperties = {
-            imageName: 'saucer_explosion',
-            numberOfFrames: 4,
-            frameWidth: 80,
-            frameSpeed: 0.8,
-            soundName: 'saucer_explosion'
-        };
-        return explosionProperties;
+        return new ExplosionProperties('saucer_explosion', 4, 80, 0.8, 'saucer_explosion');
     };
 
     this.getScoreTotal = function() {
