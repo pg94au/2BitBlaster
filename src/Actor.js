@@ -4,6 +4,7 @@ var debug = require('debug')('Blaster:Actor');
 const { v4: uuidv4 } = require('uuid');
 
 var Direction = require('./devices/Direction').Direction;
+var ImageDetails = require('./ImageDetails').ImageDetails;
 var Point = require('./Point').Point;
 
 var Actor = function(world, startCoordinates) {
@@ -51,14 +52,6 @@ Actor.prototype.tick = function() {
     debug('Actor.tick');
 };
 
-/*
-Return: {
-    name: <root name of sprite sheet image>,
-    numberOfFrames: <number of frames in sprite sheet>,
-    frameWidth: <width in pixels of each sprite frame>,
-    currentFrame: <current frame to be displayed (indexed from zero)>
-}
- */
 Actor.prototype.getImageDetails = function() {
     throw new Error('Must implement getImageDetails');
 };

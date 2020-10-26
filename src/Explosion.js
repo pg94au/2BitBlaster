@@ -5,6 +5,7 @@ var debug = require('debug')('Blaster:Explosion');
 var util = require('util');
 
 var Actor = require('./Actor');
+var ImageDetails = require('./ImageDetails').ImageDetails;
 
 function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
     debug('Explosion constructor for ' + explosionProperties.imageName);
@@ -31,12 +32,7 @@ function Explosion(explosionProperties, audioPlayer, world, startingPoint) {
 util.inherits(Explosion, Actor);
 
 Explosion.prototype.getImageDetails = function() {
-    return {
-        name: this._imageName,
-        numberOfFrames: this._numberOfFrames,
-        frameWidth: this._frameWidth,
-        currentFrame: Math.floor(this._currentFrame)
-    };
+    return new ImageDetails(this._imageName, this._numberOfFrames, this._frameWidth, Math.floor(this._currentFrame));
 };
 
 Explosion.prototype.getZIndex = function() {

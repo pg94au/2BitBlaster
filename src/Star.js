@@ -4,6 +4,7 @@ var _ = require('underscore');
 
 var Actor = require('./Actor');
 var Direction = require('./devices/Direction').Direction;
+var ImageDetails = require('./ImageDetails').ImageDetails;
 var Point = require('./Point').Point;
 
 function Star(world, startingPoint) {
@@ -34,12 +35,7 @@ function Star(world, startingPoint) {
 util.inherits(Star, Actor);
 
 Star.prototype.getImageDetails = function() {
-    return {
-        name: 'star',
-        numberOfFrames: 3,
-        frameWidth: 7,
-        currentFrame: this._frameIndices[this._currentFrame]
-    };
+    return new ImageDetails('star', 3, 7, this._frameIndices[this._currentFrame]);
 };
 
 Star.prototype.getZIndex = function() {

@@ -6,6 +6,7 @@ var Bomb = require('../shots/Bomb');
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
@@ -66,12 +67,7 @@ Saucer.prototype.getDamageAgainst = function(actor) {
 };
 
 Saucer.prototype.getImageDetails = function() {
-    return {
-        name: 'saucer',
-        numberOfFrames: 4,
-        frameWidth: 80,
-        currentFrame: this._currentFrame
-    };
+    return new ImageDetails('saucer', 4, 80, this._currentFrame);
 };
 
 Saucer.prototype.hitBy = function(actor, damage) {

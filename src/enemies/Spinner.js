@@ -6,6 +6,7 @@ var Bomb = require('../shots/Bomb');
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var HitArbiter = require('../HitArbiter').HitArbiter;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var PathAction = require('../paths/PathAction').PathAction;
 var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
@@ -92,12 +93,7 @@ Spinner.prototype.getDamageAgainst = function(actor) {
 };
 
 Spinner.prototype.getImageDetails = function() {
-    return {
-        name: 'spinner',
-        numberOfFrames: 12,
-        frameWidth: 80,
-        currentFrame: this._currentFrame
-    };
+    return new ImageDetails('spinner', 12, 80, this._currentFrame);
 };
 
 Spinner.prototype.hitBy = function(actor, damage) {

@@ -6,6 +6,7 @@ var Bounds = require('../Bounds').Bounds;
 var Direction = require('../devices/Direction').Direction;
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var Point = require('../Point').Point;
 var Shot = require('./Shot');
 
@@ -33,12 +34,7 @@ Bomb.prototype.getDamageAgainst = function(actor) {
 };
 
 Bomb.prototype.getImageDetails = function() {
-    return {
-        name: 'bomb',
-        numberOfFrames: 4,
-        frameWidth: 11,
-        currentFrame: this.currentFrame
-    };
+    return new ImageDetails('bomb', 4, 11, this.currentFrame);
 };
 
 Bomb.prototype.tick = function () {

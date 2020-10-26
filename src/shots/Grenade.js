@@ -7,6 +7,7 @@ var Direction = require('../devices/Direction').Direction;
 var Explosion = require('../Explosion');
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
+var ImageDetails = require('../ImageDetails').ImageDetails;
 var Point = require('../Point').Point;
 var Shot = require('./Shot');
 var Shrapnel = require('./Shrapnel');
@@ -36,12 +37,7 @@ Grenade.prototype.getDamageAgainst = function(actor) {
 };
 
 Grenade.prototype.getImageDetails = function() {
-    return {
-        name: 'grenade',
-        numberOfFrames: 24,
-        frameWidth: 30,
-        currentFrame: this.currentFrame
-    };
+    return new ImageDetails('grenade', 24, 30, this.currentFrame);
 };
 
 Grenade.prototype.tick = function () {
