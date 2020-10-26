@@ -1,7 +1,7 @@
 var assert = require('assert');
 var expect = require('chai').expect;
 
-var Direction = require('../../src/devices/Direction');
+var Direction = require('../../src/devices/Direction').Direction;
 var Joystick = require('../../src/devices/Joystick');
 
 //TODO: The 'equal' test on the enum produces a very bad error message if an

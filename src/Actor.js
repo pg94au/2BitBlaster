@@ -3,7 +3,7 @@
 var debug = require('debug')('Blaster:Actor');
 const { v4: uuidv4 } = require('uuid');
 
-var Direction = require('./devices/Direction');
+var Direction = require('./devices/Direction').Direction;
 var Point = require('./Point').Point;
 
 var Actor = function(world, startCoordinates) {
