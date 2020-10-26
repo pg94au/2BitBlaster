@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var expect = require('chai').expect;
 
-var LevelManager = require('../src/LevelManager');
+var LevelManager = require('../src/LevelManager').LevelManager;
 
 var AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
@@ -11,12 +11,12 @@ describe('LevelManager', function() {
     describe('#ctor()', function () {
         it('starts in an active state', function () {
             var levelManager = new LevelManager({}, {}, {}, []);
-            expect(levelManager.isActive()).to.be.true;
+            expect(levelManager.active).to.be.true;
         });
 
         it('starts at level one', function() {
             var levelManager = new LevelManager({}, {}, {}, []);
-            expect(levelManager.getCurrentLevel()).to.be.equal(1);
+            expect(levelManager.currentLevel).to.be.equal(1);
         });
     });
 
@@ -27,7 +27,7 @@ describe('LevelManager', function() {
             levelManager.on('level', function(currentLevel) {
                 levelUpdate = currentLevel;
             });
-            expect(levelUpdate).to.be.equal(levelManager.getCurrentLevel());
+            expect(levelUpdate).to.be.equal(levelManager.currentLevel);
         });
     });
 
