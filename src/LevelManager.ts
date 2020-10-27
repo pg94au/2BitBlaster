@@ -30,7 +30,7 @@ export class LevelManager {
     }
 
     get currentLevel(): number {
-        return this._currentLevel;
+        return this._currentLevel + 1;
     }
 
     get active(): boolean {

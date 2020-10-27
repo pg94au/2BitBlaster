@@ -87,7 +87,7 @@ var Game = function(joystick, renderer, audioPlayer, clock) {
     };
 
     this.gameIsOver = function() {
-        if (!self._levelManager.isActive()) {
+        if (!this._levelManager.active) {
             debug('Final level has been completed.');
             return true;
         }

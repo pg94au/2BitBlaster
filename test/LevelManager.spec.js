@@ -2,6 +2,7 @@ var _ = require('underscore');
 var expect = require('chai').expect;
 
 var LevelManager = require('../src/LevelManager').LevelManager;
+var LevelState = require('../src/LevelState').LevelState;
 
 var AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
@@ -173,7 +174,7 @@ describe('LevelManager', function() {
             clock.addSeconds(100);
             levelManager.tick(); // Clears intro.
             levelManager.tick(); // Ticks level.
-            expect(levelManager._state).to.be.equal(LevelManager.States.Win);
+            expect(levelManager._state).to.be.equal(LevelState.Win);
         });
 
         it('removes game win text and becomes inactive when the game win sequence ends', function() {
@@ -195,7 +196,7 @@ describe('LevelManager', function() {
             levelManager.tick(); // Schedules game win sequence.
             clock.addSeconds(100);
             levelManager.tick(); // Ends game win sequence and de-activates.
-            expect(levelManager.isActive()).to.be.false;
+            expect(levelManager.active).to.be.false;
             expect(levelManager._textInterlude).to.be.null;
         });
 
