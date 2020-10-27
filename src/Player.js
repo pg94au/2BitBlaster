@@ -134,7 +134,7 @@ Player.prototype.tick = function () {
             explosionProperties,
             this._audioPlayer,
             this._world,
-            this.getCoordinates().x, this.getCoordinates().y
+            this._location
         );
         this._world.addActor(playerExplosion);
 
