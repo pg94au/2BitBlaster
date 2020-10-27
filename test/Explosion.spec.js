@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var Explosion = require('../src/Explosion');
+var Explosion = require('../src/Explosion').Explosion;
 var AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');
 
 describe('Explosion', function() {

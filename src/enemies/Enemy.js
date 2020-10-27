@@ -5,7 +5,7 @@ var debug = require('debug')('Blaster:Enemy');
 var util = require('util');
 
 var Actor = require('../Actor');
-var Explosion = require('../Explosion');
+var Explosion = require('../Explosion').Explosion;
 
 function Enemy(audioPlayer, world, startingPoint) {
     debug('Enemy constructor');
