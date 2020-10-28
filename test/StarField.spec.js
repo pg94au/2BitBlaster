@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Star = require('../src/Star');
-var StarField = require('../src/StarField');
+var StarField = require('../src/StarField').StarField;
 
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
 var WorldStubBuilder = require('./builders/WorldStubBuilder');
