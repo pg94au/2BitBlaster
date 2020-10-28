@@ -3,14 +3,14 @@ export class ExplosionProperties {
     private readonly _numberOfFrames: number;
     private readonly _frameWidth: number;
     private readonly _frameSpeed: number;
-    private readonly _soundName: string;
+    private readonly _soundName: string | null;
 
     constructor(
         imageName: string,
         numberOfFrames: number,
         frameWidth: number,
         frameSpeed: number,
-        soundName: string
+        soundName: string | null = null
     ) {
         this._imageName = imageName;
         this._numberOfFrames = numberOfFrames;
@@ -35,7 +35,7 @@ export class ExplosionProperties {
         return this._frameSpeed;
     }
 
-    get soundName(): string {
+    get soundName(): string | null {
         return this._soundName;
     }
 }

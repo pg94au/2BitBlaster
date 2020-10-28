@@ -4,7 +4,7 @@ var util = require('util');
 
 var Bounds = require('../Bounds').Bounds;
 var Direction = require('../devices/Direction').Direction;
-var Explosion = require('../Explosion');
+var Explosion = require('../Explosion').Explosion;
 var HitArbiter = require('../HitArbiter').HitArbiter;
 var HitResult = require('../HitResult').HitResult;
 var ImageDetails = require('../ImageDetails').ImageDetails;
