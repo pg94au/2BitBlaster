@@ -5,6 +5,7 @@ const debug = Debug("Blaster:StarField");
 
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
+import {Clock} from "./timing/Clock";
 const Star = require('./Star');
 
 export class StarField {
@@ -12,17 +13,17 @@ export class StarField {
     private readonly _scheduler: Scheduler;
     private _firstTick: boolean = true;
 
-    constructor(world: any, scheduler: Scheduler) {
+    constructor(world: any, clock: Clock) {
         debug('StarField constructor');
         this._world = world;
-        this._scheduler = scheduler;
+        this._scheduler = new Scheduler(clock);
     }
 
     tick(): void {
         if (this._firstTick) {
             this.initializeStarField();
             this._firstTick = false;
-            this._scheduler.scheduleOperation('addStar', random(500, 1000), this.addStar);
+            this._scheduler.scheduleOperation('addStar', random(500, 1000), () => this.addStar());
         }
 
         // Continually add new stars to the world.
@@ -46,6 +47,6 @@ export class StarField {
         let star = new Star(this._world, new Point(x, 0));
         this._world.addActor(star);
 
-        this._scheduler.scheduleOperation('addStar', random(500, 1000), this.addStar);
+        this._scheduler.scheduleOperation('addStar', random(500, 1000), () => this.addStar());
     };
 }

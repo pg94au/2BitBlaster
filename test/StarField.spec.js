@@ -1,15 +1,16 @@
 var expect = require('chai').expect;
 
+var ScoreCounter = require("../src/ScoreCounter").ScoreCounter;
 var Star = require('../src/Star');
 var StarField = require('../src/StarField').StarField;
 
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
-var WorldStubBuilder = require('./builders/WorldStubBuilder');
+var World = require("../src/World");
 
 describe('StarField', function() {
     describe('#tick()', function () {
         it('populates the world with multiple stars on first call', function () {
-            var world = new WorldStubBuilder().build();
+            var world = new World(480, 640, new ScoreCounter());
             var clock = new ClockStubBuilder().build();
             var starField = new StarField(world, clock);
 
@@ -19,7 +20,7 @@ describe('StarField', function() {
         });
 
         it('adds stars periodically on subsequent ticks', function() {
-            var world = new WorldStubBuilder().build();
+            var world = new World(480, 640, new ScoreCounter());
             var clock = new ClockStubBuilder().build();
             var starField = new StarField(world, clock);
 
@@ -30,7 +31,6 @@ describe('StarField', function() {
             starField.tick();
 
             expect(starAdded).to.be.true;
-
         });
     });
 });
