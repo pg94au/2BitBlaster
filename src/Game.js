@@ -14,7 +14,7 @@ var SimpleWave = require('./waves/SimpleWave');
 var SpinnerWave = require('./waves/SpinnerWave');
 var SpinnerWave2 = require('./waves/SpinnerWave2');
 var SplitterWave = require('./waves/SplitterWave');
-var StarField = require('./StarField');
+var StarField = require('./StarField').StarField;
 var TextInterlude = require('./TextInterlude').TextInterlude;
 var World = require('./World');
 
