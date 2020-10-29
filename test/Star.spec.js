@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Point = require('../src/Point').Point;
-var Star = require('../src/Star');
+var Star = require('../src/Star').Star;
 
 var WorldStubBuilder = require('./builders/WorldStubBuilder');
 

@@ -2,7 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {ScoreCounter} from "../src/ScoreCounter";
-const Star = require('../src/Star');
+import {Star} from '../src/Star';
 import {StarField} from '../src/StarField';
 const World = require("../src/World");
 

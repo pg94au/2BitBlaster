@@ -6,7 +6,7 @@ const debug = Debug("Blaster:StarField");
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
 import {Clock} from "./timing/Clock";
-const Star = require('./Star');
+import {Star} from './Star';
 
 export class StarField {
     private readonly _world: any;
