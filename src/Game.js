@@ -3,9 +3,10 @@
 var debug = require('debug')('Blaster:Game');
 var events = require('events');
 
+var Bounds = require('./Bounds').Bounds;
 var Level = require('./Level').Level;
 var LevelManager = require('./LevelManager').LevelManager;
-var Player = require('./Player');
+var Player = require('./Player').Player;
 var Point = require('./Point').Point;
 var SecondWave = require('./waves/SecondWave');
 var Scheduler = require('./timing/Scheduler').Scheduler;
@@ -99,13 +100,8 @@ var Game = function(joystick, renderer, audioPlayer, clock) {
     };
 
     this.addPlayerToWorld = function() {
-        var playerBounds = {
-            minX: 50,
-            maxX: 430,
-            minY: 490,
-            maxY: 590
-        };
-        var playerStartingPoint = new Point((playerBounds.minX + playerBounds.maxX) / 2, (playerBounds.minY + playerBounds.maxY) / 2);
+        var playerBounds = new Bounds(50, 430, 490, 590);
+        var playerStartingPoint = new Point((playerBounds.left + playerBounds.right) / 2, (playerBounds.top + playerBounds.bottom) / 2);
         this._player = new Player(
             this._joystick,
             this._audioPlayer,

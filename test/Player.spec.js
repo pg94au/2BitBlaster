@@ -1,8 +1,9 @@
 var expect = require('chai').expect;
 
+var Bounds = require('../src/Bounds').Bounds;
 var Clock = require('../src/timing/Clock').Clock;
 var Direction = require('../src/devices/Direction').Direction;
-var Player = require('../src/Player');
+var Player = require('../src/Player').Player;
 var Point = require('../src/Point').Point;
 var ScoreCounter = require('../src/ScoreCounter').ScoreCounter;
 var World = require('../src/World');
@@ -131,7 +132,7 @@ describe('Player', function() {
                 };
                 var audioPlayer = new AudioPlayerStubBuilder().build();
                 var world = new World(480, 640, new ScoreCounter());
-                var bounds = {minX: 10, maxX: 10, minY: 10, maxY: 10};
+                var bounds = new Bounds(10, 10, 10, 10);
 
                 var player = new Player(joystickMock, audioPlayer, world, new Point(10, 10), bounds, new Clock());
                 player.tick();
