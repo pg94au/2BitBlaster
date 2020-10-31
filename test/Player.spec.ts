@@ -2,7 +2,6 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bounds} from '../src/Bounds';
-import {Clock} from '../src/timing/Clock';
 import {Direction} from '../src/devices/Direction';
 import {Player} from '../src/Player';
 import {Point} from '../src/Point';
@@ -13,13 +12,21 @@ import {JoystickStub} from "./stubs/JoystickStub";
 const World = require('../src/World');
 
 describe('Player', () => {
+    let audioPlayer: AudioPlayerStub;
+    let clock: ClockStub;
+    let joystick: JoystickStub;
+    let world: typeof World;
+
+    beforeEach(() => {
+        audioPlayer = new AudioPlayerStub();
+        clock = new ClockStub();
+        joystick = new JoystickStub();
+        world = new World(480, 640, new ScoreCounter());
+    });
+
     describe('#ctor()', () => {
         it('should start active', () => {
-            let joystick = new JoystickStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(1, 2, 1, 2);
-            let clock = new ClockStub();
-            let audioPlayer = new AudioPlayerStub();
             let player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
             expect(player.isActive()).to.be.true;
         });
@@ -27,11 +34,7 @@ describe('Player', () => {
 
     describe('#hitBy()', () => {
         it('will cause visible evidence that damage was sustained when hit is successful', () => {
-            let joystick = new JoystickStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(1, 2, 1, 2);
-            let clock = new ClockStub();
-            let audioPlayer = new AudioPlayerStub();
             let player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
 
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
@@ -45,11 +48,7 @@ describe('Player', () => {
         });
 
         it('will only display visible evidence of damage sustained for a short period of time', () => {
-            let joystick = new JoystickStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(1, 2, 1, 2);
-            let clock = new ClockStub();
-            let audioPlayer = new AudioPlayerStub();
             let player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
 
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
@@ -67,11 +66,7 @@ describe('Player', () => {
         });
 
         it('will play a sound when damage is sustained', () => {
-            let joystick = new JoystickStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(1, 2, 1, 2);
-            let clock = new ClockStub();
-            let audioPlayer = new AudioPlayerStub();
             let player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
 
             let playedSounds: string[] = [];
@@ -89,11 +84,7 @@ describe('Player', () => {
     describe('#on()', () => {
         it('immediately emits a health event', () => {
             let healthUpdate: number | null = null;
-            let joystick = new JoystickStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(1, 2, 1, 2);
-            let clock = new ClockStub();
-            let audioPlayer = new AudioPlayerStub();
 
             let player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
             player.on('health', (currentHealth) => {
@@ -105,11 +96,7 @@ describe('Player', () => {
 
     describe('#tick()', () => {
         it('does not move player when joystick direction is none', () => {
-            let joystick = new JoystickStub();
-            let audioPlayer = new AudioPlayerStub();
-            let world = new World(480, 640, new ScoreCounter());
             let bounds = new Bounds(0, 20, 0, 20);
-            let clock = new ClockStub();
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
@@ -118,11 +105,8 @@ describe('Player', () => {
         });
 
         it('moves player when joystick has direction set', () => {
-            let joystick = new JoystickStub().setCurrentDirection(Direction.Right);
-            let audioPlayer = new AudioPlayerStub();
-            let world = new World(480, 640, new ScoreCounter());
+            joystick.setCurrentDirection(Direction.Right);
             let bounds = new Bounds(0, 20, 0, 20);
-            let clock = new ClockStub();
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
@@ -131,11 +115,8 @@ describe('Player', () => {
 
         [Direction.Up, Direction.Down, Direction.Left, Direction.Right].forEach((direction) => {
             it('will not move player ' + direction + ' out of bounds', () => {
-                let joystick = new JoystickStub().setCurrentDirection(direction);
-                let audioPlayer = new AudioPlayerStub();
-                let world = new World(480, 640, new ScoreCounter());
+                joystick.setCurrentDirection(direction);
                 let bounds = new Bounds(10, 10, 10, 10);
-                let clock = new ClockStub();
 
                 let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
                 player.tick();
@@ -144,11 +125,8 @@ describe('Player', () => {
         });
 
         it('will add a new bullet to world if fire is active', () => {
-            let joystick = new JoystickStub().setFireState(true);
-            let audioPlayer = new AudioPlayerStub();
-            let world = new World(480, 640, new ScoreCounter());
-            let bounds = { minX: 0, maxX: 10, minY: 0, maxY: 20 };
-            let clock = new ClockStub();
+            joystick.setFireState(true);
+            let bounds = new Bounds(0, 10, 0, 20);
 
             let addedActor: boolean = false;
             world.addActor = (actor: any) => { addedActor = true; }
@@ -160,13 +138,10 @@ describe('Player', () => {
         });
 
         it('will not allow immediate consecutive bullet to be fired', () => {
-            let joystick = new JoystickStub().setFireState(true);
-            let audioPlayer = new AudioPlayerStub();
+            joystick.setFireState(true);
             let addedActors: any[] = [];
-            let world = new World(480, 640, new ScoreCounter());
             world.addActor = (actor: any) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
-            let clock = new ClockStub();
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
@@ -175,13 +150,10 @@ describe('Player', () => {
         });
 
         it('will allow another bullet to be fired after a period of time', () => {
-            let joystick = new JoystickStub().setFireState(true);
-            let audioPlayer = new AudioPlayerStub();
+            joystick.setFireState(true);
             let addedActors: any[] = [];
-            let world = new World(480, 640, new ScoreCounter());
             world.addActor = (actor: any) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
-            let clock = new ClockStub();
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
