@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Actor = require('../../src/Actor');
-var Bomb = require('../../src/shots/Bomb');
+var Bomb = require('../../src/shots/Bomb').Bomb;
 var Point = require('../../src/Point').Point;
 var Player = require('../../src/Player');
 

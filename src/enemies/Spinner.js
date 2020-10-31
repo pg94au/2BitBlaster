@@ -2,7 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:Spinner');
 var util = require('util');
 
-var Bomb = require('../shots/Bomb');
+var Bomb = require('../shots/Bomb').Bomb;
 var Bounds = require('../Bounds').Bounds;
 var Enemy = require('./Enemy');
 var ExplosionProperties = require('../ExplosionProperties').ExplosionProperties;
