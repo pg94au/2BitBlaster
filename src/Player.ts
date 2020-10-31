@@ -5,7 +5,7 @@ const debug = Debug("Blaster:Player");
 
 const Actor = require('./Actor');
 import {Bounds} from './Bounds';
-const Bullet = require('./shots/Bullet');
+import {Bullet} from './shots/Bullet';
 import {Explosion} from './Explosion';
 import {ExplosionProperties} from './ExplosionProperties';
 import {HitArbiter} from './HitArbiter';
