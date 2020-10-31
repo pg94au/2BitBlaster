@@ -114,20 +114,20 @@ Joystick.prototype.getCurrentDirection = function() {
             // then we have a diagonal direction and must calculate it.
             var first = directionsWithoutConflicts[0].direction;
             var second = directionsWithoutConflicts[1].direction;
-            if (((first == Direction.Up) && (second == Direction.Left)) ||
-                ((first == Direction.Left) && (second == Direction.Up))) {
+            if (((first === Direction.Up) && (second === Direction.Left)) ||
+                ((first === Direction.Left) && (second === Direction.Up))) {
                 return Direction.Up | Direction.Left;
             }
-            if (((first == Direction.Up) && (second == Direction.Right)) ||
-                ((first == Direction.Right) && (second == Direction.Up))) {
+            if (((first === Direction.Up) && (second === Direction.Right)) ||
+                ((first === Direction.Right) && (second === Direction.Up))) {
                 return Direction.Up | Direction.Right;
             }
-            if (((first == Direction.Down) && (second == Direction.Left)) ||
-                ((first == Direction.Left) && (second == Direction.Down))) {
+            if (((first === Direction.Down) && (second === Direction.Left)) ||
+                ((first === Direction.Left) && (second === Direction.Down))) {
                 return Direction.Down | Direction.Left;
             }
-            if (((first == Direction.Down) && (second == Direction.Right)) ||
-                ((first == Direction.Right) && (second == Direction.Down))) {
+            if (((first === Direction.Down) && (second === Direction.Right)) ||
+                ((first === Direction.Right) && (second === Direction.Down))) {
                 return Direction.Down | Direction.Right;
             }
         }

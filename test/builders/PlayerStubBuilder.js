@@ -1,6 +1,6 @@
 var Clock = require('../../src/timing/Clock').Clock;
 var Joystick = require('../../src/devices/Joystick');
-var Player = require('../../src/Player');
+var Player = require('../../src/Player').Player;
 var Point = require('../../src/Point').Point;
 var AudioPlayerStubBuilder = require('./AudioPlayerStubBuilder');
 var WorldStubBuilder = require('./WorldStubBuilder');

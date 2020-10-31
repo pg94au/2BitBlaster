@@ -4,7 +4,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:World');
 var Enemy = require('./enemies/Enemy');
 var Explosion = require('./Explosion').Explosion;
-var Player = require('./Player');
+var Player = require('./Player').Player;
 
 var World = function(width, height, scoreCounter) {
     debug('World: constructor');
