@@ -9,7 +9,7 @@ import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
-const Shot = require('./Shot');
+import {Shot} from './Shot';
 import {Shrapnel} from './Shrapnel';
 
 export class Grenade extends Shot {
