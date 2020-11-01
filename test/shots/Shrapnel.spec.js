@@ -3,7 +3,7 @@ var expect = require('chai').expect;
 var Actor = require('../../src/Actor');
 var Player = require('../../src/Player');
 var Point = require('../../src/Point').Point;
-var Shrapnel = require('../../src/shots/Shrapnel');
+var Shrapnel = require('../../src/shots/Shrapnel').Shrapnel;
 
 var AudioPlayerStubBuilder = require('../builders/AudioPlayerStubBuilder');
 var PlayerStubBuilder = require('../builders/PlayerStubBuilder');

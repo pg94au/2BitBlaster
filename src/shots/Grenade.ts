@@ -10,7 +10,7 @@ import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 const Shot = require('./Shot');
-const Shrapnel = require('./Shrapnel');
+import {Shrapnel} from './Shrapnel';
 
 export class Grenade extends Shot {
     private readonly _audioPlayer: any;
