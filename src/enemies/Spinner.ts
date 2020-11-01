@@ -16,11 +16,6 @@ import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
 import {Clock} from "../timing/Clock";
 
-export enum Bias {
-    Left,
-    Right
-}
-
 export class Spinner extends Enemy {
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
@@ -30,7 +25,7 @@ export class Spinner extends Enemy {
     private _currentFrame: number = 0;
     private _pathsCalculated: boolean = false;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, path: number, bias: Bias) {
+    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, path: number, bias: Spinner.Bias) {
         super(audioPlayer, world, startingPoint);
 
         if (path < 1 || path > 2) {
@@ -45,10 +40,10 @@ export class Spinner extends Enemy {
         this.calculatePaths();
 
         switch(bias) {
-            case Bias.Left:
+            case Spinner.Bias.Left:
                 this.prepareNextPath(this._leftPathTemplates[path - 1]);
                 break;
-            case Bias.Right:
+            case Spinner.Bias.Right:
                 this.prepareNextPath(this._rightPathTemplates[path - 1]);
                 break;
             default:
@@ -245,5 +240,12 @@ export class Spinner extends Enemy {
         this._currentPathTemplate = pathTemplate;
         this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
         this._pathPosition = 0;
+    }
+}
+
+export module Spinner {
+    export enum Bias {
+        Left,
+        Right
     }
 }

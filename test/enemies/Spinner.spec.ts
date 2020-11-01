@@ -2,11 +2,10 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 import {ClockStub} from "../stubs/ClockStub";
 import {Point} from "../../src/Point";
-import {Bias, Spinner} from "../../src/enemies/Spinner";
+import {Spinner} from "../../src/enemies/Spinner";
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
-import {Clock} from "../../src/timing/Clock";
 import {Bullet} from "../../src/shots/Bullet";
 
 const World = require('../../src/World');
@@ -29,7 +28,7 @@ describe('Spinner', () => {
             let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             expect(spinner.hitBy(bullet, 1)).to.be.true;
         });
 
@@ -37,7 +36,7 @@ describe('Spinner', () => {
             let player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             expect(spinner.hitBy(player, 1)).to.be.true;
         });
     });
@@ -47,7 +46,7 @@ describe('Spinner', () => {
             let player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             spinner.hitBy(player, 1);
             spinner.tick();
             expect(spinner.isActive()).to.be.false;
@@ -57,7 +56,7 @@ describe('Spinner', () => {
             let player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             spinner.hitBy(player, 0.5);
             player.tick();
             expect(player.isActive()).to.be.true;
@@ -67,7 +66,7 @@ describe('Spinner', () => {
             let player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             spinner.hitBy(player, 1);
             spinner.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
@@ -77,7 +76,7 @@ describe('Spinner', () => {
             let player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Bias.Left);
+            let spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), 1, Spinner.Bias.Left);
             spinner.hitBy(player, 1);
             spinner.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
