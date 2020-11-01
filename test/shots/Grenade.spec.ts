@@ -6,7 +6,7 @@ import {Point} from '../../src/Point';
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
-const Shrapnel = require('../../src/shots/Shrapnel');
+const Shrapnel = require('../../src/shots/Shrapnel').Shrapnel;
 const World = require('../../src/World');
 
 describe('Grenade', () => {

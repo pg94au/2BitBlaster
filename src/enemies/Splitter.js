@@ -12,7 +12,7 @@ var PathTemplate = require('../paths/PathTemplate').PathTemplate;
 var Point = require('../Point').Point;
 var ScheduledAction = require('../paths/ScheduledAction').ScheduledAction;
 var Scheduler = require('../timing/Scheduler').Scheduler;
-var Shrapnel = require('../shots/Shrapnel');
+var Shrapnel = require('../shots/Shrapnel').Shrapnel;
 var SplinePath = require('../paths/SplinePath').SplinePath;
 var SplitterFragment = require('./SplitterFragment');
 
