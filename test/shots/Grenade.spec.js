@@ -2,7 +2,7 @@ var _ = require('underscore');
 var expect = require('chai').expect;
 
 var Actor = require('../../src/Actor');
-var Grenade = require('../../src/shots/Grenade');
+var Grenade = require('../../src/shots/Grenade').Grenade;
 var Player = require('../../src/Player');
 var Point = require('../../src/Point').Point;
 var Shrapnel = require('../../src/shots/Shrapnel');
