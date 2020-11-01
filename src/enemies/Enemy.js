@@ -11,17 +11,17 @@ function Enemy(audioPlayer, world, startingPoint) {
     debug('Enemy constructor');
     Actor.apply(this, [world, startingPoint]);
     this._audioPlayer = audioPlayer;
-
-    this.getExplosionProperties = function() {
-        throw new Error('getExplosionProperties must be overridden');
-    };
-
-    this.getScoreTotal = function() {
-        throw new Error('getScoreTotal must be overridden');
-    };
 }
 
 util.inherits(Enemy, Actor);
+
+Enemy.prototype.getExplosionProperties = function() {
+    throw new Error('getExplosionProperties must be overridden');
+};
+
+Enemy.prototype.getScoreTotal = function() {
+    throw new Error('getScoreTotal must be overridden');
+};
 
 Enemy.prototype.getZIndex = function() {
     return 20;
@@ -31,7 +31,7 @@ Enemy.prototype.tick = function () {
     debug('Enemy.tick');
     Enemy.super_.prototype.tick.call(this);
 
-    if (this.health <= 0) {
+    if (this.health <= 0 || this._health <= 0) { // TODO: Consolidate this to only _health when last subclass is converted to TypeScript
         this._active = false;
 
         var scoreTotal = this.getScoreTotal();

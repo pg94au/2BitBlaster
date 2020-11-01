@@ -1,16 +1,12 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
-const Actor = require('../../src/Actor');
 import {Bullet} from '../../src/shots/Bullet';
-import {Clock} from '../../src/timing/Clock';
-const Enemy = require('../../src/enemies/Enemy');
 import {Point} from '../../src/Point';
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {EnemyStub} from "../stubs/EnemyStub";
 import {Bounds} from "../../src/Bounds";
-const Saucer = require('../../src/enemies/Saucer');
 const World = require('../../src/World');
 
 describe('Bullet', () => {
