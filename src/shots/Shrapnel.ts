@@ -6,7 +6,7 @@ import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
-const Shot = require('./Shot');
+import {Shot} from './Shot';
 
 export class Shrapnel extends Shot {
     private readonly _audioPlayer: any;
