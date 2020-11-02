@@ -25,12 +25,8 @@ export class Spinner extends Enemy {
     private _currentFrame: number = 0;
     private _pathsCalculated: boolean = false;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, path: number, bias: Spinner.Bias) {
+    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, pattern: Spinner.Pattern, bias: Spinner.Bias) {
         super(audioPlayer, world, startingPoint);
-
-        if (path < 1 || path > 2) {
-            throw new Error('path value out of range');
-        }
 
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
@@ -41,10 +37,10 @@ export class Spinner extends Enemy {
 
         switch(bias) {
             case Spinner.Bias.Left:
-                this.prepareNextPath(this._leftPathTemplates[path - 1]);
+                this.prepareNextPath(this._leftPathTemplates[pattern]);
                 break;
             case Spinner.Bias.Right:
-                this.prepareNextPath(this._rightPathTemplates[path - 1]);
+                this.prepareNextPath(this._rightPathTemplates[pattern]);
                 break;
             default:
                 throw new Error('Unrecognized bias argument: ' + bias);
@@ -247,5 +243,10 @@ export module Spinner {
     export enum Bias {
         Left,
         Right
+    }
+
+    export enum Pattern {
+        Type1 = 0,
+        Type2 = 1
     }
 }

@@ -1,9 +1,8 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:SpinnerWave2');
-var util = require('util');
 
 var Point = require('../Point').Point;
-var Spinner = require('../enemies/Spinner');
+var Spinner = require('../enemies/Spinner').Spinner;
 var Scheduler = require('../timing/Scheduler').Scheduler;
 
 function SpinnerWave2(audioPlayer, world, clock) {
@@ -47,9 +46,9 @@ SpinnerWave2.prototype.deploySpinner = function() {
     var worldDimensions = this._world.getDimensions();
     var spinnerStartX = worldDimensions.width / 2;
     var spinnerStartY = -20;
-    var leftSpinner = new Spinner(this._audioPlayer, this._world, this._clock, new Point(spinnerStartX - 40, spinnerStartY), 2, Spinner.Bias.Left);
+    var leftSpinner = new Spinner(this._audioPlayer, this._world, this._clock, new Point(spinnerStartX - 40, spinnerStartY), Spinner.Pattern.Type2, Spinner.Bias.Left);
     this._world.addActor(leftSpinner);
-    var rightSpinner = new Spinner(this._audioPlayer, this._world, this._clock, new Point(spinnerStartX + 40, spinnerStartY), 2, Spinner.Bias.Right);
+    var rightSpinner = new Spinner(this._audioPlayer, this._world, this._clock, new Point(spinnerStartX + 40, spinnerStartY), Spinner.Pattern.Type2, Spinner.Bias.Right);
     this._world.addActor(rightSpinner);
 
     this._numberOfSpinnersLeftToDeploy-=2;
