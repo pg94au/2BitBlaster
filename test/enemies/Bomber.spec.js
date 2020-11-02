@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var Bomber = require('../../src/enemies/Bomber');
+var Bomber = require('../../src/enemies/Bomber').Bomber;
 var Clock = require('../../src/timing/Clock').Clock;
 var Explosion = require('../../src/Explosion').Explosion;
 var Point = require('../../src/Point').Point;

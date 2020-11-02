@@ -1,7 +1,7 @@
 var _ = require('underscore');
 var debug = require('debug')('Blaster:SpinnerWave');
 
-var Bomber = require('../enemies/Bomber');
+var Bomber = require('../enemies/Bomber').Bomber;
 var Point = require('../Point').Point;
 var Spinner = require('../enemies/Spinner').Spinner;
 var Scheduler = require('../timing/Scheduler').Scheduler;
