@@ -1,10 +1,8 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
-const Actor = require('../../src/Actor');
 import {Bomb} from '../../src/shots/Bomb';
 import {Point} from '../../src/Point';
-import {Player} from '../../src/Player';
 const World = require('../../src/World');
 
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
