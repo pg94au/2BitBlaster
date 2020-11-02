@@ -18,7 +18,7 @@ export class Bomber extends Enemy {
     private readonly _frameIndices: number[] = [0, 1, 2, 3, 4, 5, 5, 5, 4, 3, 2, 1];
     private _health: number = 1;
     private _currentFrame: number = 0;
-    private _grenadeDropPosition: number;
+    private readonly _grenadeDropPosition: number;
 
     constructor(audioPlayer: any, world: any, clock: Clock, startY: number) {
         super(audioPlayer, world, new Point(-40, startY));

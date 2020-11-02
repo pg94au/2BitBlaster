@@ -3,7 +3,7 @@ var debug = require('debug')('Blaster:SimpleWave');
 var util = require('util');
 
 var Point = require('../Point').Point;
-var Saucer = require('../enemies/Saucer');
+var Saucer = require('../enemies/Saucer').Saucer;
 
 function SimpleWave(audioPlayer, world, clock) {
     debug('SimpleWave constructor');
