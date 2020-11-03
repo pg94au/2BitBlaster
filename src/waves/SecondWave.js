@@ -2,7 +2,7 @@ var _ = require('underscore');
 var debug = require('debug')('Blaster:SecondWave');
 
 var Point = require('../Point').Point;
-var Probe = require('../enemies/Probe');
+var Probe = require('../enemies/Probe').Probe;
 
 function SecondWave(audioPlayer, world, clock) {
     debug('SecondWave constructor');
