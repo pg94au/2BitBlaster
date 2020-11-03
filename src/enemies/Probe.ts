@@ -18,13 +18,15 @@ import {Clock} from "../timing/Clock";
 import {PathEntry} from "../paths/PathEntry";
 
 export class Probe extends Enemy {
+    public static readonly InitialHealth: number = 3;
+
     private static _pathsCalculated: boolean = false;
     private static _introPathTemplate: PathEntry[];
     private static _diveRightPathTemplate: PathEntry[];
     private static _diveLeftPathTemplate: PathEntry[];
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
-    private _health: number = 3;
+    private _health: number = Probe.InitialHealth;
     private _currentFrame: number = 0;
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
