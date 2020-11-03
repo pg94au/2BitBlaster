@@ -3,7 +3,7 @@ var debug = require('debug')('Blaster:SplitterWave');
 var util = require('util');
 
 var Point = require('../Point').Point;
-var Splitter = require('../enemies/Splitter');
+var Splitter = require('../enemies/Splitter').Splitter;
 
 function SplitterWave(audioPlayer, world, clock) {
     debug('SplitterWave constructor');
