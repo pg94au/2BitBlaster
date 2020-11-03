@@ -31,6 +31,7 @@ export class Splitter extends Enemy {
     private static _diveRightPathTemplate: PathEntry[];
     private static _diveLeftPathTemplate: PathEntry[];
 
+    private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
     private readonly _frameIndices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1];
@@ -41,6 +42,7 @@ export class Splitter extends Enemy {
         super(audioPlayer, world, startingPoint);
         debug('Splitter constructor');
 
+        this._clock = clock;
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
 
@@ -49,7 +51,7 @@ export class Splitter extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperites(): ExplosionProperties {
+    getExplosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
