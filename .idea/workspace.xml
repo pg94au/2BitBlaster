@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="41f284ee-707c-422c-af72-62e6cfbe09f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1ivKJODJZfCdq95HnkAyeNiak63" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/test" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="ts.external.directory.path" value="C:\WORK\BlasterTS\node_modules\typescript\lib" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RunManager" selected="Mocha.Mocha Tests">
+    <configuration name="Run tests" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="test" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="Mocha Tests" type="mocha-javascript-test-runner" temporary="true">
+      <node-interpreter>project</node-interpreter>
+      <node-options />
+      <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
+      <working-directory>$PROJECT_DIR$</working-directory>
+      <pass-parent-env>true</pass-parent-env>
+      <ui>bdd</ui>
+      <extra-mocha-options>--require ts-node/register</extra-mocha-options>
+      <test-kind>PATTERN</test-kind>
+      <test-pattern>test/**/*.{js,ts}</test-pattern>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Mocha.Mocha Tests" />
+      <item itemvalue="npm.Run tests" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Mocha.Mocha Tests" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="41f284ee-707c-422c-af72-62e6cfbe09f6" name="Default Changelist" comment="" />
+      <created>1602782553352</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1602782553352</updated>
+      <workItem from="1602782554464" duration="82164000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="475" y="232" width="802" height="525" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1604448405217">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="475" y="232" width="802" height="525" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1604448405217" />
+    <state x="792" y="394" width="1092" height="810" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428534106" />
+    <state x="1215" y="474" key="FileChooserDialogImpl" timestamp="1604428283860">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1215" y="474" key="FileChooserDialogImpl/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428283860" />
+    <state width="1334" height="195" key="GridCell.Tab.0.bottom" timestamp="1604448343051">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1334" height="195" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604448343051" />
+    <state width="1802" height="266" key="GridCell.Tab.0.bottom/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428414686" />
+    <state width="1334" height="195" key="GridCell.Tab.0.center" timestamp="1604448343050">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1334" height="195" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604448343050" />
+    <state width="1802" height="266" key="GridCell.Tab.0.center/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428414686" />
+    <state width="1334" height="195" key="GridCell.Tab.0.left" timestamp="1604448343049">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1334" height="195" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604448343049" />
+    <state width="1802" height="266" key="GridCell.Tab.0.left/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428414686" />
+    <state width="1334" height="195" key="GridCell.Tab.0.right" timestamp="1604448343051">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="1334" height="195" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604448343051" />
+    <state width="1802" height="266" key="GridCell.Tab.0.right/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604428414686" />
+    <state width="1824" height="328" key="GridCell.Tab.1.bottom" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.1.bottom/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.1.center" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.1.center/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.1.left" timestamp="1603722495984">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.1.left/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495984" />
+    <state width="1824" height="328" key="GridCell.Tab.1.right" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.1.right/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.2.bottom" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.2.bottom/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.2.center" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.2.center/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.2.left" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.2.left/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.2.right" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.2.right/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.3.bottom" timestamp="1603722495986">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.3.bottom/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495986" />
+    <state width="1824" height="328" key="GridCell.Tab.3.center" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.3.center/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.3.left" timestamp="1603722495985">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.3.left/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495985" />
+    <state width="1824" height="328" key="GridCell.Tab.3.right" timestamp="1603722495986">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="1824" height="328" key="GridCell.Tab.3.right/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603722495986" />
+    <state x="1169" y="345" width="585" height="801" key="find.popup" timestamp="1604422026123">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1169" y="345" width="585" height="801" key="find.popup/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1604422026123" />
+    <state x="1026" y="438" width="672" height="678" key="search.everywhere.popup" timestamp="1603224507348">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1026" y="438" width="672" height="678" key="search.everywhere.popup/0.0.2560.1400/-2560.-9.2560.1400@0.0.2560.1400" timestamp="1603224507348" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BlasterTS$ScoreCounter.dat" NAME="ScoreCounter Coverage Results" MODIFIED="1604427861550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+</project>
