@@ -4,18 +4,20 @@
 import Debug from "debug";
 const debug = Debug("Blaster:Enemy");
 
-const Actor = require('../Actor');
+import {Actor} from '../Actor';
 import {Explosion} from '../Explosion';
 import {Point} from "../Point";
 import {ExplosionProperties} from "../ExplosionProperties";
 
 export abstract class Enemy extends Actor {
     protected readonly _audioPlayer: any;
+    protected _health: number;
 
-    protected constructor(audioPlayer: any, world: any, startingPoint: Point) {
+    protected constructor(audioPlayer: any, world: any, startingPoint: Point, initialHealth: number) {
         super(world, startingPoint);
 
         this._audioPlayer = audioPlayer;
+        this._health = initialHealth;
     }
 
     abstract getExplosionProperties(): ExplosionProperties;
@@ -28,7 +30,6 @@ export abstract class Enemy extends Actor {
 
     tick(): void {
         debug('Enemy.tick');
-        super.tick();
 
         if (this._health <= 0) {
             this._active = false;
@@ -37,14 +38,14 @@ export abstract class Enemy extends Actor {
             this._world.getScoreCounter().increment(scoreTotal);
 
             let explosionProperties = this.getExplosionProperties();
-            let saucerCoordinates = this.getCoordinates();
-            let saucerExplosion = new Explosion(
+            let coordinates = this.getCoordinates();
+            let explosion = new Explosion(
                 explosionProperties,
                 this._audioPlayer,
                 this._world,
-                saucerCoordinates
+                coordinates
             );
-            this._world.addActor(saucerExplosion);
+            this._world.addActor(explosion);
         }
     }
 }

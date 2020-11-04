@@ -36,10 +36,12 @@ export class Splitter extends Enemy {
     private readonly _hitArbiter: HitArbiter;
     private readonly _frameIndices = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1];
     private _currentFrame: number = 0;
-    private _health: number = Splitter.InitialHealth;
+    private _currentPath!: PathEntry[];
+    private _currentPathTemplate!: PathEntry[];
+    private _pathPosition!: number;
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
-        super(audioPlayer, world, startingPoint);
+        super(audioPlayer, world, startingPoint, Splitter.InitialHealth);
         debug('Splitter constructor');
 
         this._clock = clock;
@@ -186,7 +188,7 @@ export class Splitter extends Enemy {
         // Follow the current path.
         switch(this._currentPath[this._pathPosition].action) {
             case PathAction.Move:
-                this._location = this._currentPath[this._pathPosition].location;
+                this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
                 this.dropBomb();

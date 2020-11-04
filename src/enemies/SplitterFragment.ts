@@ -35,11 +35,13 @@ export class SplitterFragment extends Enemy {
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
     private readonly _frameIndices: number[] = [0, 1, 2, 3, 4, 5, 4, 3, 2, 1];
-    private _health: number = SplitterFragment.InitialHealth;
     private _currentFrame: number = 0;
+    private _currentPath!: PathEntry[];
+    private _currentPathTemplate!: PathEntry[];
+    private _pathPosition!: number;
 
     constructor(audioPlayer: any, world: any, clock: Clock, side: SplitterFragment.Side, startingPoint: Point) {
-        super(audioPlayer, world, startingPoint);
+        super(audioPlayer, world, startingPoint, SplitterFragment.InitialHealth);
         debug('SplitterFragment constructor');
 
         this._side = side;
@@ -178,7 +180,7 @@ export class SplitterFragment extends Enemy {
         // Follow the current path.
         switch(this._currentPath[this._pathPosition].action) {
             case PathAction.Move:
-                this._location = this._currentPath[this._pathPosition].location;
+                this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
                 this.dropBomb();

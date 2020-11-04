@@ -1,6 +1,6 @@
 var expect = require('chai').expect;
 
-var Actor = require('../src/Actor');
+var Actor = require('../src/Actor').Actor;
 var Clock = require('../src/timing/Clock').Clock;
 var Enemy = require('../src/enemies/Enemy').Enemy;
 var Explosion = require('../src/Explosion').Explosion;

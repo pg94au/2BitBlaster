@@ -26,11 +26,13 @@ export class Probe extends Enemy {
     private static _diveLeftPathTemplate: PathEntry[];
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
-    private _health: number = Probe.InitialHealth;
     private _currentFrame: number = 0;
+    private _currentPath!: PathEntry[];
+    private _currentPathTemplate!: PathEntry[];
+    private _pathPosition!: number;
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
-        super(audioPlayer, world, startingPoint);
+        super(audioPlayer, world, startingPoint, Probe.InitialHealth);
         debug('Probe constructor');
 
         this._scheduler = new Scheduler(clock);
@@ -125,7 +127,7 @@ export class Probe extends Enemy {
         // Follow the current path.
         switch(this._currentPath[this._pathPosition].action) {
             case PathAction.Move:
-                this._location = this._currentPath[this._pathPosition].location;
+                this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
                 this.dropBomb();

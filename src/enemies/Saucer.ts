@@ -18,10 +18,14 @@ import {Clock} from "../timing/Clock";
 import {PathEntry} from "../paths/PathEntry";
 
 export class Saucer extends Enemy {
+    public static readonly InitialHealth: number = 1;
+
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
-    private _health: number = 1;
     private _currentFrame: number = 0;
+    private _currentPath!: PathEntry[];
+    private _currentPathTemplate!: PathEntry[];
+    private _pathPosition!: number;
 
     private static _pathsCalculated: boolean = false;
     private static _floatAroundPathTemplate: PathEntry[];
@@ -34,7 +38,7 @@ export class Saucer extends Enemy {
     private static _diveLeftPathTemplate: PathEntry[];
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
-        super(audioPlayer, world, startingPoint);
+        super(audioPlayer, world, startingPoint, Saucer.InitialHealth);
         debug('Saucer constructor');
 
         this._scheduler = new Scheduler(clock);
@@ -149,7 +153,7 @@ export class Saucer extends Enemy {
         // Follow the current path.
         switch(this._currentPath[this._pathPosition].action) {
             case PathAction.Move:
-                this._location = this._currentPath[this._pathPosition].location;
+                this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
                 this.dropBomb();

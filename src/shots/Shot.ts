@@ -5,7 +5,7 @@ import Debug from "debug";
 import {Point} from "../Point";
 const debug = Debug("Blaster:Shot");
 
-const Actor = require('../Actor');
+import {Actor} from '../Actor';
 
 export abstract class Shot extends Actor {
     protected constructor(world: any, startingPoint: Point) {
@@ -18,7 +18,6 @@ export abstract class Shot extends Actor {
 
     tick(): void {
         debug('Shot.tick');
-        super.tick();
     }
 
     abstract getDamageAgainst(actor: any): number;

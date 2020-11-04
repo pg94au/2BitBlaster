@@ -4,7 +4,7 @@ const debug = Debug("Blaster:Star");
 
 import {random} from 'underscore';
 
-const Actor = require('./Actor');
+import {Actor} from './Actor';
 import {Direction} from './devices/Direction';
 import {ImageDetails} from './ImageDetails';
 import {Point} from './Point';
@@ -50,7 +50,6 @@ export class Star extends Actor {
     }
 
     tick(): void {
-        super.tick();
         debug('Star.tick');
 
         this.move(Direction.Down);
