@@ -5,8 +5,24 @@ import {Explosion} from '../src/Explosion';
 import {ExplosionProperties} from "../src/ExplosionProperties";
 import {Point} from "../src/Point";
 import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
+import {ClockStub} from "./stubs/ClockStub";
+import {ScoreCounter} from "../src/ScoreCounter";
+import World from '../src/World';
+import {ShotStub} from "./stubs/ShotStub";
 
 describe('Explosion', () => {
+    let audioPlayer: any;
+    let clock: ClockStub;
+    let scoreCounter: ScoreCounter;
+    let world: any;
+
+    beforeEach(() => {
+        audioPlayer = new AudioPlayerStub();
+        clock = new ClockStub();
+        scoreCounter = new ScoreCounter();
+        world = new World(480, 640, scoreCounter);
+    });
+
     describe('#getImageDetails()', () => {
         it('should return image properties as provided', () => {
             let explosionProperties = new ExplosionProperties(
@@ -16,7 +32,7 @@ describe('Explosion', () => {
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, {}, {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
             let imageDetails = explosion.imageDetails;
 
             expect(imageDetails.name).to.be.equal('imagename');
@@ -32,7 +48,7 @@ describe('Explosion', () => {
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, {}, {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
 
             expect(explosion.imageDetails.currentFrame).to.be.equal(0);
         });
@@ -47,9 +63,11 @@ describe('Explosion', () => {
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, {}, {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
 
-            expect(explosion.hitBy({}, 1)).to.be.false;
+            let shot = new ShotStub(world,  new Point(5, 10));
+
+            expect(explosion.hitBy(shot, 1)).to.be.false;
         });
     });
 
@@ -62,7 +80,7 @@ describe('Explosion', () => {
                 .4,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
             explosion.tick();
             expect(explosion.imageDetails.currentFrame).to.be.equal(0);
             explosion.tick();
@@ -79,7 +97,7 @@ describe('Explosion', () => {
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
             explosion.tick();
             explosion.tick();
             explosion.tick();
@@ -99,7 +117,7 @@ describe('Explosion', () => {
             let playedSounds: string[] = [];
             let audioPlayer = new AudioPlayerStub().onPlay((soundName) => playedSounds.push(soundName));
 
-            let explosion = new Explosion(explosionProperties, audioPlayer, {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
             explosion.tick();
 
             expect(playedSounds).to.be.eql(['soundname']);
@@ -115,7 +133,7 @@ describe('Explosion', () => {
             let playedSounds: string[] = [];
             let audioPlayer = new AudioPlayerStub().onPlay((soundName) => playedSounds.push(soundName));
 
-            let explosion = new Explosion(explosionProperties, audioPlayer, {}, new Point(5, 10));
+            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
             explosion.tick();
 
             expect(playedSounds).to.be.empty;

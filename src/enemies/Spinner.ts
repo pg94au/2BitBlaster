@@ -17,16 +17,20 @@ import {SplinePath} from '../paths/SplinePath';
 import {Clock} from "../timing/Clock";
 
 export class Spinner extends Enemy {
+    public static readonly InitialHealth: number = 1;
+
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
     private _rightPathTemplates!: PathEntry[][];
     private _leftPathTemplates!: PathEntry[][];
-    private _health: number = 1;
     private _currentFrame: number = 0;
     private _pathsCalculated: boolean = false;
+    private _currentPath!: PathEntry[];
+    private _currentPathTemplate!: PathEntry[];
+    private _pathPosition!: number;
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, pattern: Spinner.Pattern, bias: Spinner.Bias) {
-        super(audioPlayer, world, startingPoint);
+        super(audioPlayer, world, startingPoint, Spinner.InitialHealth);
 
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
@@ -142,7 +146,7 @@ export class Spinner extends Enemy {
         // Follow the current path.
         switch(this._currentPath[this._pathPosition].action) {
             case PathAction.Move:
-                this._location = this._currentPath[this._pathPosition].location;
+                this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
                 this.dropBomb();

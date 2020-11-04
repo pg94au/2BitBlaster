@@ -4,6 +4,7 @@ import {Point} from "../../src/Point";
 
 import {AudioPlayerStub} from "./AudioPlayerStub";
 import {ExplosionProperties} from "../../src/ExplosionProperties";
+import {ImageDetails} from "../../src/ImageDetails";
 
 export class EnemyStub extends Enemy {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
@@ -11,7 +12,7 @@ export class EnemyStub extends Enemy {
     private _ignoreHits: boolean = false;
 
     constructor(world: any, startingPoint: Point) {
-        super(new AudioPlayerStub(), world, startingPoint);
+        super(new AudioPlayerStub(), world, startingPoint, 1);
     }
 
     onHit(value: (damage: number) => void): EnemyStub {
@@ -44,5 +45,9 @@ export class EnemyStub extends Enemy {
 
     getScoreTotal(): number {
         throw new Error('Not implemented');
+    }
+
+    getImageDetails(): ImageDetails {
+        return new ImageDetails('image_name', 1, 1, 0);
     }
 }

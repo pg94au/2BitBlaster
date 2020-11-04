@@ -3,7 +3,7 @@ import {EventEmitter} from "events";
 
 const debug = Debug("Blaster:Player");
 
-const Actor = require('./Actor');
+import {Actor} from './Actor';
 import {Bounds} from './Bounds';
 import {Bullet} from './shots/Bullet';
 import {Explosion} from './Explosion';
@@ -111,7 +111,6 @@ export class Player extends Actor {
 
     tick(): void {
         debug('Player.tick');
-        super.tick();
 
         this._scheduler.executeDueOperations();
 

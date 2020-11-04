@@ -41,7 +41,7 @@ describe('Grenade', () => {
 
         it('should become inactive after it has moved more than a distance of 200', () => {
             let grenade = new Grenade(audioPlayer, world, new Point(5, 10));
-            while (grenade._location.y < 210) {
+            while (grenade.getCoordinates().y < 210) {
                 grenade.tick();
             }
 
@@ -50,7 +50,7 @@ describe('Grenade', () => {
 
         it('should add pieces of shrapnel when it explodes', () => {
             let grenade = new Grenade(audioPlayer, world, new Point(5, 10));
-            while (grenade._location.y < 210) {
+            while (grenade.getCoordinates().y < 210) {
                 grenade.tick();
             }
 

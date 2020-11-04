@@ -2,7 +2,7 @@ import Debug from "debug";
 
 const debug = Debug("Blaster:Explosion");
 
-const Actor = require('./Actor');
+import {Actor} from './Actor';
 import {ExplosionProperties} from "./ExplosionProperties";
 import {ImageDetails} from "./ImageDetails";
 import {Point} from "./Point";
@@ -45,8 +45,6 @@ export class Explosion extends Actor {
 
     tick(): void {
         debug('Explosion.tick');
-
-        super.tick();
 
         if (this._firstTick) {
             if (this._explosionProperties.soundName) {

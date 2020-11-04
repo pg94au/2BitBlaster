@@ -2,7 +2,7 @@ import {Point} from "../src/Point";
 
 var expect = require('chai').expect;
 
-var Actor = require('../src/Actor');
+var Actor = require('../src/Actor').Actor;
 var Direction = require('../src/devices/Direction').Direction;
 
 describe('Actor', function() {
@@ -23,20 +23,6 @@ describe('Actor', function() {
             var actor1 = new Actor({}, new Point(1, 2));
             var actor2 = new Actor({}, new Point(1, 2));
             expect(actor2.getId()).to.not.equal(actor1.getId());
-        });
-    });
-
-    describe('#getImageDetails()', function() {
-        it('must be overridden in subclasses', function() {
-            var actor = new Actor({}, new Point(1, 2));
-            expect(actor.getImageDetails).to.throw('Must implement getImageDetails');
-        });
-    });
-
-    describe('#getZIndex()', function() {
-        it('must be overridden in a subclass', function() {
-            var actor = new Actor({}, new Point(1, 2));
-            expect(actor.getZIndex).to.throw('Must implement getZIndex');
         });
     });
 
@@ -66,7 +52,7 @@ describe('Actor', function() {
             expect(actor.getCoordinates().x).to.be.below(100);
         });
 
-        it('should incrmenet x position when moving right', function() {
+        it('should increment x position when moving right', function() {
             var actor = new Actor({}, new Point(100, 100));
             actor.move(Direction.Right);
             expect(actor.getCoordinates().x).to.be.above(100);
