@@ -16,7 +16,7 @@ import {Shrapnel} from '../shots/Shrapnel';
 import {SplinePath} from '../paths/SplinePath';
 import {Clock} from "../timing/Clock";
 import {PathEntry} from "../paths/PathEntry";
-const SplitterFragment = require('./SplitterFragment');
+import {SplitterFragment} from './SplitterFragment';
 
 export class Splitter extends Enemy {
     private static readonly InitialHealth = 1;
