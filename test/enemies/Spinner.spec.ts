@@ -7,8 +7,7 @@ import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
 import {Bullet} from "../../src/shots/Bullet";
-
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 describe('Spinner', () => {
     let audioPlayer: any;

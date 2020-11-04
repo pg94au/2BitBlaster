@@ -7,7 +7,7 @@ import {Point} from "../src/Point";
 import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
 import {ClockStub} from "./stubs/ClockStub";
 import {ScoreCounter} from "../src/ScoreCounter";
-import World from '../src/World';
+import {World} from '../src/World';
 import {ShotStub} from "./stubs/ShotStub";
 
 describe('Explosion', () => {

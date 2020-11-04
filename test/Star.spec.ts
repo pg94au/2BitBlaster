@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import {Point} from '../src/Point';
 import {Star} from '../src/Star';
 import {ScoreCounter} from "../src/ScoreCounter";
-const World = require('../src/World');
+import {World} from '../src/World';
 
 describe('Star', () => {
     describe('#tick()', () => {

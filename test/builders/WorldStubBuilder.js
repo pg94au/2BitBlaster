@@ -1,5 +1,5 @@
 var ScoreCounter = require('../../src/ScoreCounter').ScoreCounter;
-var World = require('../../src/World');
+var World = require('../../src/World').World;
 
 function WorldStubBuilder() {
     this._width = 480;

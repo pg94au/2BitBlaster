@@ -7,12 +7,11 @@ import {ScoreCounter} from "../../src/ScoreCounter";
 import {Shrapnel} from "../../src/shots/Shrapnel";
 import {Splitter} from "../../src/enemies/Splitter";
 import {SplitterFragment} from '../../src/enemies/SplitterFragment';
+import {World} from '../../src/World';
 
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
 import {PlayerStub} from "../stubs/PlayerStub";
-
-const World = require('../../src/World');
 
 describe('Splitter', () => {
     let audioPlayer: any;

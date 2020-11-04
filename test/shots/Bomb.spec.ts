@@ -3,10 +3,10 @@ import {expect} from 'chai';
 
 import {Bomb} from '../../src/shots/Bomb';
 import {Point} from '../../src/Point';
-const World = require('../../src/World');
+import {ScoreCounter} from "../../src/ScoreCounter";
+import {World} from '../../src/World';
 
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
-import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
 
 describe('Bomb', () => {

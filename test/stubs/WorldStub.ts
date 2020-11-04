@@ -1,6 +1,6 @@
 import {ScoreCounter} from "../../src/ScoreCounter";
 
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 export class WorldStub extends World {
     private _onAddActor: (actor: any) => void = actor => {};
