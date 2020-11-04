@@ -4,9 +4,11 @@ import {expect} from 'chai';
 import {Bounds} from '../src/Bounds';
 import {HitArbiter} from "../src/HitArbiter";
 import {HitResult} from "../src/HitResult";
-
-let ActorStubBuilder = require('./builders/ActorStubBuilder');
-
+import {ShotStub} from "./stubs/ShotStub";
+import {Point} from "../src/Point";
+import {ScoreCounter} from "../src/ScoreCounter";
+import {WorldStub} from "./stubs/WorldStub";
+import {PlayerStub} from "./stubs/PlayerStub";
 
 let testData = [
     {
@@ -79,12 +81,19 @@ let testData = [
 
 
 describe('HitArbiter', () => {
+    let world: WorldStub;
+
+    beforeEach(() => {
+        world = new WorldStub(480, 640, new ScoreCounter());
+    });
+
     describe('#areasCollide()', () => {
         testData.forEach(function(testParameters) {
             it('should result in ' + testParameters.result +
                 ', with area1=' + JSON.stringify(testParameters.area1) +
                 ' and area2=' + JSON.stringify(testParameters.area2), function() {
-                let hitArbiter = new HitArbiter({});
+                let shot = new ShotStub(world, new Point(1, 1));
+                let hitArbiter = new HitArbiter(shot);
                 let result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
                 expect(result).to.be.equal(testParameters.result);
             });
@@ -92,40 +101,38 @@ describe('HitArbiter', () => {
     });
 
     describe('#attemptToHit()', () => {
-        it('returns false if the shot misses the actor', () => {
-            let shot = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
-            let actor = new ActorStubBuilder().withCoordinates(1000, 1000).withCollisionMask(-10, 10, -10, 10).build();
+        it('returns false if the shot misses the player', () => {
+            let shot = new ShotStub(world, new Point(1, 1))
+                .setCollisionMask([new Bounds(-10, 10, -10, 10)]);
+            let player = new PlayerStub(world, new Point(100, 100));
             let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(actor);
+            let result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Miss);
         });
 
         it('hits actor for shot damage when shot collides with actor', () => {
-            let shot = new ActorStubBuilder()
-                .withCoordinates(1, 1)
-                .withCollisionMask(-10, 10, -10, 10)
-                .inflictsDamage(10)
-                .build();
-            let actor = new ActorStubBuilder().withCoordinates(1, 1).withCollisionMask(-10, 10, -10, 10).build();
+            let shot = new ShotStub(world, new Point(1, 1))
+                .setCollisionMask([new Bounds(-10, 10, -10, 10)])
+                .setDamageInflicted(10);
+            let sustainedDamage: number = 0;
+            let player = new PlayerStub(world, new Point(1, 1))
+                .onHit(damage => { sustainedDamage += damage });
             let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(actor);
+            let result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Effective);
-            expect(actor.getSustainedDamage()).to.be.equal(10);
+            expect(sustainedDamage).to.be.equal(10);
         });
 
         it('indicates to shot when actor declines damage', () => {
-            let shot = new ActorStubBuilder()
-                .withCoordinates(1, 1)
-                .withCollisionMask(-10, 10, -10, 10)
-                .inflictsDamage(10)
-                .build();
-            let actor = new ActorStubBuilder()
-                .withCoordinates(1, 1)
-                .withCollisionMask(-10, 10, -10, 10)
-                .declinesDamage()
-                .build();
+            let shot = new ShotStub(world, new Point(1, 1))
+                .setCollisionMask([new Bounds(-10, 10, -10, 10)])
+                .setDamageInflicted(10);
+            let sustainedDamage: number = 0;
+            let player = new PlayerStub(world, new Point(1, 1))
+                .onHit(damage => { sustainedDamage += damage })
+                .ignoreHits();
             let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(actor);
+            let result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Ineffective);
         });
     });

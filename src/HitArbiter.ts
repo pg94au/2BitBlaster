@@ -1,13 +1,14 @@
 import Debug from "debug";
 import {HitResult} from "./HitResult";
 import {Point} from "./Point";
+import {Shot} from "./shots/Shot";
 
 const debug = Debug("Blaster:HitArbiter");
 
 export class HitArbiter {
     private readonly _shot: any;
 
-    constructor(shot: any) {
+    constructor(shot: Shot) {
         debug('HitArbiter constructor');
         if (shot === undefined) {
             throw new Error('shot cannot be undefined');
