@@ -4,13 +4,13 @@ import {expect} from 'chai';
 import {Bullet} from "../../src/shots/Bullet";
 import {Point} from "../../src/Point";
 import {ScoreCounter} from "../../src/ScoreCounter";
+import {Shrapnel} from "../../src/shots/Shrapnel";
 import {Splitter} from "../../src/enemies/Splitter";
-const SplitterFragment = require('../../src/enemies/SplitterFragment');
+import {SplitterFragment} from '../../src/enemies/SplitterFragment';
 
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
 import {PlayerStub} from "../stubs/PlayerStub";
-import {Shrapnel} from "../../src/shots/Shrapnel";
 
 const World = require('../../src/World');
 
