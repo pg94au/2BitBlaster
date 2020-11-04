@@ -1,14 +1,13 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
-import {Clock} from '../../src/timing/Clock';
 import {Point} from '../../src/Point';
 import {Probe} from '../../src/enemies/Probe';
 import {ScoreCounter} from '../../src/ScoreCounter';
 import {ClockStub} from "../stubs/ClockStub";
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {Bullet} from "../../src/shots/Bullet";
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 describe('Probe', () => {
     let audioPlayer: any;

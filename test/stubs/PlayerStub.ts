@@ -8,6 +8,7 @@ import {ClockStub} from "./ClockStub";
 export class PlayerStub extends Player {
     private _ignoreHits: boolean = false;
     private _onHit: (damage: number) => void = damage => {};
+    private _onTick: () => void = () => {};
 
     constructor(world: any, startingPoint: Point) {
         super(
@@ -33,5 +34,14 @@ export class PlayerStub extends Player {
     hitBy(shot: any, damage: number): boolean {
         this._onHit(damage);
         return !this._ignoreHits;
+    }
+
+    onTick(value: () => void): PlayerStub {
+        this._onTick = value;
+        return this;
+    }
+
+    tick(): void {
+        this._onTick();
     }
 }

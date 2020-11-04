@@ -9,13 +9,13 @@ import {ScoreCounter} from '../src/ScoreCounter';
 import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
 import {ClockStub} from "./stubs/ClockStub";
 import {JoystickStub} from "./stubs/JoystickStub";
-const World = require('../src/World');
+import {World} from '../src/World';
 
 describe('Player', () => {
     let audioPlayer: AudioPlayerStub;
     let clock: ClockStub;
     let joystick: JoystickStub;
-    let world: typeof World;
+    let world:  World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

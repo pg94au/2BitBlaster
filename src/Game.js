@@ -17,7 +17,7 @@ var SpinnerWave2 = require('./waves/SpinnerWave2');
 var SplitterWave = require('./waves/SplitterWave');
 var StarField = require('./StarField').StarField;
 var TextInterlude = require('./TextInterlude').TextInterlude;
-var World = require('./World');
+var World = require('./World').World;
 
 var Game = function(joystick, renderer, audioPlayer, clock) {
     debug('Game constructor');

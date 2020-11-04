@@ -9,10 +9,21 @@ import {ImageDetails} from "../../src/ImageDetails";
 export class EnemyStub extends Enemy {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
     private _onHit: (damage: number) => void = damage => {};
+    private _onTick: () => void = () => {};
     private _ignoreHits: boolean = false;
+    private _isActive: boolean = true;
 
     constructor(world: any, startingPoint: Point) {
         super(new AudioPlayerStub(), world, startingPoint, 1);
+    }
+
+    isActive(): boolean {
+        return this._isActive;
+    }
+
+    setActiveState(isActive: boolean): EnemyStub {
+        this._isActive = isActive;
+        return this;
     }
 
     onHit(value: (damage: number) => void): EnemyStub {
@@ -49,5 +60,14 @@ export class EnemyStub extends Enemy {
 
     getImageDetails(): ImageDetails {
         return new ImageDetails('image_name', 1, 1, 0);
+    }
+
+    onTick(value: () => void): EnemyStub {
+        this._onTick = value;
+        return this;
+    }
+
+    tick(): void {
+        this._onTick();
     }
 }

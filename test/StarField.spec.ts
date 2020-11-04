@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import {ScoreCounter} from "../src/ScoreCounter";
 import {Star} from '../src/Star';
 import {StarField} from '../src/StarField';
-const World = require("../src/World");
+import {World} from '../src/World';
 
 import {ClockStub} from "./stubs/ClockStub";
 

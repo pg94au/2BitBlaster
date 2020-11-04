@@ -1,14 +1,15 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
+
+import {Bullet} from "../../src/shots/Bullet";
 import {ClockStub} from "../stubs/ClockStub";
 import {Point} from "../../src/Point";
-import {SplitterFragment} from "../../src/enemies/SplitterFragment";
-import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
-import {PlayerStub} from "../stubs/PlayerStub";
-import {Bullet} from "../../src/shots/Bullet";
+import {SplitterFragment} from "../../src/enemies/SplitterFragment";
+import {World} from '../../src/World';
 
-const World = require('../../src/World');
+import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
+import {PlayerStub} from "../stubs/PlayerStub";
 
 describe('SplitterFragment', () => {
     let audioPlayer: any;

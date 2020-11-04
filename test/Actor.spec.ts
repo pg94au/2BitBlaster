@@ -6,7 +6,7 @@ import {ClockStub} from "./stubs/ClockStub";
 import {Direction} from '../src/devices/Direction';
 import {Point} from "../src/Point";
 import {ScoreCounter} from "../src/ScoreCounter";
-import World from "../src/World";
+import {World} from "../src/World";
 
 import {ActorStub} from "./stubs/ActorStub";
 import {AudioPlayerStub} from "./stubs/AudioPlayerStub";

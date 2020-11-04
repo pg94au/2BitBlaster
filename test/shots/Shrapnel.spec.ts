@@ -6,7 +6,7 @@ import {Shrapnel} from '../../src/shots/Shrapnel';
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 describe('Shrapnel', () => {
     let audioPlayer: any;

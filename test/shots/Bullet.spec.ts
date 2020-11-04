@@ -7,7 +7,7 @@ import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {EnemyStub} from "../stubs/EnemyStub";
 import {Bounds} from "../../src/Bounds";
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 describe('Bullet', () => {
     describe('#tick()', () => {

@@ -8,7 +8,7 @@ import {Saucer} from '../../src/enemies/Saucer';
 import {ScoreCounter} from '../../src/ScoreCounter';
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
-const World = require('../../src/World');
+import {World} from '../../src/World';
 
 describe('Saucer', () => {
     let audioPlayer: any;
