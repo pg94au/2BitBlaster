@@ -4,7 +4,7 @@ import {random} from 'underscore';
 
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
-const Enemy = require('./Enemy');
+import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
@@ -30,8 +30,8 @@ export class Saucer extends Enemy {
     private static _flyLeftPathTemplate: PathEntry[];
     private static _flyUpPathTemplate: PathEntry[];
     private static _flyDownPathTemplate: PathEntry[];
-    private static _DiveRightPathTemplate: PathEntry[];
-    private static _DiveLeftPathTemplate: PathEntry[];
+    private static _diveRightPathTemplate: PathEntry[];
+    private static _diveLeftPathTemplate: PathEntry[];
 
     constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint);

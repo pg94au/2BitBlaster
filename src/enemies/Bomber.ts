@@ -3,7 +3,7 @@ const debug = Debug("Blaster:Bomber");
 import {random} from 'underscore';
 
 import {Bounds} from '../Bounds';
-const Enemy = require('./Enemy');
+import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {Grenade} from '../shots/Grenade';
 import {HitArbiter} from '../HitArbiter';
