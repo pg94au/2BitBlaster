@@ -2,7 +2,6 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bomber} from '../../src/enemies/Bomber';
-import {Clock} from '../../src/timing/Clock';
 import {Explosion} from '../../src/Explosion';
 import {Point} from '../../src/Point';
 import {ScoreCounter} from '../../src/ScoreCounter';
