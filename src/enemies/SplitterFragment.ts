@@ -3,7 +3,7 @@ const debug = Debug("Blaster:SplitterFragment");
 import {random} from 'underscore';
 
 import {Bounds} from '../Bounds';
-const Enemy = require('./Enemy');
+import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
@@ -19,6 +19,17 @@ import {PathEntry} from "../paths/PathEntry";
 
 export class SplitterFragment extends Enemy {
     public static readonly InitialHealth: number = 1;
+
+    private static _pathsCalculated: boolean = false;
+    private static _floatAroundPath1Template: PathEntry[];
+    private static _floatAroundPath2Template: PathEntry[];
+    private static _flyRightPathTemplate: PathEntry[];
+    private static _flyLeftPathTemplate: PathEntry[];
+    private static _diveRightPathTemplate: PathEntry[];
+    private static _diveLeftPathTemplate: PathEntry[];
+    private static _flyUpPathTemplate: PathEntry[];
+    private static _flyDownPathTemplate: PathEntry[];
+    private static _separatePath: PathEntry[][];
 
     private readonly _side: SplitterFragment.Side;
     private readonly _scheduler: Scheduler;

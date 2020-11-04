@@ -2,7 +2,7 @@
 
 var _ = require('underscore');
 var debug = require('debug')('Blaster:World');
-var Enemy = require('./enemies/Enemy');
+var Enemy = require('./enemies/Enemy').Enemy;
 var Explosion = require('./Explosion').Explosion;
 var Player = require('./Player').Player;
 

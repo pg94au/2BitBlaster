@@ -3,7 +3,7 @@ const debug = Debug("Blaster:Splitter");
 import {random} from 'underscore';
 
 import {Bounds} from '../Bounds';
-const Enemy = require('./Enemy');
+import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';

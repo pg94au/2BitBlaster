@@ -1,7 +1,9 @@
-import {AudioPlayerStub} from "./AudioPlayerStub";
-import {Point} from "../../src/Point";
 import {Bounds} from "../../src/Bounds";
-const Enemy = require('../../src/enemies/Enemy');
+import {Enemy} from '../../src/enemies/Enemy';
+import {Point} from "../../src/Point";
+
+import {AudioPlayerStub} from "./AudioPlayerStub";
+import {ExplosionProperties} from "../../src/ExplosionProperties";
 
 export class EnemyStub extends Enemy {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
@@ -34,5 +36,13 @@ export class EnemyStub extends Enemy {
 
     getCollisionMask(): Bounds[] {
         return this._collisionMask;
+    }
+
+    getExplosionProperties(): ExplosionProperties {
+        throw new Error('Not implemented');
+    }
+
+    getScoreTotal(): number {
+        throw new Error('Not implemented');
     }
 }

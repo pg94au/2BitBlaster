@@ -2,7 +2,7 @@ var expect = require('chai').expect;
 
 var Actor = require('../src/Actor');
 var Clock = require('../src/timing/Clock').Clock;
-var Enemy = require('../src/enemies/Enemy');
+var Enemy = require('../src/enemies/Enemy').Enemy;
 var Explosion = require('../src/Explosion').Explosion;
 var Player = require('../src/Player').Player;
 var Point = require('../src/Point').Point;

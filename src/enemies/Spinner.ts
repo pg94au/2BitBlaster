@@ -4,7 +4,7 @@ import {random} from 'underscore';
 
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
-const Enemy = require('./Enemy');
+import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
