@@ -3,6 +3,7 @@ import {Shot} from '../../src/shots/Shot';
 import {Point} from "../../src/Point";
 
 import {ExplosionProperties} from "../../src/ExplosionProperties";
+import {ImageDetails} from "../../src/ImageDetails";
 
 export class ShotStub extends Shot {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
@@ -43,5 +44,9 @@ export class ShotStub extends Shot {
 
     getScoreTotal(): number {
         throw new Error('Not implemented');
+    }
+
+    getImageDetails(): ImageDetails {
+        return new ImageDetails('image_name', 1, 1, 0);
     }
 }
