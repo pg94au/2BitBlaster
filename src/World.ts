@@ -47,40 +47,19 @@ export class World {
     }
 
     getActiveEnemies(): Enemy[] {
-        let activeEnemies: Enemy[] = [];
-        for (let i=0; i < this._actors.length; i++) {
-            if (this._actors[i].isActive()) {
-                if (this._actors[i] instanceof Enemy) {
-                    activeEnemies.push(<Enemy>this._actors[i]);
-                }
-            }
-        }
-
-        return activeEnemies;
+        return this._actors.filter(
+            (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive() }
+            );
     }
 
     getActiveExplosions(): Explosion[] {
-        let activeExplosions: Explosion[] = [];
-        for (let i=0; i < this._actors.length; i++) {
-            if (this._actors[i].isActive()) {
-                if (this._actors[i] instanceof Explosion) {
-                    activeExplosions.push(<Explosion>this._actors[i]);
-                }
-            }
-        }
-
-        return activeExplosions;
+        return this._actors.filter(
+            (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive() }
+            );
     }
 
     getPlayer(): Player | null {
-        let player: Player | null = null;
-        for (let i=0; i < this._actors.length; i++) {
-            if (this._actors[i] instanceof Player) {
-                player = <Player>this._actors[i];
-            }
-        }
-
-        return player;
+        return this._actors.find((actor): actor is Player => { return actor instanceof Player }) || null;
     }
 
     getScoreCounter(): ScoreCounter {
@@ -93,8 +72,7 @@ export class World {
 
     tick(): void {
         debug('World.tick');
-        for (let i=0; i < this._actors.length; i++) {
-            let actor = this._actors[i];
+        for (let actor of this._actors) {
             debug('World.tick: ticking %o', actor);
             actor.tick();
         }
