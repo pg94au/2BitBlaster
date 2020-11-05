@@ -1,7 +1,7 @@
 var expect = require('chai').expect;
 
 var Clock = require('../src/timing/Clock').Clock;
-var Game = require('../src/Game');
+var Game = require('../src/Game').Game;
 
 var AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');
 var ClockStubBuilder = require('./builders/ClockStubBuilder');
