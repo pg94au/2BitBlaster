@@ -3,7 +3,7 @@ const debug = Debug("Blaster:Main");
 
 import AudioPlayer from './devices/AudioPlayer';
 import {Clock} from './timing/Clock';
-import Game from './Game';
+import {Game} from './Game';
 import Joystick from './devices/Joystick';
 import Renderer from './devices/Renderer';
 
