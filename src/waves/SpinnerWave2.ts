@@ -1,10 +1,11 @@
 import Debug from "debug";
 const debug = Debug("Blaster:SpinnerWave2");
 
-import {Point} from '../Point';
-import {Spinner} from '../enemies/Spinner';
-import {Scheduler} from '../timing/Scheduler';
 import {Clock} from "../timing/Clock";
+import {Point} from '../Point';
+import {Scheduler} from '../timing/Scheduler';
+import {Spinner} from '../enemies/Spinner';
+import {Wave} from './Wave';
 import {World} from "../World";
 
 export class SpinnerWave2 implements Wave {

@@ -2,10 +2,11 @@ import Debug from "debug";
 const debug = Debug("Blaster:SplitterWave");
 import {random} from 'underscore';
 
+import {Clock} from "../timing/Clock";
 import {Point} from '../Point';
 import {Splitter} from '../enemies/Splitter';
+import {Wave} from './Wave';
 import {World} from "../World";
-import {Clock} from "../timing/Clock";
 
 export class SplitterWave implements Wave {
     private readonly _audioPlayer: any;

@@ -1,12 +1,12 @@
 import {Direction} from "../../src/devices/Direction";
 
-const Joystick = require('../../src/devices/Joystick');
+import {Joystick} from '../../src/devices/Joystick';
 
 export class JoystickStub extends Joystick {
     private _currentDirection: Direction = Direction.None;
-    private _fireState: boolean = false;
+    private _currentFireState: boolean = false;
 
-    setCurrentDirection(direction: Direction): typeof Joystick {
+    setCurrentDirection(direction: Direction): JoystickStub {
         this._currentDirection = direction;
         return this;
     }
@@ -15,12 +15,12 @@ export class JoystickStub extends Joystick {
         return this._currentDirection;
     }
 
-    setFireState(fireState: boolean): typeof Joystick {
-        this._fireState = fireState;
+    setFireState(fireState: boolean): JoystickStub {
+        this._currentFireState = fireState;
         return this;
     }
 
     getFireState(): boolean {
-        return this._fireState;
+        return this._currentFireState;
     }
 }

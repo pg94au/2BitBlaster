@@ -1,13 +1,10 @@
-var assert = require('assert');
-var expect = require('chai').expect;
+import {describe} from 'mocha';
+import {expect} from 'chai';
 
-var Direction = require('../../src/devices/Direction').Direction;
-var Joystick = require('../../src/devices/Joystick');
+import {Direction} from '../../src/devices/Direction';
+import {Joystick} from '../../src/devices/Joystick';
 
-//TODO: The 'equal' test on the enum produces a very bad error message if an
-// expectation fails.  Comparing the 'key' property is better, but not as elegant.
-
-var testData = [
+let testData = [
     // No event.
     {
         events: [],
@@ -105,58 +102,60 @@ var testData = [
     }
 ];
 
-describe('Joystick', function() {
-    describe('#getCurrentDirection()', function() {
+describe('Joystick', () => {
+    describe('#getCurrentDirection()', () => {
         // Execute all test data as individual test cases.
-        testData.forEach(
-            function(testInput) {
-                it('should should result in ' + testInput.result.key + ' after events [' + testInput.events + ']', function() {
-                    var joystick = new Joystick();
+        for (let testInput of testData) {
+            it('should should result in ' + testInput.result + ' after events [' + testInput.events + ']', () => {
+                let joystick = new Joystick();
 
-                    testInput.events.forEach(
-                        function(event) {
-                            joystick[event]();
-                        }
-                    );
-
-                    expect(joystick.getCurrentDirection()).to.be.equal(testInput.result);
+                for (let event of testInput.events) {
+                    (<any>joystick)[event]();
                 }
-            );
-        });
+
+                let currentDirection = joystick.getCurrentDirection();
+                if (currentDirection !== testInput.result) {
+                    joystick.getCurrentDirection();
+                    console.log('hey!');
+                }
+
+                expect(joystick.getCurrentDirection()).to.be.equal(testInput.result);
+            })
+        }
     });
 
-    describe('#getFireState()', function() {
-        it('should start not set', function() {
-            var joystick = new Joystick();
+    describe('#getFireState()', () => {
+        it('should start not set', () => {
+            let joystick = new Joystick();
             expect(joystick.getFireState()).to.be.false;
         });
     });
 
-    describe('#startFire()', function() {
-        it('should enable fire state', function () {
-            var joystick = new Joystick();
+    describe('#startFire()', () => {
+        it('should enable fire state', () => {
+            let joystick = new Joystick();
             joystick.startFire();
             expect(joystick.getFireState()).to.be.true;
         });
 
-        it('should retain enabled fire state when called consecutively', function() {
-            var joystick = new Joystick();
+        it('should retain enabled fire state when called consecutively', () => {
+            let joystick = new Joystick();
             joystick.startFire();
             joystick.startFire();
             expect(joystick.getFireState()).to.be.true;
         });
     });
 
-    describe('#stopFire()', function() {
-        it('should disable fire state', function() {
-            var joystick = new Joystick();
+    describe('#stopFire()', () => {
+        it('should disable fire state', () => {
+            let joystick = new Joystick();
             joystick.startFire();
             joystick.stopFire();
             expect(joystick.getFireState()).to.be.false;
         });
 
-        it('should retain disabled fire state when called consecutively', function() {
-            var joystick = new Joystick();
+        it('should retain disabled fire state when called consecutively', () => {
+            let joystick = new Joystick();
             joystick.startFire();
             joystick.stopFire();
             joystick.stopFire();

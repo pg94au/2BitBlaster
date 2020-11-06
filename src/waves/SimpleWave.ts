@@ -2,10 +2,11 @@ import Debug from "debug";
 const debug = Debug("Blaster:SimpleWave");
 import {random} from 'underscore';
 
+import {Clock} from "../timing/Clock";
 import {Point} from '../Point';
 import {Saucer} from '../enemies/Saucer';
+import {Wave} from './Wave';
 import {World} from "../World";
-import {Clock} from "../timing/Clock";
 
 export class SimpleWave implements Wave {
     private readonly _audioPlayer: any;
