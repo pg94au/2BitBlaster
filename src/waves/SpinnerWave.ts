@@ -3,11 +3,12 @@ const debug = Debug("Blaster:SpinnerWave");
 import {random} from 'underscore';
 
 import {Bomber} from '../enemies/Bomber';
-import {Point} from '../Point';
-import {Spinner} from '../enemies/Spinner';
-import {Scheduler} from '../timing/Scheduler';
-import {World} from "../World";
 import {Clock} from "../timing/Clock";
+import {Point} from '../Point';
+import {Scheduler} from '../timing/Scheduler';
+import {Spinner} from '../enemies/Spinner';
+import {Wave} from './Wave';
+import {World} from "../World";
 
 export class SpinnerWave implements Wave {
     private readonly _audioPlayer: any;

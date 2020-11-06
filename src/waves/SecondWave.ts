@@ -1,10 +1,11 @@
 import Debug from "debug";
 const debug = Debug("Blaster:SecondWave");
 
+import {Clock} from "../timing/Clock";
 import {Point} from '../Point';
 import {Probe} from '../enemies/Probe';
+import {Wave} from './Wave';
 import {World} from "../World";
-import {Clock} from "../timing/Clock";
 
 export class SecondWave implements Wave {
     private readonly _audioPlayer: any;
