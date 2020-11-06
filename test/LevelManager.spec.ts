@@ -4,22 +4,33 @@ import {times} from 'underscore';
 
 import {LevelManager} from "../src/LevelManager";
 import {LevelState} from "../src/LevelState";
+import {ScoreCounter} from "../src/ScoreCounter";
 import {Text} from '../src/Text';
+
+import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
 import {ClockStub} from "./stubs/ClockStub";
 import {LevelStub} from "./stubs/LevelStub";
-
-const AudioPlayerStubBuilder = require('./builders/AudioPlayerStubBuilder');
-const WorldStubBuilder = require('./builders/WorldStubBuilder');
+import {WorldStub} from "./stubs/WorldStub";
 
 describe('LevelManager', () => {
+    let audioPlayer: AudioPlayerStub;
+    let clock: ClockStub;
+    let world:  WorldStub;
+
+    beforeEach(() => {
+        audioPlayer = new AudioPlayerStub();
+        clock = new ClockStub();
+        world = new WorldStub(480, 640, new ScoreCounter());
+    });
+
     describe('#ctor()', () => {
         it('starts in an active state', () => {
-            let levelManager = new LevelManager({}, {}, new ClockStub(), []);
+            let levelManager = new LevelManager(audioPlayer, world, clock, []);
             expect(levelManager.active).to.be.true;
         });
 
         it('starts at level one', () => {
-            let levelManager = new LevelManager({}, {}, new ClockStub(), []);
+            let levelManager = new LevelManager(audioPlayer, world, clock, []);
             expect(levelManager.currentLevel).to.be.equal(1);
         });
     });
@@ -27,7 +38,7 @@ describe('LevelManager', () => {
     describe('#on()', () => {
         it('immediately emits a level event', () => {
             let levelUpdate : number | null = null;
-            let levelManager = new LevelManager({}, {}, new ClockStub(), []);
+            let levelManager = new LevelManager(audioPlayer, world, clock, []);
             levelManager.on('level', (currentLevel: number) => {
                 levelUpdate = currentLevel;
             });
@@ -39,15 +50,8 @@ describe('LevelManager', () => {
         it('starts with a delay before level text is displayed', () => {
             let textAdded = false;
             let level1 = new LevelStub().isActive(true);
-            let clock = new ClockStub();
-            let world = new WorldStubBuilder().build();
             world.addText = (text: Text) => { textAdded = true; };
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1]);
             levelManager.tick();
             levelManager.tick();
             expect(textAdded).to.be.false;
@@ -55,9 +59,6 @@ describe('LevelManager', () => {
 
         it ('displays level text after an initial delay', () => {
             let textAdded = false;
-            let audioPlayer = new AudioPlayerStubBuilder().build();
-            let clock = new ClockStub();
-            let world = new WorldStubBuilder().build();
             world.addText = (text: Text) => { textAdded = true; };
             let levelManager = new LevelManager(audioPlayer, world, clock, [new LevelStub()]);
             levelManager.tick(); // Tick to schedule text display.
@@ -68,9 +69,6 @@ describe('LevelManager', () => {
 
         it('removes level text after a delay', () => {
             let addedText: Text | null = null;
-            let audioPlayer = new AudioPlayerStubBuilder().build();
-            let clock = new ClockStub();
-            let world = new WorldStubBuilder().build();
             world.addText = (text: Text) => { addedText = text; };
             let levelManager = new LevelManager(audioPlayer, world, clock, [new LevelStub()]);
             levelManager.tick(); // Tick to schedule text display.
@@ -88,12 +86,7 @@ describe('LevelManager', () => {
                 .isActive(true)
                 .onTick(() => { level1Ticked = true });
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1]);
             levelManager.tick(); // Schedules intro.
             clock.addSeconds(100);
             levelManager.tick(); // Clears intro.
@@ -108,12 +101,7 @@ describe('LevelManager', () => {
                 .isActive(true)
                 .onTick(() => { level2Ticked = true });
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1, level2]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1, level2]);
             // Tick through first level before we get to the second.
             times(2, (n: number) => {
                 levelManager.tick(); // Schedules intro.
@@ -130,12 +118,7 @@ describe('LevelManager', () => {
             let level1 = new LevelStub().isActive(false);
             let level2 = new LevelStub().isActive(true);
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1, level2]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1, level2]);
             levelManager.on('level', (currentLevel: number) => { levelFromEvent = currentLevel });
             // Tick through first level before we get to the second.
             times(2, (n: number) => {
@@ -150,12 +133,7 @@ describe('LevelManager', () => {
         it('starts the game win sequence after there are no more levels left', () => {
             let level1 = new LevelStub().isActive(false);
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1]);
             levelManager.tick(); // Schedules intro.
             clock.addSeconds(100);
             levelManager.tick(); // Clears intro.
@@ -166,12 +144,7 @@ describe('LevelManager', () => {
         it('removes game win text and becomes inactive when the game win sequence ends', () => {
             let level1 = new LevelStub().isActive(false);
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1]);
             levelManager.tick(); // Schedules intro.
             clock.addSeconds(100);
             levelManager.tick(); // Clears intro.
@@ -188,12 +161,7 @@ describe('LevelManager', () => {
             let levelUpdate = null;
 
             let clock = new ClockStub();
-            let levelManager = new LevelManager(
-                new AudioPlayerStubBuilder().build(),
-                new WorldStubBuilder().build(),
-                clock,
-                [level1]
-            );
+            let levelManager = new LevelManager(audioPlayer, world, clock, [level1]);
             levelManager.on('level', (currentLevel: number) => {
                 levelUpdate = currentLevel;
             });
