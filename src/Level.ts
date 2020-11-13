@@ -1,13 +1,14 @@
 import Debug from "debug";
-
 const debug = Debug("Blaster:Level");
+
+import {Wave} from "./waves/Wave";
 
 export class Level {
     private _active: boolean = true;
     private _currentWave: number = 0;
-    private _waves: any[];
+    private _waves: Wave[];
 
-    constructor(waves: any[]) {
+    constructor(waves: Wave[]) {
         debug('Level constructor');
         if (waves === undefined) {
             throw new Error('waves cannot be undefined');

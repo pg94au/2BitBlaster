@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../../src/Actor";
 import {Bullet} from "../../src/shots/Bullet";
 import {Point} from "../../src/Point";
 import {ScoreCounter} from "../../src/ScoreCounter";
@@ -17,7 +18,7 @@ describe('Splitter', () => {
     let audioPlayer: any;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
@@ -49,7 +50,7 @@ describe('Splitter', () => {
            let splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
            splitter.dropBomb();
 
-           expect(world.getActors().filter((actor: any) => { return (actor instanceof Shrapnel) }).length).to.be.equal(2);
+           expect(world.getActors().filter((actor: Actor) => { return (actor instanceof Shrapnel) }).length).to.be.equal(2);
        });
     });
 
@@ -92,7 +93,7 @@ describe('Splitter', () => {
             splitter.hitBy(bullet, 1);
             splitter.tick();
 
-            expect(world.getActors().filter((actor: any) => { return (actor instanceof SplitterFragment)}).length).to.be.equal(2);
+            expect(world.getActors().filter((actor: Actor) => { return (actor instanceof SplitterFragment)}).length).to.be.equal(2);
         });
 
         it('should increment the score when it is destroyed', () => {

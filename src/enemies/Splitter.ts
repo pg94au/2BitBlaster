@@ -2,21 +2,23 @@ import Debug from "debug";
 const debug = Debug("Blaster:Splitter");
 import {random} from 'underscore';
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {PathAction} from '../paths/PathAction';
+import {PathEntry} from "../paths/PathEntry";
 import {PathTemplate} from '../paths/PathTemplate';
 import {Point} from '../Point';
 import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {Shrapnel} from '../shots/Shrapnel';
 import {SplinePath} from '../paths/SplinePath';
-import {Clock} from "../timing/Clock";
-import {PathEntry} from "../paths/PathEntry";
 import {SplitterFragment} from './SplitterFragment';
+import {World} from "../World";
 
 export class Splitter extends Enemy {
     private static readonly InitialHealth = 1;
@@ -40,7 +42,7 @@ export class Splitter extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Splitter.InitialHealth);
         debug('Splitter constructor');
 
@@ -71,7 +73,7 @@ export class Splitter extends Enemy {
         return [new Bounds(-40, 40, -20, 20)];
     }
 
-    getDamageAgainst(): number {
+    getDamageAgainst(actor: Actor): number {
         return 5;
     }
 
@@ -79,7 +81,7 @@ export class Splitter extends Enemy {
         return new ImageDetails('splitter', 6, 100, this._frameIndices[this._currentFrame]);
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

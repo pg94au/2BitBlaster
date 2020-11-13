@@ -1,13 +1,15 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../../src/Actor";
 import {Bomber} from '../../src/enemies/Bomber';
+import {Bullet} from "../../src/shots/Bullet";
 import {Explosion} from '../../src/Explosion';
 import {Point} from '../../src/Point';
 import {ScoreCounter} from '../../src/ScoreCounter';
-import {ClockStub} from "../stubs/ClockStub";
+
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
-import {Bullet} from "../../src/shots/Bullet";
+import {ClockStub} from "../stubs/ClockStub";
 import {WorldStub} from "../stubs/WorldStub";
 
 describe('Bomber', function() {
@@ -45,14 +47,17 @@ describe('Bomber', function() {
         });
 
         it('should remain active after hit if health remains above zero', () => {
+            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            world.addActor(bullet);
+
             let bomber = new Bomber(audioPlayer, world, clock, 10);
-            bomber.hitBy({}, 0.5);
+            bomber.hitBy(bullet, 0.5);
             bomber.tick();
             expect(bomber.isActive()).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
-            let addedActor: Explosion | null = null;
+            let addedActor: Actor | null = null;
             world.onAddActor(actor => { addedActor = actor });
 
             let bullet = new Bullet(audioPlayer, world, new Point(10, 10));

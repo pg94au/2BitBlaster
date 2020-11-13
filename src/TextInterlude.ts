@@ -1,27 +1,28 @@
 import Debug from "debug";
 const debug = Debug("Blaster:TextInterlude");
 
+import {Clock} from "./timing/Clock";
 import {Scheduler} from "./timing/Scheduler";
 import {Text} from "./Text";
-import {Clock} from "./timing/Clock";
+import {World} from "./World";
 
 export class TextInterlude {
-    private _world: any;
+    private _world: World;
     private _clock: Clock;
-    private _textContent: string;
-    private _font: string;
-    private _color: string;
-    private _xPosition: number;
-    private _yPosition: number;
-    private _preDisplayTimeInMillis: number;
-    private _displayTimeInMillis: number;
-    private _postDisplayTimeInMillis: number;
-    private _scheduler: any;
+    private readonly _textContent: string;
+    private readonly _font: string;
+    private readonly _color: string;
+    private readonly _xPosition: number;
+    private readonly _yPosition: number;
+    private readonly _preDisplayTimeInMillis: number;
+    private readonly _displayTimeInMillis: number;
+    private readonly _postDisplayTimeInMillis: number;
+    private _scheduler: Scheduler;
     private _interludeText!: Text;
     private _active: boolean = true;
 
     constructor(
-        world: any,
+        world: World,
         clock: Clock,
         textContent: string,
         font: string,

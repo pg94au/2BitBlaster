@@ -1,10 +1,10 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
-import {Dimensions} from "../src/Dimensions";
-import {ScoreCounter} from "../src/ScoreCounter";
 
+import {Dimensions} from "../src/Dimensions";
 import {Explosion} from '../src/Explosion';
 import {Point} from '../src/Point';
+import {ScoreCounter} from "../src/ScoreCounter";
 import {World} from '../src/World';
 
 import {ActorStub} from './stubs/ActorStub';
@@ -18,7 +18,7 @@ describe('World', () => {
     let audioPlayer: any;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

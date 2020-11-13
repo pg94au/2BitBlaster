@@ -2,7 +2,8 @@ import Debug from "debug";
 const debug = Debug("Blaster:Bomber");
 import {random} from 'underscore';
 
-import {Bounds} from '../Bounds';
+import {Actor} from "../Actor";
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {Grenade} from '../shots/Grenade';
@@ -10,7 +11,8 @@ import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Scheduler} from '../timing/Scheduler';
-import {Clock} from "../timing/Clock";
+import {World} from "../World";
+import {Bounds} from "../Bounds";
 
 export class Bomber extends Enemy {
     private static readonly InitialHealth: number = 1;
@@ -21,7 +23,7 @@ export class Bomber extends Enemy {
     private _currentFrame: number = 0;
     private readonly _grenadeDropPosition: number;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startY: number) {
+    constructor(audioPlayer: any, world: World, clock: Clock, startY: number) {
         super(audioPlayer, world, new Point(-40, startY), Bomber.InitialHealth);
         debug('Bomber constructor');
 
@@ -50,7 +52,7 @@ export class Bomber extends Enemy {
         return [new Bounds(-35, 45, -19, 19)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 5;
     }
 
@@ -58,7 +60,7 @@ export class Bomber extends Enemy {
         return new ImageDetails('bomber', 6, 80, this._frameIndices[this._currentFrame]);
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

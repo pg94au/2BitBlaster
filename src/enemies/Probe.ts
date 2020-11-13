@@ -2,20 +2,22 @@ import Debug from "debug";
 const debug = Debug("Blaster:Probe");
 import {random} from 'underscore';
 
+import {Actor} from "../Actor";
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {PathAction} from '../paths/PathAction';
+import {PathEntry} from "../paths/PathEntry";
 import {PathTemplate} from '../paths/PathTemplate';
 import {Point} from '../Point';
 import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
-import {Clock} from "../timing/Clock";
-import {PathEntry} from "../paths/PathEntry";
+import {World} from "../World";
 
 export class Probe extends Enemy {
     public static readonly InitialHealth: number = 3;
@@ -31,7 +33,7 @@ export class Probe extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Probe.InitialHealth);
         debug('Probe constructor');
 
@@ -61,7 +63,7 @@ export class Probe extends Enemy {
         return [new Bounds(-20, 20, -20, 20)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 5;
     }
 
@@ -69,7 +71,7 @@ export class Probe extends Enemy {
         return new ImageDetails('probe', 3, 70, Math.min(3 - this._health, 2));
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

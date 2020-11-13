@@ -3,16 +3,17 @@ import {expect} from 'chai';
 
 import {Grenade} from '../../src/shots/Grenade';
 import {Point} from '../../src/Point';
+import {Shrapnel} from '../../src/shots/Shrapnel';
+import {World} from '../../src/World';
+
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
-import {Shrapnel} from '../../src/shots/Shrapnel';
-import {World} from '../../src/World';
 
 describe('Grenade', () => {
     describe('#tick()', () => {
         let audioPlayer: any;
-        let world: any;
+        let world: World;
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();

@@ -2,17 +2,19 @@ import Debug from "debug";
 const debug = Debug("Blaster:Actor");
 import {v4 as uuid} from 'uuid';
 
+import {Bounds} from "./Bounds";
 import {Direction} from './devices/Direction';
 import {ImageDetails} from './ImageDetails';
 import {Point} from './Point';
+import {World} from "./World";
 
 export abstract class Actor {
     protected readonly _id: string = uuid();
-    protected readonly _world: any;
+    protected readonly _world: World;
     protected _location: Point;
     protected _active: boolean = true;
 
-    protected constructor(world: any, startCoordinates: Point) {
+    protected constructor(world: World, startCoordinates: Point) {
         debug('Actor constructor');
         this._world = world;
         this._location = startCoordinates;
@@ -50,6 +52,8 @@ export abstract class Actor {
     }
 
     abstract tick(): void;
+
+    abstract getCollisionMask(actor: Actor): Bounds[];
 
     abstract getImageDetails(): ImageDetails;
 

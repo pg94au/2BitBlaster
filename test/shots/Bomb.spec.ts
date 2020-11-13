@@ -11,8 +11,8 @@ import {PlayerStub} from "../stubs/PlayerStub";
 
 describe('Bomb', () => {
     describe('#tick()', () => {
-        let audioPlayer: any;
-        let world: any;
+        let audioPlayer: AudioPlayerStub;
+        let world: World;
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();

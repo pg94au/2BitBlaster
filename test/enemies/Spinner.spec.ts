@@ -10,10 +10,10 @@ import {Bullet} from "../../src/shots/Bullet";
 import {World} from '../../src/World';
 
 describe('Spinner', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayerStub;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

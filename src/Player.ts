@@ -13,6 +13,8 @@ import {ImageDetails} from './ImageDetails';
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
 import {Clock} from "./timing/Clock";
+import {World} from "./World";
+import {Shot} from "./shots/Shot";
 
 export class Player extends Actor {
     private readonly _joystick: any;
@@ -28,7 +30,7 @@ export class Player extends Actor {
     private _invulnerableFrames: number[] = [1, 2, 3, 3, 2, 1];
     private _currentInvulnerableFrameIndex: number = 2;
 
-    constructor(joystick: any, audioPlayer: any, world: any, startingPoint: Point, bounds: Bounds, clock: Clock) {
+    constructor(joystick: any, audioPlayer: any, world: World, startingPoint: Point, bounds: Bounds, clock: Clock) {
         super(world, startingPoint);
 
         this._joystick = joystick;
@@ -52,7 +54,7 @@ export class Player extends Actor {
         }
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 5;
     }
 
@@ -87,7 +89,7 @@ export class Player extends Actor {
         return 10;
     }
 
-    hitBy(shot: any, damage: number): boolean {
+    hitBy(shot: Shot, damage: number): boolean {
         if (this._vulnerable) {
             this._currentHealth = Math.max(0, this._currentHealth - damage);
             this._eventEmitter.emit('health', this._currentHealth);

@@ -1,10 +1,11 @@
 import {Level} from "../../src/Level";
+import {Wave} from "../../src/waves/Wave";
 
 export class LevelStub extends Level {
     private _stubActive: boolean = true;
     private _onTick: () => void = () => {};
 
-    constructor(waves: any[] = []) {
+    constructor(waves: Wave[] = []) {
         super(waves);
     }
 

@@ -1,9 +1,10 @@
+import {Actor} from "../../src/Actor";
 import {Bounds} from "../../src/Bounds";
-import {Shot} from '../../src/shots/Shot';
-import {Point} from "../../src/Point";
-
 import {ExplosionProperties} from "../../src/ExplosionProperties";
 import {ImageDetails} from "../../src/ImageDetails";
+import {Point} from "../../src/Point";
+import {Shot} from '../../src/shots/Shot';
+import {World} from "../../src/World";
 
 export class ShotStub extends Shot {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
@@ -11,11 +12,11 @@ export class ShotStub extends Shot {
     private _ignoreHits: boolean = false;
     private _damageInflicted: number = 1;
 
-    constructor(world: any, startingPoint: Point) {
+    constructor(world: World, startingPoint: Point) {
         super(world, startingPoint);
     }
 
-    hitBy(shot: any, damage: number): boolean {
+    hitBy(shot: Shot, damage: number): boolean {
         this._onHit(damage);
         return !this._ignoreHits;
     }
@@ -34,7 +35,7 @@ export class ShotStub extends Shot {
         return this;
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return this._damageInflicted;
     }
 

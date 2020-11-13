@@ -7,6 +7,8 @@ import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Shot} from './Shot';
+import {World} from "../World";
+import {Actor} from "../Actor";
 
 export class Shrapnel extends Shot {
     private readonly _audioPlayer: any;
@@ -16,7 +18,7 @@ export class Shrapnel extends Shot {
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(audioPlayer: any, world: any, startingPoint: Point, trajectory: number) {
+    constructor(audioPlayer: any, world: World, startingPoint: Point, trajectory: number) {
         super(world, startingPoint);
         debug('Shrapnel constructor');
 
@@ -30,7 +32,7 @@ export class Shrapnel extends Shot {
         return [new Bounds(-5, 5, -5, 5)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 1;
     }
 
