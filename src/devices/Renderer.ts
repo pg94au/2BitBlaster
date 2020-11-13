@@ -14,7 +14,7 @@ export class Renderer {
     private _renderer: any;
     private _stage!: PIXI.Container;
     private _activeSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
-    private _activeTexts: any = {};
+    private _activeTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();
     private _preloadedImages: Map<string, PIXI.Texture> = new Map<string, PIXI.Texture>();
 
     constructor(containerElement: HTMLElement) {
@@ -109,17 +109,22 @@ export class Renderer {
 
     addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
-        for (let text of this._world.getTexts()) {
-            let pixiText = this._activeTexts[text.id];
-            if (pixiText == null) {
+        let texts = this._world.getTexts();
+        for (let text of texts) {
+            let pixiText : PIXI.Text | undefined = this._activeTexts.get(text.id);
+
+            // Add a new text if one does not already exist.
+            if (!pixiText) {
                 pixiText = new PIXI.Text(text.content, {font: text.font, fill: text.color});
+                pixiText.scale.x = 2;
+                pixiText.scale.y = 2;
                 pixiText.anchor.x = 0.5;
                 pixiText.anchor.y = 0.5;
-                let textCoordinates = text.coordinates;
-                pixiText.position.x = textCoordinates.x;
-                pixiText.position.y = textCoordinates.y;
+                pixiText.position.x = text.coordinates.x;
+                pixiText.position.y = text.coordinates.y;
+                pixiText.resolution = 2;
                 pixiText.zIndex = 1000000; // Always on top
-                this._activeTexts[text.id] = pixiText;
+                this._activeTexts.set(text.id, pixiText);
                 this._stage.addChild(pixiText);
             }
         }
@@ -138,15 +143,13 @@ export class Renderer {
 
     cleanUpInactiveText() {
         // Remove any text were the associated text items no longer exist.
-        for (let textId in this._activeTexts) {
-            if (this._activeTexts.hasOwnProperty(textId)) {
-                // Check if there exists a text with id == textId.
-                if (this._world.getTexts().find(textItem => { return textItem.id == textId })) {
-                    this._stage.removeChild(this._activeTexts[textId]);
-                    delete this._activeTexts[textId];
-                }
+        this._activeTexts.forEach((text: PIXI.Text, textId: string) => {
+            // Check if there exists a text with id == textId.
+            if (!this._world.getTexts().find(text => { return text.id == textId })) {
+                this._stage.removeChild(text);
+                this._activeTexts.delete(textId);
             }
-        }
+        });
     }
 
     sortSpritesByActorZOrder() {
