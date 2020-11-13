@@ -3,13 +3,15 @@ const debug = Debug("Blaster:Game");
 import {EventEmitter} from "events";
 
 import {Bounds} from './Bounds';
+import {Clock} from "./timing/Clock";
 import {Level} from './Level';
 import {LevelManager} from './LevelManager';
 import {Player} from './Player';
 import {Point} from './Point';
-import {SecondWave} from './waves/SecondWave';
+import {Renderer} from "./devices/Renderer";
 import {Scheduler} from './timing/Scheduler';
 import {ScoreCounter} from './ScoreCounter';
+import {SecondWave} from './waves/SecondWave';
 import {SimpleWave} from './waves/SimpleWave';
 import {SpinnerWave} from './waves/SpinnerWave';
 import {SpinnerWave2} from './waves/SpinnerWave2';
@@ -17,11 +19,10 @@ import {SplitterWave} from './waves/SplitterWave';
 import {StarField} from './StarField';
 import {TextInterlude} from './TextInterlude';
 import {World} from './World';
-import {Clock} from "./timing/Clock";
 
 export class Game {
     private readonly _joystick: any;
-    private readonly _renderer: any;
+    private readonly _renderer: Renderer;
     private readonly _audioPlayer: any;
     private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
@@ -35,7 +36,7 @@ export class Game {
     private _textInterlude!: TextInterlude | null;
     private _isActive: boolean = false;
 
-    constructor(joystick: any, renderer: any, audioPlayer: any, clock: Clock) {
+    constructor(joystick: any, renderer: Renderer, audioPlayer: any, clock: Clock) {
         debug('Game constructor');
         this._joystick = joystick;
         this._renderer = renderer;
