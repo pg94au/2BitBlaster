@@ -62,7 +62,6 @@ export class Renderer {
     private _worldDimensions!: Dimensions;
     private _renderer: any;
     private _stage!: PIXI.Container;
-//    private _activeSprites: any = {};
     private _activeSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
     private _activeTexts: any = {};
     private _preloadedImages: Map<string, PIXI.Texture> = new Map<string, PIXI.Texture>();
@@ -116,19 +115,6 @@ export class Renderer {
     render() {
         this.setScale();
 
-        // let spriteSheetTexture = this._preloadedImages.get('player')!;
-        // let actorSprite = new PIXI.Sprite(spriteSheetTexture);
-        // actorSprite.anchor.set(0.5);
-        // let texture = new PIXI.Texture(
-        //     spriteSheetTexture.baseTexture,
-        //     new PIXI.Rectangle(0, 0, 50, spriteSheetTexture.height)
-        // )
-        // actorSprite.texture = texture;
-        //
-        // this._stage.addChild(actorSprite);
-        // actorSprite.position.x = 100;
-        // actorSprite.position.y = 100;
-
         this.addAnyUnrenderedNewSpritesToStage();
 
         this.addAnyUnrenderedNewTextToStage();
@@ -170,74 +156,6 @@ export class Renderer {
         }
     }
 
-    // XaddAnyUnrenderedNewSpritesToStage() {
-    //     let actors = this._world.getActors();
-    //     for (let actor of actors) {
-    //         let imageDetails = actor.getImageDetails();
-    //
-    //         debug('An actor with id ' + actor.getId() + ' and image name ' + imageDetails.name +
-    //             ' is at position ' + JSON.stringify(actor.getCoordinates()));
-    //
-    //         let actorSprite : PIXI.Sprite | null = this._activeSprites[actor.getId()];
-    //         // Remove an existing sprite if the image does not match the one requested by the actor.
-    //         // @ts-ignore
-    //         if (actorSprite && (actorSprite.imageName !== imageDetails.name)) {
-    //             this._stage.removeChild(this._activeSprites[actor.getId()]);
-    //             delete this._activeSprites[actor.getId()];
-    //             actorSprite = null;
-    //         }
-    //         // Add a new sprite for this actor if one does not already exist.
-    //         if (actorSprite == null) {
-    //             // Create new sprite for this actor, remember it, and add it to the stage.
-    //             //let spriteSheetTexture;
-    //             // try {
-    //             //     // @ts-ignore
-    //             //     spriteSheetTexture = PIXI.Texture.fromImage(this._preloadedImages.get(imageDetails.name));
-    //             // }
-    //             // catch (e) {
-    //             //     throw new Error('Image [' + imageDetails.name + '] has not been pre-loaded: ' + e);
-    //             // }
-    //             let spriteSheetTexture: PIXI.Texture = this._preloadedImages.get(imageDetails.name)!;
-    //             actorSprite = new PIXI.Sprite(spriteSheetTexture);
-    //             actorSprite.zIndex = actor.getZIndex();
-    //             // @ts-ignore
-    //             //actorSprite.id = actor.getId();
-    //             // @ts-ignore
-    //             actorSprite.imageName = imageDetails.name;
-    //             // @ts-ignore
-    //             actorSprite.frames = [];
-    //             for (let index = 0; index < imageDetails.numberOfFrames; index++) {
-    //                 // @ts-ignore
-    //                 actorSprite.frames.push(
-    //                     new PIXI.Texture(
-    //                         spriteSheetTexture.baseTexture,
-    //                         new PIXI.Rectangle(index * imageDetails.frameWidth, 0, imageDetails.frameWidth, spriteSheetTexture.height)
-    //                     )
-    //                 );
-    //             }
-    //             actorSprite.anchor.set(0.5);
-    //             this._activeSprites[actor.getId()] = actorSprite;
-    //             this._stage.addChild(actorSprite);
-    //         }
-    //
-    //         // Move the sprite for this actor to its current position.
-    //         //actorSprite = self._activeSprites[actor.getId()];
-    //         let actorCoordinates = actor.getCoordinates();
-    //         actorSprite.position.x = actorCoordinates.x;
-    //         actorSprite.position.y = actorCoordinates.y;
-    //
-    //         // Set the current sprite frame.
-    //         // @ts-ignore
-    //         if (actorSprite.frames[imageDetails.currentFrame]) {
-    //             // @ts-ignore
-    //             actorSprite.texture = actorSprite.frames[imageDetails.currentFrame];
-    //         }
-    //         else {
-    //             throw new Error('Frame number ' + imageDetails.currentFrame + ' is not valid for image ' + imageDetails.name + '.');
-    //         }
-    //     }
-    // }
-
     addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
         for (let text of this._world.getTexts()) {
@@ -265,27 +183,7 @@ export class Renderer {
                 this._activeSprites.delete(actorId);
             }
         });
-        // for (const [actorId, spriteDetail] of this._activeSprites) {
-        //     // Check if there exists an actor with id == actorId.
-        //     if (!this._world.getActors().find(actor => { return actor.getId() == actorId })) {
-        //         this._stage.removeChild(spriteDetail.sprite);
-        //         this._activeSprites.delete(actorId);
-        //     }
-        // }
     }
-
-    // XcleanUpInactiveActors(): void {
-    //     // Remove any sprites whose associated actors no longer exist.
-    //     for (let actorId in this._activeSprites) {
-    //         if (this._activeSprites.hasOwnProperty(actorId)) {
-    //             // Check if there exists an actor with id == actorId.
-    //             if (this._world.getActors().find(actor => { return actor.getId() == actorId })) {
-    //                 this._stage.removeChild(this._activeSprites[actorId]);
-    //                 delete this._activeSprites[actorId];
-    //             }
-    //         }
-    //     }
-    // }
 
     cleanUpInactiveText() {
         // Remove any text were the associated text items no longer exist.
