@@ -3,9 +3,11 @@ import Debug from "debug";
 const debug = Debug("Blaster:Explosion");
 
 import {Actor} from './Actor';
+import { Bounds } from "./Bounds";
 import {ExplosionProperties} from "./ExplosionProperties";
 import {ImageDetails} from "./ImageDetails";
 import {Point} from "./Point";
+import {World} from "./World";
 
 export class Explosion extends Actor {
     private readonly _audioPlayer: any;
@@ -13,7 +15,7 @@ export class Explosion extends Actor {
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(explosionProperties: ExplosionProperties, audioPlayer: any, world: any, startingPoint: Point) {
+    constructor(explosionProperties: ExplosionProperties, audioPlayer: any, world: World, startingPoint: Point) {
         super(world, startingPoint);
         debug('Explosion constructor for ' + explosionProperties.imageName);
         this._explosionProperties = explosionProperties;
@@ -60,5 +62,9 @@ export class Explosion extends Actor {
             debug('De-activating explosion ' + this._id);
             this._active = false;
         }
+    }
+
+    getCollisionMask(actor: Actor): Bounds[] {
+        return [];
     }
 }

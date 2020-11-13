@@ -2,14 +2,14 @@ import Debug from "debug";
 const debug = Debug("Blaster:Text");
 
 import {v4} from 'uuid';
+import {Point} from "./Point";
 
 export class Text {
     private readonly _id: string = v4();
     private readonly _content: string;
     private readonly _font: string;
     private readonly _color: string;
-    private readonly _x: number;
-    private readonly _y: number;
+    private readonly _location: Point;
     private _active: boolean = true;
 
     constructor(content: string, font: string, color: string, startX: number, startY: number) {
@@ -17,16 +17,15 @@ export class Text {
         this._content = content;
         this._font = font;
         this._color = color;
-        this._x = startX;
-        this._y = startY;
+        this._location = new Point(startX, startY);
     }
 
     get id(): string {
         return this._id;
     }
 
-    get coordinates(): any {
-        return {x: this._x, y: this._y};
+    get coordinates(): Point {
+        return this._location;
     }
 
     get content(): string {

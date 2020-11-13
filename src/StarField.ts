@@ -3,17 +3,18 @@ import {random} from 'underscore';
 
 const debug = Debug("Blaster:StarField");
 
+import {Clock} from "./timing/Clock";
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
-import {Clock} from "./timing/Clock";
 import {Star} from './Star';
+import {World} from "./World";
 
 export class StarField {
-    private readonly _world: any;
+    private readonly _world: World;
     private readonly _scheduler: Scheduler;
     private _firstTick: boolean = true;
 
-    constructor(world: any, clock: Clock) {
+    constructor(world: World, clock: Clock) {
         debug('StarField constructor');
         this._world = world;
         this._scheduler = new Scheduler(clock);

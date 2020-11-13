@@ -1,7 +1,7 @@
 import Debug from "debug";
-
 const debug = Debug("Blaster:Grenade");
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
 import {Explosion} from '../Explosion';
 import {ExplosionProperties} from "../ExplosionProperties";
@@ -11,6 +11,7 @@ import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Shot} from './Shot';
 import {Shrapnel} from './Shrapnel';
+import {World} from "../World";
 
 export class Grenade extends Shot {
     private readonly _audioPlayer: any;
@@ -18,7 +19,7 @@ export class Grenade extends Shot {
     private _firstTick: boolean = true;
     private readonly _initialHeight: number;
 
-    constructor(audioPlayer: any, world: any, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, startingPoint: Point) {
         super(world, startingPoint);
 
         this._audioPlayer = audioPlayer;
@@ -29,7 +30,7 @@ export class Grenade extends Shot {
         return [new Bounds(-12, 12, -12, 12)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 3;
     }
 

@@ -1,20 +1,21 @@
 import Debug from "debug";
-
 const debug = Debug("Blaster:Bomb");
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Shot} from './Shot';
+import {World} from "../World";
 
 export class Bomb extends Shot {
     private readonly _audioPlayer: any;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(audioPlayer: any, world: any, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, startingPoint: Point) {
         super(world, startingPoint);
         debug('Bomb constructor');
 
@@ -25,7 +26,7 @@ export class Bomb extends Shot {
         return [new Bounds(-5, 5, -5, 5)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 1;
     }
 

@@ -1,19 +1,20 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Bullet} from "../../src/shots/Bullet";
 import {Point} from '../../src/Point';
 import {Probe} from '../../src/enemies/Probe';
 import {ScoreCounter} from '../../src/ScoreCounter';
-import {ClockStub} from "../stubs/ClockStub";
-import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
-import {Bullet} from "../../src/shots/Bullet";
 import {World} from '../../src/World';
+
+import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
+import {ClockStub} from "../stubs/ClockStub";
 
 describe('Probe', () => {
     let audioPlayer: any;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

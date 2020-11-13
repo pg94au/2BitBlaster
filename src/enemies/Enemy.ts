@@ -6,14 +6,15 @@ const debug = Debug("Blaster:Enemy");
 
 import {Actor} from '../Actor';
 import {Explosion} from '../Explosion';
-import {Point} from "../Point";
 import {ExplosionProperties} from "../ExplosionProperties";
+import {Point} from "../Point";
+import {World} from "../World";
 
 export abstract class Enemy extends Actor {
     protected readonly _audioPlayer: any;
     protected _health: number;
 
-    protected constructor(audioPlayer: any, world: any, startingPoint: Point, initialHealth: number) {
+    protected constructor(audioPlayer: any, world: World, startingPoint: Point, initialHealth: number) {
         super(world, startingPoint);
 
         this._audioPlayer = audioPlayer;

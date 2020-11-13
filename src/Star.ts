@@ -1,21 +1,21 @@
 import Debug from "debug";
-
 const debug = Debug("Blaster:Star");
-
 import {random} from 'underscore';
 
 import {Actor} from './Actor';
+import {Bounds} from "./Bounds";
 import {Direction} from './devices/Direction';
 import {ImageDetails} from './ImageDetails';
 import {Point} from './Point';
+import {World} from "./World";
 
 export class Star extends Actor {
     private readonly _flashRate: number = random(5, 10);
     private _flashCounter: number = 0;
-    private _frameIndices: any[] = [];
+    private _frameIndices: number[] = [];
     private _currentFrame: number = 0;
 
-    constructor(world: any, startingPoint: Point) {
+    constructor(world: World, startingPoint: Point) {
         super(world, startingPoint);
 
         debug('Star constructor');
@@ -66,5 +66,9 @@ export class Star extends Actor {
         if (this._flashCounter == 0) {
             this._currentFrame = (this._currentFrame + 1) % this._frameIndices.length;
         }
+    }
+
+    getCollisionMask(actor: Actor): Bounds[] {
+        return [];
     }
 }

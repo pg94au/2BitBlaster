@@ -2,20 +2,22 @@ import Debug from "debug";
 const debug = Debug("Blaster:SplitterFragment");
 import {random} from 'underscore';
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {PathAction} from '../paths/PathAction';
+import {PathEntry} from "../paths/PathEntry";
 import {PathTemplate} from '../paths/PathTemplate';
 import {Point} from '../Point';
 import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {Shrapnel} from '../shots/Shrapnel';
 import {SplinePath} from '../paths/SplinePath';
-import {Clock} from "../timing/Clock";
-import {PathEntry} from "../paths/PathEntry";
+import {World} from "../World";
 
 export class SplitterFragment extends Enemy {
     public static readonly InitialHealth: number = 1;
@@ -40,7 +42,7 @@ export class SplitterFragment extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, side: SplitterFragment.Side, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, clock: Clock, side: SplitterFragment.Side, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, SplitterFragment.InitialHealth);
         debug('SplitterFragment constructor');
 
@@ -71,7 +73,7 @@ export class SplitterFragment extends Enemy {
         return [new Bounds(-25, 25, -15, 15)];
     }
 
-    getDamageAgainst(actor: any) {
+    getDamageAgainst(actor: Actor) {
         return 5;
     }
 
@@ -88,7 +90,7 @@ export class SplitterFragment extends Enemy {
         }
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

@@ -1,10 +1,12 @@
 import {Bounds} from "../../src/Bounds";
 import {Enemy} from '../../src/enemies/Enemy';
-import {Point} from "../../src/Point";
-
-import {AudioPlayerStub} from "./AudioPlayerStub";
 import {ExplosionProperties} from "../../src/ExplosionProperties";
 import {ImageDetails} from "../../src/ImageDetails";
+import {Point} from "../../src/Point";
+import {Shot} from "../../src/shots/Shot";
+import {World} from "../../src/World";
+
+import {AudioPlayerStub} from "./AudioPlayerStub";
 
 export class EnemyStub extends Enemy {
     private _collisionMask: Bounds[] = [new Bounds(-1, 1, -1, 1)];
@@ -13,7 +15,7 @@ export class EnemyStub extends Enemy {
     private _ignoreHits: boolean = false;
     private _isActive: boolean = true;
 
-    constructor(world: any, startingPoint: Point) {
+    constructor(world: World, startingPoint: Point) {
         super(new AudioPlayerStub(), world, startingPoint, 1);
     }
 
@@ -31,7 +33,7 @@ export class EnemyStub extends Enemy {
         return this;
     }
 
-    hitBy(shot: any, damage: number): boolean {
+    hitBy(shot: Shot, damage: number): boolean {
         this._onHit(damage);
         return !this._ignoreHits;
     }

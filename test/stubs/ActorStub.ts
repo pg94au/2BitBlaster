@@ -1,9 +1,11 @@
 import {Actor} from "../../src/Actor";
-import {Point} from "../../src/Point";
+import {Bounds} from "../../src/Bounds";
 import {ImageDetails} from "../../src/ImageDetails";
+import {Point} from "../../src/Point";
+import {World} from "../../src/World";
 
 export class ActorStub extends Actor {
-    constructor(world: any, startCoordinates: Point) {
+    constructor(world: World, startCoordinates: Point) {
         super(world, startCoordinates);
     }
 
@@ -16,5 +18,9 @@ export class ActorStub extends Actor {
     }
 
     tick() {
+    }
+
+    getCollisionMask(actor: Actor): Bounds[] {
+        return [];
     }
 }

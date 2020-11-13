@@ -10,7 +10,7 @@ import {World} from '../../src/World';
 
 describe('Shrapnel', () => {
     let audioPlayer: any;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

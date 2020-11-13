@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../src/Actor";
 import {ScoreCounter} from "../src/ScoreCounter";
 import {Star} from '../src/Star';
 import {StarField} from '../src/StarField';
@@ -28,7 +29,7 @@ describe('StarField', () => {
             let starAdded = false;
             starField.tick();
             clock.addSeconds(10);
-            world.addActor = (actor: any) => { if (actor instanceof Star) { starAdded = true; }};
+            world.addActor = (actor: Actor) => { if (actor instanceof Star) { starAdded = true; }};
             starField.tick();
 
             expect(starAdded).to.be.true;

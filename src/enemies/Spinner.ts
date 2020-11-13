@@ -2,8 +2,10 @@ import Debug from "debug";
 const debug = Debug("Blaster:Spinner");
 import {random} from 'underscore';
 
+import {Actor} from "../Actor";
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
@@ -14,7 +16,7 @@ import {PathTemplate} from '../paths/PathTemplate';
 import {Point} from '../Point';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
-import {Clock} from "../timing/Clock";
+import {World} from "../World";
 
 export class Spinner extends Enemy {
     public static readonly InitialHealth: number = 1;
@@ -29,7 +31,7 @@ export class Spinner extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point, pattern: Spinner.Pattern, bias: Spinner.Bias) {
+    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point, pattern: Spinner.Pattern, bias: Spinner.Bias) {
         super(audioPlayer, world, startingPoint, Spinner.InitialHealth);
 
         this._scheduler = new Scheduler(clock);
@@ -70,7 +72,7 @@ export class Spinner extends Enemy {
         return [new Bounds(-30, 30, -30, 30)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 5;
     }
 
@@ -78,7 +80,7 @@ export class Spinner extends Enemy {
         return new ImageDetails('spinner', 12, 80, this._currentFrame);
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

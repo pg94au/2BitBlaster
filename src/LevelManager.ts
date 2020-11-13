@@ -1,17 +1,18 @@
 import Debug from "debug";
+const debug = Debug("Blaster:LevelManager");
+
+import {Clock} from "./timing/Clock";
 import {EventEmitter} from 'events';
+import {Level} from "./Level";
 import {LevelState} from "./LevelState";
 import {Scheduler} from './timing/Scheduler';
 import {TextInterlude} from './TextInterlude';
-import {Clock} from "./timing/Clock";
-import {Level} from "./Level";
-
-const debug = Debug("Blaster:LevelManager");
+import {World} from "./World";
 
 export class LevelManager {
     private readonly _eventEmitter = new EventEmitter();
     private readonly _audioPlayer: any;
-    private readonly _world: any;
+    private readonly _world: World;
     private readonly _levels: Level[];
     private _textInterlude: TextInterlude | null = null;
     private _currentLevel: number = 0;
@@ -20,7 +21,7 @@ export class LevelManager {
     private _state: LevelState = LevelState.Intro;
     private _active: boolean = true;
 
-    constructor(audioPlayer: any, world: any, clock: Clock, levels: Level[]) {
+    constructor(audioPlayer: any, world: World, clock: Clock, levels: Level[]) {
         debug('LevelManager constructor');
         this._audioPlayer = audioPlayer;
         this._world = world;

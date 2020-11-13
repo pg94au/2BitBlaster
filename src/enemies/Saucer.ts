@@ -16,6 +16,8 @@ import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
 import {Clock} from "../timing/Clock";
 import {PathEntry} from "../paths/PathEntry";
+import {World} from "../World";
+import {Actor} from "../Actor";
 
 export class Saucer extends Enemy {
     public static readonly InitialHealth: number = 1;
@@ -37,7 +39,7 @@ export class Saucer extends Enemy {
     private static _diveRightPathTemplate: PathEntry[];
     private static _diveLeftPathTemplate: PathEntry[];
 
-    constructor(audioPlayer: any, world: any, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Saucer.InitialHealth);
         debug('Saucer constructor');
 
@@ -76,7 +78,7 @@ export class Saucer extends Enemy {
         return new ImageDetails('saucer', 4, 80, this._currentFrame);
     }
 
-    hitBy(actor: any, damage: number): boolean {
+    hitBy(actor: Actor, damage: number): boolean {
         this._health = Math.max(0, this._health - damage);
         return true;
     }

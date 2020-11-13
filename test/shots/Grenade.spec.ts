@@ -1,18 +1,20 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../../src/Actor";
 import {Grenade} from '../../src/shots/Grenade';
 import {Point} from '../../src/Point';
+import {Shrapnel} from '../../src/shots/Shrapnel';
+import {World} from '../../src/World';
+
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {PlayerStub} from "../stubs/PlayerStub";
-import {Shrapnel} from '../../src/shots/Shrapnel';
-import {World} from '../../src/World';
 
 describe('Grenade', () => {
     describe('#tick()', () => {
         let audioPlayer: any;
-        let world: any;
+        let world: World;
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
@@ -54,7 +56,7 @@ describe('Grenade', () => {
                 grenade.tick();
             }
 
-            let shrapnel = world.getActors().filter((a: any) => { return (a instanceof Shrapnel) });
+            let shrapnel = world.getActors().filter((a: Actor) => { return (a instanceof Shrapnel) });
 
             expect(shrapnel.length).to.be.above(0);
         });

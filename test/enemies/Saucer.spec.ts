@@ -2,19 +2,20 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bullet} from "../../src/shots/Bullet";
-import {Clock} from '../../src/timing/Clock';
 import {Point} from '../../src/Point';
 import {Saucer} from '../../src/enemies/Saucer';
 import {ScoreCounter} from '../../src/ScoreCounter';
+import {World} from '../../src/World';
+
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
-import {World} from '../../src/World';
+import {ActorStub} from "../stubs/ActorStub";
 
 describe('Saucer', () => {
     let audioPlayer: any;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
@@ -26,7 +27,10 @@ describe('Saucer', () => {
     describe('#hitBy()', () => {
         it('should return true', () => {
             let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            expect(saucer.hitBy({}, 1)).to.be.true;
+            let actor = new ActorStub(world, new Point(5, 10));
+            world.addActor(actor);
+
+            expect(saucer.hitBy(actor, 1)).to.be.true;
         });
     });
 

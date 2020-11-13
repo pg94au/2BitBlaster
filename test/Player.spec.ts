@@ -1,15 +1,18 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../src/Actor";
 import {Bounds} from '../src/Bounds';
 import {Direction} from '../src/devices/Direction';
 import {Player} from '../src/Player';
 import {Point} from '../src/Point';
 import {ScoreCounter} from '../src/ScoreCounter';
+import {World} from '../src/World';
+
 import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
 import {ClockStub} from "./stubs/ClockStub";
 import {JoystickStub} from "./stubs/JoystickStub";
-import {World} from '../src/World';
+import {ShotStub} from "./stubs/ShotStub";
 
 describe('Player', () => {
     let audioPlayer: AudioPlayerStub;
@@ -40,7 +43,10 @@ describe('Player', () => {
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
 
-            player.hitBy({}, 1);
+            let shot = new ShotStub(world, new Point(1, 2));
+            world.addActor(shot);
+
+            player.hitBy(shot, 1);
 
             let imageDetailsAfter = player.getImageDetails();
 
@@ -54,7 +60,10 @@ describe('Player', () => {
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
 
-            player.hitBy({}, 1);
+            let shot = new ShotStub(world, new Point(1, 2));
+            world.addActor(shot);
+
+            player.hitBy(shot, 1);
             let imageDetailsBefore = player.getImageDetails();
 
             clock.addSeconds(5);
@@ -75,7 +84,10 @@ describe('Player', () => {
             clock.addSeconds(10);   // Add time and tick to get to vulnerable state.
             player.tick();
 
-            player.hitBy({}, 1);
+            let shot = new ShotStub(world, new Point(1, 2));
+            world.addActor(shot);
+
+            player.hitBy(shot, 1);
 
             expect(playedSounds).to.be.eql(['player_hit']);
         });
@@ -129,7 +141,7 @@ describe('Player', () => {
             let bounds = new Bounds(0, 10, 0, 20);
 
             let addedActor: boolean = false;
-            world.addActor = (actor: any) => { addedActor = true; }
+            world.addActor = (actor: Actor) => { addedActor = true; }
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
@@ -139,8 +151,8 @@ describe('Player', () => {
 
         it('will not allow immediate consecutive bullet to be fired', () => {
             joystick.setFireState(true);
-            let addedActors: any[] = [];
-            world.addActor = (actor: any) => { addedActors.push(actor); };
+            let addedActors: Actor[] = [];
+            world.addActor = (actor: Actor) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
@@ -151,8 +163,8 @@ describe('Player', () => {
 
         it('will allow another bullet to be fired after a period of time', () => {
             joystick.setFireState(true);
-            let addedActors: any[] = [];
-            world.addActor = (actor: any) => { addedActors.push(actor); };
+            let addedActors: Actor[] = [];
+            world.addActor = (actor: Actor) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
