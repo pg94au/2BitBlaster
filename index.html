@@ -68,15 +68,15 @@
             $('#touchFireButton').css('display', 'inline-block');
         });
 
-        var gameElement = document.getElementById('gameDiv');
-        var blaster = new Blaster.default();
+        const gameElement = document.getElementById('gameDiv');
+        const blaster = new Blaster.default();
         renderer = new blaster.Renderer(gameElement);
         audioPlayer = new blaster.AudioPlayer();
         joystick = new blaster.Joystick();
-        var clock = new blaster.Clock();
+        clock = new blaster.Clock();
         game = new blaster.Game(joystick, renderer, audioPlayer, clock);
 
-        var images = [
+        const images = [
             { name: 'bomb', url: 'images/bomb.png' },
             { name: 'bomber', url: 'images/bomber.png' },
             { name: 'bullet', url: 'images/bullet.png' },
@@ -97,12 +97,12 @@
         ];
         renderer.preLoadImages(images, onImagesLoaded);
 
-        var touchJoystick = $('#touchJoystick')[0];
+        const touchJoystick = $('#touchJoystick')[0];
         touchJoystick.addEventListener('touchstart', joystickTouchEventHandler, false);
         touchJoystick.addEventListener('touchmove', joystickTouchEventHandler, false);
         touchJoystick.addEventListener('touchend', joystickTouchEventHandler, false);
 
-        var touchFireButton = $('#touchFireButton')[0];
+        const touchFireButton = $('#touchFireButton')[0];
         touchFireButton.addEventListener('touchstart', fireButtonTouchEventHandler, false);
         touchFireButton.addEventListener('touchmove', fireButtonTouchEventHandler, false);
         touchFireButton.addEventListener('touchend', fireButtonTouchEventHandler, false);
