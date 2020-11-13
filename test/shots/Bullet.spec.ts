@@ -1,18 +1,19 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Bounds} from "../../src/Bounds";
 import {Bullet} from '../../src/shots/Bullet';
 import {Point} from '../../src/Point';
-import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
-import {ScoreCounter} from "../../src/ScoreCounter";
-import {EnemyStub} from "../stubs/EnemyStub";
-import {Bounds} from "../../src/Bounds";
 import {World} from '../../src/World';
+
+import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
+import {EnemyStub} from "../stubs/EnemyStub";
+import {ScoreCounter} from "../../src/ScoreCounter";
 
 describe('Bullet', () => {
     describe('#tick()', () => {
         let audioPlayer: AudioPlayerStub;
-        let world: any;
+        let world: World;
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
@@ -57,7 +58,7 @@ describe('Bullet', () => {
         });
 
         it('should remain active while it remains within the world', () => {
-            var bullet = new Bullet(
+            let bullet = new Bullet(
                 audioPlayer,
                 world,
                 new Point(5, 10)
@@ -67,7 +68,7 @@ describe('Bullet', () => {
         });
 
         it('should become inactive when it leaves the world', () => {
-            var bullet = new Bullet(
+            let bullet = new Bullet(
                 audioPlayer,
                 world,
                 new Point(5, 0)

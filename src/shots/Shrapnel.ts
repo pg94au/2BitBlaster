@@ -1,6 +1,7 @@
 import Debug from "debug";
 const debug = Debug("Blaster:Shrapnel");
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
@@ -8,7 +9,6 @@ import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Shot} from './Shot';
 import {World} from "../World";
-import {Actor} from "../Actor";
 
 export class Shrapnel extends Shot {
     private readonly _audioPlayer: any;

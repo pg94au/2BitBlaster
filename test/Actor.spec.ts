@@ -16,7 +16,7 @@ describe('Actor', () => {
     let audioPlayer: any;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
-    let world: any;
+    let world: World;
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();

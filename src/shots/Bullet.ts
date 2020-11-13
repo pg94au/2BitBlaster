@@ -1,20 +1,22 @@
 import Debug from "debug";
-
 const debug = Debug("Blaster:Bullet");
 
+import {Actor} from "../Actor";
 import {Bounds} from '../Bounds';
+import {Enemy} from "../enemies/Enemy";
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Shot} from './Shot';
+import {World} from "../World";
 
 export class Bullet extends Shot {
     private readonly _audioPlayer: any;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(audioPlayer: any, world: any, startingPoint: Point) {
+    constructor(audioPlayer: any, world: World, startingPoint: Point) {
         super(world, startingPoint);
         debug('Bullet constructor');
 
@@ -25,7 +27,7 @@ export class Bullet extends Shot {
         return [new Bounds(-5, 5, -5, 5)];
     }
 
-    getDamageAgainst(actor: any): number {
+    getDamageAgainst(actor: Actor): number {
         return 1;
     }
 
@@ -57,7 +59,7 @@ export class Bullet extends Shot {
 
                 // Check if this bullet has collided with any active enemies.
                 let activeEnemies = this._world.getActiveEnemies();
-                activeEnemies.forEach((enemy: any) => {
+                activeEnemies.forEach((enemy: Enemy) => {
                     //TODO: Do something if the hit is ineffective.
                     if (this._active) {
                         if (hitArbiter.attemptToHit(enemy) !== HitResult.Miss) {

@@ -6,15 +6,16 @@ const debug = Debug("Blaster:Player");
 import {Actor} from './Actor';
 import {Bounds} from './Bounds';
 import {Bullet} from './shots/Bullet';
+import {Clock} from "./timing/Clock";
+import {Enemy} from "./enemies/Enemy";
 import {Explosion} from './Explosion';
 import {ExplosionProperties} from './ExplosionProperties';
 import {HitArbiter} from './HitArbiter';
 import {ImageDetails} from './ImageDetails';
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
-import {Clock} from "./timing/Clock";
-import {World} from "./World";
 import {Shot} from "./shots/Shot";
+import {World} from "./World";
 
 export class Player extends Actor {
     private readonly _joystick: any;
@@ -159,7 +160,7 @@ export class Player extends Actor {
         debug('Current position is (' + this._location + ')');
 
         // Check if the player has collided with any active enemies.
-        this._world.getActiveEnemies().forEach((enemy: any) => {
+        this._world.getActiveEnemies().forEach((enemy: Enemy) => {
             this._hitArbiter.attemptToHit(enemy);
         });
 

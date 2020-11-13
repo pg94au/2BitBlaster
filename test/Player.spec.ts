@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Actor} from "../src/Actor";
 import {Bounds} from '../src/Bounds';
 import {Direction} from '../src/devices/Direction';
 import {Player} from '../src/Player';
@@ -140,7 +141,7 @@ describe('Player', () => {
             let bounds = new Bounds(0, 10, 0, 20);
 
             let addedActor: boolean = false;
-            world.addActor = (actor: any) => { addedActor = true; }
+            world.addActor = (actor: Actor) => { addedActor = true; }
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
@@ -150,8 +151,8 @@ describe('Player', () => {
 
         it('will not allow immediate consecutive bullet to be fired', () => {
             joystick.setFireState(true);
-            let addedActors: any[] = [];
-            world.addActor = (actor: any) => { addedActors.push(actor); };
+            let addedActors: Actor[] = [];
+            world.addActor = (actor: Actor) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
@@ -162,8 +163,8 @@ describe('Player', () => {
 
         it('will allow another bullet to be fired after a period of time', () => {
             joystick.setFireState(true);
-            let addedActors: any[] = [];
-            world.addActor = (actor: any) => { addedActors.push(actor); };
+            let addedActors: Actor[] = [];
+            world.addActor = (actor: Actor) => { addedActors.push(actor); };
             let bounds = new Bounds(0, 10, 0, 20);
 
             let player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
