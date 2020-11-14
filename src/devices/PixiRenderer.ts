@@ -67,7 +67,7 @@ export class PixiRenderer implements Renderer {
     render() {
         this.setScale();
 
-        this.addAnyUnrenderedNewSpritesToStage();
+        this.addOrUpdateSpritesInStage();
 
         this.addAnyUnrenderedNewTextToStage();
 
@@ -92,7 +92,7 @@ export class PixiRenderer implements Renderer {
         this._renderer.resize(width, height);
     }
 
-    addAnyUnrenderedNewSpritesToStage() {
+    addOrUpdateSpritesInStage() {
         let actors = this._world.getActors();
         for (let actor of actors) {
             let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.getId());

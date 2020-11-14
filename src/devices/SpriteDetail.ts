@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 import {Actor} from "../Actor";
 
 export class SpriteDetail {
-    private readonly _frameTextures: PIXI.Texture[] = [];
+    private _frameTextures: PIXI.Texture[] = [];
     private readonly _sprite: PIXI.Sprite;
     private _imageName: string = '';
 
@@ -15,6 +15,7 @@ export class SpriteDetail {
     updateTextures(): void {
         if (this._actor.getImageDetails().name != this._imageName) {
             this._imageName = this._actor.getImageDetails().name;
+            this._frameTextures = [];
             for (let index = 0; index < this._actor.getImageDetails().numberOfFrames; index++) {
                 this._frameTextures.push(
                     new PIXI.Texture(
