@@ -3,6 +3,8 @@ const debug = Debug("Blaster:Bomber");
 import {random} from 'underscore';
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
+import {Bounds} from "../Bounds";
 import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
@@ -12,7 +14,6 @@ import {ImageDetails} from '../ImageDetails';
 import {Point} from '../Point';
 import {Scheduler} from '../timing/Scheduler';
 import {World} from "../World";
-import {Bounds} from "../Bounds";
 
 export class Bomber extends Enemy {
     private static readonly InitialHealth: number = 1;
@@ -23,7 +24,7 @@ export class Bomber extends Enemy {
     private _currentFrame: number = 0;
     private readonly _grenadeDropPosition: number;
 
-    constructor(audioPlayer: any, world: World, clock: Clock, startY: number) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startY: number) {
         super(audioPlayer, world, new Point(-40, startY), Bomber.InitialHealth);
         debug('Bomber constructor');
 

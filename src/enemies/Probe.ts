@@ -3,6 +3,7 @@ const debug = Debug("Blaster:Probe");
 import {random} from 'underscore';
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
 import {Clock} from "../timing/Clock";
@@ -33,7 +34,7 @@ export class Probe extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Probe.InitialHealth);
         debug('Probe constructor');
 

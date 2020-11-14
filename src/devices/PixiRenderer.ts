@@ -12,7 +12,7 @@ export class PixiRenderer implements Renderer {
     private readonly _containerElement!: HTMLElement;
     private _world!: World;
     private _worldDimensions!: Dimensions;
-    private _renderer: any;
+    private _renderer!: PIXI.Renderer;
     private _stage!: PIXI.Container;
     private _activeSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
     private _activeTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();

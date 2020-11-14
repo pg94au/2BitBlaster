@@ -2,6 +2,7 @@ import Debug from "debug";
 const debug = Debug("Blaster:Bomb");
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
@@ -11,11 +12,11 @@ import {Shot} from './Shot';
 import {World} from "../World";
 
 export class Bomb extends Shot {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(audioPlayer: any, world: World, startingPoint: Point) {
+    constructor(audioPlayer: AudioPlayer, world: World, startingPoint: Point) {
         super(world, startingPoint);
         debug('Bomb constructor');
 

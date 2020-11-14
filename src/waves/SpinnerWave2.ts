@@ -1,6 +1,7 @@
 import Debug from "debug";
 const debug = Debug("Blaster:SpinnerWave2");
 
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Clock} from "../timing/Clock";
 import {Point} from '../Point';
 import {Scheduler} from '../timing/Scheduler';
@@ -9,13 +10,13 @@ import {Wave} from './Wave';
 import {World} from "../World";
 
 export class SpinnerWave2 implements Wave {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _world: World;
     private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
     private _numberOfSpinnersLeftToDeploy: number = 10;
 
-    constructor(audioPlayer: any, world: World, clock: Clock) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock) {
         debug('SpinnerWave2 constructor');
 
         this._audioPlayer = audioPlayer;

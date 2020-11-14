@@ -2,6 +2,7 @@ import Debug from "debug";
 const debug = Debug("Blaster:Grenade");
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
 import {Explosion} from '../Explosion';
 import {ExplosionProperties} from "../ExplosionProperties";
@@ -14,12 +15,12 @@ import {Shrapnel} from './Shrapnel';
 import {World} from "../World";
 
 export class Grenade extends Shot {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
     private readonly _initialHeight: number;
 
-    constructor(audioPlayer: any, world: World, startingPoint: Point) {
+    constructor(audioPlayer: AudioPlayer, world: World, startingPoint: Point) {
         super(world, startingPoint);
 
         this._audioPlayer = audioPlayer;

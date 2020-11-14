@@ -3,6 +3,7 @@ const debug = Debug("Blaster:Splitter");
 import {random} from 'underscore';
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
 import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
@@ -42,7 +43,7 @@ export class Splitter extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Splitter.InitialHealth);
         debug('Splitter constructor');
 

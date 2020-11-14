@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
 import {ClockStub} from "../stubs/ClockStub";
 import {Point} from "../../src/Point";
@@ -12,7 +13,7 @@ import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {PlayerStub} from "../stubs/PlayerStub";
 
 describe('SplitterFragment', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayer;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
     let world: World;

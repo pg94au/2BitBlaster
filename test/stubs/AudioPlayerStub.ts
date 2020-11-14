@@ -1,23 +1,17 @@
-// @ts-ignore
-import * as nodeWindowPolyfill from 'node-window-polyfill';
+import {AudioPlayer} from "../../src/devices/AudioPlayer";
 
-// AudioPlayer that we are extending will reference window.
-nodeWindowPolyfill.register();
-
-// @ts-ignore
-window.AudioContext = class {};
-
-const AudioPlayer = require('../../src/devices/AudioPlayer');
-
-export class AudioPlayerStub extends AudioPlayer {
+export class AudioPlayerStub implements AudioPlayer {
     private _onPlay: (soundName: string) => void = (soundName: string) => {};
 
-    onPlay(value: (soundName: string) => void): typeof AudioPlayer {
+    onPlay(value: (soundName: string) => void): AudioPlayer {
         this._onPlay = value;
         return this;
     }
 
     play(soundName: string): void {
         this._onPlay(soundName);
+    }
+
+    preLoadSounds(sounds: any[], onSuccess: () => void, onFailure: (errors: any) => void): void {
     }
 }

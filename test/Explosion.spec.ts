@@ -4,14 +4,15 @@ import {expect} from 'chai';
 import {Explosion} from '../src/Explosion';
 import {ExplosionProperties} from "../src/ExplosionProperties";
 import {Point} from "../src/Point";
-import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
-import {ClockStub} from "./stubs/ClockStub";
 import {ScoreCounter} from "../src/ScoreCounter";
 import {World} from '../src/World';
+
+import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
+import {ClockStub} from "./stubs/ClockStub";
 import {ShotStub} from "./stubs/ShotStub";
 
 describe('Explosion', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayerStub;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
     let world: World;

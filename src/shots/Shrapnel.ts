@@ -2,6 +2,7 @@ import Debug from "debug";
 const debug = Debug("Blaster:Shrapnel");
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
@@ -11,14 +12,14 @@ import {Shot} from './Shot';
 import {World} from "../World";
 
 export class Shrapnel extends Shot {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _trajectory: number;
     private _exactX: number;
     private _exactY: number;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(audioPlayer: any, world: World, startingPoint: Point, trajectory: number) {
+    constructor(audioPlayer: AudioPlayer, world: World, startingPoint: Point, trajectory: number) {
         super(world, startingPoint);
         debug('Shrapnel constructor');
 
