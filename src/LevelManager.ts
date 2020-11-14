@@ -79,7 +79,7 @@ export class LevelManager {
             this._textInterlude = new TextInterlude(
                 this._world, this._clock,
                 "Level " + (this._currentLevel + 1),
-                "50px Arial", "red",
+                "Arial", 50, "red",
                 this._world.getDimensions().width / 2, this._world.getDimensions().height / 2,
                 TIME_TO_LEVEL_TEXT_VISIBLE, TIME_LEVEL_TEXT_IS_VISIBLE, TIME_AFTER_LEVEL_TEXT_VISIBLE
             );
@@ -120,7 +120,7 @@ export class LevelManager {
             this._textInterlude = new TextInterlude(
                 this._world, this._clock,
                 "CONGRATULATIONS!",
-                "32px Arial", "green",
+                "Arial", 32, "green",
                 this._world.getDimensions().width / 2, this._world.getDimensions().height / 2,
                 TIME_TO_CONGRATULATIONS_TEXT_VISIBLE, TIME_CONGRATULATIONS_TEXT_IS_VISIBLE, TIME_AFTER_CONGRATULATIONS_TEXT_VISIBLE
             );

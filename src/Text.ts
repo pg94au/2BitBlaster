@@ -7,16 +7,18 @@ import {Point} from "./Point";
 export class Text {
     private readonly _id: string = v4();
     private readonly _content: string;
-    private readonly _font: string;
-    private readonly _color: string;
+    private readonly _fontFamily: string;
+    private readonly _fontSize: number;
+    private readonly _fillColor: string;
     private readonly _location: Point;
     private _active: boolean = true;
 
-    constructor(content: string, font: string, color: string, startX: number, startY: number) {
+    constructor(content: string, fontFamily: string, fontSize: number, fillColor: string, startX: number, startY: number) {
         debug('Text constructor');
         this._content = content;
-        this._font = font;
-        this._color = color;
+        this._fontFamily = fontFamily;
+        this._fontSize = fontSize;
+        this._fillColor = fillColor;
         this._location = new Point(startX, startY);
     }
 
@@ -32,12 +34,16 @@ export class Text {
         return this._content;
     }
 
-    get font(): string {
-        return this._font;
+    get fontFamily(): string {
+        return this._fontFamily;
     }
 
-    get color(): string {
-        return this._color;
+    get fontSize(): number {
+        return this._fontSize;
+    }
+
+    get fillColor(): string {
+        return this._fillColor;
     }
 
     get active(): boolean {

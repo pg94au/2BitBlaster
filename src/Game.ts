@@ -191,7 +191,7 @@ export class Game {
             this._textInterlude = new TextInterlude(
                 this._world, this._clock,
                 "GAME OVER",
-                "50px Arial", "red",
+                "Arial", 50, "red",
                 this._world.getDimensions().width / 2, this._world.getDimensions().height / 2,
                 2000, 4000, 2000
             );

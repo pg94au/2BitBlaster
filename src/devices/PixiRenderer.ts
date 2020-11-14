@@ -116,9 +116,10 @@ export class PixiRenderer implements Renderer {
 
             // Add a new text if one does not already exist.
             if (!pixiText) {
-                pixiText = new PIXI.Text(text.content, {font: text.font, fill: text.color});
-                pixiText.scale.x = 2;
-                pixiText.scale.y = 2;
+                pixiText = new PIXI.Text(
+                    text.content,
+                    new PIXI.TextStyle({fontFamily: text.fontFamily, fontSize: text.fontSize, fill: text.fillColor})
+                );
                 pixiText.anchor.x = 0.5;
                 pixiText.anchor.y = 0.5;
                 pixiText.position.x = text.coordinates.x;

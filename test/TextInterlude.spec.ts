@@ -19,7 +19,7 @@ describe('TextInterlude', () => {
 
     describe('#ctor()', () => {
         it('starts in an active state', function () {
-            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 3, 4, 5);
+            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", 12, "COLOR", 1, 2, 3, 4, 5);
 
             expect(textInterlude.active).to.be.true;
         });
@@ -29,7 +29,7 @@ describe('TextInterlude', () => {
         it('does not immediately display text', () => {
             let textAdded = false;
             world.addText = (text: Text): void => { textAdded = true; };
-            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 2000, 4000, 2000);
+            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", 12, "COLOR", 1, 2, 2000, 4000, 2000);
             textInterlude.tick();
 
             expect(textInterlude.active).to.be.true;
@@ -39,7 +39,7 @@ describe('TextInterlude', () => {
         it('displays text after an initial delay', () => {
             let addedText: Text | null = null;
             world.addText = (text: Text):void => { addedText = text; };
-            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 2000, 4000, 2000);
+            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", 12, "COLOR", 1, 2, 2000, 4000, 2000);
             textInterlude.tick();
             clock.addSeconds(3);
             textInterlude.tick();
@@ -52,7 +52,7 @@ describe('TextInterlude', () => {
         it('removes text after it has been displayed for a period of time', () => {
             let addedText: Text | null = null;
             world.addText = (text: Text) => { addedText = text; };
-            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 2000, 4000, 2000);
+            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", 12, "COLOR", 1, 2, 2000, 4000, 2000);
             textInterlude.tick();
             clock.addSeconds(3);
             textInterlude.tick();
@@ -65,7 +65,7 @@ describe('TextInterlude', () => {
 
         it('becomes inactive after a period after text is removed', () => {
             world.addText = (text: Text): void => {};
-            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", "COLOR", 1, 2, 2000, 4000, 2000);
+            let textInterlude = new TextInterlude(world, clock, "TEST", "FONT", 12, "COLOR", 1, 2, 2000, 4000, 2000);
             textInterlude.tick();
             clock.addSeconds(3);
             textInterlude.tick();
