@@ -47,6 +47,7 @@ export class PixiRenderer implements Renderer {
         this._renderer.backgroundColor = 0x000000;
         this._containerElement.appendChild(this._renderer.view);
         this._stage = new PIXI.Container();
+        this._stage.sortableChildren = true;
         this._renderer.backgroundColor = 0x061639;
         this._renderer.render(this._stage);
     }
