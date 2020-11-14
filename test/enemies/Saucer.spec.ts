@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
 import {Point} from '../../src/Point';
 import {Saucer} from '../../src/enemies/Saucer';
@@ -12,7 +13,7 @@ import {ClockStub} from "../stubs/ClockStub";
 import {ActorStub} from "../stubs/ActorStub";
 
 describe('Saucer', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayer;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
     let world: World;

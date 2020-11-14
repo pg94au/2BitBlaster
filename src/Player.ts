@@ -4,6 +4,7 @@ import {EventEmitter} from "events";
 const debug = Debug("Blaster:Player");
 
 import {Actor} from './Actor';
+import {AudioPlayer} from "./devices/AudioPlayer";
 import {Bounds} from './Bounds';
 import {Bullet} from './shots/Bullet';
 import {Clock} from "./timing/Clock";
@@ -12,14 +13,15 @@ import {Explosion} from './Explosion';
 import {ExplosionProperties} from './ExplosionProperties';
 import {HitArbiter} from './HitArbiter';
 import {ImageDetails} from './ImageDetails';
+import {Joystick} from "./devices/Joystick";
 import {Point} from './Point';
 import {Scheduler} from './timing/Scheduler';
 import {Shot} from "./shots/Shot";
 import {World} from "./World";
 
 export class Player extends Actor {
-    private readonly _joystick: any;
-    private readonly _audioPlayer: any;
+    private readonly _joystick: Joystick;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _bounds: Bounds;
     private readonly _hitArbiter: HitArbiter;
     private readonly _scheduler: Scheduler;
@@ -31,7 +33,13 @@ export class Player extends Actor {
     private _invulnerableFrames: number[] = [1, 2, 3, 3, 2, 1];
     private _currentInvulnerableFrameIndex: number = 2;
 
-    constructor(joystick: any, audioPlayer: any, world: World, startingPoint: Point, bounds: Bounds, clock: Clock) {
+    constructor(
+        joystick: Joystick,
+        audioPlayer: AudioPlayer,
+        world: World,
+        startingPoint: Point,
+        bounds: Bounds,
+        clock: Clock) {
         super(world, startingPoint);
 
         this._joystick = joystick;

@@ -2,6 +2,7 @@ import Debug from "debug";
 const debug = Debug("Blaster:SplitterWave");
 import {random} from 'underscore';
 
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Clock} from "../timing/Clock";
 import {Point} from '../Point';
 import {Splitter} from '../enemies/Splitter';
@@ -9,13 +10,13 @@ import {Wave} from './Wave';
 import {World} from "../World";
 
 export class SplitterWave implements Wave {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _world: World;
     private readonly _clock: Clock;
     private _addNextEnemyAt: Date = new Date();
     private _numberOfEnemiesLeftToDeploy: number = 15;
 
-    constructor(audioPlayer: any, world: World, clock: Clock) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock) {
         debug('SplitterWave constructor');
         this._audioPlayer = audioPlayer;
         this._world = world;

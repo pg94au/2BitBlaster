@@ -3,19 +3,20 @@ import Debug from "debug";
 const debug = Debug("Blaster:Explosion");
 
 import {Actor} from './Actor';
-import { Bounds } from "./Bounds";
+import {AudioPlayer} from "./devices/AudioPlayer";
+import {Bounds} from "./Bounds";
 import {ExplosionProperties} from "./ExplosionProperties";
 import {ImageDetails} from "./ImageDetails";
 import {Point} from "./Point";
 import {World} from "./World";
 
 export class Explosion extends Actor {
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _explosionProperties: ExplosionProperties;
     private _currentFrame: number = 0;
     private _firstTick: boolean = true;
 
-    constructor(explosionProperties: ExplosionProperties, audioPlayer: any, world: World, startingPoint: Point) {
+    constructor(explosionProperties: ExplosionProperties, audioPlayer: AudioPlayer, world: World, startingPoint: Point) {
         super(world, startingPoint);
         debug('Explosion constructor for ' + explosionProperties.imageName);
         this._explosionProperties = explosionProperties;

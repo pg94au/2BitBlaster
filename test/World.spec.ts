@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {AudioPlayer} from "../src/devices/AudioPlayer";
 import {Dimensions} from "../src/Dimensions";
 import {Explosion} from '../src/Explosion';
 import {Point} from '../src/Point';
@@ -15,7 +16,7 @@ import {ExplosionProperties} from "../src/ExplosionProperties";
 import {PlayerStub} from "./stubs/PlayerStub";
 
 describe('World', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayer;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
     let world: World;

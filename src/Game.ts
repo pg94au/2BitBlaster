@@ -2,8 +2,10 @@ import Debug from "debug";
 const debug = Debug("Blaster:Game");
 import {EventEmitter} from "events";
 
+import {AudioPlayer} from "./devices/AudioPlayer";
 import {Bounds} from './Bounds';
 import {Clock} from "./timing/Clock";
+import {Joystick} from "./devices/Joystick";
 import {Level} from './Level';
 import {LevelManager} from './LevelManager';
 import {Player} from './Player';
@@ -21,9 +23,9 @@ import {TextInterlude} from './TextInterlude';
 import {World} from './World';
 
 export class Game {
-    private readonly _joystick: any;
+    private readonly _joystick: Joystick;
     private readonly _renderer: Renderer;
-    private readonly _audioPlayer: any;
+    private readonly _audioPlayer: AudioPlayer;
     private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
     private readonly _eventEmitter: EventEmitter;
@@ -36,7 +38,7 @@ export class Game {
     private _textInterlude!: TextInterlude | null;
     private _isActive: boolean = false;
 
-    constructor(joystick: any, renderer: Renderer, audioPlayer: any, clock: Clock) {
+    constructor(joystick: Joystick, renderer: Renderer, audioPlayer: AudioPlayer, clock: Clock) {
         debug('Game constructor');
         this._joystick = joystick;
         this._renderer = renderer;

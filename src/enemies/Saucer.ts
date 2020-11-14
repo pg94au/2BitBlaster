@@ -2,22 +2,23 @@ import Debug from "debug";
 const debug = Debug("Blaster:Saucer");
 import {random} from 'underscore';
 
+import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
+import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {PathAction} from '../paths/PathAction';
+import {PathEntry} from "../paths/PathEntry";
 import {PathTemplate} from '../paths/PathTemplate';
 import {Point} from '../Point';
 import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
-import {Clock} from "../timing/Clock";
-import {PathEntry} from "../paths/PathEntry";
 import {World} from "../World";
-import {Actor} from "../Actor";
 
 export class Saucer extends Enemy {
     public static readonly InitialHealth: number = 1;
@@ -39,7 +40,7 @@ export class Saucer extends Enemy {
     private static _diveRightPathTemplate: PathEntry[];
     private static _diveLeftPathTemplate: PathEntry[];
 
-    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point) {
+    constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startingPoint: Point) {
         super(audioPlayer, world, startingPoint, Saucer.InitialHealth);
         debug('Saucer constructor');
 

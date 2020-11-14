@@ -13,7 +13,7 @@ import {AudioPlayerStub} from "./stubs/AudioPlayerStub";
 import {ShotStub} from './stubs/ShotStub';
 
 describe('Actor', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayerStub;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
     let world: World;

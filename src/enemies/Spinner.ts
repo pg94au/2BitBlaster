@@ -3,6 +3,7 @@ const debug = Debug("Blaster:Spinner");
 import {random} from 'underscore';
 
 import {Actor} from "../Actor";
+import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
 import {Clock} from "../timing/Clock";
@@ -31,7 +32,12 @@ export class Spinner extends Enemy {
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
 
-    constructor(audioPlayer: any, world: World, clock: Clock, startingPoint: Point, pattern: Spinner.Pattern, bias: Spinner.Bias) {
+    constructor(audioPlayer: AudioPlayer,
+                world: World,
+                clock: Clock,
+                startingPoint: Point,
+                pattern: Spinner.Pattern,
+                bias: Spinner.Bias) {
         super(audioPlayer, world, startingPoint, Spinner.InitialHealth);
 
         this._scheduler = new Scheduler(clock);

@@ -2,14 +2,15 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Point} from '../../src/Point';
-import {Shrapnel} from '../../src/shots/Shrapnel';
-import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ScoreCounter} from "../../src/ScoreCounter";
-import {PlayerStub} from "../stubs/PlayerStub";
+import {Shrapnel} from '../../src/shots/Shrapnel';
 import {World} from '../../src/World';
 
+import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
+import {PlayerStub} from "../stubs/PlayerStub";
+
 describe('Shrapnel', () => {
-    let audioPlayer: any;
+    let audioPlayer: AudioPlayerStub;
     let world: World;
 
     beforeEach(() => {

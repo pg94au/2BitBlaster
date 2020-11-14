@@ -13,7 +13,7 @@ import {PlayerStub} from "../stubs/PlayerStub";
 
 describe('Grenade', () => {
     describe('#tick()', () => {
-        let audioPlayer: any;
+        let audioPlayer: AudioPlayerStub;
         let world: World;
 
         beforeEach(() => {
