@@ -45,7 +45,7 @@
     "debug": "^4.2.0",
     "events": "^3.2.0",
     "pixi.js": "^5.3.3",
-    "resource-loader": "^1.8.0",
+    "resource-loader": "^4.0.0-rc4",
     "superagent": "^6.1.0",
     "underscore": "^1.11.0",
     "uniq": "^1.0.1",
