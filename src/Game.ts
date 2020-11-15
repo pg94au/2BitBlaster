@@ -48,11 +48,11 @@ export class Game {
         this._eventEmitter = new EventEmitter();
     }
 
-    createDisplay(): void {
+    private createDisplay(): void {
         this._renderer.initialize(this._world);
     }
 
-    ticker(): void {
+    public tick(): void {
         if (this.gameIsOver()) {
             debug('Game.ticker: The game is over.');
             this.tickWithinGameOver();
@@ -79,7 +79,7 @@ export class Game {
 
         if (this._isActive) {
             setTimeout(() => {
-                global.requestAnimationFrame(() => { this.ticker() });
+                global.requestAnimationFrame(() => { this.tick() });
             }, 1000/30);
         }
         else {
@@ -95,7 +95,7 @@ export class Game {
         debug('Current joystick direction is %s', this._joystick.getCurrentDirection().toString());
     }
 
-    gameIsOver(): boolean {
+    private gameIsOver(): boolean {
         if (!this._levelManager.active) {
             debug('Final level has been completed.');
             return true;
@@ -107,7 +107,7 @@ export class Game {
         return false;
     }
 
-    addPlayerToWorld(): void {
+    private addPlayerToWorld(): void {
         const playerBounds = new Bounds(50, 430, 490, 590);
         const playerStartingPoint = new Point(
             (playerBounds.left + playerBounds.right) / 2,
@@ -180,10 +180,10 @@ export class Game {
         });
 
         this.createDisplay();
-        this.ticker();
+        this.tick();
     }
 
-    tickWithinGameOver(): void {
+    private tickWithinGameOver(): void {
         // When the game ends, text is displayed for some time before it stops
         // and the gameOver event is emitted.  This gives the user a chance to see the final
         // explosion, and few moments of the world without any player.

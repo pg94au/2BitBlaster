@@ -6,6 +6,7 @@ import {Actor} from "../Actor";
 import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from "../Bounds";
 import {Clock} from "../timing/Clock";
+import {Direction} from "../devices/Direction";
 import {Enemy} from './Enemy';
 import {ExplosionProperties} from '../ExplosionProperties';
 import {Grenade} from '../shots/Grenade';
@@ -73,7 +74,7 @@ export class Bomber extends Enemy {
         this._scheduler.executeDueOperations();
 
         for (let i = 0; i < 3; i++) {
-            this.move();
+            this.step();
 
             if (this._location.x === this._grenadeDropPosition) {
                 this.dropGrenade();
@@ -81,7 +82,7 @@ export class Bomber extends Enemy {
         }
     }
 
-    advanceCurrentFrame(): void {
+    private advanceCurrentFrame(): void {
         this._currentFrame = (this._currentFrame + 1) % this._frameIndices.length;
 
         this._scheduler.scheduleOperation(
@@ -91,14 +92,14 @@ export class Bomber extends Enemy {
         );
     }
 
-    dropGrenade(): void {
+    private dropGrenade(): void {
         const grenade = new Grenade(this._audioPlayer, this._world, this._location.translate(10, 30));
         this._world.addActor(grenade);
     }
 
-    move(): void {
+    private step(): void {
         // Move across the screen toward the right side.
-        this._location = this._location.right();
+        this.move(Direction.Right);
 
         if (this._location.x > this._world.getDimensions().width + 40) {
             this._active = false;

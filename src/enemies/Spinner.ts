@@ -97,7 +97,7 @@ export class Spinner extends Enemy {
 
         this._scheduler.executeDueOperations();
 
-        this.move();
+        this.step();
 
         this.scheduleNextBombDrop();
 
@@ -108,7 +108,7 @@ export class Spinner extends Enemy {
         }
     }
 
-    advanceCurrentFrame(): void {
+    private advanceCurrentFrame(): void {
         this._currentFrame = (this._currentFrame + 1) % 12;
 
         this._scheduler.scheduleOperation(
@@ -118,7 +118,7 @@ export class Spinner extends Enemy {
         );
     }
 
-    scheduleNextBombDrop(): void {
+    private scheduleNextBombDrop(): void {
         // Need to bind so that 'this' in dropBomb will refer to the Spinner.
         this._scheduler.scheduleOperation(
             'dropBombAt',
@@ -127,7 +127,7 @@ export class Spinner extends Enemy {
         );
     }
 
-    dropBomb(): void {
+    private dropBomb(): void {
         const worldDimensions = this._world.getDimensions();
 
         if (this._location.x > 0 && this._location.x < worldDimensions.width
@@ -140,7 +140,7 @@ export class Spinner extends Enemy {
         }
     }
 
-    move(): void {
+    private step(): void {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
             this._scheduler.scheduleOperation(
@@ -163,7 +163,7 @@ export class Spinner extends Enemy {
         this._pathPosition++;
     }
 
-    calculatePaths(): void {
+    private calculatePaths(): void {
         this._rightPathTemplates = [
             new SplinePath(new PathTemplate(
                 [
@@ -244,7 +244,7 @@ export class Spinner extends Enemy {
         this._pathsCalculated = true;
     }
 
-    prepareNextPath(pathTemplate: PathEntry[]) {
+    private prepareNextPath(pathTemplate: PathEntry[]) {
         this._currentPathTemplate = pathTemplate;
         this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
         this._pathPosition = 0;

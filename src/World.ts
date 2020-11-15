@@ -80,7 +80,7 @@ export class World {
         this.cleanUp();
     }
 
-    cleanUp(): void {
+    private cleanUp(): void {
         debug('World.cleanUp: before is %o', this._actors);
 
         this._actors =  this._actors.filter(actor => { return actor.isActive() });

@@ -102,7 +102,7 @@ export class SplitterFragment extends Enemy {
 
         this._scheduler.executeDueOperations();
 
-        this.move();
+        this.step();
 
         // Check if this Splitter fragment has collided with any active enemies.
         const player = this._world.getPlayer();
@@ -111,7 +111,7 @@ export class SplitterFragment extends Enemy {
         }
     }
 
-    advanceCurrentFrame(): void {
+    private advanceCurrentFrame(): void {
         this._currentFrame = (this._currentFrame + 1) % this._frameIndices.length;
 
         this._scheduler.scheduleOperation(
@@ -121,7 +121,7 @@ export class SplitterFragment extends Enemy {
         );
     }
 
-    scheduleNextBombDrop() {
+    private scheduleNextBombDrop() {
         // Need to bind so that 'this' in dropBomb will refer to the Splitter fragment.
         this._scheduler.scheduleOperation(
             'dropBombAt',
@@ -130,12 +130,12 @@ export class SplitterFragment extends Enemy {
         );
     }
 
-    dropBomb(): void {
+    private dropBomb(): void {
         const shrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
         this._world.addActor(shrapnel);
     }
 
-    move(): void {
+    private step(): void {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
             let nextPath;
@@ -192,7 +192,7 @@ export class SplitterFragment extends Enemy {
         this._pathPosition++;
     }
 
-    calculatePaths(): void {
+    private calculatePaths(): void {
         if (!SplitterFragment._pathsCalculated) {
             const floatAroundPath1 = new SplinePath(new PathTemplate(
                 [
@@ -333,7 +333,7 @@ export class SplitterFragment extends Enemy {
         }
     }
 
-    prepareNextPath(pathTemplate: PathEntry[]) {
+    private prepareNextPath(pathTemplate: PathEntry[]) {
         this._currentPathTemplate = pathTemplate;
         this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
         this._pathPosition = 0;

@@ -4,6 +4,7 @@ const debug = Debug("Blaster:Bomb");
 import {Actor} from "../Actor";
 import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
+import {Direction} from "../devices/Direction";
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
 import {ImageDetails} from '../ImageDetails';
@@ -48,7 +49,7 @@ export class Bomb extends Shot {
 
         const speed = 10;
         for (let step = 0; step < speed; step++) {
-            this._location = this._location.down();
+            this.move(Direction.Down);
 
             if (this._location.y > this._world.getDimensions().height) {
                 // When the bomb leaves the world, it becomes inactive.

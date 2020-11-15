@@ -4,6 +4,7 @@ const debug = Debug("Blaster:Bullet");
 import {Actor} from "../Actor";
 import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
+import {Direction} from "../devices/Direction";
 import {Enemy} from "../enemies/Enemy";
 import {HitArbiter} from '../HitArbiter';
 import {HitResult} from '../HitResult';
@@ -48,7 +49,7 @@ export class Bullet extends Shot {
 
         const speed: number = 10;
         for (let step = 0; step < speed; step++) {
-            this._location = this._location.up();
+            this.move(Direction.Up);
 
             if (this._location.y < 0) {
                 // When the bullet leaves the world, it becomes inactive.

@@ -4,6 +4,7 @@ const debug = Debug("Blaster:Grenade");
 import {Actor} from "../Actor";
 import {AudioPlayer} from "../devices/AudioPlayer";
 import {Bounds} from '../Bounds';
+import {Direction} from "../devices/Direction";
 import {Explosion} from '../Explosion';
 import {ExplosionProperties} from "../ExplosionProperties";
 import {HitArbiter} from '../HitArbiter';
@@ -51,7 +52,7 @@ export class Grenade extends Shot {
 
         const speed = 5;
         for (let step = 0; step < speed; step++) {
-            this._location = this._location.down();
+            this.move(Direction.Down);
 
             if (this._location.y > this._world.getDimensions().height) {
                 // If the grenade leaves the world, it becomes inactive.

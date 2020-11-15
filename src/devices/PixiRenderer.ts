@@ -81,7 +81,7 @@ export class PixiRenderer implements Renderer {
         this._renderer.render(this._stage);
     }
 
-    setScale() {
+    private setScale() {
         const height = this._containerElement.clientHeight;
         const width = this._containerElement.clientWidth;
 
@@ -93,7 +93,7 @@ export class PixiRenderer implements Renderer {
         this._renderer.resize(width, height);
     }
 
-    addOrUpdateSpritesInStage() {
+    private addOrUpdateSpritesInStage() {
         const actors = this._world.getActors();
         for (const actor of actors) {
             let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.getId());
@@ -109,7 +109,7 @@ export class PixiRenderer implements Renderer {
         }
     }
 
-    addAnyUnrenderedNewTextToStage(): void {
+    private addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
         const texts = this._world.getTexts();
         for (const text of texts) {
@@ -133,7 +133,7 @@ export class PixiRenderer implements Renderer {
         }
     }
 
-    cleanUpInactiveActors(): void {
+    private cleanUpInactiveActors(): void {
         // Remove any sprites whose associated actors no longer exist.
         this._activeSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
             // Check if there exists an actor with id == actorId.
@@ -144,7 +144,7 @@ export class PixiRenderer implements Renderer {
         });
     }
 
-    cleanUpInactiveText() {
+    private cleanUpInactiveText() {
         // Remove any text were the associated text items no longer exist.
         this._activeTexts.forEach((text: PIXI.Text, textId: string) => {
             // Check if there exists a text with id == textId.
@@ -155,7 +155,7 @@ export class PixiRenderer implements Renderer {
         });
     }
 
-    sortSpritesByActorZOrder() {
+    private sortSpritesByActorZOrder() {
         // Sort sprites so that they get rendered in the z-order that's been specified by each actor.
         sortBy(this._stage.children, child => {
             child.zIndex = child.zIndex || 0;

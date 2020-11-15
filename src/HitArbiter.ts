@@ -39,7 +39,7 @@ export class HitArbiter {
             shotCollisionAreas.push(shotCollisionArea);
         }
 
-        if (this.areasCollide(actorCollisionAreas, shotCollisionAreas)) {
+        if (HitArbiter.areasCollide(actorCollisionAreas, shotCollisionAreas)) {
             const damage = this._shot.getDamageAgainst(actor);
             const hitEffective = actor.hitBy(this._shot, damage);
 
@@ -55,7 +55,7 @@ export class HitArbiter {
         }
     }
 
-    areasCollide(areas1: Bounds[], areas2: Bounds[]): boolean {
+    static areasCollide(areas1: Bounds[], areas2: Bounds[]): boolean {
         for (const area1 of areas1) {
             for (const area2 of areas2) {
                 if (area1.collidesWith(area2)) {
