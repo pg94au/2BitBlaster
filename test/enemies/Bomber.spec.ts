@@ -42,7 +42,7 @@ describe('Bomber', () => {
             world.addActor(bullet);
 
             const bomber = new Bomber(audioPlayer, world, clock, 10);
-            bomber.hitBy(bullet, 3);
+            bomber.hitBy(bullet, Bomber.InitialHealth);
             bomber.tick();
             expect(bomber.isActive()).to.be.false;
         });
@@ -52,7 +52,7 @@ describe('Bomber', () => {
             world.addActor(bullet);
 
             const bomber = new Bomber(audioPlayer, world, clock, 10);
-            bomber.hitBy(bullet, 0.5);
+            bomber.hitBy(bullet,  Bomber.InitialHealth / 2);
             bomber.tick();
             expect(bomber.isActive()).to.be.true;
         });
@@ -65,7 +65,7 @@ describe('Bomber', () => {
             world.addActor(bullet);
 
             const bomber = new Bomber(audioPlayer, world, clock, 10);
-            bomber.hitBy(bullet, 1000);
+            bomber.hitBy(bullet, Bomber.InitialHealth);
             bomber.tick();
             expect(addedActor).to.be.instanceOf(Explosion);
         });
@@ -75,7 +75,7 @@ describe('Bomber', () => {
             world.addActor(bullet);
 
             const bomber = new Bomber(audioPlayer, world, clock, 10);
-            bomber.hitBy(bullet, 1000);
+            bomber.hitBy(bullet, Bomber.InitialHealth);
             bomber.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });

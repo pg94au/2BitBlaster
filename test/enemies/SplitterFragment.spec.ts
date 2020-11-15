@@ -31,7 +31,7 @@ describe('SplitterFragment', () => {
             world.addActor(bullet);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            expect(splitterFragment.hitBy(bullet, 1)).to.be.true;
+            expect(splitterFragment.hitBy(bullet, SplitterFragment.InitialHealth)).to.be.true;
         });
 
         it('should return true for Player', () => {
@@ -39,7 +39,7 @@ describe('SplitterFragment', () => {
             world.addActor(player);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            expect(splitterFragment.hitBy(player, 1)).to.be.true;
+            expect(splitterFragment.hitBy(player, SplitterFragment.InitialHealth)).to.be.true;
         });
     });
 
@@ -49,7 +49,7 @@ describe('SplitterFragment', () => {
             world.addActor(player);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            splitterFragment.hitBy(player, 1);
+            splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
             expect(splitterFragment.isActive()).to.be.false;
         });
@@ -59,7 +59,7 @@ describe('SplitterFragment', () => {
             world.addActor(player);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            splitterFragment.hitBy(player, 0.5);
+            splitterFragment.hitBy(player, SplitterFragment.InitialHealth / 2);
             player.tick();
             expect(player.isActive()).to.be.true;
         });
@@ -69,7 +69,7 @@ describe('SplitterFragment', () => {
             world.addActor(player);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            splitterFragment.hitBy(player, 1);
+            splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
         });
@@ -79,7 +79,7 @@ describe('SplitterFragment', () => {
             world.addActor(player);
 
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
-            splitterFragment.hitBy(player, 1);
+            splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });
