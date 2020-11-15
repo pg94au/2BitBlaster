@@ -8,7 +8,8 @@
         "comment-format":false,
 	"no-bitwise":false,
 	"no-internal-module":false,
-	"no-namespace":false
+	"no-namespace":false,
+	"radix":false
     },
     "rulesDirectory": []
 }

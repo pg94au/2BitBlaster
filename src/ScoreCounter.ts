@@ -15,21 +15,21 @@ export class ScoreCounter {
 
     synchronizeHighScore(): void {
         let remoteHighScore: number;
-        get('highScore').end(((error: any, result: Response): void => {
-            if (error || !result.ok) {
+        get('highScore').end(((getError: any, getResult: Response): void => {
+            if (getError || !getResult.ok) {
                 debug('Unable to retrieve high score from server.');
                 remoteHighScore = 0;
             }
             else {
-                remoteHighScore = parseInt(result.text);
+                remoteHighScore = parseInt(getResult.text);
             }
 
             if (this._highScore > remoteHighScore) {
                 put('highScore')
                     .set('Content-Type', 'text/plain')
                     .send(this._highScore.toString())
-                    .end((error: any, result: Response): void => {
-                        if (error || !result.ok) {
+                    .end((putError: any, putResult: Response): void => {
+                        if (putError || !putResult.ok) {
                             debug('Failed to submit high score to server.');
                         }
                     });

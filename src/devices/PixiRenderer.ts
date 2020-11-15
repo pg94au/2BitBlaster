@@ -28,7 +28,7 @@ export class PixiRenderer implements Renderer {
             loader.add(image.name, image.url);
         }
         loader.onComplete.add(() => { onLoaded() });
-        loader.load((loader, resources) => {
+        loader.load((byLoader, resources) => {
             const resourceNames = Object.getOwnPropertyNames(resources);
             for (const resourceName of resourceNames) {
                 const texture: PIXI.Texture = resources[resourceName]!.texture;
@@ -137,7 +137,7 @@ export class PixiRenderer implements Renderer {
         // Remove any sprites whose associated actors no longer exist.
         this._activeSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
             // Check if there exists an actor with id == actorId.
-            if (!this._world.getActors().find(actor => { return actor.getId() == actorId })) {
+            if (!this._world.getActors().find(actor => { return actor.getId() === actorId })) {
                 this._stage.removeChild(spriteDetail.sprite);
                 this._activeSprites.delete(actorId);
             }
@@ -148,7 +148,7 @@ export class PixiRenderer implements Renderer {
         // Remove any text were the associated text items no longer exist.
         this._activeTexts.forEach((text: PIXI.Text, textId: string) => {
             // Check if there exists a text with id == textId.
-            if (!this._world.getTexts().find(text => { return text.id == textId })) {
+            if (!this._world.getTexts().find(t => { return t.id === textId })) {
                 this._stage.removeChild(text);
                 this._activeTexts.delete(textId);
             }

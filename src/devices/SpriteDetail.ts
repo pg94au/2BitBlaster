@@ -13,7 +13,7 @@ export class SpriteDetail {
     }
 
     updateTextures(): void {
-        if (this._actor.getImageDetails().name != this._imageName) {
+        if (this._actor.getImageDetails().name !== this._imageName) {
             this._imageName = this._actor.getImageDetails().name;
             this._frameTextures = [];
             for (let index = 0; index < this._actor.getImageDetails().numberOfFrames; index++) {

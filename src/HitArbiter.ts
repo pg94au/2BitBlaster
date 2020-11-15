@@ -28,14 +28,14 @@ export class HitArbiter {
 
         // Offset collision masks to the current positions before testing for collision.
         const actorCollisionAreas: Bounds[] = [];
-        for (let i=0; i < actorCollisionMasks.length; i++) {
-            const actorCollisionArea = actorCollisionMasks[i].translate(actorCoordinates);
+        for (const actorCollisionMask of actorCollisionMasks) {
+            const actorCollisionArea = actorCollisionMask.translate(actorCoordinates);
             actorCollisionAreas.push(actorCollisionArea);
         }
 
         const shotCollisionAreas: Bounds[] = [];
-        for (let i=0; i < shotCollisionMasks.length; i++) {
-            const shotCollisionArea = shotCollisionMasks[i].translate(shotCoordinates);
+        for (const shotCollisionMask of shotCollisionMasks) {
+            const shotCollisionArea = shotCollisionMask.translate(shotCoordinates);
             shotCollisionAreas.push(shotCollisionArea);
         }
 
@@ -56,9 +56,9 @@ export class HitArbiter {
     }
 
     areasCollide(areas1: Bounds[], areas2: Bounds[]): boolean {
-        for (let area1Index = 0; area1Index < areas1.length; area1Index++) {
-            for (let area2Index = 0; area2Index < areas2.length; area2Index++) {
-                if (areas1[area1Index].collidesWith(areas2[area2Index])) {
+        for (const area1 of areas1) {
+            for (const area2 of areas2) {
+                if (area1.collidesWith(area2)) {
                     return true;
                 }
             }

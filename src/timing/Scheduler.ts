@@ -42,19 +42,19 @@ export class Scheduler {
         debug('executeDueOperations: now=' + now);
         const dueOperations: ScheduleEntry[] = [];
         const notYetDue: ScheduleEntry[] = [];
-        for (let i=0; i < this._scheduledItems.length; i++) {
-            if (now >= this._scheduledItems[i].date) {
-                dueOperations.push(this._scheduledItems[i]);
+        for (const scheduledItem of this._scheduledItems) {
+            if (now >= scheduledItem.date) {
+                dueOperations.push(scheduledItem);
             }
             else {
-                notYetDue.push(this._scheduledItems[i]);
+                notYetDue.push(scheduledItem);
             }
         }
         this._scheduledItems = notYetDue;
 
-        for (let i=0; i < dueOperations.length; i++) {
-            debug('Executing scheduled operation [' + dueOperations[i].tag + ']');
-            dueOperations[i].operation();
+        for (const dueOperation of dueOperations) {
+            debug('Executing scheduled operation [' + dueOperation.tag + ']');
+            dueOperation.operation();
         }
         debug('executeDueOperations: At end _scheduledItems.length=' + this._scheduledItems.length);
     }

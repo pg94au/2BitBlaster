@@ -31,12 +31,12 @@ export class LinePath {
         }
 
         if (this._scheduledActions) {
-            for (let i = 0; i < this._scheduledActions.length; i++) {
+            for (const scheduledAction of this._scheduledActions) {
                 // Create the new action entry.
-                const pathEntry = new PathEntry(this._scheduledActions[i].action, null);
+                const pathEntry = new PathEntry(scheduledAction.action, null);
 
                 // Figure out what offset to include it at.
-                const stepPosition = Math.floor(numberOfSteps * this._scheduledActions[i].when);
+                const stepPosition = Math.floor(numberOfSteps * scheduledAction.when);
 
                 // Insert it at that position.
                 path.splice(stepPosition, 0, pathEntry);

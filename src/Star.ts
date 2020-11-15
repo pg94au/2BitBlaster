@@ -63,7 +63,7 @@ export class Star extends Actor {
         // Make the star sparkle.
         this._flashCounter = (this._flashCounter + 1) % this._flashRate;
 
-        if (this._flashCounter == 0) {
+        if (this._flashCounter === 0) {
             this._currentFrame = (this._currentFrame + 1) % this._frameIndices.length;
         }
     }

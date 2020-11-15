@@ -50,7 +50,7 @@ export class SplinePath {
             const t = currentStep * stepSize;
 
             // bspline accepts points in the form [[x1, y1], [x2, y2], ...] so we need to convert from a collection of Point
-            const pointsAsArray: ArrayLike<number>[] = this._pathTemplate.points.map((point: Point): ArrayLike<number> => { return [point.x, point.y]});
+            const pointsAsArray: ArrayLike<number>[] = this._pathTemplate.points.map(p => { return [p.x, p.y] });
 
             // bspline will return a point in the form [x, y], so it will have to converted to a Point
             const point = bspline(t, this._order - 1, pointsAsArray, this._knots);
@@ -61,11 +61,9 @@ export class SplinePath {
         }
 
         if (this._pathTemplate.scheduledActions) {
-            for (let i = 0; i < this._pathTemplate.scheduledActions.length; i++) {
-                const scheduledAction = this._pathTemplate.scheduledActions[i];
-
+            for (const scheduledAction of this._pathTemplate.scheduledActions) {
                 // Create the new action entry.
-                const actionEntry = new PathEntry(this._pathTemplate.scheduledActions[i].action, null);
+                const actionEntry = new PathEntry(scheduledAction.action, null);
 
                 // Figure out what offset to include it at.
                 const stepPosition = Math.floor(numberOfSteps * scheduledAction.when);
@@ -80,14 +78,14 @@ export class SplinePath {
 
     static mirrorPath(originalPath: PathEntry[]): PathEntry[] {
         const mirroredPath: PathEntry[] = [];
-        for (let i = 0; i < originalPath.length; i++) {
-            switch (originalPath[i].action) {
+        for (const pathEntry of originalPath) {
+            switch (pathEntry.action) {
                 case PathAction.Move:
-                    const pathEntry = new PathEntry(PathAction.Move, new Point(-originalPath[i].location!.x, originalPath[i].location!.y));
-                    mirroredPath.push(pathEntry);
+                    const mirrored = new PathEntry(PathAction.Move, new Point(-pathEntry.location!.x, pathEntry.location!.y));
+                    mirroredPath.push(mirrored);
                     break;
                 case PathAction.Fire:
-                    mirroredPath.push(originalPath[i]);
+                    mirroredPath.push(pathEntry);
                     break;
             }
         }
@@ -97,8 +95,7 @@ export class SplinePath {
 
     static translatePath(originalPath: PathEntry[], xOffset: number, yOffset: number): PathEntry[] {
         const translatedPath: PathEntry[] = [];
-        for (let i = 0; i < originalPath.length; i++) {
-            const pathEntry = originalPath[i];
+        for (const pathEntry of originalPath) {
             switch(pathEntry.action) {
                 case PathAction.Move:
                     const translatedPathEntry = new PathEntry(
@@ -108,7 +105,7 @@ export class SplinePath {
                     translatedPath.push(translatedPathEntry);
                     break;
                 case PathAction.Fire:
-                    translatedPath.push(originalPath[i]);
+                    translatedPath.push(pathEntry);
                     break;
             }
         }
