@@ -44,7 +44,7 @@ describe('Game', () => {
         });
     });
 
-    describe('#ticker()', () => {
+    describe('#tick()', () => {
         it('should decrement the number of remaining lives when the player is killed', () => {
             let initialRemainingLives: number | null = null;
             let currentRemainingLives: number | null = null;
@@ -56,16 +56,16 @@ describe('Game', () => {
             initialRemainingLives = currentRemainingLives;
 
             clock.addSeconds(1000);
-            (game as any).ticker(); // Tick adds player to world.
+            game.tick(); // Tick adds player to world.
             clock.addSeconds(1000);
-            (game as any).ticker(); // Tick ensures player is now vulnerable.
+            game.tick(); // Tick ensures player is now vulnerable.
 
             const world = ((game as any)._world as World);
             const player = world.getPlayer()!;
             const shot = new ShotStub(world, player.getCoordinates());
             player.hitBy(shot, 1000);
-            (game as any).ticker(); // Tick removes the player from the world.
-            (game as any).ticker(); // Tick notices the player gone and decrements lives remaining.
+            game.tick(); // Tick removes the player from the world.
+            game.tick(); // Tick notices the player gone and decrements lives remaining.
 
             expect(currentRemainingLives).to.be.below(initialRemainingLives!);
         });

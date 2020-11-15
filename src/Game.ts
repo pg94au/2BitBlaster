@@ -52,7 +52,7 @@ export class Game {
         this._renderer.initialize(this._world);
     }
 
-    private ticker(): void {
+    public tick(): void {
         if (this.gameIsOver()) {
             debug('Game.ticker: The game is over.');
             this.tickWithinGameOver();
@@ -79,7 +79,7 @@ export class Game {
 
         if (this._isActive) {
             setTimeout(() => {
-                global.requestAnimationFrame(() => { this.ticker() });
+                global.requestAnimationFrame(() => { this.tick() });
             }, 1000/30);
         }
         else {
@@ -180,7 +180,7 @@ export class Game {
         });
 
         this.createDisplay();
-        this.ticker();
+        this.tick();
     }
 
     private tickWithinGameOver(): void {
