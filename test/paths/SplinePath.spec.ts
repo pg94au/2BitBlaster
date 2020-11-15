@@ -11,7 +11,7 @@ import {PathTemplate} from "../../src/paths/PathTemplate";
 describe('SplinePath', () => {
     describe('#getPath()', () => {
         it ('creates a path with the specified number of steps', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -22,15 +22,15 @@ describe('SplinePath', () => {
                 )
             );
 
-            let numberOfSteps = 10;
-            let path = splinePath.getPath(numberOfSteps);
+            const numberOfSteps = 10;
+            const path = splinePath.getPath(numberOfSteps);
 
             // A given number of steps require one additional point (fencepost analogy).
             expect(path.length).to.be.equal(numberOfSteps + 1);
         });
 
         it ('creates a path containing only movements when no other actions are specified in the template', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -41,16 +41,16 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
             // All steps that are movements.
-            let movements = path.filter((pathEntry: PathEntry): boolean => { return pathEntry.action === PathAction.Move });
+            const movements = path.filter((pathEntry: PathEntry): boolean => { return pathEntry.action === PathAction.Move });
 
             expect(movements.length).to.be.equal(path.length);
         });
 
         it('creates paths that begin and terminate at the first and last provided points', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -61,7 +61,7 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
             expect(Math.round(path[0].location!.x)).to.be.eql(0.0);
             expect(Math.round(path[0].location!.y)).to.be.eql(0.0);
@@ -71,7 +71,7 @@ describe('SplinePath', () => {
         });
 
         it('inserts non-movement actions at specified positions along the path', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -84,7 +84,7 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
             // One extra step for the fire action.
             expect(path.length).to.be.equal(12);
@@ -93,9 +93,9 @@ describe('SplinePath', () => {
         });
     });
 
-    describe('#mirrorPath', function() {
+    describe('#mirrorPath', () => {
         it('creates a new path with the same length as the provided path', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -106,15 +106,15 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let mirroredPath = SplinePath.mirrorPath(path);
+            const mirroredPath = SplinePath.mirrorPath(path);
 
             expect(mirroredPath.length).to.be.equal(path.length);
         });
 
         it('creates new path with the x-coordinate of each point mirrored in the y-axis', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -125,9 +125,9 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let mirroredPath = SplinePath.mirrorPath(path);
+            const mirroredPath = SplinePath.mirrorPath(path);
 
             for (let i=0; i < path.length; i++) {
                 expect(path[i].location!.x).to.be.equal(-mirroredPath[i].location!.x);
@@ -135,7 +135,7 @@ describe('SplinePath', () => {
         });
 
         it('should not affect the y-coordinates of any point in the path', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -146,9 +146,9 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let mirroredPath = SplinePath.mirrorPath(path);
+            const mirroredPath = SplinePath.mirrorPath(path);
 
             for (let i=0; i < path.length; i++) {
                 expect(path[i].location!.y).to.be.equal(mirroredPath[i].location!.y);
@@ -156,7 +156,7 @@ describe('SplinePath', () => {
         });
 
         it('should include all actions from the provided path', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -169,17 +169,17 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let mirroredPath = SplinePath.mirrorPath(path);
+            const mirroredPath = SplinePath.mirrorPath(path);
 
             expect(mirroredPath[5].action).to.be.equal(PathAction.Fire);
         });
     });
 
-    describe('#mirrorPath', function() {
+    describe('#mirrorPath', () => {
         it('should generate a new path with the same length as the original', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -190,15 +190,15 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let translatedPath = SplinePath.translatePath(path, 3, 7);
+            const translatedPath = SplinePath.translatePath(path, 3, 7);
 
             expect(translatedPath.length).to.be.equal(path.length);
         });
 
         it('should translate every coordinate by the x and y offsets', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -209,9 +209,9 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let translatedPath = SplinePath.translatePath(path, 3, 7);
+            const translatedPath = SplinePath.translatePath(path, 3, 7);
 
             for (let i = 0; i < path.length; i++) {
                 expect(translatedPath[i].location!.x).to.be.equal(path[i].location!.x + 3);
@@ -220,7 +220,7 @@ describe('SplinePath', () => {
         });
 
         it('should copy actions without modification', () => {
-            let splinePath = new SplinePath(
+            const splinePath = new SplinePath(
                 new PathTemplate(
                     [
                         new Point(0.0, 0.0),
@@ -233,9 +233,9 @@ describe('SplinePath', () => {
                 )
             );
 
-            let path = splinePath.getPath(10);
+            const path = splinePath.getPath(10);
 
-            let translatedPath = SplinePath.translatePath(path, 3, 7);
+            const translatedPath = SplinePath.translatePath(path, 3, 7);
 
             expect(translatedPath[5].action).to.be.equal(PathAction.Fire);
         });

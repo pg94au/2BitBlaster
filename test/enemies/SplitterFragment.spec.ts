@@ -27,58 +27,58 @@ describe('SplitterFragment', () => {
 
     describe('#hitBy()', () => {
         it('should return true for Bullet', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             expect(splitterFragment.hitBy(bullet, 1)).to.be.true;
         });
 
         it('should return true for Player', () => {
-            let player = new PlayerStub(world, new Point(10, 10));
+            const player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             expect(splitterFragment.hitBy(player, 1)).to.be.true;
         });
     });
 
     describe('#tick()', () => {
         it('should de-activate after health reaches zero', () => {
-            let player = new PlayerStub(world, new Point(10, 10));
+            const player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, 1);
             splitterFragment.tick();
             expect(splitterFragment.isActive()).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
-            let player = new PlayerStub(world, new Point(10, 10));
+            const player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, 0.5);
             player.tick();
             expect(player.isActive()).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
-            let player = new PlayerStub(world, new Point(10, 10));
+            const player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, 1);
             splitterFragment.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {
-            let player = new PlayerStub(world, new Point(10, 10));
+            const player = new PlayerStub(world, new Point(10, 10));
             world.addActor(player);
 
-            let splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
+            const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, 1);
             splitterFragment.tick();
             expect(scoreCounter.currentScore).to.be.above(0);

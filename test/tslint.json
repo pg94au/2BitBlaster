@@ -1,0 +1,17 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "comment-format":false,
+	"no-bitwise":false,
+	"no-empty":false,
+	"no-internal-module":false,
+	"no-namespace":false,
+	"no-unused-expression":false,
+	"radix":false
+    },
+    "rulesDirectory": []
+}

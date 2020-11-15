@@ -29,7 +29,7 @@ describe('Game', () => {
     describe('#start()', () => {
         it('should begin game with score of zero', () => {
             let initialScore: number | null = null;
-            let game = new Game(joystick, renderer, audioPlayer, clock);
+            const game = new Game(joystick, renderer, audioPlayer, clock);
             game.on('score', currentScore => { initialScore = currentScore });
             game.start();
             expect(initialScore).to.be.equal(0);
@@ -37,7 +37,7 @@ describe('Game', () => {
 
         it('should indicate a positive initial number of remaining lives', () => {
             let initialRemainingLives: number | null = null;
-            let game = new Game(joystick, renderer, audioPlayer, clock);
+            const game = new Game(joystick, renderer, audioPlayer, clock);
             game.on('remainingLives', remainingLives => { initialRemainingLives = remainingLives });
             game.start();
             expect(initialRemainingLives).to.be.greaterThan(0);
@@ -49,7 +49,7 @@ describe('Game', () => {
             let initialRemainingLives: number | null = null;
             let currentRemainingLives: number | null = null;
 
-            let game = new Game(joystick, renderer, audioPlayer, clock);
+            const game = new Game(joystick, renderer, audioPlayer, clock);
             game.on('remainingLives', remainingLives => { currentRemainingLives = remainingLives });
 
             game.start();
@@ -60,9 +60,9 @@ describe('Game', () => {
             clock.addSeconds(1000);
             game.ticker(); // Tick ensures player is now vulnerable.
 
-            let world = <World>game["_world"];
-            let player = world.getPlayer()!;
-            let shot = new ShotStub(world, player.getCoordinates());
+            const world = ((game as any)._world as World);
+            const player = world.getPlayer()!;
+            const shot = new ShotStub(world, player.getCoordinates());
             player.hitBy(shot, 1000);
             game.ticker(); // Tick removes the player from the world.
             game.ticker(); // Tick notices the player gone and decrements lives remaining.

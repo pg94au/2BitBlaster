@@ -13,7 +13,7 @@ import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
 import {WorldStub} from "../stubs/WorldStub";
 
-describe('Bomber', function() {
+describe('Bomber', () => {
     let audioPlayer: AudioPlayer;
     let clock: ClockStub;
     let scoreCounter: ScoreCounter;
@@ -28,30 +28,30 @@ describe('Bomber', function() {
 
     describe('#hit()', () => {
         it('should return true', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
             expect(bomber.hitBy(bullet, 1)).to.be.true;
         });
     });
 
     describe('#tick()', () => {
         it('should de-activate after health reaches zero', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, 3);
             bomber.tick();
             expect(bomber.isActive()).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, 0.5);
             bomber.tick();
             expect(bomber.isActive()).to.be.true;
@@ -61,29 +61,29 @@ describe('Bomber', function() {
             let addedActor: Actor | null = null;
             world.onAddActor(actor => { addedActor = actor });
 
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, 1000);
             bomber.tick();
             expect(addedActor).to.be.instanceOf(Explosion);
         });
 
         it('should increment the score when it is destroyed', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(10, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             world.addActor(bullet);
 
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, 1000);
             bomber.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });
 
         it('should become inactive when it disappears of the side of the screen', () => {
-            let bomber = new Bomber(audioPlayer, world, clock, 10);
+            const bomber = new Bomber(audioPlayer, world, clock, 10);
 
-            let lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
+            const lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
 
             while (bomber.getCoordinates().x < lastVisiblePosition) {
                 bomber.tick();

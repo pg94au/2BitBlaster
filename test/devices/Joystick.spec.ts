@@ -4,7 +4,7 @@ import {expect} from 'chai';
 import {Direction} from '../../src/devices/Direction';
 import {Joystick} from '../../src/devices/Joystick';
 
-let testData = [
+const testData = [
     // No event.
     {
         events: [],
@@ -105,18 +105,12 @@ let testData = [
 describe('Joystick', () => {
     describe('#getCurrentDirection()', () => {
         // Execute all test data as individual test cases.
-        for (let testInput of testData) {
+        for (const testInput of testData) {
             it('should should result in ' + testInput.result + ' after events [' + testInput.events + ']', () => {
-                let joystick = new Joystick();
+                const joystick = new Joystick();
 
-                for (let event of testInput.events) {
-                    (<any>joystick)[event]();
-                }
-
-                let currentDirection = joystick.getCurrentDirection();
-                if (currentDirection !== testInput.result) {
-                    joystick.getCurrentDirection();
-                    console.log('hey!');
+                for (const event of testInput.events) {
+                    (joystick as any)[event]();
                 }
 
                 expect(joystick.getCurrentDirection()).to.be.equal(testInput.result);
@@ -126,20 +120,20 @@ describe('Joystick', () => {
 
     describe('#getFireState()', () => {
         it('should start not set', () => {
-            let joystick = new Joystick();
+            const joystick = new Joystick();
             expect(joystick.getFireState()).to.be.false;
         });
     });
 
     describe('#startFire()', () => {
         it('should enable fire state', () => {
-            let joystick = new Joystick();
+            const joystick = new Joystick();
             joystick.startFire();
             expect(joystick.getFireState()).to.be.true;
         });
 
         it('should retain enabled fire state when called consecutively', () => {
-            let joystick = new Joystick();
+            const joystick = new Joystick();
             joystick.startFire();
             joystick.startFire();
             expect(joystick.getFireState()).to.be.true;
@@ -148,14 +142,14 @@ describe('Joystick', () => {
 
     describe('#stopFire()', () => {
         it('should disable fire state', () => {
-            let joystick = new Joystick();
+            const joystick = new Joystick();
             joystick.startFire();
             joystick.stopFire();
             expect(joystick.getFireState()).to.be.false;
         });
 
         it('should retain disabled fire state when called consecutively', () => {
-            let joystick = new Joystick();
+            const joystick = new Joystick();
             joystick.startFire();
             joystick.stopFire();
             joystick.stopFire();

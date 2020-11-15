@@ -27,8 +27,8 @@ describe('Saucer', () => {
 
     describe('#hitBy()', () => {
         it('should return true', () => {
-            let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            let actor = new ActorStub(world, new Point(5, 10));
+            const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
+            const actor = new ActorStub(world, new Point(5, 10));
             world.addActor(actor);
 
             expect(saucer.hitBy(actor, 1)).to.be.true;
@@ -37,40 +37,40 @@ describe('Saucer', () => {
 
     describe('#tick()', () => {
         it('should de-activate after health reaches zero', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(5, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(5, 10));
             world.addActor(bullet);
 
-            let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
+            const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, 1);
             saucer.tick();
             expect(saucer.isActive()).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(5, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(5, 10));
             world.addActor(bullet);
 
-            let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
+            const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, 0.5);
             saucer.tick();
             expect(saucer.isActive()).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(5, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(5, 10));
             world.addActor(bullet);
 
-            let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
+            const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, 1);
             saucer.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {
-            let bullet = new Bullet(audioPlayer, world, new Point(5, 10));
+            const bullet = new Bullet(audioPlayer, world, new Point(5, 10));
             world.addActor(bullet);
 
-            let saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
+            const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, 1);
             saucer.tick();
             expect(scoreCounter.currentScore).to.be.above(0);

@@ -12,9 +12,9 @@ import {ClockStub} from "./stubs/ClockStub";
 describe('StarField', () => {
     describe('#tick()', () => {
         it('populates the world with multiple stars on first call', () => {
-            let world = new World(480, 640, new ScoreCounter());
-            let clock = new ClockStub();
-            let starField = new StarField(world, clock);
+            const world = new World(480, 640, new ScoreCounter());
+            const clock = new ClockStub();
+            const starField = new StarField(world, clock);
 
             starField.tick();
 
@@ -22,9 +22,9 @@ describe('StarField', () => {
         });
 
         it('adds stars periodically on subsequent ticks', () => {
-            let world = new World(480, 640, new ScoreCounter());
-            let clock = new ClockStub();
-            let starField = new StarField(world, clock);
+            const world = new World(480, 640, new ScoreCounter());
+            const clock = new ClockStub();
+            const starField = new StarField(world, clock);
 
             let starAdded = false;
             starField.tick();

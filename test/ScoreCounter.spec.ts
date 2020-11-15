@@ -9,21 +9,21 @@ describe('ScoreCounter', () => {
 
     describe('#ctor()', () => {
         it('starts with zero score', () => {
-            let scoreCounter = new ScoreCounter();
+            const scoreCounter = new ScoreCounter();
             expect(scoreCounter.currentScore).to.be.equal(0);
         });
     });
 
     describe('#increment()', () => {
         it('increments the score by a specified amount', () => {
-            let scoreCounter = new ScoreCounter();
+            const scoreCounter = new ScoreCounter();
             scoreCounter.increment(3);
             expect(scoreCounter.currentScore).to.be.equal(3);
         });
 
         it('emits a score event with the new score', () => {
             let scoreUpdate: number | null = null;
-            let scoreCounter = new ScoreCounter();
+            const scoreCounter = new ScoreCounter();
             scoreCounter.on('score', (score: number): void => { scoreUpdate = score; });
             scoreCounter.increment(3);
             expect(scoreUpdate).to.be.equal(3);
@@ -33,7 +33,7 @@ describe('ScoreCounter', () => {
     describe('#on()', () => {
         it('immediately emits a score event', () => {
             let scoreUpdate: number | null = null;
-            let scoreCounter = new ScoreCounter();
+            const scoreCounter = new ScoreCounter();
             scoreCounter.on('score', (score: number): void => { scoreUpdate = score; });
             expect(scoreUpdate).to.be.equal(0);
         });

@@ -26,15 +26,15 @@ describe('Explosion', () => {
 
     describe('#getImageDetails()', () => {
         it('should return image properties as provided', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
-            let imageDetails = explosion.imageDetails;
+            const explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
+            const imageDetails = explosion.imageDetails;
 
             expect(imageDetails.name).to.be.equal('imagename');
             expect(imageDetails.numberOfFrames).to.be.equal(3);
@@ -42,14 +42,14 @@ describe('Explosion', () => {
         });
 
         it('current frame number should initially be zero', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
 
             expect(explosion.imageDetails.currentFrame).to.be.equal(0);
         });
@@ -57,16 +57,16 @@ describe('Explosion', () => {
 
     describe('#hitBy()', () => {
         it('should not be possible to hit an explosion', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
 
-            let shot = new ShotStub(world,  new Point(5, 10));
+            const shot = new ShotStub(world,  new Point(5, 10));
 
             expect(explosion.hitBy(shot, 1)).to.be.false;
         });
@@ -74,14 +74,14 @@ describe('Explosion', () => {
 
     describe('#tick()', () => {
         it('should animate at the requested speed', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 .4,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
             explosion.tick();
             expect(explosion.imageDetails.currentFrame).to.be.equal(0);
             explosion.tick();
@@ -91,23 +91,23 @@ describe('Explosion', () => {
         });
 
         it('should become inactive after one cycle through its image frames', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 1,
                 'soundname'
             );
-            let explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, new AudioPlayerStub(), world, new Point(5, 10));
             explosion.tick();
             explosion.tick();
             explosion.tick();
 
             expect(explosion.isActive()).to.be.false;
         });
-        
+
         it('should play sound on the first tick if one is specified', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
@@ -115,26 +115,26 @@ describe('Explosion', () => {
                 'soundname'
             );
 
-            let playedSounds: string[] = [];
-            let audioPlayer = new AudioPlayerStub().onPlay((soundName) => playedSounds.push(soundName));
+            const playedSounds: string[] = [];
+            audioPlayer.onPlay((soundName) => playedSounds.push(soundName));
 
-            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
             explosion.tick();
 
             expect(playedSounds).to.be.eql(['soundname']);
         });
 
         it('should not play a sound on the first tick if one is not specified', () => {
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'imagename',
                 3,
                 25,
                 1
             );
-            let playedSounds: string[] = [];
-            let audioPlayer = new AudioPlayerStub().onPlay((soundName) => playedSounds.push(soundName));
+            const playedSounds: string[] = [];
+            audioPlayer.onPlay((soundName) => playedSounds.push(soundName));
 
-            let explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
+            const explosion = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 10));
             explosion.tick();
 
             expect(playedSounds).to.be.empty;
