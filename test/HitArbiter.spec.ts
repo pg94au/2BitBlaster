@@ -94,7 +94,7 @@ describe('HitArbiter', () => {
                 ' and area2=' + JSON.stringify(testParameters.area2), () => {
                 const shot = new ShotStub(world, new Point(1, 1));
                 const hitArbiter = new HitArbiter(shot);
-                const result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
+                const result = HitArbiter.areasCollide(testParameters.area1, testParameters.area2);
                 expect(result).to.be.equal(testParameters.result);
             });
         });

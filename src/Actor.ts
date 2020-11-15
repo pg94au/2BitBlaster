@@ -24,7 +24,7 @@ export abstract class Actor {
         return this._id;
     }
 
-    move(direction: Direction) {
+    protected move(direction: Direction) {
         if (direction & Direction.Up) {
             this._location = this._location.up();
         }

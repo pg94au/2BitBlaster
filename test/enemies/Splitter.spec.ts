@@ -49,7 +49,7 @@ describe('Splitter', () => {
     describe('#dropBomb()', () => {
        it('should drop two bits of shrapnel', () => {
            const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
-           splitter.dropBomb();
+           (splitter as any).dropBomb();
 
            expect(world.getActors().filter((actor: Actor) => { return (actor instanceof Shrapnel) }).length).to.be.equal(2);
        });

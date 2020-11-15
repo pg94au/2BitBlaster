@@ -70,7 +70,7 @@ export class LevelManager {
         this._scheduler.executeDueOperations();
     }
 
-    tickWithinLevelIntro(): void {
+    private tickWithinLevelIntro(): void {
         const TIME_TO_LEVEL_TEXT_VISIBLE = 2000;
         const TIME_LEVEL_TEXT_IS_VISIBLE = 4000;
         const TIME_AFTER_LEVEL_TEXT_VISIBLE = 2000;
@@ -96,7 +96,7 @@ export class LevelManager {
         }
     }
 
-    tickWithinLevel(): void {
+    private tickWithinLevel(): void {
         this._levels[this._currentLevel].tick();
 
         if (!this._levels[this._currentLevel].active) {
@@ -111,7 +111,7 @@ export class LevelManager {
         }
     }
 
-    tickWithinWinnerSequence(): void {
+    private tickWithinWinnerSequence(): void {
         const TIME_TO_CONGRATULATIONS_TEXT_VISIBLE = 2000;
         const TIME_CONGRATULATIONS_TEXT_IS_VISIBLE = 4000;
         const TIME_AFTER_CONGRATULATIONS_TEXT_VISIBLE = 2000;

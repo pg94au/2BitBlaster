@@ -121,7 +121,7 @@ export class Joystick {
         }
     }
 
-    removeConflictingDirectionStates(directionStates: DirectionState[]): DirectionState[] {
+    private removeConflictingDirectionStates(directionStates: DirectionState[]): DirectionState[] {
         const acceptedDirections: Map<Direction, boolean> = new Map([
             [Direction.Up, false],
             [Direction.Down, false],

@@ -45,7 +45,7 @@ export class SpinnerWave2 implements Wave {
         this._scheduler.executeDueOperations();
     }
 
-    deploySpinner(): void {
+    private deploySpinner(): void {
         debug('SpinnerWave2.deploySpinner');
 
         const worldDimensions = this._world.getDimensions();

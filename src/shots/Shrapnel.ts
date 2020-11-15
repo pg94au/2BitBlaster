@@ -79,7 +79,7 @@ export class Shrapnel extends Shot {
         }
     }
 
-    moveOneStepInDefinedTrajectory(): void {
+    private moveOneStepInDefinedTrajectory(): void {
         const trajectoryInRadians = this._trajectory * Math.PI  / 180;
 
         const xOffset = Math.cos(trajectoryInRadians);

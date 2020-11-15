@@ -31,7 +31,7 @@ export class StarField {
         this._scheduler.executeDueOperations();
     }
 
-    initializeStarField(): void {
+    private initializeStarField(): void {
         // Fill the screen with stars before it starts scrolling.
         const worldDimensions = this._world.getDimensions();
         for (let y = 0; y < worldDimensions.height; y++) {
@@ -43,7 +43,7 @@ export class StarField {
         }
     }
 
-    addStar(): void {
+    private addStar(): void {
         const x = random(10, this._world.getDimensions().width - 10);
         const star = new Star(this._world, new Point(x, 0));
         this._world.addActor(star);

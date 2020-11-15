@@ -56,25 +56,25 @@ describe('Actor', () => {
     describe('#move()', () => {
         it('should decrement y position when moving up', () => {
             const actor = new ActorStub(world, new Point(100, 100));
-            actor.move(Direction.Up);
+            (actor as any).move(Direction.Up);
             expect(actor.getCoordinates().y).to.be.below(100);
         });
 
         it('should increment y position when moving down', () => {
             const actor = new ActorStub(world, new Point(100, 100));
-            actor.move(Direction.Down);
+            (actor as any).move(Direction.Down);
             expect(actor.getCoordinates().y).to.be.above(100);
         });
 
         it('should decrement x position when moving left', () => {
             const actor = new ActorStub(world, new Point(100, 100));
-            actor.move(Direction.Left);
+            (actor as any).move(Direction.Left);
             expect(actor.getCoordinates().x).to.be.below(100);
         });
 
         it('should increment x position when moving right', () => {
             const actor = new ActorStub(world, new Point(100, 100));
-            actor.move(Direction.Right);
+            (actor as any).move(Direction.Right);
             expect(actor.getCoordinates().x).to.be.above(100);
         });
     });

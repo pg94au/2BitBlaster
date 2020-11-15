@@ -90,7 +90,7 @@ export class Saucer extends Enemy {
 
         this._scheduler.executeDueOperations();
 
-        this.move();
+        this.step();
 
         // Check if this saucer has collided with any active enemies.
         const player = this._world.getPlayer();
@@ -99,7 +99,7 @@ export class Saucer extends Enemy {
         }
     }
 
-    advanceCurrentFrame(): void {
+    private advanceCurrentFrame(): void {
         this._currentFrame = (this._currentFrame + 1) % 4;
 
         this._scheduler.scheduleOperation(
@@ -109,12 +109,12 @@ export class Saucer extends Enemy {
         );
     }
 
-    dropBomb(): void {
+    private dropBomb(): void {
         const bomb = new Bomb(this._audioPlayer, this._world, this._location);
         this._world.addActor(bomb);
     }
 
-    move(): void {
+    private step(): void {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
             let nextPath: PathEntry[];
@@ -165,7 +165,7 @@ export class Saucer extends Enemy {
         this._pathPosition++;
     }
 
-    calculatePaths(): void {
+    private calculatePaths(): void {
         if (!Saucer._pathsCalculated) {
             const introPath = new SplinePath(new PathTemplate(
                 [
@@ -303,7 +303,7 @@ export class Saucer extends Enemy {
         }
     }
 
-    prepareNextPath(pathTemplate: PathEntry[]): void {
+    private prepareNextPath(pathTemplate: PathEntry[]): void {
         this._currentPathTemplate = pathTemplate;
         this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
         this._pathPosition = 0;

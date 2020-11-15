@@ -62,7 +62,7 @@ export class SpinnerWave implements Wave {
         this._scheduler.executeDueOperations();
     }
 
-    deploySpinner(): void {
+    private deploySpinner(): void {
         debug('SpinnerWave.deploySpinner');
 
         const worldDimensions = this._world.getDimensions();
@@ -90,7 +90,7 @@ export class SpinnerWave implements Wave {
         this._numberOfSpinnersLeftToDeploy -= 2;
     }
 
-    deployBomber(): void {
+    private deployBomber(): void {
         debug('SpinnerWave.deployBomber');
 
         const worldDimensions = this._world.getDimensions();

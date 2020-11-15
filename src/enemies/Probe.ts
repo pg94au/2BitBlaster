@@ -83,7 +83,7 @@ export class Probe extends Enemy {
 
         this._scheduler.executeDueOperations();
 
-        this.move();
+        this.step();
 
         // Check if this probe has collided with any active enemies.
         const player = this._world.getPlayer();
@@ -92,12 +92,12 @@ export class Probe extends Enemy {
         }
     }
 
-    dropBomb(): void {
+    private dropBomb(): void {
         const bomb = new Bomb(this._audioPlayer, this._world, this._location);
         this._world.addActor(bomb);
     }
 
-    advanceCurrentFrame(): void {
+    private advanceCurrentFrame(): void {
         this._currentFrame = (this._currentFrame + 1) % 2;
 
         this._scheduler.scheduleOperation(
@@ -107,7 +107,7 @@ export class Probe extends Enemy {
         );
     }
 
-    move(): void {
+    private step(): void {
         // Choose the next path to follow if we've reached the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
             let nextPath;
@@ -139,7 +139,7 @@ export class Probe extends Enemy {
         this._pathPosition++;
     }
 
-    calculatePaths(): void {
+    private calculatePaths(): void {
         if (!Probe._pathsCalculated) {
             const introPath = new SplinePath(new PathTemplate(
                 [
@@ -200,7 +200,7 @@ export class Probe extends Enemy {
         }
     }
 
-    prepareNextPath(pathTemplate: PathEntry[]): void {
+    private prepareNextPath(pathTemplate: PathEntry[]): void {
         this._currentPathTemplate = pathTemplate;
         this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
         this._pathPosition = 0;
