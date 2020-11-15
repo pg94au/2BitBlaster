@@ -31,7 +31,7 @@ export class Scheduler {
 
         const date = this._clock.getCurrentDate();
         date.setMilliseconds(date.getMilliseconds() + milliSecondsFromNow);
-        this._scheduledItems.push({ tag: tag, date: date, operation: operation });
+        this._scheduledItems.push({ tag, date, operation });
         debug('scheduleOperation: _scheduleItems.length=' + this._scheduledItems.length);
         return true;
     }
