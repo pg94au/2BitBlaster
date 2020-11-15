@@ -46,7 +46,7 @@ describe('Spinner', () => {
             world.addActor(player);
 
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
-            spinner.hitBy(player, 1);
+            spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
             expect(spinner.isActive()).to.be.false;
         });
@@ -56,7 +56,7 @@ describe('Spinner', () => {
             world.addActor(player);
 
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
-            spinner.hitBy(player, 0.5);
+            spinner.hitBy(player, Spinner.InitialHealth / 2);
             player.tick();
             expect(player.isActive()).to.be.true;
         });
@@ -66,7 +66,7 @@ describe('Spinner', () => {
             world.addActor(player);
 
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
-            spinner.hitBy(player, 1);
+            spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
         });
@@ -76,7 +76,7 @@ describe('Spinner', () => {
             world.addActor(player);
 
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
-            spinner.hitBy(player, 1);
+            spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });

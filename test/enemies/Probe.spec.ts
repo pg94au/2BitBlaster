@@ -84,12 +84,12 @@ describe('Probe', () => {
             world.addActor(bullet);
 
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
-            probe.hitBy(bullet, Probe.InitialHealth - 0.5);
+            probe.hitBy(bullet, Probe.InitialHealth / 2);
             probe.tick();
             expect(probe.isActive()).to.be.true;
         });
 
-        it('should add a new explosion to the world', () => {
+        it('should add an explosion when it is destroyed', () => {
             const bullet = new Bullet(audioPlayer, world, new Point(5, 10));
             world.addActor(bullet);
 
@@ -106,7 +106,7 @@ describe('Probe', () => {
             world.addActor(bullet);
 
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
-            probe.hitBy(bullet, 1000);
+            probe.hitBy(bullet, Probe.InitialHealth);
             probe.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });

@@ -41,7 +41,7 @@ describe('Saucer', () => {
             world.addActor(bullet);
 
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            saucer.hitBy(bullet, 1);
+            saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
             expect(saucer.isActive()).to.be.false;
         });
@@ -51,7 +51,7 @@ describe('Saucer', () => {
             world.addActor(bullet);
 
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            saucer.hitBy(bullet, 0.5);
+            saucer.hitBy(bullet, Saucer.InitialHealth / 2);
             saucer.tick();
             expect(saucer.isActive()).to.be.true;
         });
@@ -61,7 +61,7 @@ describe('Saucer', () => {
             world.addActor(bullet);
 
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            saucer.hitBy(bullet, 1);
+            saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
             expect(world.getActiveExplosions().length).to.be.equal(1);
         });
@@ -71,7 +71,7 @@ describe('Saucer', () => {
             world.addActor(bullet);
 
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
-            saucer.hitBy(bullet, 1);
+            saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
             expect(scoreCounter.currentScore).to.be.above(0);
         });

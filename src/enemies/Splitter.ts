@@ -22,7 +22,7 @@ import {SplitterFragment} from './SplitterFragment';
 import {World} from "../World";
 
 export class Splitter extends Enemy {
-    private static readonly InitialHealth = 1;
+    public static readonly InitialHealth = 1;
 
     private static _pathsCalculated: boolean = false;
     private static _introPathTemplate: PathEntry[];

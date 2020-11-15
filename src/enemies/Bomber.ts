@@ -16,7 +16,7 @@ import {Scheduler} from '../timing/Scheduler';
 import {World} from "../World";
 
 export class Bomber extends Enemy {
-    private static readonly InitialHealth: number = 1;
+    public static readonly InitialHealth: number = 1;
 
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
