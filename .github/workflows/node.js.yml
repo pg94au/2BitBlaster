@@ -25,6 +25,10 @@ jobs:
       uses: actions/setup-node@v2.1.2
       with:
         node-version: ${{ matrix.node-version }}
+    - name: TypeScript Linter Action
+      uses: AntonKornus/TypeScript-Linter@1.0.0
+      with:
+        folder: src
     - run: npm ci
     - run: npm run build --if-present
     - run: npm run test
