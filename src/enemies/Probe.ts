@@ -86,14 +86,14 @@ export class Probe extends Enemy {
         this.move();
 
         // Check if this probe has collided with any active enemies.
-        let player = this._world.getPlayer();
+        const player = this._world.getPlayer();
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
     }
 
     dropBomb(): void {
-        let bomb = new Bomb(this._audioPlayer, this._world, this._location);
+        const bomb = new Bomb(this._audioPlayer, this._world, this._location);
         this._world.addActor(bomb);
     }
 
@@ -141,7 +141,7 @@ export class Probe extends Enemy {
 
     calculatePaths(): void {
         if (!Probe._pathsCalculated) {
-            let introPath = new SplinePath(new PathTemplate(
+            const introPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(50.0, 100.0),
@@ -162,7 +162,7 @@ export class Probe extends Enemy {
             ));
             Probe._introPathTemplate = introPath.getPath(100);
 
-            let diveRightPath = new SplinePath(new PathTemplate(
+            const diveRightPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(-40.0, 50.0),
@@ -180,7 +180,7 @@ export class Probe extends Enemy {
             ));
             Probe._diveRightPathTemplate = diveRightPath.getPath(100);
 
-            let diveLeftPath = new SplinePath(new PathTemplate(
+            const diveLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(40.0, 50.0),

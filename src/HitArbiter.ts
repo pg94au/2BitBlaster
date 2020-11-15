@@ -20,28 +20,28 @@ export class HitArbiter {
 
     attemptToHit(actor: Actor): HitResult {
         // Collision masks are relative to 0,0.
-        let actorCollisionMasks = actor.getCollisionMask(this._shot);
-        let shotCollisionMasks = this._shot.getCollisionMask(actor);
+        const actorCollisionMasks = actor.getCollisionMask(this._shot);
+        const shotCollisionMasks = this._shot.getCollisionMask(actor);
 
-        let actorCoordinates: Point = actor.getCoordinates();
-        let shotCoordinates: Point = this._shot.getCoordinates();
+        const actorCoordinates: Point = actor.getCoordinates();
+        const shotCoordinates: Point = this._shot.getCoordinates();
 
         // Offset collision masks to the current positions before testing for collision.
-        let actorCollisionAreas: Bounds[] = [];
+        const actorCollisionAreas: Bounds[] = [];
         for (let i=0; i < actorCollisionMasks.length; i++) {
-            let actorCollisionArea = actorCollisionMasks[i].translate(actorCoordinates);
+            const actorCollisionArea = actorCollisionMasks[i].translate(actorCoordinates);
             actorCollisionAreas.push(actorCollisionArea);
         }
 
-        let shotCollisionAreas: Bounds[] = [];
+        const shotCollisionAreas: Bounds[] = [];
         for (let i=0; i < shotCollisionMasks.length; i++) {
-            let shotCollisionArea = shotCollisionMasks[i].translate(shotCoordinates);
+            const shotCollisionArea = shotCollisionMasks[i].translate(shotCoordinates);
             shotCollisionAreas.push(shotCollisionArea);
         }
 
         if (this.areasCollide(actorCollisionAreas, shotCollisionAreas)) {
-            let damage = this._shot.getDamageAgainst(actor);
-            let hitEffective = actor.hitBy(this._shot, damage);
+            const damage = this._shot.getDamageAgainst(actor);
+            const hitEffective = actor.hitBy(this._shot, damage);
 
             if (hitEffective) {
                 return HitResult.Effective;

@@ -39,12 +39,12 @@ export class SplitterWave implements Wave {
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
-                let worldDimensions = this._world.getDimensions();
-                let splitterStartingPoint = new Point(
+                const worldDimensions = this._world.getDimensions();
+                const splitterStartingPoint = new Point(
                     Math.floor(random(100 + 50, worldDimensions.width - 100 - 50)),
                     -20
                 );
-                let _splitter = new Splitter(this._audioPlayer, this._world, this._clock, splitterStartingPoint);
+                const _splitter = new Splitter(this._audioPlayer, this._world, this._clock, splitterStartingPoint);
                 this._world.addActor(_splitter);
 
                 this._numberOfEnemiesLeftToDeploy--;

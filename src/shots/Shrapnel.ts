@@ -52,7 +52,7 @@ export class Shrapnel extends Shot {
 
         this._currentFrame = (this._currentFrame + 1) % 4;
 
-        let speed = 10;
+        const speed = 10;
         for (let step = 0; step < speed; step++) {
             this.moveOneStepInDefinedTrajectory();
 
@@ -63,9 +63,9 @@ export class Shrapnel extends Shot {
             }
             else {
                 // Check if this piece of shrapnel has collided with any active enemies.
-                let player = this._world.getPlayer();
+                const player = this._world.getPlayer();
                 if (player) {
-                    let hitArbiter = new HitArbiter(this);
+                    const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
                         this._active = false;
@@ -80,10 +80,10 @@ export class Shrapnel extends Shot {
     }
 
     moveOneStepInDefinedTrajectory(): void {
-        let trajectoryInRadians = this._trajectory * Math.PI  / 180;
+        const trajectoryInRadians = this._trajectory * Math.PI  / 180;
 
-        let xOffset = Math.cos(trajectoryInRadians);
-        let yOffset = Math.sin(trajectoryInRadians);
+        const xOffset = Math.cos(trajectoryInRadians);
+        const yOffset = Math.sin(trajectoryInRadians);
 
         this._exactX += xOffset;
         this._exactY -= yOffset;

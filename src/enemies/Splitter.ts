@@ -96,13 +96,13 @@ export class Splitter extends Enemy {
         this.move();
 
         // Check if this Splitter has collided with any active enemies.
-        let player = this._world.getPlayer();
+        const player = this._world.getPlayer();
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
 
         if (this._health <= 0) {
-            let leftSplitterFragment = new SplitterFragment(
+            const leftSplitterFragment = new SplitterFragment(
                 this._audioPlayer,
                 this._world,
                 this._clock,
@@ -111,7 +111,7 @@ export class Splitter extends Enemy {
             );
             this._world.addActor(leftSplitterFragment);
 
-            let rightSplitterFragment = new SplitterFragment(
+            const rightSplitterFragment = new SplitterFragment(
                 this._audioPlayer,
                 this._world,
                 this._clock,
@@ -142,10 +142,10 @@ export class Splitter extends Enemy {
     }
 
     dropBomb(): void {
-        let leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 267);
+        const leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 267);
         this._world.addActor(leftShrapnel);
 
-        let rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 273);
+        const rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 273);
         this._world.addActor(rightShrapnel);
     }
 
@@ -202,7 +202,7 @@ export class Splitter extends Enemy {
 
     calculatePaths(): void {
         if (!Splitter._pathsCalculated) {
-            let introPath = new SplinePath(new PathTemplate(
+            const introPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(100, 50),
@@ -228,7 +228,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._introPathTemplate = introPath.getPath(150);
 
-            let floatAroundPath = new SplinePath(new PathTemplate(
+            const floatAroundPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(40.0, 40.0),
@@ -240,7 +240,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._floatAroundPathTemplate = floatAroundPath.getPath(50);
 
-            let flyRightPath = new SplinePath(new PathTemplate(
+            const flyRightPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(75, 50),
@@ -254,7 +254,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._flyRightPathTemplate = flyRightPath.getPath(50);
 
-            let flyLeftPath = new SplinePath(new PathTemplate(
+            const flyLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-75, -50),
@@ -268,7 +268,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._flyLeftPathTemplate = flyLeftPath.getPath(50);
 
-            let flyUpPath = new SplinePath(new PathTemplate(
+            const flyUpPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-50, -50),
@@ -281,7 +281,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._flyUpPathTemplate = flyUpPath.getPath(50);
 
-            let flyDownPath = new SplinePath(new PathTemplate(
+            const flyDownPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-50, 50),
@@ -294,7 +294,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._flyDownPathTemplate = flyDownPath.getPath(50);
 
-            let diveRightPath = new SplinePath(new PathTemplate(
+            const diveRightPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-40, 30),
@@ -312,7 +312,7 @@ export class Splitter extends Enemy {
             ));
             Splitter._diveRightPathTemplate = diveRightPath.getPath(60);
 
-            let diveLeftPath = new SplinePath(new PathTemplate(
+            const diveLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(40, 30),

@@ -21,7 +21,7 @@ export class SplinePath {
     private createKnots(numberOfPoints: number, order: number): number[] {
         // Knots are computed to generate a spline that is fixed to both end points, with
         // evenly distributed computed points.
-        let knots: number[] = [];
+        const knots: number[] = [];
 
         for (let i=0; i < order; i++) {
             knots.push(0);
@@ -43,32 +43,32 @@ export class SplinePath {
             throw new Error('numberOfSteps cannot be undefined');
         }
 
-        let path: PathEntry[] = [];
+        const path: PathEntry[] = [];
 
-        let stepSize = 1.0 / numberOfSteps;
+        const stepSize = 1.0 / numberOfSteps;
         for (let currentStep = 0; currentStep <= numberOfSteps; currentStep++) {
-            let t = currentStep * stepSize;
+            const t = currentStep * stepSize;
 
             // bspline accepts points in the form [[x1, y1], [x2, y2], ...] so we need to convert from a collection of Point
-            let pointsAsArray: ArrayLike<number>[] = this._pathTemplate.points.map((point: Point): ArrayLike<number> => { return [point.x, point.y]});
+            const pointsAsArray: ArrayLike<number>[] = this._pathTemplate.points.map((point: Point): ArrayLike<number> => { return [point.x, point.y]});
 
             // bspline will return a point in the form [x, y], so it will have to converted to a Point
-            let point = bspline(t, this._order - 1, pointsAsArray, this._knots);
+            const point = bspline(t, this._order - 1, pointsAsArray, this._knots);
 
-            let pathEntry = new PathEntry(PathAction.Move, new Point(Math.round(point[0]), Math.round(point[1])));
+            const pathEntry = new PathEntry(PathAction.Move, new Point(Math.round(point[0]), Math.round(point[1])));
 
             path.push(pathEntry);
         }
 
         if (this._pathTemplate.scheduledActions) {
             for (let i = 0; i < this._pathTemplate.scheduledActions.length; i++) {
-                let scheduledAction = this._pathTemplate.scheduledActions[i];
+                const scheduledAction = this._pathTemplate.scheduledActions[i];
 
                 // Create the new action entry.
-                let actionEntry = new PathEntry(this._pathTemplate.scheduledActions[i].action, null);
+                const actionEntry = new PathEntry(this._pathTemplate.scheduledActions[i].action, null);
 
                 // Figure out what offset to include it at.
-                let stepPosition = Math.floor(numberOfSteps * scheduledAction.when);
+                const stepPosition = Math.floor(numberOfSteps * scheduledAction.when);
 
                 // Insert it at that position.
                 path.splice(stepPosition, 0, actionEntry);
@@ -79,11 +79,11 @@ export class SplinePath {
     }
 
     static mirrorPath(originalPath: PathEntry[]): PathEntry[] {
-        let mirroredPath: PathEntry[] = [];
+        const mirroredPath: PathEntry[] = [];
         for (let i = 0; i < originalPath.length; i++) {
             switch (originalPath[i].action) {
                 case PathAction.Move:
-                    let pathEntry = new PathEntry(PathAction.Move, new Point(-originalPath[i].location!.x, originalPath[i].location!.y));
+                    const pathEntry = new PathEntry(PathAction.Move, new Point(-originalPath[i].location!.x, originalPath[i].location!.y));
                     mirroredPath.push(pathEntry);
                     break;
                 case PathAction.Fire:
@@ -96,12 +96,12 @@ export class SplinePath {
     }
 
     static translatePath(originalPath: PathEntry[], xOffset: number, yOffset: number): PathEntry[] {
-        let translatedPath: PathEntry[] = [];
+        const translatedPath: PathEntry[] = [];
         for (let i = 0; i < originalPath.length; i++) {
-            let pathEntry = originalPath[i];
+            const pathEntry = originalPath[i];
             switch(pathEntry.action) {
                 case PathAction.Move:
-                    let translatedPathEntry = new PathEntry(
+                    const translatedPathEntry = new PathEntry(
                         pathEntry.action,
                         new Point(pathEntry.location!.x + xOffset, pathEntry.location!.y + yOffset)
                     );

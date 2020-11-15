@@ -20,8 +20,8 @@ export class Star extends Actor {
 
         debug('Star constructor');
 
-        let startFrame = random(0, 2);
-        let endFrame = random(startFrame, 2);
+        const startFrame = random(0, 2);
+        const endFrame = random(startFrame, 2);
 
         for (let i = startFrame; i <= endFrame; i++) {
             this._frameIndices.push(i);

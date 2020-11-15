@@ -23,15 +23,15 @@ export class PixiRenderer implements Renderer {
     }
 
     preLoadImages(images: any[], onLoaded: () => void) {
-        let loader = PIXI.Loader.shared;
-        for (let image of images) {
+        const loader = PIXI.Loader.shared;
+        for (const image of images) {
             loader.add(image.name, image.url);
         }
         loader.onComplete.add(() => { onLoaded() });
         loader.load((loader, resources) => {
-            let resourceNames = Object.getOwnPropertyNames(resources);
-            for (let resourceName of resourceNames) {
-                let texture: PIXI.Texture = resources[resourceName]!.texture;
+            const resourceNames = Object.getOwnPropertyNames(resources);
+            for (const resourceName of resourceNames) {
+                const texture: PIXI.Texture = resources[resourceName]!.texture;
                 this._preloadedImages.set(resourceName, texture);
             }
         });
@@ -60,7 +60,7 @@ export class PixiRenderer implements Renderer {
 
     destroyTextures(): void {
         // TODO: Call this method if necessary when navigating from this page.
-        for (let texture of Object.keys(PIXI.utils.TextureCache)) {
+        for (const texture of Object.keys(PIXI.utils.TextureCache)) {
             PIXI.utils.TextureCache[texture].destroy(true);
         }
     }
@@ -82,10 +82,10 @@ export class PixiRenderer implements Renderer {
     }
 
     setScale() {
-        let height = this._containerElement.clientHeight;
-        let width = this._containerElement.clientWidth;
+        const height = this._containerElement.clientHeight;
+        const width = this._containerElement.clientWidth;
 
-        let scale = height / this._worldDimensions.height;
+        const scale = height / this._worldDimensions.height;
 
         this._stage.scale.x = scale;
         this._stage.scale.y = scale;
@@ -94,8 +94,8 @@ export class PixiRenderer implements Renderer {
     }
 
     addOrUpdateSpritesInStage() {
-        let actors = this._world.getActors();
-        for (let actor of actors) {
+        const actors = this._world.getActors();
+        for (const actor of actors) {
             let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.getId());
 
             // Add a new sprite for this actor if one does not already exist.
@@ -111,8 +111,8 @@ export class PixiRenderer implements Renderer {
 
     addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
-        let texts = this._world.getTexts();
-        for (let text of texts) {
+        const texts = this._world.getTexts();
+        for (const text of texts) {
             let pixiText : PIXI.Text | undefined = this._activeTexts.get(text.id);
 
             // Add a new text if one does not already exist.

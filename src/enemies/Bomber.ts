@@ -92,7 +92,7 @@ export class Bomber extends Enemy {
     }
 
     dropGrenade(): void {
-        let grenade = new Grenade(this._audioPlayer, this._world, this._location.translate(10, 30));
+        const grenade = new Grenade(this._audioPlayer, this._world, this._location.translate(10, 30));
         this._world.addActor(grenade);
     }
 

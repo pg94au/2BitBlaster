@@ -74,17 +74,17 @@ export class Joystick {
         debug('Joystick.getCurrentDirection');
 
         // Start by considering only active directions.
-        let activeDirections = this._directionStates.filter(directionState => { return directionState.isActive; });
+        const activeDirections = this._directionStates.filter(directionState => { return directionState.isActive; });
 
         // If there are active directions, determine the resulting Direction, else the direction is None.
         if (activeDirections.length > 0) {
             // Sort these by event counter so the most recent is first.
-            let sortedDirections = activeDirections.sort(
+            const sortedDirections = activeDirections.sort(
                 (a, b) => { return (b.eventNumber - a.eventNumber) }
                 );
 
             // Remove conflicting directions based on most recent event order.
-            let directionsWithoutConflicts = this.removeConflictingDirectionStates(sortedDirections);
+            const directionsWithoutConflicts = this.removeConflictingDirectionStates(sortedDirections);
 
             if (directionsWithoutConflicts.length === 1) {
                 // If there is only one non-conflicting direction, that is it.
@@ -93,8 +93,8 @@ export class Joystick {
             else {
                 // If there is more than one non-conflicting direction (there will be two),
                 // then we have a diagonal direction and must calculate it.
-                let first = directionsWithoutConflicts[0].direction;
-                let second = directionsWithoutConflicts[1].direction;
+                const first = directionsWithoutConflicts[0].direction;
+                const second = directionsWithoutConflicts[1].direction;
                 if (((first === Direction.Up) && (second === Direction.Left)) ||
                     ((first === Direction.Left) && (second === Direction.Up))) {
                     return Direction.Up | Direction.Left;
@@ -122,14 +122,14 @@ export class Joystick {
     }
 
     removeConflictingDirectionStates(directionStates: DirectionState[]): DirectionState[] {
-        let acceptedDirections: Map<Direction, boolean> = new Map([
+        const acceptedDirections: Map<Direction, boolean> = new Map([
             [Direction.Up, false],
             [Direction.Down, false],
             [Direction.Left, false],
             [Direction.Right, false]
         ]);
 
-        let directionStatesWithoutConflicts = directionStates.filter(
+        const directionStatesWithoutConflicts = directionStates.filter(
             directionState => {
                 if (
                     ((directionState.direction === Direction.Up) && !acceptedDirections.get(Direction.Down)) ||

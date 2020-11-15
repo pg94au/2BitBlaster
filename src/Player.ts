@@ -83,7 +83,7 @@ export class Player extends Actor {
             else {
                 this._currentInvulnerableFrameIndex = 2;
             }
-            let currentFrame = this._invulnerableFrames[this._currentInvulnerableFrameIndex];
+            const currentFrame = this._invulnerableFrames[this._currentInvulnerableFrameIndex];
 
             return new ImageDetails(
                 'player',
@@ -128,14 +128,14 @@ export class Player extends Actor {
         if (this._currentHealth <= 0) {
             this._active = false;
 
-            let explosionProperties = new ExplosionProperties(
+            const explosionProperties = new ExplosionProperties(
                 'player_explosion',
                 4,
                 80,
                 0.8,
                 'player_explosion'
             );
-            let playerExplosion = new Explosion(
+            const playerExplosion = new Explosion(
                 explosionProperties,
                 this._audioPlayer,
                 this._world,
@@ -146,7 +146,7 @@ export class Player extends Actor {
             return;
         }
 
-        let direction = this._joystick.getCurrentDirection();
+        const direction = this._joystick.getCurrentDirection();
 
         for (let i = 0; i < 5; i++) {
             super.move(direction);
@@ -176,7 +176,7 @@ export class Player extends Actor {
         if (this._joystick.getFireState()) {
             if (this._canFireBullet) {
                 this._canFireBullet = false;
-                let bullet = new Bullet(this._audioPlayer, this._world, this._location);
+                const bullet = new Bullet(this._audioPlayer, this._world, this._location);
                 this._world.addActor(bullet);
 
                 // Another bullet cannot be fired until a fixed time period.

@@ -72,7 +72,7 @@ export class World {
 
     tick(): void {
         debug('World.tick');
-        for (let actor of this._actors) {
+        for (const actor of this._actors) {
             debug('World.tick: ticking %o', actor);
             actor.tick();
         }
