@@ -10,7 +10,7 @@ import {ScoreCounter} from "../src/ScoreCounter";
 import {WorldStub} from "./stubs/WorldStub";
 import {PlayerStub} from "./stubs/PlayerStub";
 
-let testData = [
+const testData = [
     {
         // Two areas are completely disjoint.
         area1: [new Bounds(1, 2, 1, 2)],
@@ -88,13 +88,13 @@ describe('HitArbiter', () => {
     });
 
     describe('#areasCollide()', () => {
-        testData.forEach(function(testParameters) {
+        testData.forEach((testParameters) => {
             it('should result in ' + testParameters.result +
                 ', with area1=' + JSON.stringify(testParameters.area1) +
-                ' and area2=' + JSON.stringify(testParameters.area2), function() {
-                let shot = new ShotStub(world, new Point(1, 1));
-                let hitArbiter = new HitArbiter(shot);
-                let result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
+                ' and area2=' + JSON.stringify(testParameters.area2), () => {
+                const shot = new ShotStub(world, new Point(1, 1));
+                const hitArbiter = new HitArbiter(shot);
+                const result = hitArbiter.areasCollide(testParameters.area1, testParameters.area2);
                 expect(result).to.be.equal(testParameters.result);
             });
         });
@@ -102,37 +102,37 @@ describe('HitArbiter', () => {
 
     describe('#attemptToHit()', () => {
         it('returns false if the shot misses the player', () => {
-            let shot = new ShotStub(world, new Point(1, 1))
+            const shot = new ShotStub(world, new Point(1, 1))
                 .setCollisionMask([new Bounds(-10, 10, -10, 10)]);
-            let player = new PlayerStub(world, new Point(100, 100));
-            let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(player);
+            const player = new PlayerStub(world, new Point(100, 100));
+            const hitArbiter = new HitArbiter(shot);
+            const result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Miss);
         });
 
         it('hits actor for shot damage when shot collides with actor', () => {
-            let shot = new ShotStub(world, new Point(1, 1))
+            const shot = new ShotStub(world, new Point(1, 1))
                 .setCollisionMask([new Bounds(-10, 10, -10, 10)])
                 .setDamageInflicted(10);
             let sustainedDamage: number = 0;
-            let player = new PlayerStub(world, new Point(1, 1))
+            const player = new PlayerStub(world, new Point(1, 1))
                 .onHit(damage => { sustainedDamage += damage });
-            let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(player);
+            const hitArbiter = new HitArbiter(shot);
+            const result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Effective);
             expect(sustainedDamage).to.be.equal(10);
         });
 
         it('indicates to shot when actor declines damage', () => {
-            let shot = new ShotStub(world, new Point(1, 1))
+            const shot = new ShotStub(world, new Point(1, 1))
                 .setCollisionMask([new Bounds(-10, 10, -10, 10)])
                 .setDamageInflicted(10);
             let sustainedDamage: number = 0;
-            let player = new PlayerStub(world, new Point(1, 1))
+            const player = new PlayerStub(world, new Point(1, 1))
                 .onHit(damage => { sustainedDamage += damage })
                 .ignoreHits();
-            let hitArbiter = new HitArbiter(shot);
-            let result = hitArbiter.attemptToHit(player);
+            const hitArbiter = new HitArbiter(shot);
+            const result = hitArbiter.attemptToHit(player);
             expect(result).to.be.equal(HitResult.Ineffective);
         });
     });

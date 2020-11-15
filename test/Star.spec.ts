@@ -9,8 +9,8 @@ import {World} from '../src/World';
 describe('Star', () => {
     describe('#tick()', () => {
         it('moves star downwards', () => {
-            let world = new World(480, 640, new ScoreCounter());
-            let star = new Star(world, new Point(1, 1));
+            const world = new World(480, 640, new ScoreCounter());
+            const star = new Star(world, new Point(1, 1));
 
             star.tick();
 
@@ -19,10 +19,10 @@ describe('Star', () => {
 
         // This test is only going to be valid if all stars sparkle.
         // it('cycles image frames to sparkle the star', () => {
-        //     let world = new World(480, 640, new ScoreCounter());
-        //     let star = new Star(world, new Point(1, 1));
+        //     const world = new World(480, 640, new ScoreCounter());
+        //     const star = new Star(world, new Point(1, 1));
         //
-        //     let initialFrame = star.getImageDetails().currentFrame;
+        //     const initialFrame = star.getImageDetails().currentFrame;
         //
         //     let flickered = false;
         //     // Within this number of ticks, for sure the image should change.
@@ -37,8 +37,8 @@ describe('Star', () => {
         // });
 
         it('sets the star inactive when it leaves the world', () => {
-            let world = new World(480, 640, new ScoreCounter());
-            let star = new Star(world, new Point(1, world.getDimensions().height));
+            const world = new World(480, 640, new ScoreCounter());
+            const star = new Star(world, new Point(1, world.getDimensions().height));
 
             star.tick();
 

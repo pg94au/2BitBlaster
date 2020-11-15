@@ -12,30 +12,30 @@ import {PathAction} from "../../src/paths/PathAction";
 describe('LinePath', () => {
     describe('#getPath()', () => {
         it ('creates a path with the specified number of steps', () => {
-            let linePath = new LinePath(new Point(0.0, 0.0), new Point(100.0, 100.0), []);
+            const linePath = new LinePath(new Point(0.0, 0.0), new Point(100.0, 100.0), []);
 
-            let numberOfSteps = 10;
-            let path = linePath.getPath(numberOfSteps);
+            const numberOfSteps = 10;
+            const path = linePath.getPath(numberOfSteps);
 
             // A given number of steps require one additional point (fencepost analogy).
             expect(path.length).to.be.equal(numberOfSteps + 1);
         });
 
         it ('creates a path containing only movements when no other actions are specified in the template', () => {
-            let linePath = new LinePath(new Point(0.0, 0.0), new Point(100.0, 100.0), []);
+            const linePath = new LinePath(new Point(0.0, 0.0), new Point(100.0, 100.0), []);
 
-            let path = linePath.getPath(10);
+            const path = linePath.getPath(10);
 
             // All steps that are movements.
-            let movements = path.filter((value: PathEntry): boolean => { return value.action === PathAction.Move });
+            const movements = path.filter((value: PathEntry): boolean => { return value.action === PathAction.Move });
 
             expect(movements.length).to.be.equal(path.length);
         });
 
         it('creates paths that begin and terminate at the first and last provided points', () => {
-            let linePath = new LinePath(new Point(0.0, 0.0), new Point(10.0, 30.0), []);
+            const linePath = new LinePath(new Point(0.0, 0.0), new Point(10.0, 30.0), []);
 
-            let path = linePath.getPath(10);
+            const path = linePath.getPath(10);
 
             expect(Math.round(path[0].location!.x)).to.be.eql(0.0);
             expect(Math.round(path[0].location!.y)).to.be.eql(0.0);
@@ -45,12 +45,12 @@ describe('LinePath', () => {
         });
 
         it('inserts non-movement actions at specified positions along the path', () => {
-            let linePath = new LinePath(
+            const linePath = new LinePath(
                 new Point(0.0, 0.0),
                 new Point(100.0, 100.0),
                 [new ScheduledAction(0.50, PathAction.Fire)]);
 
-            let path = linePath.getPath(10);
+            const path = linePath.getPath(10);
 
             // One extra step for the fire action.
             expect(path.length).to.be.equal(12);
@@ -59,9 +59,9 @@ describe('LinePath', () => {
         });
 
         it('only generates coordinates between the start and end points', () => {
-            let linePath = new LinePath(new Point(10.0, 50.0), new Point(40.0, 90.0), []);
+            const linePath = new LinePath(new Point(10.0, 50.0), new Point(40.0, 90.0), []);
 
-            let path = linePath.getPath(10);
+            const path = linePath.getPath(10);
 
             expect(
                 every(

@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npx webpack --config webpack.config.js",
     "test": "npx ts-mocha --reporter spec --paths test/*.spec.[jt]s test/**/*.spec.[jt]s",
-    "lint": "tslint src/*.ts src/**/*.ts"
+    "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts"
   },
   "repository": {
     "type": "git",
