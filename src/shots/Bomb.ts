@@ -46,7 +46,7 @@ export class Bomb extends Shot {
 
         this._currentFrame = (this._currentFrame + 1) % 4;
 
-        let speed = 10;
+        const speed = 10;
         for (let step = 0; step < speed; step++) {
             this._location = this._location.down();
 
@@ -57,9 +57,9 @@ export class Bomb extends Shot {
             }
             else {
                 // Check if this bomb has collided with any active enemies.
-                let player = this._world.getPlayer();
+                const player = this._world.getPlayer();
                 if (player) {
-                    let hitArbiter = new HitArbiter(this);
+                    const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
                         this._active = false;

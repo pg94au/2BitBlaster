@@ -49,7 +49,7 @@ export class Grenade extends Shot {
             this._firstTick = false;
         }
 
-        let speed = 5;
+        const speed = 5;
         for (let step = 0; step < speed; step++) {
             this._location = this._location.down();
 
@@ -60,9 +60,9 @@ export class Grenade extends Shot {
             }
             else {
                 // Check if this grenade has collided with any active enemies.
-                let player = this._world.getPlayer();
+                const player = this._world.getPlayer();
                 if (player) {
-                    let hitArbiter = new HitArbiter(this);
+                    const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
                         this._active = false;
@@ -70,12 +70,12 @@ export class Grenade extends Shot {
                 }
 
                 // If this grenade has fallen far enough, it explodes into shrapnel.
-                let distanceCovered = this._location.y - this._initialHeight;
+                const distanceCovered = this._location.y - this._initialHeight;
                 if (distanceCovered >= 200) {
                     this._active = false;
 
                     //TODO: Add a small explosion here.
-                    let explosion = new Explosion(
+                    const explosion = new Explosion(
                         new ExplosionProperties(
                             'grenade_explosion',
                             7,
@@ -89,13 +89,13 @@ export class Grenade extends Shot {
                     );
                     this._world.addActor(explosion);
 
-                    let downShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
+                    const downShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
                     this._world.addActor(downShrapnel);
 
-                    let leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 250);
+                    const leftShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 250);
                     this._world.addActor(leftShrapnel);
 
-                    let rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 290);
+                    const rightShrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 290);
                     this._world.addActor(rightShrapnel);
                 }
                 else {

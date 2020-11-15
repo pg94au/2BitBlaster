@@ -48,10 +48,10 @@ export class SpinnerWave2 implements Wave {
     deploySpinner(): void {
         debug('SpinnerWave2.deploySpinner');
 
-        let worldDimensions = this._world.getDimensions();
-        let spinnerStartX = worldDimensions.width / 2;
-        let spinnerStartY = -20;
-        let leftSpinner = new Spinner(
+        const worldDimensions = this._world.getDimensions();
+        const spinnerStartX = worldDimensions.width / 2;
+        const spinnerStartY = -20;
+        const leftSpinner = new Spinner(
             this._audioPlayer,
             this._world,
             this._clock,
@@ -60,7 +60,7 @@ export class SpinnerWave2 implements Wave {
             Spinner.Bias.Left
         );
         this._world.addActor(leftSpinner);
-        let rightSpinner = new Spinner(
+        const rightSpinner = new Spinner(
             this._audioPlayer,
             this._world,
             this._clock,

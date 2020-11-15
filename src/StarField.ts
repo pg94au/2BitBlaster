@@ -33,19 +33,19 @@ export class StarField {
 
     initializeStarField(): void {
         // Fill the screen with stars before it starts scrolling.
-        let worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.getDimensions();
         for (let y = 0; y < worldDimensions.height; y++) {
             if (random(1, 100) > 95) {
-                let x = random(10, worldDimensions.width - 10);
-                let star = new Star(this._world, new Point(x, y));
+                const x = random(10, worldDimensions.width - 10);
+                const star = new Star(this._world, new Point(x, y));
                 this._world.addActor(star);
             }
         }
     }
 
     addStar(): void {
-        let x = random(10, this._world.getDimensions().width - 10);
-        let star = new Star(this._world, new Point(x, 0));
+        const x = random(10, this._world.getDimensions().width - 10);
+        const star = new Star(this._world, new Point(x, 0));
         this._world.addActor(star);
 
         this._scheduler.scheduleOperation('addStar', random(500, 1000), () => this.addStar());

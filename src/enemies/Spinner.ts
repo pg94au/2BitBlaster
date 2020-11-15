@@ -102,7 +102,7 @@ export class Spinner extends Enemy {
         this.scheduleNextBombDrop();
 
         // Check if this spinner has collided with any active enemies.
-        let player = this._world.getPlayer();
+        const player = this._world.getPlayer();
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -128,13 +128,13 @@ export class Spinner extends Enemy {
     }
 
     dropBomb(): void {
-        let worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.getDimensions();
 
         if (this._location.x > 0 && this._location.x < worldDimensions.width
             && this._location.y > 0 && this._location.y < worldDimensions.height) {
             // Don't drop a bomb if we're too low.  Not very fair.
             if (this._location.y < (worldDimensions.height / 2)) {
-                let bomb = new Bomb(this._audioPlayer, this._world, this._location);
+                const bomb = new Bomb(this._audioPlayer, this._world, this._location);
                 this._world.addActor(bomb);
             }
         }

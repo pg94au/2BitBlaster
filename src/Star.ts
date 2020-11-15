@@ -20,8 +20,8 @@ export class Star extends Actor {
 
         debug('Star constructor');
 
-        let startFrame = random(0, 2);
-        let endFrame = random(startFrame, 2);
+        const startFrame = random(0, 2);
+        const endFrame = random(startFrame, 2);
 
         for (let i = startFrame; i <= endFrame; i++) {
             this._frameIndices.push(i);
@@ -63,7 +63,7 @@ export class Star extends Actor {
         // Make the star sparkle.
         this._flashCounter = (this._flashCounter + 1) % this._flashRate;
 
-        if (this._flashCounter == 0) {
+        if (this._flashCounter === 0) {
             this._currentFrame = (this._currentFrame + 1) % this._frameIndices.length;
         }
     }

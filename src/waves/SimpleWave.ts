@@ -40,12 +40,12 @@ export class SimpleWave implements Wave {
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
-                let worldDimensions = this._world.getDimensions();
-                let saucerStartingPoint = new Point(
+                const worldDimensions = this._world.getDimensions();
+                const saucerStartingPoint = new Point(
                     Math.floor(random(100 + 50, worldDimensions.width - 100 - 50)),
                     -20
                 );
-                let _saucer = new Saucer(this._audioPlayer, this._world, this._clock, saucerStartingPoint);
+                const _saucer = new Saucer(this._audioPlayer, this._world, this._clock, saucerStartingPoint);
                 this._world.addActor(_saucer);
 
                 this._numberOfEnemiesLeftToDeploy--;

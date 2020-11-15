@@ -38,8 +38,8 @@ export class SecondWave implements Wave {
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
-                let probeStartingPoint = new Point(240, -10);
-                let _probe = new Probe(this._audioPlayer, this._world, this._clock, probeStartingPoint);
+                const probeStartingPoint = new Point(240, -10);
+                const _probe = new Probe(this._audioPlayer, this._world, this._clock, probeStartingPoint);
                 this._world.addActor(_probe);
 
                 this._numberOfEnemiesLeftToDeploy--;

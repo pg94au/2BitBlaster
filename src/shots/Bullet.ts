@@ -46,7 +46,7 @@ export class Bullet extends Shot {
 
         this._currentFrame = (this._currentFrame + 1) % 4;
 
-        let speed: number = 10;
+        const speed: number = 10;
         for (let step = 0; step < speed; step++) {
             this._location = this._location.up();
 
@@ -56,10 +56,10 @@ export class Bullet extends Shot {
                 this._active = false;
             }
             else {
-                let hitArbiter = new HitArbiter(this);
+                const hitArbiter = new HitArbiter(this);
 
                 // Check if this bullet has collided with any active enemies.
-                let activeEnemies = this._world.getActiveEnemies();
+                const activeEnemies = this._world.getActiveEnemies();
                 activeEnemies.forEach((enemy: Enemy) => {
                     //TODO: Do something if the hit is ineffective.
                     if (this._active) {

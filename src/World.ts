@@ -36,7 +36,7 @@ export class World {
 
     addText(text: Text): void {
         debug('World.addText: %o', text);
-        if (this._texts.find(existing => { return existing.id == text.id })) {
+        if (this._texts.find(existing => { return existing.id === text.id })) {
             throw new Error('Cannot add same text twice.');
         }
         this._texts.push(text);
@@ -72,7 +72,7 @@ export class World {
 
     tick(): void {
         debug('World.tick');
-        for (let actor of this._actors) {
+        for (const actor of this._actors) {
             debug('World.tick: ticking %o', actor);
             actor.tick();
         }

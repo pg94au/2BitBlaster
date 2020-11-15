@@ -39,7 +39,7 @@ export class Bounds {
     }
 
     collidesWith(other: Bounds): boolean {
-        let collision: boolean = (
+        const collision: boolean = (
             (
                 ((this.left >= other.left) && (this.left <= other.right)) ||
                 ((this.right >= other.left) && (this.right <= other.right)) ||

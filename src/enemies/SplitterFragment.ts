@@ -81,8 +81,8 @@ export class SplitterFragment extends Enemy {
     getImageDetails(): ImageDetails {
         if ((this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Left]) ||
             (this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Right])) {
-            let currentFrame = Math.round(this._pathPosition / this._currentPath.length * 9);
-            let imageName = (this._side === SplitterFragment.Side.Left) ? 'splitter_left_separation' : 'splitter_right_separation';
+            const currentFrame = Math.round(this._pathPosition / this._currentPath.length * 9);
+            const imageName = (this._side === SplitterFragment.Side.Left) ? 'splitter_left_separation' : 'splitter_right_separation';
 
             return new ImageDetails(imageName, 10, 60, currentFrame);
         }
@@ -105,7 +105,7 @@ export class SplitterFragment extends Enemy {
         this.move();
 
         // Check if this Splitter fragment has collided with any active enemies.
-        let player = this._world.getPlayer();
+        const player = this._world.getPlayer();
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -131,7 +131,7 @@ export class SplitterFragment extends Enemy {
     }
 
     dropBomb(): void {
-        let shrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
+        const shrapnel = new Shrapnel(this._audioPlayer, this._world, this._location, 270);
         this._world.addActor(shrapnel);
     }
 
@@ -194,7 +194,7 @@ export class SplitterFragment extends Enemy {
 
     calculatePaths(): void {
         if (!SplitterFragment._pathsCalculated) {
-            let floatAroundPath1 = new SplinePath(new PathTemplate(
+            const floatAroundPath1 = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(20.0, 30.0),
@@ -206,7 +206,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._floatAroundPath1Template = floatAroundPath1.getPath(25);
 
-            let floatAroundPath2 = new SplinePath(new PathTemplate(
+            const floatAroundPath2 = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(-25.0, 35.0),
@@ -218,7 +218,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._floatAroundPath2Template = floatAroundPath2.getPath(25);
 
-            let flyRightPath = new SplinePath(new PathTemplate(
+            const flyRightPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0.0, 0.0),
                     new Point(20.0, -20.0),
@@ -232,7 +232,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._flyRightPathTemplate = flyRightPath.getPath(30);
 
-            let flyLeftPath = new SplinePath(new PathTemplate(
+            const flyLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-20, -20),
@@ -246,7 +246,7 @@ export class SplitterFragment extends Enemy {
             ))
             SplitterFragment._flyLeftPathTemplate = flyLeftPath.getPath(30);
 
-            let flyUpPath = new SplinePath(new PathTemplate(
+            const flyUpPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-15, -10),
@@ -263,7 +263,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._flyUpPathTemplate = flyUpPath.getPath(30);
 
-            let flyDownPath = new SplinePath(new PathTemplate(
+            const flyDownPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(15, 10),
@@ -280,7 +280,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._flyDownPathTemplate = flyDownPath.getPath(30);
 
-            let diveRightPath = new SplinePath(new PathTemplate(
+            const diveRightPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(-40, 50),
@@ -298,7 +298,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._diveRightPathTemplate = diveRightPath.getPath(60);
 
-            let diveLeftPath = new SplinePath(new PathTemplate(
+            const diveLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0, 0),
                     new Point(40, 30),
@@ -316,7 +316,7 @@ export class SplitterFragment extends Enemy {
             ));
             SplitterFragment._diveLeftPathTemplate = diveLeftPath.getPath(60);
 
-            let separateLeftPath = new SplinePath(new PathTemplate(
+            const separateLeftPath = new SplinePath(new PathTemplate(
                 [
                     new Point(0,0),
                     new Point(-60, -0),
@@ -324,7 +324,7 @@ export class SplitterFragment extends Enemy {
                 ],
                 []
             )).getPath(20);
-            let separateRightPath = SplinePath.mirrorPath(separateLeftPath);
+            const separateRightPath = SplinePath.mirrorPath(separateLeftPath);
             SplitterFragment._separatePath = [];
             SplitterFragment._separatePath[SplitterFragment.Side.Left] = separateLeftPath;
             SplitterFragment._separatePath[SplitterFragment.Side.Right] = separateRightPath;

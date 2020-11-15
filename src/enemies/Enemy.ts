@@ -36,12 +36,12 @@ export abstract class Enemy extends Actor {
         if (this._health <= 0) {
             this._active = false;
 
-            let scoreTotal = this.getScoreTotal();
+            const scoreTotal = this.getScoreTotal();
             this._world.getScoreCounter().increment(scoreTotal);
 
-            let explosionProperties = this.getExplosionProperties();
-            let coordinates = this.getCoordinates();
-            let explosion = new Explosion(
+            const explosionProperties = this.getExplosionProperties();
+            const coordinates = this.getCoordinates();
+            const explosion = new Explosion(
                 explosionProperties,
                 this._audioPlayer,
                 this._world,

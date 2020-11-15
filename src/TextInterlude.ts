@@ -58,11 +58,11 @@ export class TextInterlude {
     tick(): void {
         debug('TextInterlude.tick');
 
-        let delayBeforeBecomingInactive = this._preDisplayTimeInMillis + this._displayTimeInMillis + this._postDisplayTimeInMillis;
-        let delayBeforeShowingText = this._preDisplayTimeInMillis;
-        let delayBeforeHidingText = this._preDisplayTimeInMillis + this._displayTimeInMillis;
+        const delayBeforeBecomingInactive = this._preDisplayTimeInMillis + this._displayTimeInMillis + this._postDisplayTimeInMillis;
+        const delayBeforeShowingText = this._preDisplayTimeInMillis;
+        const delayBeforeHidingText = this._preDisplayTimeInMillis + this._displayTimeInMillis;
 
-        let justScheduled = this._scheduler.scheduleOperation('textInterludeEnds', delayBeforeBecomingInactive, () => {
+        const justScheduled = this._scheduler.scheduleOperation('textInterludeEnds', delayBeforeBecomingInactive, () => {
             debug('Text interlude ending');
             this._active = false;
         });
@@ -72,7 +72,7 @@ export class TextInterlude {
             this._scheduler.scheduleOperation('showInterludeText', delayBeforeShowingText, () => {
                 // Add interlude text.
                 debug('Adding interlude text [' + this._textContent + ']');
-                let worldDimensions = this._world.getDimensions();
+                const worldDimensions = this._world.getDimensions();
                 this._interludeText = new Text(
                     this._textContent,
                     this._fontFamily,

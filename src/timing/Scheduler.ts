@@ -29,9 +29,9 @@ export class Scheduler {
             return false;
         }
 
-        let date = this._clock.getCurrentDate();
+        const date = this._clock.getCurrentDate();
         date.setMilliseconds(date.getMilliseconds() + milliSecondsFromNow);
-        this._scheduledItems.push({ tag: tag, date: date, operation: operation });
+        this._scheduledItems.push({ tag, date, operation });
         debug('scheduleOperation: _scheduleItems.length=' + this._scheduledItems.length);
         return true;
     }
@@ -40,21 +40,21 @@ export class Scheduler {
         debug('executeDueOperations');
         const now = this._clock.getCurrentDate();
         debug('executeDueOperations: now=' + now);
-        let dueOperations: ScheduleEntry[] = [];
-        let notYetDue: ScheduleEntry[] = [];
-        for (var i=0; i < this._scheduledItems.length; i++) {
-            if (now >= this._scheduledItems[i].date) {
-                dueOperations.push(this._scheduledItems[i]);
+        const dueOperations: ScheduleEntry[] = [];
+        const notYetDue: ScheduleEntry[] = [];
+        for (const scheduledItem of this._scheduledItems) {
+            if (now >= scheduledItem.date) {
+                dueOperations.push(scheduledItem);
             }
             else {
-                notYetDue.push(this._scheduledItems[i]);
+                notYetDue.push(scheduledItem);
             }
         }
         this._scheduledItems = notYetDue;
 
-        for (i=0; i < dueOperations.length; i++) {
-            debug('Executing scheduled operation [' + dueOperations[i].tag + ']');
-            dueOperations[i].operation();
+        for (const dueOperation of dueOperations) {
+            debug('Executing scheduled operation [' + dueOperation.tag + ']');
+            dueOperation.operation();
         }
         debug('executeDueOperations: At end _scheduledItems.length=' + this._scheduledItems.length);
     }

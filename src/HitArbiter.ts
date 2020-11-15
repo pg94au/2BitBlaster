@@ -20,28 +20,28 @@ export class HitArbiter {
 
     attemptToHit(actor: Actor): HitResult {
         // Collision masks are relative to 0,0.
-        let actorCollisionMasks = actor.getCollisionMask(this._shot);
-        let shotCollisionMasks = this._shot.getCollisionMask(actor);
+        const actorCollisionMasks = actor.getCollisionMask(this._shot);
+        const shotCollisionMasks = this._shot.getCollisionMask(actor);
 
-        let actorCoordinates: Point = actor.getCoordinates();
-        let shotCoordinates: Point = this._shot.getCoordinates();
+        const actorCoordinates: Point = actor.getCoordinates();
+        const shotCoordinates: Point = this._shot.getCoordinates();
 
         // Offset collision masks to the current positions before testing for collision.
-        let actorCollisionAreas: Bounds[] = [];
-        for (let i=0; i < actorCollisionMasks.length; i++) {
-            let actorCollisionArea = actorCollisionMasks[i].translate(actorCoordinates);
+        const actorCollisionAreas: Bounds[] = [];
+        for (const actorCollisionMask of actorCollisionMasks) {
+            const actorCollisionArea = actorCollisionMask.translate(actorCoordinates);
             actorCollisionAreas.push(actorCollisionArea);
         }
 
-        let shotCollisionAreas: Bounds[] = [];
-        for (let i=0; i < shotCollisionMasks.length; i++) {
-            let shotCollisionArea = shotCollisionMasks[i].translate(shotCoordinates);
+        const shotCollisionAreas: Bounds[] = [];
+        for (const shotCollisionMask of shotCollisionMasks) {
+            const shotCollisionArea = shotCollisionMask.translate(shotCoordinates);
             shotCollisionAreas.push(shotCollisionArea);
         }
 
         if (this.areasCollide(actorCollisionAreas, shotCollisionAreas)) {
-            let damage = this._shot.getDamageAgainst(actor);
-            let hitEffective = actor.hitBy(this._shot, damage);
+            const damage = this._shot.getDamageAgainst(actor);
+            const hitEffective = actor.hitBy(this._shot, damage);
 
             if (hitEffective) {
                 return HitResult.Effective;
@@ -56,9 +56,9 @@ export class HitArbiter {
     }
 
     areasCollide(areas1: Bounds[], areas2: Bounds[]): boolean {
-        for (let area1Index = 0; area1Index < areas1.length; area1Index++) {
-            for (let area2Index = 0; area2Index < areas2.length; area2Index++) {
-                if (areas1[area1Index].collidesWith(areas2[area2Index])) {
+        for (const area1 of areas1) {
+            for (const area2 of areas2) {
+                if (area1.collidesWith(area2)) {
                     return true;
                 }
             }

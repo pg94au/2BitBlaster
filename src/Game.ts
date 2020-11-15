@@ -108,8 +108,8 @@ export class Game {
     }
 
     addPlayerToWorld(): void {
-        let playerBounds = new Bounds(50, 430, 490, 590);
-        let playerStartingPoint = new Point(
+        const playerBounds = new Bounds(50, 430, 490, 590);
+        const playerStartingPoint = new Point(
             (playerBounds.left + playerBounds.right) / 2,
             (playerBounds.top + playerBounds.bottom) / 2
         );

@@ -18,25 +18,25 @@ export class LinePath {
     }
 
     getPath(numberOfSteps: number): PathEntry[] {
-        let path: PathEntry[] = [];
+        const path: PathEntry[] = [];
 
-        let stepSize = 1.0 / numberOfSteps;
+        const stepSize = 1.0 / numberOfSteps;
         for (let currentStep = 0; currentStep <= numberOfSteps; currentStep++) {
-            let t = currentStep * stepSize;
-            let x = this._start.x + Math.round((this._end.x - this._start.x) * t);
-            let y = this._start.y + Math.round((this._end.y - this._start.y) * t);
+            const t = currentStep * stepSize;
+            const x = this._start.x + Math.round((this._end.x - this._start.x) * t);
+            const y = this._start.y + Math.round((this._end.y - this._start.y) * t);
 
-            let pathEntry = new PathEntry(PathAction.Move, new Point(x, y));
+            const pathEntry = new PathEntry(PathAction.Move, new Point(x, y));
             path.push(pathEntry);
         }
 
         if (this._scheduledActions) {
-            for (let i = 0; i < this._scheduledActions.length; i++) {
+            for (const scheduledAction of this._scheduledActions) {
                 // Create the new action entry.
-                let pathEntry = new PathEntry(this._scheduledActions[i].action, null);
+                const pathEntry = new PathEntry(scheduledAction.action, null);
 
                 // Figure out what offset to include it at.
-                let stepPosition = Math.floor(numberOfSteps * this._scheduledActions[i].when);
+                const stepPosition = Math.floor(numberOfSteps * scheduledAction.when);
 
                 // Insert it at that position.
                 path.splice(stepPosition, 0, pathEntry);

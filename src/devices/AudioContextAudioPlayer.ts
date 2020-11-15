@@ -13,21 +13,21 @@ export class AudioContextAudioPlayer implements AudioPlayer {
         debug('AudioPlayer constructor');
 
         // @ts-ignore
-        let AudioContext = window.AudioContext || window.webkitAudioContext;
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
         this._audioContext = new AudioContext();
     }
 
     preLoadSounds(sounds: any[], onSuccess: () => void, onFailure: (errors: any) => void) {
-        let loader = new Loader();
-        let errors: any[] = [];
+        const loader = new Loader();
+        const errors: any[] = [];
 
-        let errorHandler = (error: any) => {
+        const errorHandler = (error: any) => {
             debug('Error event while loading audio resources: ' + error);
             errors.push(error);
         };
         loader.onError.add(errorHandler);
 
-        for (let sound of sounds) {
+        for (const sound of sounds) {
             loader.add(sound.name, sound.url);
         }
 
@@ -38,7 +38,7 @@ export class AudioContextAudioPlayer implements AudioPlayer {
             else {
                 debug('Successfully loaded ' + resourceMap.length + ' sounds.');
 
-                for (let name in resourceMap) {
+                for (const name in resourceMap) {
                     if (resourceMap.hasOwnProperty(name)) {
                         this._decodedAudio[name] = resourceMap[name]!.data;
                     }
@@ -50,11 +50,11 @@ export class AudioContextAudioPlayer implements AudioPlayer {
     }
 
     play(soundName: string): void {
-        let decodedAudio = this._decodedAudio[soundName];
+        const decodedAudio = this._decodedAudio[soundName];
         if (decodedAudio) {
             debug('Playing sound ' + soundName);
 
-            let audio = decodedAudio.cloneNode(true);
+            const audio = decodedAudio.cloneNode(true);
             audio.play();
         }
         else {
