@@ -56,7 +56,7 @@ export class EnemyStub extends Enemy {
         throw new Error('Not implemented');
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         throw new Error('Not implemented');
     }
 

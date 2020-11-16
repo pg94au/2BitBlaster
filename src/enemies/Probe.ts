@@ -56,7 +56,7 @@ export class Probe extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 25;
     }
 

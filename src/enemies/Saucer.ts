@@ -62,7 +62,7 @@ export class Saucer extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 10;
         return 10;
     }

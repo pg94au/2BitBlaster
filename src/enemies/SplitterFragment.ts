@@ -66,7 +66,7 @@ export class SplitterFragment extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 10;
     }
 

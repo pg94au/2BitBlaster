@@ -70,7 +70,7 @@ export class Spinner extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 5;
     }
 

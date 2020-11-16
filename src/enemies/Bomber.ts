@@ -46,7 +46,7 @@ export class Bomber extends Enemy {
         );
     };
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 50;
     };
 

@@ -24,7 +24,7 @@ export abstract class Enemy extends Actor {
 
     abstract get explosionProperties(): ExplosionProperties;
 
-    abstract getScoreTotal(): number;
+    abstract get scoreTotal(): number;
 
     getZIndex(): number {
         return 20;
@@ -36,7 +36,7 @@ export abstract class Enemy extends Actor {
         if (this._health <= 0) {
             this._active = false;
 
-            const scoreTotal = this.getScoreTotal();
+            const scoreTotal = this.scoreTotal;
             this._world.getScoreCounter().increment(scoreTotal);
 
             const explosionProperties = this.explosionProperties;
