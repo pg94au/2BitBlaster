@@ -52,7 +52,7 @@ export class EnemyStub extends Enemy {
         return this._collisionMask;
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         throw new Error('Not implemented');
     }
 

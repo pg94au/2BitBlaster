@@ -46,7 +46,7 @@ export class Probe extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'probe_explosion',
             4,

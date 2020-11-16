@@ -56,7 +56,7 @@ export class Splitter extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,

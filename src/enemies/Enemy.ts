@@ -22,7 +22,7 @@ export abstract class Enemy extends Actor {
         this._health = initialHealth;
     }
 
-    abstract getExplosionProperties(): ExplosionProperties;
+    abstract get explosionProperties(): ExplosionProperties;
 
     abstract getScoreTotal(): number;
 
@@ -39,7 +39,7 @@ export abstract class Enemy extends Actor {
             const scoreTotal = this.getScoreTotal();
             this._world.getScoreCounter().increment(scoreTotal);
 
-            const explosionProperties = this.getExplosionProperties();
+            const explosionProperties = this.explosionProperties;
             const coordinates = this.getCoordinates();
             const explosion = new Explosion(
                 explosionProperties,

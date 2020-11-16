@@ -60,7 +60,7 @@ export class Spinner extends Enemy {
         }
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
