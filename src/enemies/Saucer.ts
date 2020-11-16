@@ -71,7 +71,7 @@ export class Saucer extends Enemy {
         return [new Bounds(-20, 20, -20, 20)];
     }
 
-    getDamageAgainst(): number {
+    getDamageAgainst(target: Actor): number {
         return 5;
     }
 

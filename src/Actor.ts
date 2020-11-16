@@ -51,6 +51,11 @@ export abstract class Actor {
         return false;
     }
 
+    getDamageAgainst(target: Actor): number {
+        // By default, an actor inflicts no damage when it collides with another actor.
+        return 0;
+    }
+
     abstract tick(): void;
 
     abstract getCollisionMask(actor: Actor): Bounds[];
