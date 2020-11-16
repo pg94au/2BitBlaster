@@ -26,7 +26,7 @@ export class ShotStub extends Shot {
         return this;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return this._collisionMask;
     }
 

@@ -67,7 +67,7 @@ export class Saucer extends Enemy {
         return 10;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-20, 20, -20, 20)];
     }
 

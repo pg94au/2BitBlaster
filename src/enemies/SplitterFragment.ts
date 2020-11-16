@@ -70,7 +70,7 @@ export class SplitterFragment extends Enemy {
         return 10;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-25, 25, -15, 15)];
     }
 

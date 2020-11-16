@@ -28,7 +28,7 @@ export class Grenade extends Shot {
         this._initialHeight = startingPoint.y;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-12, 12, -12, 12)];
     }
 

@@ -1,3 +1,4 @@
+import {Actor} from "../../src/Actor";
 import {Bounds} from "../../src/Bounds";
 import {Enemy} from '../../src/enemies/Enemy';
 import {ExplosionProperties} from "../../src/ExplosionProperties";
@@ -48,7 +49,7 @@ export class EnemyStub extends Enemy {
         return this;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return this._collisionMask;
     }
 

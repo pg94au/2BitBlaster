@@ -74,7 +74,7 @@ export class Spinner extends Enemy {
         return 5;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-30, 30, -30, 30)];
     }
 

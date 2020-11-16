@@ -25,7 +25,7 @@ export class Bullet extends Shot {
         this._audioPlayer = audioPlayer;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-5, 5, -5, 5)];
     }
 

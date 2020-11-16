@@ -54,7 +54,7 @@ export class Player extends Actor {
         });
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         if (this._vulnerable) {
             return [new Bounds(-20, 20, -20, 20)];
         }

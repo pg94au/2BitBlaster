@@ -60,7 +60,7 @@ export class Probe extends Enemy {
         return 25;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-20, 20, -20, 20)];
     }
 

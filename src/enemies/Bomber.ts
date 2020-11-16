@@ -50,7 +50,7 @@ export class Bomber extends Enemy {
         return 50;
     };
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-35, 45, -19, 19)];
     }
 
