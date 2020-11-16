@@ -1,4 +1,4 @@
 export interface Wave {
-    isActive(): boolean;
+    isActive: boolean;
     tick(): void;
 }

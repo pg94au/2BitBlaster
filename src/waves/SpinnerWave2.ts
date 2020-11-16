@@ -25,7 +25,7 @@ export class SpinnerWave2 implements Wave {
         this._scheduler = new Scheduler(clock);
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return (this._numberOfSpinnersLeftToDeploy > 0)
             || (this._world.getActiveEnemies().length > 0)
             || (this._world.getActiveExplosions().length > 0);

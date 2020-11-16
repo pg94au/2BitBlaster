@@ -26,7 +26,7 @@ export class Level {
         if (this._currentWave < this._waves.length) {
             this._waves[this._currentWave].tick();
 
-            if (!this._waves[this._currentWave].isActive()) {
+            if (!this._waves[this._currentWave].isActive) {
                 this._currentWave++;
             }
         }

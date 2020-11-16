@@ -9,7 +9,7 @@ export class WaveStub implements Wave {
         return this;
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return this._isActive;
     }
 

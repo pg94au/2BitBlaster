@@ -23,7 +23,7 @@ export class SimpleWave implements Wave {
         this._clock = clock;
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return (this._numberOfEnemiesLeftToDeploy > 0)
             || (this._world.getActiveEnemies().length > 0)
             || (this._world.getActiveExplosions().length > 0);
