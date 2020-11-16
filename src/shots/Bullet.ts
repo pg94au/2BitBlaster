@@ -54,7 +54,7 @@ export class Bullet extends Shot {
             if (this._location.y < 0) {
                 // When the bullet leaves the world, it becomes inactive.
                 debug('De-activating bullet ' + this._id);
-                this._active = false;
+                this._isActive = false;
             }
             else {
                 const hitArbiter = new HitArbiter(this);
@@ -63,15 +63,15 @@ export class Bullet extends Shot {
                 const activeEnemies = this._world.getActiveEnemies();
                 activeEnemies.forEach((enemy: Enemy) => {
                     //TODO: Do something if the hit is ineffective.
-                    if (this._active) {
+                    if (this._isActive) {
                         if (hitArbiter.attemptToHit(enemy) !== HitResult.Miss) {
-                            this._active = false;
+                            this._isActive = false;
                         }
                     }
                 });
             }
 
-            if (!this._active) {
+            if (!this._isActive) {
                 break;
             }
         }

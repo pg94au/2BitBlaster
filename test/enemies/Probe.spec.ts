@@ -76,7 +76,7 @@ describe('Probe', () => {
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
             probe.hitBy(bullet, Probe.InitialHealth);
             probe.tick();
-            expect(probe.isActive()).to.be.false;
+            expect(probe.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -86,7 +86,7 @@ describe('Probe', () => {
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
             probe.hitBy(bullet, Probe.InitialHealth / 2);
             probe.tick();
-            expect(probe.isActive()).to.be.true;
+            expect(probe.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {

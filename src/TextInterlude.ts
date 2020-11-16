@@ -20,7 +20,7 @@ export class TextInterlude {
     private readonly _postDisplayTimeInMillis: number;
     private _scheduler: Scheduler;
     private _interludeText!: Text;
-    private _active: boolean = true;
+    private _isActive: boolean = true;
 
     constructor(
         world: World,
@@ -51,8 +51,8 @@ export class TextInterlude {
     }
 
     get active(): boolean {
-        debug('TextInterlude.isActive: ' + this._active);
-        return this._active;
+        debug('TextInterlude.isActive: ' + this._isActive);
+        return this._isActive;
     }
 
     tick(): void {
@@ -64,7 +64,7 @@ export class TextInterlude {
 
         const justScheduled = this._scheduler.scheduleOperation('textInterludeEnds', delayBeforeBecomingInactive, () => {
             debug('Text interlude ending');
-            this._active = false;
+            this._isActive = false;
         });
 
         if (justScheduled) {

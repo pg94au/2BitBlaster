@@ -47,7 +47,7 @@ export class SpinnerWave implements Wave {
         // Limit the number of bombers so the player can't just sit and pick them off forever.
         if (this._numberOfBombersLeftToDeploy > 0) {
             // To consider scheduling the addition of a bomber, there can't already be an active one.
-            if ((this._currentBomber === null) || (!this._currentBomber.isActive())) {
+            if ((this._currentBomber === null) || (!this._currentBomber.isActive)) {
                 // Additionally, bombers will only be scheduled if other enemies are still active.
                 if (this._world.getActiveEnemies().length > 0) {
                     this._scheduler.scheduleOperation(

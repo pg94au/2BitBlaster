@@ -72,7 +72,7 @@ describe('World', () => {
             const enemy1 = new EnemyStub(world, new Point(5, 5));
             world.addActor(enemy1);
             const enemy2 = new EnemyStub(world, new Point(5, 5));
-            enemy2.isActive = () => { return false };
+            (enemy2 as any)._isActive = false;
             world.addActor(enemy2);
             expect(world.getActiveEnemies()).to.have.length(1);
         });
@@ -88,7 +88,7 @@ describe('World', () => {
             const explosion1 = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 5));
             world.addActor(explosion1);
             const explosion2 = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 5));
-            explosion2.isActive = () => { return false };
+            (explosion2 as any)._isActive = false;
             world.addActor(explosion2);
             expect(world.getActiveExplosions()).to.have.length(1);
         });

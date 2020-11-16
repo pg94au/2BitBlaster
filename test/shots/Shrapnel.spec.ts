@@ -62,13 +62,13 @@ describe('Shrapnel', () => {
         it('should remain active while it remains within the world', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 10), 270);
             shrapnel.tick();
-            expect(shrapnel.isActive()).to.be.true;
+            expect(shrapnel.isActive).to.be.true;
         });
 
         it('should become inactive when it leaves the world', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 640), 270);
             shrapnel.tick();
-            expect(shrapnel.isActive()).to.be.false;
+            expect(shrapnel.isActive).to.be.false;
         });
 
         it('should hit an active player within collision distance', () => {
@@ -110,7 +110,7 @@ describe('Shrapnel', () => {
 
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(10, 10), 270);
             shrapnel.tick();
-            expect(shrapnel.isActive()).to.be.false;
+            expect(shrapnel.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -119,13 +119,13 @@ describe('Shrapnel', () => {
 
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(10, 10), 270);
             shrapnel.tick();
-            expect(shrapnel.isActive()).to.be.false;
+            expect(shrapnel.isActive).to.be.false;
         });
 
         it('should remain active when there is no player', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(10, 10), 270);
             shrapnel.tick();
-            expect(shrapnel.isActive()).to.be.true;
+            expect(shrapnel.isActive).to.be.true;
         });
 
         it('should play a sound on the first tick', () => {

@@ -47,13 +47,13 @@ describe('Bomb', () => {
         it('should remain active while it remains within the world', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.true;
+            expect(bomb.isActive).to.be.true;
         });
 
         it('should become inactive when it leaves the world', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, world.getDimensions().height - 1));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should hit an active player within collision distance', () => {
@@ -101,7 +101,7 @@ describe('Bomb', () => {
 
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -110,13 +110,13 @@ describe('Bomb', () => {
 
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should remain active when there is no player', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.true;
+            expect(bomb.isActive).to.be.true;
         });
 
         it('should play a sound on the first tick', () => {

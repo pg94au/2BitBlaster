@@ -102,7 +102,7 @@ export class Bomber extends Enemy {
         this.move(Direction.Right);
 
         if (this._location.x > this._world.getDimensions().width + 40) {
-            this._active = false;
+            this._isActive = false;
         }
     }
 }

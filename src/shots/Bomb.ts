@@ -54,7 +54,7 @@ export class Bomb extends Shot {
             if (this._location.y > this._world.getDimensions().height) {
                 // When the bomb leaves the world, it becomes inactive.
                 debug('De-activating bomb ' + this._id);
-                this._active = false;
+                this._isActive = false;
             }
             else {
                 // Check if this bomb has collided with any active enemies.
@@ -63,12 +63,12 @@ export class Bomb extends Shot {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
-                        this._active = false;
+                        this._isActive = false;
                     }
                 }
             }
 
-            if (!this._active) {
+            if (!this._isActive) {
                 break;
             }
         }

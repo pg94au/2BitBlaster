@@ -57,7 +57,7 @@ export class Grenade extends Shot {
             if (this._location.y > this._world.getDimensions().height) {
                 // If the grenade leaves the world, it becomes inactive.
                 debug('De-activating grenade ' + this._id);
-                this._active = false;
+                this._isActive = false;
             }
             else {
                 // Check if this grenade has collided with any active enemies.
@@ -66,14 +66,14 @@ export class Grenade extends Shot {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
-                        this._active = false;
+                        this._isActive = false;
                     }
                 }
 
                 // If this grenade has fallen far enough, it explodes into shrapnel.
                 const distanceCovered = this._location.y - this._initialHeight;
                 if (distanceCovered >= 200) {
-                    this._active = false;
+                    this._isActive = false;
 
                     //TODO: Add a small explosion here.
                     const explosion = new Explosion(
@@ -104,7 +104,7 @@ export class Grenade extends Shot {
                 }
             }
 
-            if (!this._active) {
+            if (!this._isActive) {
                 break;
             }
         }

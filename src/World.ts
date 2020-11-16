@@ -48,13 +48,13 @@ export class World {
 
     getActiveEnemies(): Enemy[] {
         return this._actors.filter(
-            (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive() }
+            (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive }
             );
     }
 
     getActiveExplosions(): Explosion[] {
         return this._actors.filter(
-            (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive() }
+            (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive }
             );
     }
 
@@ -83,7 +83,7 @@ export class World {
     private cleanUp(): void {
         debug('World.cleanUp: before is %o', this._actors);
 
-        this._actors =  this._actors.filter(actor => { return actor.isActive() });
+        this._actors =  this._actors.filter(actor => { return actor.isActive });
         this._texts = this._texts.filter(text => { return text.active });
 
         debug('World.cleanUp: after is %o', this._actors);

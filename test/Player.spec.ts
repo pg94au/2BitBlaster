@@ -31,7 +31,7 @@ describe('Player', () => {
         it('should start active', () => {
             const bounds = new Bounds(1, 2, 1, 2);
             const player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
     });
 

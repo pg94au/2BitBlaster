@@ -38,7 +38,7 @@ describe('Grenade', () => {
         it('should remain active before moving a distance of 200', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, 10));
             grenade.tick();
-            expect(grenade.isActive()).to.be.true;
+            expect(grenade.isActive).to.be.true;
         });
 
         it('should become inactive after it has moved more than a distance of 200', () => {
@@ -47,7 +47,7 @@ describe('Grenade', () => {
                 grenade.tick();
             }
 
-            expect(grenade.isActive()).to.be.false;
+            expect(grenade.isActive).to.be.false;
         });
 
         it('should add pieces of shrapnel when it explodes', () => {
@@ -64,7 +64,7 @@ describe('Grenade', () => {
         it('should become inactive if it leaves the world', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, world.getDimensions().height));
             grenade.tick();
-            expect(grenade.isActive()).to.be.false;
+            expect(grenade.isActive).to.be.false;
         });
 
         it('should hit an active player within collision distance', () => {
@@ -106,7 +106,7 @@ describe('Grenade', () => {
 
             const grenade = new Grenade(audioPlayer, world, new Point(10, 10));
             grenade.tick();
-            expect(grenade.isActive()).to.be.false;
+            expect(grenade.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -115,13 +115,13 @@ describe('Grenade', () => {
 
             const grenade = new Grenade(audioPlayer, world, new Point(10, 10));
             grenade.tick();
-            expect(grenade.isActive()).to.be.false;
+            expect(grenade.isActive).to.be.false;
         });
 
         it('should remain active when there is no player', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(10, 10));
             grenade.tick();
-            expect(grenade.isActive()).to.be.true;
+            expect(grenade.isActive).to.be.true;
         });
 
         it('should play a sound on the first tick', () => {

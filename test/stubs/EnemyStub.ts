@@ -14,13 +14,12 @@ export class EnemyStub extends Enemy {
     private _onHit: (damage: number) => void = damage => {};
     private _onTick: () => void = () => {};
     private _ignoreHits: boolean = false;
-    private _isActive: boolean = true;
 
     constructor(world: World, startingPoint: Point) {
         super(new AudioPlayerStub(), world, startingPoint, 1);
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return this._isActive;
     }
 

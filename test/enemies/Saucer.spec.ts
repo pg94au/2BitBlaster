@@ -43,7 +43,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
-            expect(saucer.isActive()).to.be.false;
+            expect(saucer.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -53,7 +53,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth / 2);
             saucer.tick();
-            expect(saucer.isActive()).to.be.true;
+            expect(saucer.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {

@@ -4,7 +4,7 @@ const debug = Debug("Blaster:Level");
 import {Wave} from "./waves/Wave";
 
 export class Level {
-    private _active: boolean = true;
+    private _isActive: boolean = true;
     private _currentWave: number = 0;
     private _waves: Wave[];
 
@@ -17,7 +17,7 @@ export class Level {
     }
 
     get active(): boolean {
-        return this._active;
+        return this._isActive;
     }
 
     tick(): void {
@@ -31,7 +31,7 @@ export class Level {
             }
         }
         else {
-            this._active = false;
+            this._isActive = false;
         }
     }
 }

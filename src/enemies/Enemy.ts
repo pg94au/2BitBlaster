@@ -34,7 +34,7 @@ export abstract class Enemy extends Actor {
         debug('Enemy.tick');
 
         if (this._health <= 0) {
-            this._active = false;
+            this._isActive = false;
 
             const scoreTotal = this.scoreTotal;
             this._world.getScoreCounter().increment(scoreTotal);

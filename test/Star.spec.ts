@@ -42,7 +42,7 @@ describe('Star', () => {
 
             star.tick();
 
-            expect(star.isActive()).to.be.false;
+            expect(star.isActive).to.be.false;
         })
     });
 });

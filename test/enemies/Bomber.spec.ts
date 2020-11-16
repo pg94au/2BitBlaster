@@ -44,7 +44,7 @@ describe('Bomber', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, Bomber.InitialHealth);
             bomber.tick();
-            expect(bomber.isActive()).to.be.false;
+            expect(bomber.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -54,7 +54,7 @@ describe('Bomber', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet,  Bomber.InitialHealth / 2);
             bomber.tick();
-            expect(bomber.isActive()).to.be.true;
+            expect(bomber.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -89,7 +89,7 @@ describe('Bomber', () => {
                 bomber.tick();
             }
 
-            expect(bomber.isActive()).to.be.false;
+            expect(bomber.isActive).to.be.false;
         });
     });
 });

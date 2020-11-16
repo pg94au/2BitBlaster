@@ -64,7 +64,7 @@ describe('Bullet', () => {
                 new Point(5, 10)
             );
             bullet.tick();
-            expect(bullet.isActive()).to.be.true;
+            expect(bullet.isActive).to.be.true;
         });
 
         it('should become inactive when it leaves the world', () => {
@@ -74,7 +74,7 @@ describe('Bullet', () => {
                 new Point(5, 0)
             );
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should hit any active enemies within collision distance', () => {
@@ -111,7 +111,7 @@ describe('Bullet', () => {
             world.addActor(enemy);
             const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -119,7 +119,7 @@ describe('Bullet', () => {
             world.addActor(enemy);
             const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should only be able to hit a single target', () => {

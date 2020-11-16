@@ -20,7 +20,7 @@ export class LevelManager {
     private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
     private _state: LevelState = LevelState.Intro;
-    private _active: boolean = true;
+    private _isActive: boolean = true;
 
     constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, levels: Level[]) {
         debug('LevelManager constructor');
@@ -36,7 +36,7 @@ export class LevelManager {
     }
 
     get active(): boolean {
-        return this._active;
+        return this._isActive;
     }
 
     on(event: string, args: (...args: any[]) => void): void {
@@ -48,7 +48,7 @@ export class LevelManager {
     tick(): void {
         debug('LevelManager.tick');
 
-        if (!this._active) {
+        if (!this._isActive) {
             return;
         }
 
@@ -134,7 +134,7 @@ export class LevelManager {
         if (!this._textInterlude.active) {
             this._textInterlude = null;
             this._state = LevelState.Play;
-            this._active = false;
+            this._isActive = false;
         }
     }
 }

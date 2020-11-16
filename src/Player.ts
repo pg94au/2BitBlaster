@@ -126,7 +126,7 @@ export class Player extends Actor {
         this._scheduler.executeDueOperations();
 
         if (this._currentHealth <= 0) {
-            this._active = false;
+            this._isActive = false;
 
             const explosionProperties = new ExplosionProperties(
                 'player_explosion',

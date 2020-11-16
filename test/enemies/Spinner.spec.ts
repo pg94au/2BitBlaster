@@ -48,7 +48,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
-            expect(spinner.isActive()).to.be.false;
+            expect(spinner.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -58,7 +58,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {

@@ -103,7 +103,7 @@ describe('Explosion', () => {
             explosion.tick();
             explosion.tick();
 
-            expect(explosion.isActive()).to.be.false;
+            expect(explosion.isActive).to.be.false;
         });
 
         it('should play sound on the first tick if one is specified', () => {

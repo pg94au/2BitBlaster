@@ -51,7 +51,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
-            expect(splitterFragment.isActive()).to.be.false;
+            expect(splitterFragment.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -61,7 +61,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {

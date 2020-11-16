@@ -28,7 +28,7 @@ describe('Actor', () => {
     describe('#ctor()', () => {
         it('should start active', () => {
             const actor = new ActorStub(world, new Point(1, 2));
-            expect(actor.isActive()).to.be.true;
+            expect(actor.isActive).to.be.true;
         });
 
         it('should start at specified coordinates', () => {

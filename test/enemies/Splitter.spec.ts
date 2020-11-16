@@ -63,7 +63,7 @@ describe('Splitter', () => {
             const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
             splitter.hitBy(player, Splitter.InitialHealth);
             splitter.tick();
-            expect(splitter.isActive()).to.be.false;
+            expect(splitter.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -73,7 +73,7 @@ describe('Splitter', () => {
             const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
             splitter.hitBy(player, Splitter.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {

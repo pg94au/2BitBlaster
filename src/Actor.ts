@@ -12,7 +12,7 @@ export abstract class Actor {
     protected readonly _id: string = uuid();
     protected readonly _world: World;
     protected _location: Point;
-    protected _active: boolean = true;
+    protected _isActive: boolean = true;
 
     protected constructor(world: World, startCoordinates: Point) {
         debug('Actor constructor');
@@ -62,8 +62,8 @@ export abstract class Actor {
 
     abstract get imageDetails(): ImageDetails;
 
-    isActive(): boolean {
-        debug('Actor.isActive: ' + this._active);
-        return this._active;
+    get isActive(): boolean {
+        debug('Actor.isActive: ' + this._isActive);
+        return this._isActive;
     }
 }

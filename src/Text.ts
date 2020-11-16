@@ -11,7 +11,7 @@ export class Text {
     private readonly _fontSize: number;
     private readonly _fillColor: string;
     private readonly _location: Point;
-    private _active: boolean = true;
+    private _isActive: boolean = true;
 
     constructor(content: string, fontFamily: string, fontSize: number, fillColor: string, startX: number, startY: number) {
         debug('Text constructor');
@@ -47,10 +47,10 @@ export class Text {
     }
 
     get active(): boolean {
-        return this._active;
+        return this._isActive;
     }
 
     set active(value: boolean) {
-        this._active = value;
+        this._isActive = value;
     }
 }
