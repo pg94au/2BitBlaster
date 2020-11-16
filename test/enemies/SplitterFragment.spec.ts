@@ -72,7 +72,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

@@ -60,7 +60,7 @@ export class Bullet extends Shot {
                 const hitArbiter = new HitArbiter(this);
 
                 // Check if this bullet has collided with any active enemies.
-                const activeEnemies = this._world.getActiveEnemies();
+                const activeEnemies = this._world.activeEnemies;
                 activeEnemies.forEach((enemy: Enemy) => {
                     //TODO: Do something if the hit is ineffective.
                     if (this._isActive) {

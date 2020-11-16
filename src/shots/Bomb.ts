@@ -58,7 +58,7 @@ export class Bomb extends Shot {
             }
             else {
                 // Check if this bomb has collided with any active enemies.
-                const player = this._world.getPlayer();
+                const player = this._world.player;
                 if (player) {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.

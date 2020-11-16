@@ -64,7 +64,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

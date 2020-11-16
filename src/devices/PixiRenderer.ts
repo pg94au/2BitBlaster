@@ -94,7 +94,7 @@ export class PixiRenderer implements Renderer {
     }
 
     private addOrUpdateSpritesInStage() {
-        const actors = this._world.getActors();
+        const actors = this._world.actors;
         for (const actor of actors) {
             let spriteDetail : SpriteDetail | undefined = this._isActiveSprites.get(actor.id);
 
@@ -111,7 +111,7 @@ export class PixiRenderer implements Renderer {
 
     private addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
-        const texts = this._world.getTexts();
+        const texts = this._world.texts;
         for (const text of texts) {
             let pixiText : PIXI.Text | undefined = this._isActiveTexts.get(text.id);
 
@@ -137,7 +137,7 @@ export class PixiRenderer implements Renderer {
         // Remove any sprites whose associated actors no longer exist.
         this._isActiveSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
             // Check if there exists an actor with id == actorId.
-            if (!this._world.getActors().find(actor => { return actor.id === actorId })) {
+            if (!this._world.actors.find(actor => { return actor.id === actorId })) {
                 this._stage.removeChild(spriteDetail.sprite);
                 this._isActiveSprites.delete(actorId);
             }
@@ -148,7 +148,7 @@ export class PixiRenderer implements Renderer {
         // Remove any text were the associated text items no longer exist.
         this._isActiveTexts.forEach((text: PIXI.Text, textId: string) => {
             // Check if there exists a text with id == textId.
-            if (!this._world.getTexts().find(t => { return t.id === textId })) {
+            if (!this._world.texts.find(t => { return t.id === textId })) {
                 this._stage.removeChild(text);
                 this._isActiveTexts.delete(textId);
             }

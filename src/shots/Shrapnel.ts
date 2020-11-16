@@ -63,7 +63,7 @@ export class Shrapnel extends Shot {
             }
             else {
                 // Check if this piece of shrapnel has collided with any active enemies.
-                const player = this._world.getPlayer();
+                const player = this._world.player;
                 if (player) {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.

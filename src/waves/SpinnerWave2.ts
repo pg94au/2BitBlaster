@@ -27,8 +27,8 @@ export class SpinnerWave2 implements Wave {
 
     get isActive(): boolean {
         return (this._numberOfSpinnersLeftToDeploy > 0)
-            || (this._world.getActiveEnemies().length > 0)
-            || (this._world.getActiveExplosions().length > 0);
+            || (this._world.activeEnemies.length > 0)
+            || (this._world.activeExplosions.length > 0);
     }
 
     tick(): void {

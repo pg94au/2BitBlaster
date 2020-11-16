@@ -69,7 +69,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

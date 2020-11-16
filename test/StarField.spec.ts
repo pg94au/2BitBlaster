@@ -19,7 +19,7 @@ describe('StarField', () => {
 
             starField.tick();
 
-            expect(world.getActors().length).to.be.above(10);
+            expect(world.actors.length).to.be.above(10);
         });
 
         it('adds stars periodically on subsequent ticks', () => {

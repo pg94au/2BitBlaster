@@ -41,31 +41,31 @@ export class World {
         this._texts.push(text);
     }
 
-    getActors(): Actor[] {
+    get actors(): Actor[] {
         return this._actors;
     }
 
-    getActiveEnemies(): Enemy[] {
+    get activeEnemies(): Enemy[] {
         return this._actors.filter(
             (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive }
             );
     }
 
-    getActiveExplosions(): Explosion[] {
+    get activeExplosions(): Explosion[] {
         return this._actors.filter(
             (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive }
             );
     }
 
-    getPlayer(): Player | null {
+    get player(): Player | null {
         return this._actors.find((actor): actor is Player => { return actor instanceof Player }) || null;
     }
 
-    getScoreCounter(): ScoreCounter {
+    get scoreCounter(): ScoreCounter {
         return this._scoreCounter;
     }
 
-    getTexts(): Text[] {
+    get texts(): Text[] {
         return this._texts;
     }
 

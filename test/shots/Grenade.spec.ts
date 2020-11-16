@@ -57,7 +57,7 @@ describe('Grenade', () => {
                 grenade.tick();
             }
 
-            const shrapnel = world.getActors().filter((a: Actor) => { return (a instanceof Shrapnel) });
+            const shrapnel = world.actors.filter((a: Actor) => { return (a instanceof Shrapnel) });
 
             expect(shrapnel.length).to.be.above(0);
         });

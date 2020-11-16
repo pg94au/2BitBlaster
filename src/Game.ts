@@ -59,7 +59,7 @@ export class Game {
             this.tickWithinGameOver();
         }
 
-        if ((this._world.getPlayer() === null) && (this._remainingLives >= 0)) {
+        if ((this._world.player === null) && (this._remainingLives >= 0)) {
             if (this._scheduler.scheduleOperation(
                 'resurrectPlayer',
                 3000,

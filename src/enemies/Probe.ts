@@ -86,7 +86,7 @@ export class Probe extends Enemy {
         this.step();
 
         // Check if this probe has collided with any active enemies.
-        const player = this._world.getPlayer();
+        const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }

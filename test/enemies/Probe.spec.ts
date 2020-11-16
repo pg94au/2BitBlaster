@@ -99,7 +99,7 @@ describe('Probe', () => {
             probe.hitBy(bullet, Probe.InitialHealth);
             probe.tick();
 
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

@@ -25,8 +25,8 @@ export class SplitterWave implements Wave {
 
     get isActive(): boolean {
         return (this._numberOfEnemiesLeftToDeploy > 0)
-            || (this._world.getActiveEnemies().length > 0)
-            || (this._world.getActiveExplosions().length > 0);
+            || (this._world.activeEnemies.length > 0)
+            || (this._world.activeExplosions.length > 0);
     }
 
     tick(): void {
@@ -34,7 +34,7 @@ export class SplitterWave implements Wave {
 
         if (this._numberOfEnemiesLeftToDeploy > 0) {
             // Add new enemy when the time comes, but only if a maximum allowed aren't already active.
-            if ((this._addNextEnemyAt <= new Date()) && (this._world.getActiveEnemies().length < 3)) {
+            if ((this._addNextEnemyAt <= new Date()) && (this._world.activeEnemies.length < 3)) {
                 // Space out the addition of enemies.
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);

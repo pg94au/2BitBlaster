@@ -168,7 +168,7 @@ export class Player extends Actor {
         debug('Current position is (' + this._location + ')');
 
         // Check if the player has collided with any active enemies.
-        this._world.getActiveEnemies().forEach((enemy: Enemy) => {
+        this._world.activeEnemies.forEach((enemy: Enemy) => {
             this._hitArbiter.attemptToHit(enemy);
         });
 

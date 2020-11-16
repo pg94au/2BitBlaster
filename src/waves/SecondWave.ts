@@ -24,8 +24,8 @@ export class SecondWave implements Wave {
 
     get isActive(): boolean {
         return (this._numberOfEnemiesLeftToDeploy > 0)
-            || (this._world.getActiveEnemies().length > 0)
-            || (this._world.getActiveExplosions().length > 0);
+            || (this._world.activeEnemies.length > 0)
+            || (this._world.activeExplosions.length > 0);
     }
 
     tick(): void {
@@ -33,7 +33,7 @@ export class SecondWave implements Wave {
 
         //TODO: This is just a simple demonstration of how a wave can manage adding enemies to the world.
         if (this._numberOfEnemiesLeftToDeploy > 0) {
-            if ((this._addNextEnemyAt <= new Date()) && (this._world.getActiveEnemies().length < 5)) {
+            if ((this._addNextEnemyAt <= new Date()) && (this._world.activeEnemies.length < 5)) {
                 // Space out the addition of enemies.
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
