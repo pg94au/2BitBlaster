@@ -13,7 +13,7 @@ export abstract class Shot extends Actor {
         super(world, startingPoint);
     }
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 5;
     }
 

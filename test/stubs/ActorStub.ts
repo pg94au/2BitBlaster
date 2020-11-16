@@ -13,7 +13,7 @@ export class ActorStub extends Actor {
         throw new Error('Not implemented');
     }
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 0;
     }
 

@@ -44,11 +44,6 @@ export class Star extends Actor {
         return 0;
     }
 
-    // TOD: Remove this when only the property is used.
-    getZIndex(): number {
-        return this.zIndex;
-    }
-
     tick(): void {
         debug('Star.tick');
 

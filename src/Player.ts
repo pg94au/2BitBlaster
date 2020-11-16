@@ -94,7 +94,7 @@ export class Player extends Actor {
         }
     }
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 10;
     }
 

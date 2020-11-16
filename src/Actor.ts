@@ -43,7 +43,7 @@ export abstract class Actor {
         return this._location;
     }
 
-    abstract getZIndex(): number;
+    abstract get zIndex(): number;
 
     hitBy(actor: Actor, damage: number): boolean {
         debug('Actor.hitBy ' + actor + ' for ' + damage);

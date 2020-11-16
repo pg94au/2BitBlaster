@@ -26,7 +26,7 @@ export abstract class Enemy extends Actor {
 
     abstract get scoreTotal(): number;
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 20;
     }
 

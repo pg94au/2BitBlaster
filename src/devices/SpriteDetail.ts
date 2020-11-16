@@ -36,7 +36,7 @@ export class SpriteDetail {
         this._sprite.anchor.set(0.5);
         this._sprite.position.x = this._actor.getCoordinates().x;
         this._sprite.position.y = this._actor.getCoordinates().y;
-        this._sprite.zIndex = this._actor.getZIndex();
+        this._sprite.zIndex = this._actor.zIndex;
     }
 
     updateSprite(): void {

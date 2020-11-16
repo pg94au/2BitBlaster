@@ -41,11 +41,6 @@ export class Explosion extends Actor {
         return 30;
     }
 
-    // TODO: Remove this once Actor has the property.
-    getZIndex(): number {
-        return this.zIndex;
-    }
-
     tick(): void {
         debug('Explosion.tick');
 
