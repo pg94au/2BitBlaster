@@ -128,7 +128,7 @@ export class Spinner extends Enemy {
     }
 
     private dropBomb(): void {
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
 
         if (this._location.x > 0 && this._location.x < worldDimensions.width
             && this._location.y > 0 && this._location.y < worldDimensions.height) {

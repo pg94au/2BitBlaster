@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {Shrapnel} from '../../src/shots/Shrapnel';
@@ -15,7 +16,7 @@ describe('Shrapnel', () => {
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
-        world = new World(480, 640, new ScoreCounter());
+        world = new World(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#tick()', () => {

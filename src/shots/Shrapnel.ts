@@ -56,7 +56,7 @@ export class Shrapnel extends Shot {
         for (let step = 0; step < speed; step++) {
             this.moveOneStepInDefinedTrajectory();
 
-            if (this._location.y > this._world.getDimensions().height) {
+            if (this._location.y > this._world.dimensions.height) {
                 // When this shrapnel piece leaves the world, it becomes inactive.
                 debug('De-activating shrapnel ' + this._id);
                 this._isActive = false;

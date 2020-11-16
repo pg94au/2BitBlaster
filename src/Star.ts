@@ -44,7 +44,7 @@ export class Star extends Actor {
 
         this.move(Direction.Down);
 
-        if (this._location.y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.dimensions.height) {
             // When the star leaves the world, it becomes inactive.
             debug('De-activating star ' + this._id);
             this._isActive = false;

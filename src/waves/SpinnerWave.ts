@@ -65,7 +65,7 @@ export class SpinnerWave implements Wave {
     private deploySpinner(): void {
         debug('SpinnerWave.deploySpinner');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const spinnerStartX = worldDimensions.width / 2;
         const spinnerStartY = -20;
         const leftSpinner = new Spinner(
@@ -93,7 +93,7 @@ export class SpinnerWave implements Wave {
     private deployBomber(): void {
         debug('SpinnerWave.deployBomber');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const bomberStartY = Math.floor(random(50, worldDimensions.height / 2));
         const bomber = new Bomber(this._audioPlayer, this._world, this._clock, bomberStartY);
         this._currentBomber = bomber;

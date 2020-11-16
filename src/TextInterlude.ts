@@ -72,7 +72,7 @@ export class TextInterlude {
             this._scheduler.scheduleOperation('showInterludeText', delayBeforeShowingText, () => {
                 // Add interlude text.
                 debug('Adding interlude text [' + this._textContent + ']');
-                const worldDimensions = this._world.getDimensions();
+                const worldDimensions = this._world.dimensions;
                 this._interludeText = new Text(
                     this._textContent,
                     this._fontFamily,

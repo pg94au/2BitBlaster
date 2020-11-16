@@ -114,7 +114,7 @@ export class Probe extends Enemy {
             if (this._location.x < 120) {
                 nextPath = Probe._diveRightPathTemplate;
             }
-            else if (this._location.x > this._world.getDimensions().width - 120) {
+            else if (this._location.x > this._world.dimensions.width - 120) {
                 nextPath = Probe._diveLeftPathTemplate;
             }
             else if (random(0, 1) > 0.5) {

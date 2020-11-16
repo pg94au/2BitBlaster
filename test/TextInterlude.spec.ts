@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Dimensions} from "../src/Dimensions";
 import {ScoreCounter} from "../src/ScoreCounter";
 import {Text} from '../src/Text';
 import {TextInterlude} from "../src/TextInterlude";
@@ -14,7 +15,7 @@ describe('TextInterlude', () => {
 
     beforeEach(() => {
         clock = new ClockStub();
-        world = new WorldStub(480, 640, new ScoreCounter());
+        world = new WorldStub(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#ctor()', () => {

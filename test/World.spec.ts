@@ -25,14 +25,14 @@ describe('World', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#ctor()', () => {
@@ -55,10 +55,10 @@ describe('World', () => {
         });
     });
 
-    describe('#getDimensions()', () => {
+    describe('#dimensions', () => {
         it('should return the X and Y dimensions of the world in pixels', () => {
-            const worldOfSpecificSize = new World(20, 10, scoreCounter);
-            const dimensions = worldOfSpecificSize.getDimensions();
+            const worldOfSpecificSize = new World(new Dimensions(20, 10), scoreCounter);
+            const dimensions = worldOfSpecificSize.dimensions;
             expect(dimensions).to.deep.equal(new Dimensions(20, 10));
         })
     });

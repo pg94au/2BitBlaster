@@ -2,6 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Actor} from "../../src/Actor";
+import {Dimensions} from "../../src/Dimensions";
 import {Grenade} from '../../src/shots/Grenade';
 import {Point} from '../../src/Point';
 import {Shrapnel} from '../../src/shots/Shrapnel';
@@ -18,7 +19,7 @@ describe('Grenade', () => {
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
-            world = new World(480, 640, new ScoreCounter());
+            world = new World(new Dimensions(480, 640), new ScoreCounter());
         });
 
         it('should move the grenade directly downwards', () => {
@@ -62,7 +63,7 @@ describe('Grenade', () => {
         });
 
         it('should become inactive if it leaves the world', () => {
-            const grenade = new Grenade(audioPlayer, world, new Point(5, world.getDimensions().height));
+            const grenade = new Grenade(audioPlayer, world, new Point(5, world.dimensions.height));
             grenade.tick();
             expect(grenade.isActive).to.be.false;
         });

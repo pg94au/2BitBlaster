@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {Probe} from '../../src/enemies/Probe';
 import {ScoreCounter} from '../../src/ScoreCounter';
@@ -21,7 +22,7 @@ describe('Probe', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#imageDetails', () => {

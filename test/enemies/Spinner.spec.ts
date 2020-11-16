@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 import {ClockStub} from "../stubs/ClockStub";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from "../../src/Point";
 import {Spinner} from "../../src/enemies/Spinner";
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
@@ -19,7 +20,7 @@ describe('Spinner', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {

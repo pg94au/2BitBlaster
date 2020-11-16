@@ -39,7 +39,7 @@ export class PixiRenderer implements Renderer {
 
     initialize(world: World): void {
         this._world = world;
-        this._worldDimensions = this._world.getDimensions();
+        this._worldDimensions = this._world.dimensions;
         this._renderer = PIXI.autoDetectRenderer({
             width: this._worldDimensions.width,
             height: this._worldDimensions.height

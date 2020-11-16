@@ -2,6 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Actor} from "../src/Actor";
+import {Dimensions} from "../src/Dimensions";
 import {ScoreCounter} from "../src/ScoreCounter";
 import {Star} from '../src/Star';
 import {StarField} from '../src/StarField';
@@ -12,7 +13,7 @@ import {ClockStub} from "./stubs/ClockStub";
 describe('StarField', () => {
     describe('#tick()', () => {
         it('populates the world with multiple stars on first call', () => {
-            const world = new World(480, 640, new ScoreCounter());
+            const world = new World(new Dimensions(480, 640), new ScoreCounter());
             const clock = new ClockStub();
             const starField = new StarField(world, clock);
 
@@ -22,7 +23,7 @@ describe('StarField', () => {
         });
 
         it('adds stars periodically on subsequent ticks', () => {
-            const world = new World(480, 640, new ScoreCounter());
+            const world = new World(new Dimensions(480, 640), new ScoreCounter());
             const clock = new ClockStub();
             const starField = new StarField(world, clock);
 

@@ -142,7 +142,7 @@ export class SplitterFragment extends Enemy {
             if ((this._currentPathTemplate === SplitterFragment._floatAroundPath1Template)
                 || (this._currentPathTemplate === SplitterFragment._floatAroundPath2Template)) {
                 if (random(0, 1) > 0.5) {
-                    if (this._location.x < this._world.getDimensions().width / 2) {
+                    if (this._location.x < this._world.dimensions.width / 2) {
                         nextPath = SplitterFragment._flyRightPathTemplate;
                     }
                     else {
@@ -150,12 +150,12 @@ export class SplitterFragment extends Enemy {
                     }
                 }
                 else {
-                    if (this._location.y < this._world.getDimensions().height / 2) {
+                    if (this._location.y < this._world.dimensions.height / 2) {
                         if (random(0, 1) > 0.5) {
                             nextPath = SplitterFragment._flyDownPathTemplate;
                         }
                         else {
-                            if (this._location.x < this._world.getDimensions().width / 2) {
+                            if (this._location.x < this._world.dimensions.width / 2) {
                                 nextPath = SplitterFragment._diveRightPathTemplate;
                             }
                             else {

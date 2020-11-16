@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Dimensions} from "../src/Dimensions";
 import {Explosion} from '../src/Explosion';
 import {ExplosionProperties} from "../src/ExplosionProperties";
 import {Point} from "../src/Point";
@@ -21,7 +22,7 @@ describe('Explosion', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#imageDetails', () => {

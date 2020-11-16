@@ -2,6 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bomb} from '../../src/shots/Bomb';
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {World} from '../../src/World';
@@ -16,7 +17,7 @@ describe('Bomb', () => {
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
-            world = new World(480, 640, new ScoreCounter());
+            world = new World(new Dimensions(480, 640), new ScoreCounter());
         });
 
         it('should move the bomb directly downwards', () => {
@@ -51,7 +52,7 @@ describe('Bomb', () => {
         });
 
         it('should become inactive when it leaves the world', () => {
-            const bomb = new Bomb(audioPlayer, world, new Point(5, world.getDimensions().height - 1));
+            const bomb = new Bomb(audioPlayer, world, new Point(5, world.dimensions.height - 1));
             bomb.tick();
             expect(bomb.isActive).to.be.false;
         });

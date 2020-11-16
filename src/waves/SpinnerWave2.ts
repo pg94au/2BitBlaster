@@ -48,7 +48,7 @@ export class SpinnerWave2 implements Wave {
     private deploySpinner(): void {
         debug('SpinnerWave2.deploySpinner');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const spinnerStartX = worldDimensions.width / 2;
         const spinnerStartY = -20;
         const leftSpinner = new Spinner(

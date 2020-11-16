@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Actor} from '../src/Actor';
 import {ClockStub} from "./stubs/ClockStub";
+import {Dimensions} from "../src/Dimensions";
 import {Direction} from '../src/devices/Direction';
 import {Point} from "../src/Point";
 import {ScoreCounter} from "../src/ScoreCounter";
@@ -22,7 +23,7 @@ describe('Actor', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#ctor()', () => {

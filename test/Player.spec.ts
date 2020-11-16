@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Actor} from "../src/Actor";
 import {Bounds} from '../src/Bounds';
+import {Dimensions} from "../src/Dimensions";
 import {Direction} from '../src/devices/Direction';
 import {Player} from '../src/Player';
 import {Point} from '../src/Point';
@@ -24,7 +25,7 @@ describe('Player', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         joystick = new JoystickStub();
-        world = new World(480, 640, new ScoreCounter());
+        world = new World(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#ctor()', () => {

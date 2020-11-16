@@ -5,6 +5,7 @@ import {EventEmitter} from "events";
 import {AudioPlayer} from "./devices/AudioPlayer";
 import {Bounds} from './Bounds';
 import {Clock} from "./timing/Clock";
+import {Dimensions} from "./Dimensions";
 import {Joystick} from "./devices/Joystick";
 import {Level} from './Level';
 import {LevelManager} from './LevelManager';
@@ -151,7 +152,7 @@ export class Game {
             this._eventEmitter.emit('highScore', highScore);
         });
 
-        this._world = new World(480, 640, this._scoreCounter);
+        this._world = new World(new Dimensions(480, 640), this._scoreCounter);
 
         this._starField = new StarField(this._world, this._clock);
 
@@ -192,7 +193,7 @@ export class Game {
                 this._world, this._clock,
                 "GAME OVER",
                 "Arial", 50, "red",
-                this._world.getDimensions().width / 2, this._world.getDimensions().height / 2,
+                this._world.dimensions.width / 2, this._world.dimensions.height / 2,
                 2000, 4000, 2000
             );
         }

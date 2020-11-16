@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Bounds} from "../../src/Bounds";
 import {Bullet} from '../../src/shots/Bullet';
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {World} from '../../src/World';
 
@@ -17,7 +18,7 @@ describe('Bullet', () => {
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
-            world = new World(480, 640, new ScoreCounter());
+            world = new World(new Dimensions(480, 640), new ScoreCounter());
         });
 
         it('should move the bullet directly upwards', () => {

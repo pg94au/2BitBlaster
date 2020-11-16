@@ -31,7 +31,7 @@ export class Bomber extends Enemy {
 
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
-        this._grenadeDropPosition = random(75, this._world.getDimensions().width - 75);
+        this._grenadeDropPosition = random(75, this._world.dimensions.width - 75);
 
         this.advanceCurrentFrame();
     }
@@ -101,7 +101,7 @@ export class Bomber extends Enemy {
         // Move across the screen toward the right side.
         this.move(Direction.Right);
 
-        if (this._location.x > this._world.getDimensions().width + 40) {
+        if (this._location.x > this._world.dimensions.width + 40) {
             this._isActive = false;
         }
     }

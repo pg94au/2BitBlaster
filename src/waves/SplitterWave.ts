@@ -39,7 +39,7 @@ export class SplitterWave implements Wave {
                 this._addNextEnemyAt = new Date();
                 this._addNextEnemyAt.setSeconds(this._addNextEnemyAt.getSeconds() + 1);
 
-                const worldDimensions = this._world.getDimensions();
+                const worldDimensions = this._world.dimensions;
                 const splitterStartingPoint = new Point(
                     Math.floor(random(100 + 50, worldDimensions.width - 100 - 50)),
                     -20

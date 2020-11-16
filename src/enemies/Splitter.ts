@@ -155,7 +155,7 @@ export class Splitter extends Enemy {
             let nextPath: PathEntry[];
             if (this._currentPathTemplate === Splitter._floatAroundPathTemplate) {
                 if (random(0, 1) > 0.5) {
-                    if (this._location.x < this._world.getDimensions().width / 2) {
+                    if (this._location.x < this._world.dimensions.width / 2) {
                         nextPath = Splitter._flyRightPathTemplate;
                     }
                     else {
@@ -163,12 +163,12 @@ export class Splitter extends Enemy {
                     }
                 }
                 else {
-                    if (this._location.y < this._world.getDimensions().height / 2) {
+                    if (this._location.y < this._world.dimensions.height / 2) {
                         if (random(0, 1) > 0.5) {
                             nextPath = Splitter._flyDownPathTemplate;
                         }
                         else {
-                            if (this._location.x < this._world.getDimensions().width / 2) {
+                            if (this._location.x < this._world.dimensions.width / 2) {
                                 nextPath = Splitter._diveRightPathTemplate;
                             }
                             else {

@@ -15,14 +15,13 @@ export class World {
     private _actors: Actor[] = [];
     private _texts: Text[] = [];
 
-    // TODO: Change constructor to accept Dimensions as parameter type
-    constructor(width: number, height: number, scoreCounter: ScoreCounter) {
+    constructor(dimensions: Dimensions, scoreCounter: ScoreCounter) {
         debug('World: constructor');
-        this._dimensions = new Dimensions(width, height);
+        this._dimensions = dimensions;
         this._scoreCounter = scoreCounter;
     }
 
-    getDimensions(): Dimensions {
+    get dimensions(): Dimensions {
         return this._dimensions;
     }
 

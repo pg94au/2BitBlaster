@@ -4,6 +4,7 @@ import {expect} from 'chai';
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
 import {ClockStub} from "../stubs/ClockStub";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from "../../src/Point";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {SplitterFragment} from "../../src/enemies/SplitterFragment";
@@ -22,7 +23,7 @@ describe('SplitterFragment', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {

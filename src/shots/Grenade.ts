@@ -54,7 +54,7 @@ export class Grenade extends Shot {
         for (let step = 0; step < speed; step++) {
             this.move(Direction.Down);
 
-            if (this._location.y > this._world.getDimensions().height) {
+            if (this._location.y > this._world.dimensions.height) {
                 // If the grenade leaves the world, it becomes inactive.
                 debug('De-activating grenade ' + this._id);
                 this._isActive = false;
