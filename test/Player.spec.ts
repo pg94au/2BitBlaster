@@ -48,7 +48,7 @@ describe('Player', () => {
 
             player.hitBy(shot, 1);
 
-            const imageDetailsAfter = player.getImageDetails();
+            const imageDetailsAfter = player.imageDetails;
 
             expect(imageDetailsAfter.currentFrame).to.be.equal(1);
         });
@@ -64,11 +64,11 @@ describe('Player', () => {
             world.addActor(shot);
 
             player.hitBy(shot, 1);
-            const imageDetailsBefore = player.getImageDetails();
+            const imageDetailsBefore = player.imageDetails;
 
             clock.addSeconds(5);
             player.tick();
-            const imageDetailsAfter = player.getImageDetails();
+            const imageDetailsAfter = player.imageDetails;
 
             expect(imageDetailsBefore.currentFrame).to.be.not.equal(0);
             expect(imageDetailsAfter.currentFrame).to.be.equal(0);

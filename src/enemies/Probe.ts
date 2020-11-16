@@ -68,7 +68,7 @@ export class Probe extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('probe', 3, 70, Math.min(3 - this._health, 2));
     }
 

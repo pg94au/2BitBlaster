@@ -55,7 +55,7 @@ export abstract class Actor {
 
     abstract getCollisionMask(actor: Actor): Bounds[];
 
-    abstract getImageDetails(): ImageDetails;
+    abstract get imageDetails(): ImageDetails;
 
     isActive(): boolean {
         debug('Actor.isActive: ' + this._active);

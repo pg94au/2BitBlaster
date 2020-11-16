@@ -75,7 +75,7 @@ export class Saucer extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('saucer', 4, 80, this._currentFrame);
     }
 

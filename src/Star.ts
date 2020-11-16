@@ -35,11 +35,6 @@ export class Star extends Actor {
         return new ImageDetails('star', 3, 7, this._frameIndices[this._currentFrame]);
     }
 
-    // TODO: Remove this when only the property is used.
-    getImageDetails(): ImageDetails {
-        return this.imageDetails;
-    }
-
     get zIndex(): number {
         return 0;
     }

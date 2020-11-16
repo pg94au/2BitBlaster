@@ -32,11 +32,6 @@ export class Explosion extends Actor {
         );
     }
 
-    // TODO: Remove this once Actor has this property.
-    getImageDetails(): ImageDetails {
-        return this.imageDetails;
-    }
-
     get zIndex(): number {
         return 30;
     }

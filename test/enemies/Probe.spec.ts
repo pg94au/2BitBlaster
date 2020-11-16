@@ -24,11 +24,11 @@ describe('Probe', () => {
         world = new World(480, 640, scoreCounter);
     });
 
-    describe('#getImageDetails', () => {
+    describe('#imageDetails', () => {
         it('should return zero frame index when probe is at full health', () => {
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
 
-            expect(probe.getImageDetails().currentFrame).equal(0);
+            expect(probe.imageDetails.currentFrame).equal(0);
         });
 
         it('should increment frame index as health decreases', () => {
@@ -38,7 +38,7 @@ describe('Probe', () => {
             const probe = new Probe(audioPlayer, world, clock, new Point(5, 10));
             probe.hitBy(bullet, 1);
 
-            expect(probe.getImageDetails().currentFrame).above(0);
+            expect(probe.imageDetails.currentFrame).above(0);
         });
 
         it('should not increment frame index further upon reaching zero health', () => {
@@ -49,12 +49,12 @@ describe('Probe', () => {
 
             // Hit up to one point left.
             probe.hitBy(bullet, Probe.InitialHealth - 1);
-            const initialFrame = probe.getImageDetails().currentFrame;
+            const initialFrame = probe.imageDetails.currentFrame;
 
             // Hit again to drop to zero.
             probe.hitBy(bullet, 1);
 
-            expect(probe.getImageDetails().currentFrame).to.not.be.above(initialFrame);
+            expect(probe.imageDetails.currentFrame).to.not.be.above(initialFrame);
         });
     });
 

@@ -8,23 +8,23 @@ export class SpriteDetail {
 
     constructor(private readonly _spriteSheets: Map<string, PIXI.Texture>, private _actor: Actor) {
         this.updateTextures();
-        this._sprite = new PIXI.Sprite(this._frameTextures[this._actor.getImageDetails().currentFrame]);
+        this._sprite = new PIXI.Sprite(this._frameTextures[this._actor.imageDetails.currentFrame]);
         this.updatePosition();
     }
 
     updateTextures(): void {
-        if (this._actor.getImageDetails().name !== this._imageName) {
-            this._imageName = this._actor.getImageDetails().name;
+        if (this._actor.imageDetails.name !== this._imageName) {
+            this._imageName = this._actor.imageDetails.name;
             this._frameTextures = [];
-            for (let index = 0; index < this._actor.getImageDetails().numberOfFrames; index++) {
+            for (let index = 0; index < this._actor.imageDetails.numberOfFrames; index++) {
                 this._frameTextures.push(
                     new PIXI.Texture(
-                        this._spriteSheets.get(this._actor.getImageDetails().name)!.baseTexture,
+                        this._spriteSheets.get(this._actor.imageDetails.name)!.baseTexture,
                         new PIXI.Rectangle(
-                            index * this._actor.getImageDetails().frameWidth,
+                            index * this._actor.imageDetails.frameWidth,
                             0,
-                            this._actor.getImageDetails().frameWidth,
-                            this._spriteSheets.get(this._actor.getImageDetails().name)!.height
+                            this._actor.imageDetails.frameWidth,
+                            this._spriteSheets.get(this._actor.imageDetails.name)!.height
                         )
                     )
                 );
@@ -41,7 +41,7 @@ export class SpriteDetail {
 
     updateSprite(): void {
         this.updateTextures();
-        this._sprite.texture = this._frameTextures[this._actor.getImageDetails().currentFrame];
+        this._sprite.texture = this._frameTextures[this._actor.imageDetails.currentFrame];
         this.updatePosition();
     }
 

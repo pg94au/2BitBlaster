@@ -28,20 +28,20 @@ describe('Bomb', () => {
 
         it ('should animate the sprite frames', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(0);
             bomb.tick();
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(1);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should recycle sprite frames when animating', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
-            const numberOfFrames = bomb.getImageDetails().numberOfFrames;
+            const numberOfFrames = bomb.imageDetails.numberOfFrames;
             for (let i=0; i < numberOfFrames-1; i++) {
                 bomb.tick();
             }
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(numberOfFrames-1);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(numberOfFrames-1);
             bomb.tick();
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(0);
         });
 
         it('should remain active while it remains within the world', () => {

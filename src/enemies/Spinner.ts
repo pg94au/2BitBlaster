@@ -82,7 +82,7 @@ export class Spinner extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('spinner', 12, 80, this._currentFrame);
     }
 

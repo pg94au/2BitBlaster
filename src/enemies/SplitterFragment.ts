@@ -78,7 +78,7 @@ export class SplitterFragment extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         if ((this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Left]) ||
             (this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Right])) {
             const currentFrame = Math.round(this._pathPosition / this._currentPath.length * 9);

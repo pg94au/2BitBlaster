@@ -43,20 +43,20 @@ describe('Shrapnel', () => {
 
         it ('should animate the sprite frames', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 10), 270);
-            expect(shrapnel.getImageDetails().currentFrame).to.be.equal(0);
+            expect(shrapnel.imageDetails.currentFrame).to.be.equal(0);
             shrapnel.tick();
-            expect(shrapnel.getImageDetails().currentFrame).to.be.equal(1);
+            expect(shrapnel.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should recycle sprite frames when animating', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 10), 270);
-            const numberOfFrames = shrapnel.getImageDetails().numberOfFrames;
+            const numberOfFrames = shrapnel.imageDetails.numberOfFrames;
             for (let i=0; i < numberOfFrames-1; i++) {
                 shrapnel.tick();
             }
-            expect(shrapnel.getImageDetails().currentFrame).to.be.equal(numberOfFrames-1);
+            expect(shrapnel.imageDetails.currentFrame).to.be.equal(numberOfFrames-1);
             shrapnel.tick();
-            expect(shrapnel.getImageDetails().currentFrame).to.be.equal(0);
+            expect(shrapnel.imageDetails.currentFrame).to.be.equal(0);
         });
 
         it('should remain active while it remains within the world', () => {

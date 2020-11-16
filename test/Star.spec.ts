@@ -22,13 +22,13 @@ describe('Star', () => {
         //     const world = new World(480, 640, new ScoreCounter());
         //     const star = new Star(world, new Point(1, 1));
         //
-        //     const initialFrame = star.getImageDetails().currentFrame;
+        //     const initialFrame = star.imageDetails.currentFrame;
         //
         //     let flickered = false;
         //     // Within this number of ticks, for sure the image should change.
         //     for (let i = 0; i < 10; i++) {
         //         star.tick();
-        //         if (star.getImageDetails().currentFrame != initialFrame) {
+        //         if (star.imageDetails.currentFrame != initialFrame) {
         //             flickered = true;
         //         }
         //     }

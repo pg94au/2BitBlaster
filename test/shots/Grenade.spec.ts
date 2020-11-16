@@ -30,9 +30,9 @@ describe('Grenade', () => {
 
         it ('should animate the sprite frames', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, 10));
-            expect(grenade.getImageDetails().currentFrame).to.be.equal(0);
+            expect(grenade.imageDetails.currentFrame).to.be.equal(0);
             grenade.tick();
-            expect(grenade.getImageDetails().currentFrame).to.be.equal(1);
+            expect(grenade.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should remain active before moving a distance of 200', () => {

@@ -32,7 +32,7 @@ export class Bomb extends Shot {
         return 1;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('bomb', 4, 11, this._currentFrame);
     }
 

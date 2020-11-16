@@ -78,7 +78,7 @@ export class Splitter extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('splitter', 6, 100, this._frameIndices[this._currentFrame]);
     }
 

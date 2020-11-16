@@ -37,9 +37,9 @@ describe('Bullet', () => {
                 world,
                 new Point(5, 10)
             );
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(0);
             bullet.tick();
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(1);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should recycle sprite frames when animating', () => {
@@ -48,13 +48,13 @@ describe('Bullet', () => {
                 world,
                 new Point(5, 10)
             );
-            const numberOfFrames = bullet.getImageDetails().numberOfFrames;
+            const numberOfFrames = bullet.imageDetails.numberOfFrames;
             for (let i=0; i < numberOfFrames-1; i++) {
                 bullet.tick();
             }
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(numberOfFrames-1);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(numberOfFrames-1);
             bullet.tick();
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(0);
         });
 
         it('should remain active while it remains within the world', () => {

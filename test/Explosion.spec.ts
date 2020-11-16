@@ -24,7 +24,7 @@ describe('Explosion', () => {
         world = new World(480, 640, scoreCounter);
     });
 
-    describe('#getImageDetails()', () => {
+    describe('#imageDetails', () => {
         it('should return image properties as provided', () => {
             const explosionProperties = new ExplosionProperties(
                 'imagename',

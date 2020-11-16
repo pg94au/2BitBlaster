@@ -58,7 +58,7 @@ export class Bomber extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('bomber', 6, 80, this._frameIndices[this._currentFrame]);
     }
 

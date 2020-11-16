@@ -67,7 +67,7 @@ export class Player extends Actor {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         if (this._vulnerable) {
             return new ImageDetails(
                 'player',

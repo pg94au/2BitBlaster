@@ -36,7 +36,7 @@ export class Grenade extends Shot {
         return 3;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('grenade', 24, 30, this._currentFrame);
     }
 

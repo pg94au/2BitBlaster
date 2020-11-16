@@ -60,7 +60,7 @@ export class EnemyStub extends Enemy {
         throw new Error('Not implemented');
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('image_name', 1, 1, 0);
     }
 

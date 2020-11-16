@@ -33,7 +33,7 @@ export class Bullet extends Shot {
         return 1;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('bullet', 4, 11, this._currentFrame);
     }
 

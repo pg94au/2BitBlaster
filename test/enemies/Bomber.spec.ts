@@ -83,7 +83,7 @@ describe('Bomber', () => {
         it('should become inactive when it disappears of the side of the screen', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
 
-            const lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
+            const lastVisiblePosition = world.getDimensions().width + bomber.imageDetails.frameWidth - 1;
 
             while (bomber.coordinates.x < lastVisiblePosition) {
                 bomber.tick();
