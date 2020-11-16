@@ -29,7 +29,7 @@ export class Scheduler {
             return false;
         }
 
-        const date = this._clock.getCurrentDate();
+        const date = this._clock.currentDate;
         date.setMilliseconds(date.getMilliseconds() + milliSecondsFromNow);
         this._scheduledItems.push({ tag, date, operation });
         debug('scheduleOperation: _scheduleItems.length=' + this._scheduledItems.length);
@@ -38,7 +38,7 @@ export class Scheduler {
 
     executeDueOperations(): void {
         debug('executeDueOperations');
-        const now = this._clock.getCurrentDate();
+        const now = this._clock.currentDate;
         debug('executeDueOperations: now=' + now);
         const dueOperations: ScheduleEntry[] = [];
         const notYetDue: ScheduleEntry[] = [];

@@ -6,7 +6,7 @@ export class Clock {
         debug('Clock constructor');
     }
 
-    getCurrentDate(): Date {
+    get currentDate(): Date {
         return new Date();
     }
 }

@@ -7,7 +7,7 @@ export class ClockStub extends Clock {
         this._currentDate.setSeconds(this._currentDate.getSeconds() + seconds);
     }
 
-    getCurrentDate(): Date {
+    get currentDate(): Date {
         return new Date(this._currentDate.getTime());
     }
 
