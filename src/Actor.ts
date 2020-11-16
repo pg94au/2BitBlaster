@@ -20,7 +20,7 @@ export abstract class Actor {
         this._location = startCoordinates;
     }
 
-    getId(): string {
+    get id(): string {
         return this._id;
     }
 

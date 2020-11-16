@@ -28,7 +28,7 @@ export class World {
 
     addActor(actor: Actor): void {
         debug('World.addActor: %o', actor);
-        if (this._actors.find(existing => { return existing.getId() === actor.getId() })) {
+        if (this._actors.find(existing => { return existing.id=== actor.id })) {
             throw new Error('Cannot add same actor twice.');
         }
         this._actors.push(actor);

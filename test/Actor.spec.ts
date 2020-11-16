@@ -37,11 +37,11 @@ describe('Actor', () => {
         });
     });
 
-    describe('#getId()', () => {
+    describe('#id()', () => {
         it('should return a new value for every instance', () => {
             const actor1 = new ActorStub(world, new Point(1, 2));
             const actor2 = new ActorStub(world, new Point(1, 2));
-            expect(actor2.getId()).to.not.equal(actor1.getId());
+            expect(actor2.id).to.not.equal(actor1.id);
         });
     });
 

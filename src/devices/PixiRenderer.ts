@@ -96,12 +96,12 @@ export class PixiRenderer implements Renderer {
     private addOrUpdateSpritesInStage() {
         const actors = this._world.getActors();
         for (const actor of actors) {
-            let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.getId());
+            let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.id);
 
             // Add a new sprite for this actor if one does not already exist.
             if (!spriteDetail) {
                 spriteDetail = new SpriteDetail(this._preloadedImages, actor);
-                this._activeSprites.set(actor.getId(), spriteDetail);
+                this._activeSprites.set(actor.id, spriteDetail);
                 this._stage.addChild(spriteDetail.sprite);
             }
 
@@ -137,7 +137,7 @@ export class PixiRenderer implements Renderer {
         // Remove any sprites whose associated actors no longer exist.
         this._activeSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
             // Check if there exists an actor with id == actorId.
-            if (!this._world.getActors().find(actor => { return actor.getId() === actorId })) {
+            if (!this._world.getActors().find(actor => { return actor.id === actorId })) {
                 this._stage.removeChild(spriteDetail.sprite);
                 this._activeSprites.delete(actorId);
             }
