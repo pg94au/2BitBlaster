@@ -27,8 +27,8 @@ describe('Bullet', () => {
                 new Point(5, 10)
             );
             bullet.tick();
-            expect(bullet.getCoordinates().x).to.be.equal(5);
-            expect(bullet.getCoordinates().y).to.be.below(10);
+            expect(bullet.coordinates.x).to.be.equal(5);
+            expect(bullet.coordinates.y).to.be.below(10);
         });
 
         it ('should animate the sprite frames', () => {

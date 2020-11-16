@@ -22,23 +22,23 @@ describe('Shrapnel', () => {
         it('should move the shrapnel down when specified by the trajectory', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 10), 270);
             shrapnel.tick();
-            expect(shrapnel.getCoordinates().x).to.be.equal(5);
-            expect(shrapnel.getCoordinates().y).to.be.above(10);
+            expect(shrapnel.coordinates.x).to.be.equal(5);
+            expect(shrapnel.coordinates.y).to.be.above(10);
         });
 
         it('should move the shrapnel right when specified by the trajectory', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(5, 10), 0);
             shrapnel.tick();
-            expect(shrapnel.getCoordinates().x).to.be.above(5);
-            expect(shrapnel.getCoordinates().y).to.be.equal(10);
+            expect(shrapnel.coordinates.x).to.be.above(5);
+            expect(shrapnel.coordinates.y).to.be.equal(10);
         });
 
         it ('should move the shrapnel diagonally left and up when specified by the trajectory', () => {
             const shrapnel = new Shrapnel(audioPlayer, world, new Point(10, 10), 135);
             shrapnel.tick();
-            expect(shrapnel.getCoordinates().x).to.be.below(10);
-            expect(shrapnel.getCoordinates().y).to.be.below(10);
-            expect(shrapnel.getCoordinates().x).to.be.equal(shrapnel.getCoordinates().y);
+            expect(shrapnel.coordinates.x).to.be.below(10);
+            expect(shrapnel.coordinates.y).to.be.below(10);
+            expect(shrapnel.coordinates.x).to.be.equal(shrapnel.coordinates.y);
         });
 
         it ('should animate the sprite frames', () => {

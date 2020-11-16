@@ -85,7 +85,7 @@ describe('Bomber', () => {
 
             const lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
 
-            while (bomber.getCoordinates().x < lastVisiblePosition) {
+            while (bomber.coordinates.x < lastVisiblePosition) {
                 bomber.tick();
             }
 

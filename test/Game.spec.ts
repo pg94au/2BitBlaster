@@ -62,7 +62,7 @@ describe('Game', () => {
 
             const world = ((game as any)._world as World);
             const player = world.getPlayer()!;
-            const shot = new ShotStub(world, player.getCoordinates());
+            const shot = new ShotStub(world, player.coordinates);
             player.hitBy(shot, 1000);
             game.tick(); // Tick removes the player from the world.
             game.tick(); // Tick notices the player gone and decrements lives remaining.

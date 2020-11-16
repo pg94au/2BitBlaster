@@ -22,8 +22,8 @@ describe('Bomb', () => {
         it('should move the bomb directly downwards', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
             bomb.tick();
-            expect(bomb.getCoordinates().x).to.be.equal(5);
-            expect(bomb.getCoordinates().y).to.be.above(10);
+            expect(bomb.coordinates.x).to.be.equal(5);
+            expect(bomb.coordinates.y).to.be.above(10);
         });
 
         it ('should animate the sprite frames', () => {

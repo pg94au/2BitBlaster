@@ -113,7 +113,7 @@ describe('Player', () => {
             const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
 
-            expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
+            expect(player.coordinates).to.be.eql(new Point(10, 10));
         });
 
         it('moves player when joystick has direction set', () => {
@@ -122,7 +122,7 @@ describe('Player', () => {
 
             const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
-            expect(player.getCoordinates().x).to.be.above(10);
+            expect(player.coordinates.x).to.be.above(10);
         });
 
         [Direction.Up, Direction.Down, Direction.Left, Direction.Right].forEach((direction) => {
@@ -132,7 +132,7 @@ describe('Player', () => {
 
                 const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
                 player.tick();
-                expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
+                expect(player.coordinates).to.be.eql(new Point(10, 10));
             })
         });
 

@@ -24,8 +24,8 @@ describe('Grenade', () => {
         it('should move the grenade directly downwards', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, 10));
             grenade.tick();
-            expect(grenade.getCoordinates().x).to.be.equal(5);
-            expect(grenade.getCoordinates().y).to.be.above(10);
+            expect(grenade.coordinates.x).to.be.equal(5);
+            expect(grenade.coordinates.y).to.be.above(10);
         });
 
         it ('should animate the sprite frames', () => {
@@ -43,7 +43,7 @@ describe('Grenade', () => {
 
         it('should become inactive after it has moved more than a distance of 200', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, 10));
-            while (grenade.getCoordinates().y < 210) {
+            while (grenade.coordinates.y < 210) {
                 grenade.tick();
             }
 
@@ -52,7 +52,7 @@ describe('Grenade', () => {
 
         it('should add pieces of shrapnel when it explodes', () => {
             const grenade = new Grenade(audioPlayer, world, new Point(5, 10));
-            while (grenade.getCoordinates().y < 210) {
+            while (grenade.coordinates.y < 210) {
                 grenade.tick();
             }
 

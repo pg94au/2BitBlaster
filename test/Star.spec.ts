@@ -14,7 +14,7 @@ describe('Star', () => {
 
             star.tick();
 
-            expect(star.getCoordinates().y).to.be.above(1);
+            expect(star.coordinates.y).to.be.above(1);
         });
 
         // This test is only going to be valid if all stars sparkle.

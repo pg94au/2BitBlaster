@@ -39,7 +39,7 @@ export abstract class Actor {
         }
     }
 
-    getCoordinates(): Point {
+    get coordinates(): Point {
         return this._location;
     }
 

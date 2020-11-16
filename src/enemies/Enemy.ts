@@ -40,7 +40,7 @@ export abstract class Enemy extends Actor {
             this._world.getScoreCounter().increment(scoreTotal);
 
             const explosionProperties = this.explosionProperties;
-            const coordinates = this.getCoordinates();
+            const coordinates = this.coordinates;
             const explosion = new Explosion(
                 explosionProperties,
                 this._audioPlayer,
