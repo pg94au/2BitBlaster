@@ -4,6 +4,7 @@ import {expect} from 'chai';
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
 import {ClockStub} from "../stubs/ClockStub";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from "../../src/Point";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {SplitterFragment} from "../../src/enemies/SplitterFragment";
@@ -22,7 +23,7 @@ describe('SplitterFragment', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {
@@ -51,7 +52,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
-            expect(splitterFragment.isActive()).to.be.false;
+            expect(splitterFragment.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -61,7 +62,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -71,7 +72,7 @@ describe('SplitterFragment', () => {
             const splitterFragment = new SplitterFragment(audioPlayer, world, clock, SplitterFragment.Side.Left, new Point(10, 10));
             splitterFragment.hitBy(player, SplitterFragment.InitialHealth);
             splitterFragment.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

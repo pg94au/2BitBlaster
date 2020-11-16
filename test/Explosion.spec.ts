@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 
+import {Dimensions} from "../src/Dimensions";
 import {Explosion} from '../src/Explosion';
 import {ExplosionProperties} from "../src/ExplosionProperties";
 import {Point} from "../src/Point";
@@ -21,10 +22,10 @@ describe('Explosion', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
-    describe('#getImageDetails()', () => {
+    describe('#imageDetails', () => {
         it('should return image properties as provided', () => {
             const explosionProperties = new ExplosionProperties(
                 'imagename',
@@ -103,7 +104,7 @@ describe('Explosion', () => {
             explosion.tick();
             explosion.tick();
 
-            expect(explosion.isActive()).to.be.false;
+            expect(explosion.isActive).to.be.false;
         });
 
         it('should play sound on the first tick if one is specified', () => {

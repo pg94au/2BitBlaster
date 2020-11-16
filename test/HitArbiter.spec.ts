@@ -2,11 +2,13 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bounds} from '../src/Bounds';
+import {Dimensions} from "../src/Dimensions";
 import {HitArbiter} from "../src/HitArbiter";
 import {HitResult} from "../src/HitResult";
 import {ShotStub} from "./stubs/ShotStub";
 import {Point} from "../src/Point";
 import {ScoreCounter} from "../src/ScoreCounter";
+
 import {WorldStub} from "./stubs/WorldStub";
 import {PlayerStub} from "./stubs/PlayerStub";
 
@@ -84,7 +86,7 @@ describe('HitArbiter', () => {
     let world: WorldStub;
 
     beforeEach(() => {
-        world = new WorldStub(480, 640, new ScoreCounter());
+        world = new WorldStub(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#areasCollide()', () => {

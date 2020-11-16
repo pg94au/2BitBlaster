@@ -15,20 +15,19 @@ export class World {
     private _actors: Actor[] = [];
     private _texts: Text[] = [];
 
-    // TODO: Change constructor to accept Dimensions as parameter type
-    constructor(width: number, height: number, scoreCounter: ScoreCounter) {
+    constructor(dimensions: Dimensions, scoreCounter: ScoreCounter) {
         debug('World: constructor');
-        this._dimensions = new Dimensions(width, height);
+        this._dimensions = dimensions;
         this._scoreCounter = scoreCounter;
     }
 
-    getDimensions(): Dimensions {
+    get dimensions(): Dimensions {
         return this._dimensions;
     }
 
     addActor(actor: Actor): void {
         debug('World.addActor: %o', actor);
-        if (this._actors.find(existing => { return existing.getId() === actor.getId() })) {
+        if (this._actors.find(existing => { return existing.id=== actor.id })) {
             throw new Error('Cannot add same actor twice.');
         }
         this._actors.push(actor);
@@ -42,31 +41,31 @@ export class World {
         this._texts.push(text);
     }
 
-    getActors(): Actor[] {
+    get actors(): Actor[] {
         return this._actors;
     }
 
-    getActiveEnemies(): Enemy[] {
+    get activeEnemies(): Enemy[] {
         return this._actors.filter(
-            (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive() }
+            (actor): actor is Enemy => { return actor instanceof Enemy && actor.isActive }
             );
     }
 
-    getActiveExplosions(): Explosion[] {
+    get activeExplosions(): Explosion[] {
         return this._actors.filter(
-            (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive() }
+            (actor): actor is Explosion => { return actor instanceof Explosion && actor.isActive }
             );
     }
 
-    getPlayer(): Player | null {
+    get player(): Player | null {
         return this._actors.find((actor): actor is Player => { return actor instanceof Player }) || null;
     }
 
-    getScoreCounter(): ScoreCounter {
+    get scoreCounter(): ScoreCounter {
         return this._scoreCounter;
     }
 
-    getTexts(): Text[] {
+    get texts(): Text[] {
         return this._texts;
     }
 
@@ -83,7 +82,7 @@ export class World {
     private cleanUp(): void {
         debug('World.cleanUp: before is %o', this._actors);
 
-        this._actors =  this._actors.filter(actor => { return actor.isActive() });
+        this._actors =  this._actors.filter(actor => { return actor.isActive });
         this._texts = this._texts.filter(text => { return text.active });
 
         debug('World.cleanUp: after is %o', this._actors);

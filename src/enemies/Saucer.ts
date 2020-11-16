@@ -52,7 +52,7 @@ export class Saucer extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
@@ -62,20 +62,19 @@ export class Saucer extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
-        return 10;
+    get scoreTotal(): number {
         return 10;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-20, 20, -20, 20)];
     }
 
-    getDamageAgainst(): number {
+    getDamageAgainst(target: Actor): number {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('saucer', 4, 80, this._currentFrame);
     }
 
@@ -93,7 +92,7 @@ export class Saucer extends Enemy {
         this.step();
 
         // Check if this saucer has collided with any active enemies.
-        const player = this._world.getPlayer();
+        const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -120,7 +119,7 @@ export class Saucer extends Enemy {
             let nextPath: PathEntry[];
             if (this._currentPathTemplate === Saucer._floatAroundPathTemplate) {
                 if (random(0, 1) > 0.5) {
-                    if (this._location.x < this._world.getDimensions().width / 2) {
+                    if (this._location.x < this._world.dimensions.width / 2) {
                         nextPath = Saucer._flyRightPathTemplate;
                     }
                     else {
@@ -128,12 +127,12 @@ export class Saucer extends Enemy {
                     }
                 }
                 else {
-                    if (this._location.y < this._world.getDimensions().height / 2) {
+                    if (this._location.y < this._world.dimensions.height / 2) {
                         if (random(0, 1) > 0.5) {
                             nextPath = Saucer._flyDownPathTemplate;
                         }
                         else {
-                            if (this._location.x < this._world.getDimensions().width / 2) {
+                            if (this._location.x < this._world.dimensions.width / 2) {
                                 nextPath = Saucer._diveRightPathTemplate;
                             }
                             else {

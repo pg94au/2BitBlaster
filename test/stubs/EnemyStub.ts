@@ -1,3 +1,4 @@
+import {Actor} from "../../src/Actor";
 import {Bounds} from "../../src/Bounds";
 import {Enemy} from '../../src/enemies/Enemy';
 import {ExplosionProperties} from "../../src/ExplosionProperties";
@@ -13,13 +14,12 @@ export class EnemyStub extends Enemy {
     private _onHit: (damage: number) => void = damage => {};
     private _onTick: () => void = () => {};
     private _ignoreHits: boolean = false;
-    private _isActive: boolean = true;
 
     constructor(world: World, startingPoint: Point) {
         super(new AudioPlayerStub(), world, startingPoint, 1);
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return this._isActive;
     }
 
@@ -48,19 +48,19 @@ export class EnemyStub extends Enemy {
         return this;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return this._collisionMask;
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         throw new Error('Not implemented');
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         throw new Error('Not implemented');
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('image_name', 1, 1, 0);
     }
 

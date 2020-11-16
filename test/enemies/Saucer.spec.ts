@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {Saucer} from '../../src/enemies/Saucer';
 import {ScoreCounter} from '../../src/ScoreCounter';
@@ -22,7 +23,7 @@ describe('Saucer', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {
@@ -43,7 +44,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
-            expect(saucer.isActive()).to.be.false;
+            expect(saucer.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -53,7 +54,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth / 2);
             saucer.tick();
-            expect(saucer.isActive()).to.be.true;
+            expect(saucer.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -63,7 +64,7 @@ describe('Saucer', () => {
             const saucer = new Saucer(audioPlayer, world, clock, new Point(5, 10));
             saucer.hitBy(bullet, Saucer.InitialHealth);
             saucer.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

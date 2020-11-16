@@ -12,7 +12,7 @@ export abstract class Actor {
     protected readonly _id: string = uuid();
     protected readonly _world: World;
     protected _location: Point;
-    protected _active: boolean = true;
+    protected _isActive: boolean = true;
 
     protected constructor(world: World, startCoordinates: Point) {
         debug('Actor constructor');
@@ -20,7 +20,7 @@ export abstract class Actor {
         this._location = startCoordinates;
     }
 
-    getId(): string {
+    get id(): string {
         return this._id;
     }
 
@@ -39,11 +39,11 @@ export abstract class Actor {
         }
     }
 
-    getCoordinates(): Point {
+    get coordinates(): Point {
         return this._location;
     }
 
-    abstract getZIndex(): number;
+    abstract get zIndex(): number;
 
     hitBy(actor: Actor, damage: number): boolean {
         debug('Actor.hitBy ' + actor + ' for ' + damage);
@@ -51,14 +51,19 @@ export abstract class Actor {
         return false;
     }
 
+    getDamageAgainst(target: Actor): number {
+        // By default, an actor inflicts no damage when it collides with another actor.
+        return 0;
+    }
+
     abstract tick(): void;
 
     abstract getCollisionMask(actor: Actor): Bounds[];
 
-    abstract getImageDetails(): ImageDetails;
+    abstract get imageDetails(): ImageDetails;
 
-    isActive(): boolean {
-        debug('Actor.isActive: ' + this._active);
-        return this._active;
+    get isActive(): boolean {
+        debug('Actor.isActive: ' + this._isActive);
+        return this._isActive;
     }
 }

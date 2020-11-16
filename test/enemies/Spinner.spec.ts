@@ -1,6 +1,7 @@
 import {describe} from 'mocha';
 import {expect} from 'chai';
 import {ClockStub} from "../stubs/ClockStub";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from "../../src/Point";
 import {Spinner} from "../../src/enemies/Spinner";
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
@@ -19,7 +20,7 @@ describe('Spinner', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {
@@ -48,7 +49,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
-            expect(spinner.isActive()).to.be.false;
+            expect(spinner.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -58,7 +59,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -68,7 +69,7 @@ describe('Spinner', () => {
             const spinner = new Spinner(audioPlayer, world, clock, new Point(10, 10), Spinner.Pattern.Type1, Spinner.Bias.Left);
             spinner.hitBy(player, Spinner.InitialHealth);
             spinner.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should increment the score when it is destroyed', () => {

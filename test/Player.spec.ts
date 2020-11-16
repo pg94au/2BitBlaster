@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Actor} from "../src/Actor";
 import {Bounds} from '../src/Bounds';
+import {Dimensions} from "../src/Dimensions";
 import {Direction} from '../src/devices/Direction';
 import {Player} from '../src/Player';
 import {Point} from '../src/Point';
@@ -24,14 +25,14 @@ describe('Player', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         joystick = new JoystickStub();
-        world = new World(480, 640, new ScoreCounter());
+        world = new World(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#ctor()', () => {
         it('should start active', () => {
             const bounds = new Bounds(1, 2, 1, 2);
             const player = new Player(joystick, audioPlayer, world, new Point(1, 2), bounds, clock);
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
     });
 
@@ -48,7 +49,7 @@ describe('Player', () => {
 
             player.hitBy(shot, 1);
 
-            const imageDetailsAfter = player.getImageDetails();
+            const imageDetailsAfter = player.imageDetails;
 
             expect(imageDetailsAfter.currentFrame).to.be.equal(1);
         });
@@ -64,11 +65,11 @@ describe('Player', () => {
             world.addActor(shot);
 
             player.hitBy(shot, 1);
-            const imageDetailsBefore = player.getImageDetails();
+            const imageDetailsBefore = player.imageDetails;
 
             clock.addSeconds(5);
             player.tick();
-            const imageDetailsAfter = player.getImageDetails();
+            const imageDetailsAfter = player.imageDetails;
 
             expect(imageDetailsBefore.currentFrame).to.be.not.equal(0);
             expect(imageDetailsAfter.currentFrame).to.be.equal(0);
@@ -113,7 +114,7 @@ describe('Player', () => {
             const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
 
-            expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
+            expect(player.coordinates).to.be.eql(new Point(10, 10));
         });
 
         it('moves player when joystick has direction set', () => {
@@ -122,7 +123,7 @@ describe('Player', () => {
 
             const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
             player.tick();
-            expect(player.getCoordinates().x).to.be.above(10);
+            expect(player.coordinates.x).to.be.above(10);
         });
 
         [Direction.Up, Direction.Down, Direction.Left, Direction.Right].forEach((direction) => {
@@ -132,7 +133,7 @@ describe('Player', () => {
 
                 const player = new Player(joystick, audioPlayer, world, new Point(10, 10), bounds, clock);
                 player.tick();
-                expect(player.getCoordinates()).to.be.eql(new Point(10, 10));
+                expect(player.coordinates).to.be.eql(new Point(10, 10));
             })
         });
 

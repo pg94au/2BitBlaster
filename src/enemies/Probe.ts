@@ -46,7 +46,7 @@ export class Probe extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'probe_explosion',
             4,
@@ -56,11 +56,11 @@ export class Probe extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 25;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-20, 20, -20, 20)];
     }
 
@@ -68,7 +68,7 @@ export class Probe extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('probe', 3, 70, Math.min(3 - this._health, 2));
     }
 
@@ -86,7 +86,7 @@ export class Probe extends Enemy {
         this.step();
 
         // Check if this probe has collided with any active enemies.
-        const player = this._world.getPlayer();
+        const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -114,7 +114,7 @@ export class Probe extends Enemy {
             if (this._location.x < 120) {
                 nextPath = Probe._diveRightPathTemplate;
             }
-            else if (this._location.x > this._world.getDimensions().width - 120) {
+            else if (this._location.x > this._world.dimensions.width - 120) {
                 nextPath = Probe._diveLeftPathTemplate;
             }
             else if (random(0, 1) > 0.5) {

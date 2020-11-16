@@ -5,6 +5,7 @@ import {Actor} from "../../src/Actor";
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bomber} from '../../src/enemies/Bomber';
 import {Bullet} from "../../src/shots/Bullet";
+import {Dimensions} from "../../src/Dimensions";
 import {Explosion} from '../../src/Explosion';
 import {Point} from '../../src/Point';
 import {ScoreCounter} from '../../src/ScoreCounter';
@@ -23,7 +24,7 @@ describe('Bomber', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new WorldStub(480, 640, scoreCounter);
+        world = new WorldStub(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hit()', () => {
@@ -44,7 +45,7 @@ describe('Bomber', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet, Bomber.InitialHealth);
             bomber.tick();
-            expect(bomber.isActive()).to.be.false;
+            expect(bomber.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -54,7 +55,7 @@ describe('Bomber', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
             bomber.hitBy(bullet,  Bomber.InitialHealth / 2);
             bomber.tick();
-            expect(bomber.isActive()).to.be.true;
+            expect(bomber.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -83,13 +84,13 @@ describe('Bomber', () => {
         it('should become inactive when it disappears of the side of the screen', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
 
-            const lastVisiblePosition = world.getDimensions().width + bomber.getImageDetails().frameWidth - 1;
+            const lastVisiblePosition = world.dimensions.width + bomber.imageDetails.frameWidth - 1;
 
-            while (bomber.getCoordinates().x < lastVisiblePosition) {
+            while (bomber.coordinates.x < lastVisiblePosition) {
                 bomber.tick();
             }
 
-            expect(bomber.isActive()).to.be.false;
+            expect(bomber.isActive).to.be.false;
         });
     });
 });

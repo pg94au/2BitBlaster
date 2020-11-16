@@ -2,6 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 import {times} from 'underscore';
 
+import {Dimensions} from "../src/Dimensions";
 import {LevelManager} from "../src/LevelManager";
 import {LevelState} from "../src/LevelState";
 import {ScoreCounter} from "../src/ScoreCounter";
@@ -20,7 +21,7 @@ describe('LevelManager', () => {
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
-        world = new WorldStub(480, 640, new ScoreCounter());
+        world = new WorldStub(new Dimensions(480, 640), new ScoreCounter());
     });
 
     describe('#ctor()', () => {

@@ -4,6 +4,7 @@ import {expect} from 'chai';
 import {Actor} from "../../src/Actor";
 import {AudioPlayer} from "../../src/devices/AudioPlayer";
 import {Bullet} from "../../src/shots/Bullet";
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from "../../src/Point";
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {Shrapnel} from "../../src/shots/Shrapnel";
@@ -25,7 +26,7 @@ describe('Splitter', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#hitBy()', () => {
@@ -51,7 +52,7 @@ describe('Splitter', () => {
            const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
            (splitter as any).dropBomb();
 
-           expect(world.getActors().filter((actor: Actor) => { return (actor instanceof Shrapnel) }).length).to.be.equal(2);
+           expect(world.actors.filter((actor: Actor) => { return (actor instanceof Shrapnel) }).length).to.be.equal(2);
        });
     });
 
@@ -63,7 +64,7 @@ describe('Splitter', () => {
             const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
             splitter.hitBy(player, Splitter.InitialHealth);
             splitter.tick();
-            expect(splitter.isActive()).to.be.false;
+            expect(splitter.isActive).to.be.false;
         });
 
         it('should remain active after hit if health remains above zero', () => {
@@ -73,7 +74,7 @@ describe('Splitter', () => {
             const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
             splitter.hitBy(player, Splitter.InitialHealth / 2);
             player.tick();
-            expect(player.isActive()).to.be.true;
+            expect(player.isActive).to.be.true;
         });
 
         it('should add an explosion when it is destroyed', () => {
@@ -83,7 +84,7 @@ describe('Splitter', () => {
             const splitter = new Splitter(audioPlayer, world, clock, new Point(10, 10));
             splitter.hitBy(player, Splitter.InitialHealth);
             splitter.tick();
-            expect(world.getActiveExplosions().length).to.be.equal(1);
+            expect(world.activeExplosions.length).to.be.equal(1);
         });
 
         it('should add two new fragments when it is destroyed', () => {
@@ -94,7 +95,7 @@ describe('Splitter', () => {
             splitter.hitBy(bullet, Splitter.InitialHealth);
             splitter.tick();
 
-            expect(world.getActors().filter((actor: Actor) => { return (actor instanceof SplitterFragment)}).length).to.be.equal(2);
+            expect(world.actors.filter((actor: Actor) => { return (actor instanceof SplitterFragment)}).length).to.be.equal(2);
         });
 
         it('should increment the score when it is destroyed', () => {

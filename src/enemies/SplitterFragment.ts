@@ -56,7 +56,7 @@ export class SplitterFragment extends Enemy {
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
@@ -66,11 +66,11 @@ export class SplitterFragment extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 10;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-25, 25, -15, 15)];
     }
 
@@ -78,7 +78,7 @@ export class SplitterFragment extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         if ((this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Left]) ||
             (this._currentPathTemplate === SplitterFragment._separatePath[SplitterFragment.Side.Right])) {
             const currentFrame = Math.round(this._pathPosition / this._currentPath.length * 9);
@@ -105,7 +105,7 @@ export class SplitterFragment extends Enemy {
         this.step();
 
         // Check if this Splitter fragment has collided with any active enemies.
-        const player = this._world.getPlayer();
+        const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -142,7 +142,7 @@ export class SplitterFragment extends Enemy {
             if ((this._currentPathTemplate === SplitterFragment._floatAroundPath1Template)
                 || (this._currentPathTemplate === SplitterFragment._floatAroundPath2Template)) {
                 if (random(0, 1) > 0.5) {
-                    if (this._location.x < this._world.getDimensions().width / 2) {
+                    if (this._location.x < this._world.dimensions.width / 2) {
                         nextPath = SplitterFragment._flyRightPathTemplate;
                     }
                     else {
@@ -150,12 +150,12 @@ export class SplitterFragment extends Enemy {
                     }
                 }
                 else {
-                    if (this._location.y < this._world.getDimensions().height / 2) {
+                    if (this._location.y < this._world.dimensions.height / 2) {
                         if (random(0, 1) > 0.5) {
                             nextPath = SplitterFragment._flyDownPathTemplate;
                         }
                         else {
-                            if (this._location.x < this._world.getDimensions().width / 2) {
+                            if (this._location.x < this._world.dimensions.width / 2) {
                                 nextPath = SplitterFragment._diveRightPathTemplate;
                             }
                             else {

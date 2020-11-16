@@ -54,7 +54,7 @@ export class Player extends Actor {
         });
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         if (this._vulnerable) {
             return [new Bounds(-20, 20, -20, 20)];
         }
@@ -67,7 +67,7 @@ export class Player extends Actor {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         if (this._vulnerable) {
             return new ImageDetails(
                 'player',
@@ -94,7 +94,7 @@ export class Player extends Actor {
         }
     }
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 10;
     }
 
@@ -126,7 +126,7 @@ export class Player extends Actor {
         this._scheduler.executeDueOperations();
 
         if (this._currentHealth <= 0) {
-            this._active = false;
+            this._isActive = false;
 
             const explosionProperties = new ExplosionProperties(
                 'player_explosion',
@@ -168,7 +168,7 @@ export class Player extends Actor {
         debug('Current position is (' + this._location + ')');
 
         // Check if the player has collided with any active enemies.
-        this._world.getActiveEnemies().forEach((enemy: Enemy) => {
+        this._world.activeEnemies.forEach((enemy: Enemy) => {
             this._hitArbiter.attemptToHit(enemy);
         });
 

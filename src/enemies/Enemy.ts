@@ -22,11 +22,11 @@ export abstract class Enemy extends Actor {
         this._health = initialHealth;
     }
 
-    abstract getExplosionProperties(): ExplosionProperties;
+    abstract get explosionProperties(): ExplosionProperties;
 
-    abstract getScoreTotal(): number;
+    abstract get scoreTotal(): number;
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 20;
     }
 
@@ -34,13 +34,13 @@ export abstract class Enemy extends Actor {
         debug('Enemy.tick');
 
         if (this._health <= 0) {
-            this._active = false;
+            this._isActive = false;
 
-            const scoreTotal = this.getScoreTotal();
-            this._world.getScoreCounter().increment(scoreTotal);
+            const scoreTotal = this.scoreTotal;
+            this._world.scoreCounter.increment(scoreTotal);
 
-            const explosionProperties = this.getExplosionProperties();
-            const coordinates = this.getCoordinates();
+            const explosionProperties = this.explosionProperties;
+            const coordinates = this.coordinates;
             const explosion = new Explosion(
                 explosionProperties,
                 this._audioPlayer,

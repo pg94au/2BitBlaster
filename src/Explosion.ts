@@ -32,18 +32,8 @@ export class Explosion extends Actor {
         );
     }
 
-    // TODO: Remove this once Actor has this property.
-    getImageDetails(): ImageDetails {
-        return this.imageDetails;
-    }
-
     get zIndex(): number {
         return 30;
-    }
-
-    // TODO: Remove this once Actor has the property.
-    getZIndex(): number {
-        return this.zIndex;
     }
 
     tick(): void {
@@ -61,7 +51,7 @@ export class Explosion extends Actor {
         if (this._currentFrame >= this._explosionProperties.numberOfFrames) {
             // When the explosion has run its course, de-active it.
             debug('De-activating explosion ' + this._id);
-            this._active = false;
+            this._isActive = false;
         }
     }
 

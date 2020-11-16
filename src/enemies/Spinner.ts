@@ -60,7 +60,7 @@ export class Spinner extends Enemy {
         }
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
@@ -70,11 +70,11 @@ export class Spinner extends Enemy {
         );
     }
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 5;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-30, 30, -30, 30)];
     }
 
@@ -82,7 +82,7 @@ export class Spinner extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('spinner', 12, 80, this._currentFrame);
     }
 
@@ -102,7 +102,7 @@ export class Spinner extends Enemy {
         this.scheduleNextBombDrop();
 
         // Check if this spinner has collided with any active enemies.
-        const player = this._world.getPlayer();
+        const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
         }
@@ -128,7 +128,7 @@ export class Spinner extends Enemy {
     }
 
     private dropBomb(): void {
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
 
         if (this._location.x > 0 && this._location.x < worldDimensions.width
             && this._location.y > 0 && this._location.y < worldDimensions.height) {

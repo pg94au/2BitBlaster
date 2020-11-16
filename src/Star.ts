@@ -35,18 +35,8 @@ export class Star extends Actor {
         return new ImageDetails('star', 3, 7, this._frameIndices[this._currentFrame]);
     }
 
-    // TODO: Remove this when only the property is used.
-    getImageDetails(): ImageDetails {
-        return this.imageDetails;
-    }
-
     get zIndex(): number {
         return 0;
-    }
-
-    // TOD: Remove this when only the property is used.
-    getZIndex(): number {
-        return this.zIndex;
     }
 
     tick(): void {
@@ -54,10 +44,10 @@ export class Star extends Actor {
 
         this.move(Direction.Down);
 
-        if (this._location.y > this._world.getDimensions().height) {
+        if (this._location.y > this._world.dimensions.height) {
             // When the star leaves the world, it becomes inactive.
             debug('De-activating star ' + this._id);
-            this._active = false;
+            this._isActive = false;
         }
 
         // Make the star sparkle.

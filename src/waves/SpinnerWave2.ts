@@ -25,10 +25,10 @@ export class SpinnerWave2 implements Wave {
         this._scheduler = new Scheduler(clock);
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return (this._numberOfSpinnersLeftToDeploy > 0)
-            || (this._world.getActiveEnemies().length > 0)
-            || (this._world.getActiveExplosions().length > 0);
+            || (this._world.activeEnemies.length > 0)
+            || (this._world.activeExplosions.length > 0);
     }
 
     tick(): void {
@@ -48,7 +48,7 @@ export class SpinnerWave2 implements Wave {
     private deploySpinner(): void {
         debug('SpinnerWave2.deploySpinner');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const spinnerStartX = worldDimensions.width / 2;
         const spinnerStartY = -20;
         const leftSpinner = new Spinner(

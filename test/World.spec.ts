@@ -25,19 +25,19 @@ describe('World', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     beforeEach(() => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#ctor()', () => {
         it('should start with no actors', () => {
-            expect(world.getActors()).to.be.empty;
+            expect(world.actors).to.be.empty;
         });
     });
 
@@ -45,7 +45,7 @@ describe('World', () => {
         it('should increase the number of actors', () => {
             const actor = new ActorStub(world, new Point(1,1));
             world.addActor(actor);
-            expect(world.getActors()).to.have.members([actor]);
+            expect(world.actors).to.have.members([actor]);
         });
 
         it('should not allow the same actor to be added more than once', () => {
@@ -55,32 +55,32 @@ describe('World', () => {
         });
     });
 
-    describe('#getDimensions()', () => {
+    describe('#dimensions', () => {
         it('should return the X and Y dimensions of the world in pixels', () => {
-            const worldOfSpecificSize = new World(20, 10, scoreCounter);
-            const dimensions = worldOfSpecificSize.getDimensions();
+            const worldOfSpecificSize = new World(new Dimensions(20, 10), scoreCounter);
+            const dimensions = worldOfSpecificSize.dimensions;
             expect(dimensions).to.deep.equal(new Dimensions(20, 10));
         })
     });
 
-    describe('#getActiveEnemies()', () => {
+    describe('#activeEnemies', () => {
         it('should return empty list when no enemies are present', () => {
-            expect(world.getActiveEnemies()).to.be.empty;
+            expect(world.activeEnemies).to.be.empty;
         });
 
         it ('should return only active enemies and skip inactive ones', () => {
             const enemy1 = new EnemyStub(world, new Point(5, 5));
             world.addActor(enemy1);
             const enemy2 = new EnemyStub(world, new Point(5, 5));
-            enemy2.isActive = () => { return false };
+            (enemy2 as any)._isActive = false;
             world.addActor(enemy2);
-            expect(world.getActiveEnemies()).to.have.length(1);
+            expect(world.activeEnemies).to.have.length(1);
         });
     });
 
-    describe('#getActiveExplosions()', () => {
+    describe('#activeExplosions', () => {
         it('should return empty list when no explosions are present', () => {
-            expect(world.getActiveExplosions()).to.be.empty;
+            expect(world.activeExplosions).to.be.empty;
         });
 
         it ('should return only active explosions and skip inactive ones', () => {
@@ -88,27 +88,27 @@ describe('World', () => {
             const explosion1 = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 5));
             world.addActor(explosion1);
             const explosion2 = new Explosion(explosionProperties, audioPlayer, world, new Point(5, 5));
-            explosion2.isActive = () => { return false };
+            (explosion2 as any)._isActive = false;
             world.addActor(explosion2);
-            expect(world.getActiveExplosions()).to.have.length(1);
+            expect(world.activeExplosions).to.have.length(1);
         });
     });
 
-    describe('#getPlayer()', () => {
+    describe('#player', () => {
         it ('should return null when the player is not present', () => {
-            expect(world.getPlayer()).to.be.null;
+            expect(world.player).to.be.null;
         });
 
         it('should return the player if present', () => {
             const player = new PlayerStub(world, new Point(1, 1));
             world.addActor(player);
-            expect(world.getPlayer()).to.be.eql(player);
+            expect(world.player).to.be.eql(player);
         })
     });
 
-    describe('#getScoreCounter()', () => {
+    describe('#scoreCounter', () => {
         it('should return the score counter provided to the constructor', () => {
-            expect(world.getScoreCounter()).to.be.equal(scoreCounter);
+            expect(world.scoreCounter).to.be.equal(scoreCounter);
         });
     });
 
@@ -142,9 +142,9 @@ describe('World', () => {
             world.addActor(actor2);
             world.tick();
 
-            expect(world.getActors()).to.have.length(1);
-            expect(world.getActors()).to.have.members([actor1]);
-            expect(world.getActors()).to.not.have.members([actor2]);
+            expect(world.actors).to.have.length(1);
+            expect(world.actors).to.have.members([actor1]);
+            expect(world.actors).to.not.have.members([actor2]);
         });
     });
 });

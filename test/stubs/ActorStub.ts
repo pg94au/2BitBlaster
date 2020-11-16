@@ -9,11 +9,11 @@ export class ActorStub extends Actor {
         super(world, startCoordinates);
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         throw new Error('Not implemented');
     }
 
-    getZIndex(): number {
+    get zIndex(): number {
         return 0;
     }
 

@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Bounds} from "../../src/Bounds";
 import {Bullet} from '../../src/shots/Bullet';
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {World} from '../../src/World';
 
@@ -17,7 +18,7 @@ describe('Bullet', () => {
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
-            world = new World(480, 640, new ScoreCounter());
+            world = new World(new Dimensions(480, 640), new ScoreCounter());
         });
 
         it('should move the bullet directly upwards', () => {
@@ -27,8 +28,8 @@ describe('Bullet', () => {
                 new Point(5, 10)
             );
             bullet.tick();
-            expect(bullet.getCoordinates().x).to.be.equal(5);
-            expect(bullet.getCoordinates().y).to.be.below(10);
+            expect(bullet.coordinates.x).to.be.equal(5);
+            expect(bullet.coordinates.y).to.be.below(10);
         });
 
         it ('should animate the sprite frames', () => {
@@ -37,9 +38,9 @@ describe('Bullet', () => {
                 world,
                 new Point(5, 10)
             );
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(0);
             bullet.tick();
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(1);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should recycle sprite frames when animating', () => {
@@ -48,13 +49,13 @@ describe('Bullet', () => {
                 world,
                 new Point(5, 10)
             );
-            const numberOfFrames = bullet.getImageDetails().numberOfFrames;
+            const numberOfFrames = bullet.imageDetails.numberOfFrames;
             for (let i=0; i < numberOfFrames-1; i++) {
                 bullet.tick();
             }
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(numberOfFrames-1);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(numberOfFrames-1);
             bullet.tick();
-            expect(bullet.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bullet.imageDetails.currentFrame).to.be.equal(0);
         });
 
         it('should remain active while it remains within the world', () => {
@@ -64,7 +65,7 @@ describe('Bullet', () => {
                 new Point(5, 10)
             );
             bullet.tick();
-            expect(bullet.isActive()).to.be.true;
+            expect(bullet.isActive).to.be.true;
         });
 
         it('should become inactive when it leaves the world', () => {
@@ -74,7 +75,7 @@ describe('Bullet', () => {
                 new Point(5, 0)
             );
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should hit any active enemies within collision distance', () => {
@@ -111,7 +112,7 @@ describe('Bullet', () => {
             world.addActor(enemy);
             const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -119,7 +120,7 @@ describe('Bullet', () => {
             world.addActor(enemy);
             const bullet = new Bullet(audioPlayer, world, new Point(10, 10));
             bullet.tick();
-            expect(bullet.isActive()).to.be.false;
+            expect(bullet.isActive).to.be.false;
         });
 
         it('should only be able to hit a single target', () => {

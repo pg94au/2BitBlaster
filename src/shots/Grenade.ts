@@ -28,7 +28,7 @@ export class Grenade extends Shot {
         this._initialHeight = startingPoint.y;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-12, 12, -12, 12)];
     }
 
@@ -36,7 +36,7 @@ export class Grenade extends Shot {
         return 3;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('grenade', 24, 30, this._currentFrame);
     }
 
@@ -54,26 +54,26 @@ export class Grenade extends Shot {
         for (let step = 0; step < speed; step++) {
             this.move(Direction.Down);
 
-            if (this._location.y > this._world.getDimensions().height) {
+            if (this._location.y > this._world.dimensions.height) {
                 // If the grenade leaves the world, it becomes inactive.
                 debug('De-activating grenade ' + this._id);
-                this._active = false;
+                this._isActive = false;
             }
             else {
                 // Check if this grenade has collided with any active enemies.
-                const player = this._world.getPlayer();
+                const player = this._world.player;
                 if (player) {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
-                        this._active = false;
+                        this._isActive = false;
                     }
                 }
 
                 // If this grenade has fallen far enough, it explodes into shrapnel.
                 const distanceCovered = this._location.y - this._initialHeight;
                 if (distanceCovered >= 200) {
-                    this._active = false;
+                    this._isActive = false;
 
                     //TODO: Add a small explosion here.
                     const explosion = new Explosion(
@@ -104,7 +104,7 @@ export class Grenade extends Shot {
                 }
             }
 
-            if (!this._active) {
+            if (!this._isActive) {
                 break;
             }
         }

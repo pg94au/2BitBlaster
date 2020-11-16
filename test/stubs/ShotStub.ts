@@ -26,7 +26,7 @@ export class ShotStub extends Shot {
         return this;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return this._collisionMask;
     }
 
@@ -43,11 +43,7 @@ export class ShotStub extends Shot {
         throw new Error('Not implemented');
     }
 
-    getScoreTotal(): number {
-        throw new Error('Not implemented');
-    }
-
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('image_name', 1, 1, 0);
     }
 }

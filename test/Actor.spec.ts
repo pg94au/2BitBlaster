@@ -3,6 +3,7 @@ import {expect} from 'chai';
 
 import {Actor} from '../src/Actor';
 import {ClockStub} from "./stubs/ClockStub";
+import {Dimensions} from "../src/Dimensions";
 import {Direction} from '../src/devices/Direction';
 import {Point} from "../src/Point";
 import {ScoreCounter} from "../src/ScoreCounter";
@@ -22,26 +23,26 @@ describe('Actor', () => {
         audioPlayer = new AudioPlayerStub();
         clock = new ClockStub();
         scoreCounter = new ScoreCounter();
-        world = new World(480, 640, scoreCounter);
+        world = new World(new Dimensions(480, 640), scoreCounter);
     });
 
     describe('#ctor()', () => {
         it('should start active', () => {
             const actor = new ActorStub(world, new Point(1, 2));
-            expect(actor.isActive()).to.be.true;
+            expect(actor.isActive).to.be.true;
         });
 
         it('should start at specified coordinates', () => {
             const actor = new ActorStub(world, new Point(12, 23));
-            expect(actor.getCoordinates()).to.eql(new Point(12, 23));
+            expect(actor.coordinates).to.eql(new Point(12, 23));
         });
     });
 
-    describe('#getId()', () => {
+    describe('#id()', () => {
         it('should return a new value for every instance', () => {
             const actor1 = new ActorStub(world, new Point(1, 2));
             const actor2 = new ActorStub(world, new Point(1, 2));
-            expect(actor2.getId()).to.not.equal(actor1.getId());
+            expect(actor2.id).to.not.equal(actor1.id);
         });
     });
 
@@ -57,25 +58,25 @@ describe('Actor', () => {
         it('should decrement y position when moving up', () => {
             const actor = new ActorStub(world, new Point(100, 100));
             (actor as any).move(Direction.Up);
-            expect(actor.getCoordinates().y).to.be.below(100);
+            expect(actor.coordinates.y).to.be.below(100);
         });
 
         it('should increment y position when moving down', () => {
             const actor = new ActorStub(world, new Point(100, 100));
             (actor as any).move(Direction.Down);
-            expect(actor.getCoordinates().y).to.be.above(100);
+            expect(actor.coordinates.y).to.be.above(100);
         });
 
         it('should decrement x position when moving left', () => {
             const actor = new ActorStub(world, new Point(100, 100));
             (actor as any).move(Direction.Left);
-            expect(actor.getCoordinates().x).to.be.below(100);
+            expect(actor.coordinates.x).to.be.below(100);
         });
 
         it('should increment x position when moving right', () => {
             const actor = new ActorStub(world, new Point(100, 100));
             (actor as any).move(Direction.Right);
-            expect(actor.getCoordinates().x).to.be.above(100);
+            expect(actor.coordinates.x).to.be.above(100);
         });
     });
 });

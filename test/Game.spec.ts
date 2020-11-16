@@ -61,8 +61,8 @@ describe('Game', () => {
             game.tick(); // Tick ensures player is now vulnerable.
 
             const world = ((game as any)._world as World);
-            const player = world.getPlayer()!;
-            const shot = new ShotStub(world, player.getCoordinates());
+            const player = world.player!;
+            const shot = new ShotStub(world, player.coordinates);
             player.hitBy(shot, 1000);
             game.tick(); // Tick removes the player from the world.
             game.tick(); // Tick notices the player gone and decrements lives remaining.

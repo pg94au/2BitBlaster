@@ -14,8 +14,8 @@ export class PixiRenderer implements Renderer {
     private _worldDimensions!: Dimensions;
     private _renderer!: PIXI.Renderer;
     private _stage!: PIXI.Container;
-    private _activeSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
-    private _activeTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();
+    private _isActiveSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
+    private _isActiveTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();
     private _preloadedImages: Map<string, PIXI.Texture> = new Map<string, PIXI.Texture>();
 
     constructor(containerElement: HTMLElement) {
@@ -39,7 +39,7 @@ export class PixiRenderer implements Renderer {
 
     initialize(world: World): void {
         this._world = world;
-        this._worldDimensions = this._world.getDimensions();
+        this._worldDimensions = this._world.dimensions;
         this._renderer = PIXI.autoDetectRenderer({
             width: this._worldDimensions.width,
             height: this._worldDimensions.height
@@ -94,14 +94,14 @@ export class PixiRenderer implements Renderer {
     }
 
     private addOrUpdateSpritesInStage() {
-        const actors = this._world.getActors();
+        const actors = this._world.actors;
         for (const actor of actors) {
-            let spriteDetail : SpriteDetail | undefined = this._activeSprites.get(actor.getId());
+            let spriteDetail : SpriteDetail | undefined = this._isActiveSprites.get(actor.id);
 
             // Add a new sprite for this actor if one does not already exist.
             if (!spriteDetail) {
                 spriteDetail = new SpriteDetail(this._preloadedImages, actor);
-                this._activeSprites.set(actor.getId(), spriteDetail);
+                this._isActiveSprites.set(actor.id, spriteDetail);
                 this._stage.addChild(spriteDetail.sprite);
             }
 
@@ -111,9 +111,9 @@ export class PixiRenderer implements Renderer {
 
     private addAnyUnrenderedNewTextToStage(): void {
         // Add any text that hasn't yet been rendered.
-        const texts = this._world.getTexts();
+        const texts = this._world.texts;
         for (const text of texts) {
-            let pixiText : PIXI.Text | undefined = this._activeTexts.get(text.id);
+            let pixiText : PIXI.Text | undefined = this._isActiveTexts.get(text.id);
 
             // Add a new text if one does not already exist.
             if (!pixiText) {
@@ -127,7 +127,7 @@ export class PixiRenderer implements Renderer {
                 pixiText.position.y = text.coordinates.y;
                 pixiText.resolution = 2;
                 pixiText.zIndex = 1000000; // Always on top
-                this._activeTexts.set(text.id, pixiText);
+                this._isActiveTexts.set(text.id, pixiText);
                 this._stage.addChild(pixiText);
             }
         }
@@ -135,22 +135,22 @@ export class PixiRenderer implements Renderer {
 
     private cleanUpInactiveActors(): void {
         // Remove any sprites whose associated actors no longer exist.
-        this._activeSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
+        this._isActiveSprites.forEach((spriteDetail: SpriteDetail, actorId: string) => {
             // Check if there exists an actor with id == actorId.
-            if (!this._world.getActors().find(actor => { return actor.getId() === actorId })) {
+            if (!this._world.actors.find(actor => { return actor.id === actorId })) {
                 this._stage.removeChild(spriteDetail.sprite);
-                this._activeSprites.delete(actorId);
+                this._isActiveSprites.delete(actorId);
             }
         });
     }
 
     private cleanUpInactiveText() {
         // Remove any text were the associated text items no longer exist.
-        this._activeTexts.forEach((text: PIXI.Text, textId: string) => {
+        this._isActiveTexts.forEach((text: PIXI.Text, textId: string) => {
             // Check if there exists a text with id == textId.
-            if (!this._world.getTexts().find(t => { return t.id === textId })) {
+            if (!this._world.texts.find(t => { return t.id === textId })) {
                 this._stage.removeChild(text);
-                this._activeTexts.delete(textId);
+                this._isActiveTexts.delete(textId);
             }
         });
     }

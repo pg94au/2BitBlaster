@@ -2,6 +2,7 @@ import {describe} from 'mocha';
 import {expect} from 'chai';
 
 import {Bomb} from '../../src/shots/Bomb';
+import {Dimensions} from "../../src/Dimensions";
 import {Point} from '../../src/Point';
 import {ScoreCounter} from "../../src/ScoreCounter";
 import {World} from '../../src/World';
@@ -16,44 +17,44 @@ describe('Bomb', () => {
 
         beforeEach(() => {
             audioPlayer = new AudioPlayerStub();
-            world = new World(480, 640, new ScoreCounter());
+            world = new World(new Dimensions(480, 640), new ScoreCounter());
         });
 
         it('should move the bomb directly downwards', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
             bomb.tick();
-            expect(bomb.getCoordinates().x).to.be.equal(5);
-            expect(bomb.getCoordinates().y).to.be.above(10);
+            expect(bomb.coordinates.x).to.be.equal(5);
+            expect(bomb.coordinates.y).to.be.above(10);
         });
 
         it ('should animate the sprite frames', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(0);
             bomb.tick();
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(1);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(1);
         });
 
         it('should recycle sprite frames when animating', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
-            const numberOfFrames = bomb.getImageDetails().numberOfFrames;
+            const numberOfFrames = bomb.imageDetails.numberOfFrames;
             for (let i=0; i < numberOfFrames-1; i++) {
                 bomb.tick();
             }
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(numberOfFrames-1);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(numberOfFrames-1);
             bomb.tick();
-            expect(bomb.getImageDetails().currentFrame).to.be.equal(0);
+            expect(bomb.imageDetails.currentFrame).to.be.equal(0);
         });
 
         it('should remain active while it remains within the world', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(5, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.true;
+            expect(bomb.isActive).to.be.true;
         });
 
         it('should become inactive when it leaves the world', () => {
-            const bomb = new Bomb(audioPlayer, world, new Point(5, world.getDimensions().height - 1));
+            const bomb = new Bomb(audioPlayer, world, new Point(5, world.dimensions.height - 1));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should hit an active player within collision distance', () => {
@@ -101,7 +102,7 @@ describe('Bomb', () => {
 
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should become inactive if it makes an unsuccessful hit', () => {
@@ -110,13 +111,13 @@ describe('Bomb', () => {
 
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.false;
+            expect(bomb.isActive).to.be.false;
         });
 
         it('should remain active when there is no player', () => {
             const bomb = new Bomb(audioPlayer, world, new Point(10, 10));
             bomb.tick();
-            expect(bomb.isActive()).to.be.true;
+            expect(bomb.isActive).to.be.true;
         });
 
         it('should play a sound on the first tick', () => {

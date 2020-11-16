@@ -27,10 +27,10 @@ export class SpinnerWave implements Wave {
         this._scheduler = new Scheduler(clock);
     }
 
-    isActive(): boolean {
+    get isActive(): boolean {
         return (this._numberOfSpinnersLeftToDeploy > 0)
-            || (this._world.getActiveEnemies().length > 0)
-            || (this._world.getActiveExplosions().length > 0);
+            || (this._world.activeEnemies.length > 0)
+            || (this._world.activeExplosions.length > 0);
     }
 
     tick(): void {
@@ -47,9 +47,9 @@ export class SpinnerWave implements Wave {
         // Limit the number of bombers so the player can't just sit and pick them off forever.
         if (this._numberOfBombersLeftToDeploy > 0) {
             // To consider scheduling the addition of a bomber, there can't already be an active one.
-            if ((this._currentBomber === null) || (!this._currentBomber.isActive())) {
+            if ((this._currentBomber === null) || (!this._currentBomber.isActive)) {
                 // Additionally, bombers will only be scheduled if other enemies are still active.
-                if (this._world.getActiveEnemies().length > 0) {
+                if (this._world.activeEnemies.length > 0) {
                     this._scheduler.scheduleOperation(
                         'deployBomber',
                         10000,
@@ -65,7 +65,7 @@ export class SpinnerWave implements Wave {
     private deploySpinner(): void {
         debug('SpinnerWave.deploySpinner');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const spinnerStartX = worldDimensions.width / 2;
         const spinnerStartY = -20;
         const leftSpinner = new Spinner(
@@ -93,7 +93,7 @@ export class SpinnerWave implements Wave {
     private deployBomber(): void {
         debug('SpinnerWave.deployBomber');
 
-        const worldDimensions = this._world.getDimensions();
+        const worldDimensions = this._world.dimensions;
         const bomberStartY = Math.floor(random(50, worldDimensions.height / 2));
         const bomber = new Bomber(this._audioPlayer, this._world, this._clock, bomberStartY);
         this._currentBomber = bomber;

@@ -23,8 +23,8 @@ export class HitArbiter {
         const actorCollisionMasks = actor.getCollisionMask(this._shot);
         const shotCollisionMasks = this._shot.getCollisionMask(actor);
 
-        const actorCoordinates: Point = actor.getCoordinates();
-        const shotCoordinates: Point = this._shot.getCoordinates();
+        const actorCoordinates: Point = actor.coordinates;
+        const shotCoordinates: Point = this._shot.coordinates;
 
         // Offset collision masks to the current positions before testing for collision.
         const actorCollisionAreas: Bounds[] = [];

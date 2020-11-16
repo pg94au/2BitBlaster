@@ -31,12 +31,12 @@ export class Bomber extends Enemy {
 
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
-        this._grenadeDropPosition = random(75, this._world.getDimensions().width - 75);
+        this._grenadeDropPosition = random(75, this._world.dimensions.width - 75);
 
         this.advanceCurrentFrame();
     }
 
-    getExplosionProperties(): ExplosionProperties {
+    get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
             4,
@@ -46,11 +46,11 @@ export class Bomber extends Enemy {
         );
     };
 
-    getScoreTotal(): number {
+    get scoreTotal(): number {
         return 50;
     };
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-35, 45, -19, 19)];
     }
 
@@ -58,7 +58,7 @@ export class Bomber extends Enemy {
         return 5;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('bomber', 6, 80, this._frameIndices[this._currentFrame]);
     }
 
@@ -101,8 +101,8 @@ export class Bomber extends Enemy {
         // Move across the screen toward the right side.
         this.move(Direction.Right);
 
-        if (this._location.x > this._world.getDimensions().width + 40) {
-            this._active = false;
+        if (this._location.x > this._world.dimensions.width + 40) {
+            this._isActive = false;
         }
     }
 }

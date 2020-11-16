@@ -29,7 +29,7 @@ export class Shrapnel extends Shot {
         this._exactY = startingPoint.y;
     }
 
-    getCollisionMask(): Bounds[] {
+    getCollisionMask(actor: Actor): Bounds[] {
         return [new Bounds(-5, 5, -5, 5)];
     }
 
@@ -37,7 +37,7 @@ export class Shrapnel extends Shot {
         return 1;
     }
 
-    getImageDetails(): ImageDetails {
+    get imageDetails(): ImageDetails {
         return new ImageDetails('bomb', 4, 11, this._currentFrame);
     }
 
@@ -56,24 +56,24 @@ export class Shrapnel extends Shot {
         for (let step = 0; step < speed; step++) {
             this.moveOneStepInDefinedTrajectory();
 
-            if (this._location.y > this._world.getDimensions().height) {
+            if (this._location.y > this._world.dimensions.height) {
                 // When this shrapnel piece leaves the world, it becomes inactive.
                 debug('De-activating shrapnel ' + this._id);
-                this._active = false;
+                this._isActive = false;
             }
             else {
                 // Check if this piece of shrapnel has collided with any active enemies.
-                const player = this._world.getPlayer();
+                const player = this._world.player;
                 if (player) {
                     const hitArbiter = new HitArbiter(this);
                     //TODO: Do something if the hit is ineffective.
                     if (hitArbiter.attemptToHit(player) !== HitResult.Miss) {
-                        this._active = false;
+                        this._isActive = false;
                     }
                 }
             }
 
-            if (!this._active) {
+            if (!this._isActive) {
                 break;
             }
         }
