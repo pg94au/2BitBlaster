@@ -64,7 +64,6 @@ export class Saucer extends Enemy {
 
     get scoreTotal(): number {
         return 10;
-        return 10;
     }
 
     getCollisionMask(actor: Actor): Bounds[] {

@@ -43,10 +43,6 @@ export class ShotStub extends Shot {
         throw new Error('Not implemented');
     }
 
-    getScoreTotal(): number {
-        throw new Error('Not implemented');
-    }
-
     get imageDetails(): ImageDetails {
         return new ImageDetails('image_name', 1, 1, 0);
     }
