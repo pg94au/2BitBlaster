@@ -9,7 +9,7 @@ import {PixiRenderer} from "./devices/PixiRenderer";
 
 Debug.disable();
 Debug.enable('Blaster:Main');
-Debug.log = console.log.bind(console);
+Debug.log = console.log.bind(console); // tslint:disable-line
 
 export default class Main {
     public AudioPlayer: typeof AudioContextAudioPlayer = AudioContextAudioPlayer;
