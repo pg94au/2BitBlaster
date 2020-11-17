@@ -8,6 +8,8 @@ import {Joystick} from './devices/Joystick';
 import {PixiRenderer} from "./devices/PixiRenderer";
 
 Debug.disable();
+Debug.enable('Blaster:Main');
+Debug.log = console.log.bind(console);
 
 export default class Main {
     public AudioPlayer: typeof AudioContextAudioPlayer = AudioContextAudioPlayer;
