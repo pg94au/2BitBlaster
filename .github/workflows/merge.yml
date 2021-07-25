@@ -1,9 +1,7 @@
-name: Continuous Integration
+name: Merge to main
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
     branches: [ main ]
 
 jobs:
@@ -26,3 +24,5 @@ jobs:
     - run: npm run build --if-present
     - run: npm run test
     - run: npm run lint
+    - run: terraform apply
+    
