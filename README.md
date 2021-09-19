@@ -7,7 +7,11 @@ This is a work in progress...
 <br>
 <br>
 
-**How to Run**
+Latest build hosted at https://2bitblaster.blinkenlights.org
+<br>
+<br>
+
+**How to Run Locally**
 
 ```git clone ...
 cd BlasterTS
