@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>2-Bit Blaster</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="blaster.js"></script>
     <meta name="viewport" content="width=800, user-scalable=0" />
@@ -12,15 +12,13 @@
         }
     </style>
 </head>
-<body style="overflow: hidden;" bgcolor="black">
-<div id="containerDiv" style="height: 640px;">
-    <div style="display: inline-block;">
-        <span id="titleSpan" style="font-size: 75px; font-family: Monaco, Verdana, Sans-Serif; color: red;">
-            B<br/>L<br/>A<br/>S<br/>T<br/>E<br/>R
-        </span>
+<body style="overflow: hidden; background-image: url('images/ScreenBackground.jpg');">
+<div id="containerDiv" style="position: fixed; height: 640px;">
+    <div style="display: inline-block; position: relative; height: 100%;">
+        <img style="position: relative; top: 0; left: 0; height: 100%;" src="images/GameTitle.svg"/><br/>
     </div>
     <div style="width: 10px; display: inline-block;"></div>
-    <div id="gameDiv" style="width: 480px; height: 640px; border: 3px solid darkcyan; display: inline-block; vertical-align: top;"></div>
+    <div id="gameDiv" style="width: 480px; height: 640px; border: 3px solid darkcyan; display: inline-block; vertical-align: top; background-color: black;"></div>
     <div style="width: 10px; display: inline-block;"></div>
     <div id="scoreBoardDiv" style="position: relative; display: inline-block; vertical-align: top; height: 100%; width: 300px;">
         <div style="vertical-align: top;">
@@ -111,7 +109,6 @@
     function resizeDisplay() {
         if (window.innerHeight > 690) {
             $('#containerDiv').height(640);
-            $('#titleSpan').css('fontSize', '75px');
             $('#gameDiv').width(480).height(640);
             $('#statusSpan').css('fontSize', '30px');
             $('#start').css('fontSize', '48px');
