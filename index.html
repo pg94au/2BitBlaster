@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>2-Bit Blaster</title>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="blaster.js"></script>
     <meta name="viewport" content="width=800, user-scalable=0" />
@@ -12,15 +12,14 @@
         }
     </style>
 </head>
-<body style="overflow: hidden;" bgcolor="black">
-<div id="containerDiv" style="height: 640px;">
-    <div style="display: inline-block;">
-        <span id="titleSpan" style="font-size: 75px; font-family: Monaco, Verdana, Sans-Serif; color: red;">
-            B<br/>L<br/>A<br/>S<br/>T<br/>E<br/>R
-        </span>
+<body style="overflow: hidden; background-image: url('images/ScreenBackground.jpg');">
+<div id="pageDiv" style="position: fixed;">
+    <div id="containerDiv" style="position: relative; height: 640px;">
+    <div style="display: inline-block; position: relative; height: 100%;">
+        <img style="position: relative; top: 0; left: 0; height: 100%;" src="images/GameTitle.svg"/><br/>
     </div>
     <div style="width: 10px; display: inline-block;"></div>
-    <div id="gameDiv" style="width: 480px; height: 640px; border: 3px solid darkcyan; display: inline-block; vertical-align: top;"></div>
+    <div id="gameDiv" style="width: 480px; height: 640px; border: 3px solid darkcyan; display: inline-block; vertical-align: top; background-color: black;"></div>
     <div style="width: 10px; display: inline-block;"></div>
     <div id="scoreBoardDiv" style="position: relative; display: inline-block; vertical-align: top; height: 100%; width: 300px;">
         <div style="vertical-align: top;">
@@ -44,8 +43,8 @@
     </div>
 </div>
 <br/>
-<span>
-    &nbsp;&nbsp;Copyright ©2020 Paul Grebenc
+<span style="font-family: sans-serif;">
+    &nbsp;&nbsp;Copyright ©2021 Paul Grebenc
 </span>
 <br/>
 <div id="touchJoystick" style="-webkit-touch-callout: none; position: relative; background-image: url('images/joystick_background.png'); width: 300px; height: 300px; display: none;">
@@ -111,7 +110,6 @@
     function resizeDisplay() {
         if (window.innerHeight > 690) {
             $('#containerDiv').height(640);
-            $('#titleSpan').css('fontSize', '75px');
             $('#gameDiv').width(480).height(640);
             $('#statusSpan').css('fontSize', '30px');
             $('#start').css('fontSize', '48px');
@@ -124,7 +122,6 @@
             var scaledWidth = Math.floor(scaledHeight/640 * 480);
 
             $('#containerDiv').height(scaledHeight);
-            $('#titleSpan').css('fontSize', (75 * scale) - 5 + 'px');
             $('#gameDiv').width(scaledWidth).height(scaledHeight);
             $('#statusSpan').css('fontSize', (30 * scale) + 'px');
             $('#start').css('fontSize', (48 * scale) + 'px');
