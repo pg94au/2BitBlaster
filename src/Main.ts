@@ -7,8 +7,6 @@ import {Game} from './Game';
 import {Joystick} from './devices/Joystick';
 import {PixiRenderer} from "./devices/PixiRenderer";
 
-Debug.disable();
-Debug.enable('Blaster:Main');
 Debug.log = console.log.bind(console); // tslint:disable-line
 
 export default class Main {
