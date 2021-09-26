@@ -123,11 +123,13 @@
 
             $('#containerDiv').height(scaledHeight);
             $('#gameDiv').width(scaledWidth).height(scaledHeight);
-            $('#statusSpan').css('fontSize', (30 * scale) + 'px');
-            $('#start').css('fontSize', (48 * scale) + 'px');
-            $('#health').find('*').css('width', scale*30.0 + 'px').css('height', scale*30 + 'px');
-            $('#numLives').find('*').css('background-size', scale*200 + 'px').width(scale*50).height(scale*70);
         }
+
+        var scoreboardScale = Math.max($('#containerDiv').height / 640, 0.5);
+        $('#statusSpan').css('fontSize', Math.floor(30 * scoreboardScale) + 'px');
+        $('#start').css('fontSize', Math.floor(48 * scoreboardScale) + 'px');
+        $('#health').find('*').css('width', Math.floor(scoreboardScale*30.0) + 'px').css('height', Math.floor(scoreboardScale*30) + 'px');
+        $('#numLives').find('*').css('background-size', Math.floor(scoreboardScale*200) + 'px').width(Math.floor(scoreboardScale*50)).height(Math.floor(scoreboardScale*70));
     }
 
     function onImagesLoaded() {
