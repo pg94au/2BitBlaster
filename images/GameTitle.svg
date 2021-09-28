@@ -8,7 +8,7 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
-   sodipodi:docname="GameTitle.svg"
+   sodipodi:docname="GameTitle_ObjectToPath.svg"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
@@ -58,67 +58,71 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <text
-       xml:space="preserve"
-       style="font-style:normal;font-weight:normal;font-size:38.3489px;line-height:0.95;font-family:sans-serif;fill:#000000;fill-opacity:1;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-       x="22.380857"
-       y="79.469719"
+    <g
+       aria-label="B
+L
+A
+S
+T
+E
+R"
+       transform="scale(1.698038,0.58891498)"
        id="text4389"
-       transform="scale(1.698038,0.58891498)"><tspan
-         sodipodi:role="line"
-         id="tspan4387"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="79.469719">B</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="116.95825"
-         id="tspan4391">L</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="154.44678"
-         id="tspan4393">A</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="191.9353"
-         id="tspan4395">S</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="229.42383"
-         id="tspan4397">T</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="266.91235"
-         id="tspan4399">E</tspan><tspan
-         sodipodi:role="line"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:38.3489px;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000;stroke:#ffff00;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none"
-         x="22.380857"
-         y="304.40088"
-         id="tspan4401">R</tspan></text>
-    <text
-       xml:space="preserve"
-       transform="scale(0.26458333)"
-       id="text9947"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect9949);fill:#000000;fill-opacity:1;stroke:none" />
-    <text
-       xml:space="preserve"
-       transform="scale(0.26458333)"
-       id="text46616"
-       style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect46618);fill:#000000;fill-opacity:1;stroke:none" />
-    <text
-       xml:space="preserve"
+       style="font-size:38.3489px;line-height:0.95;stroke:#ffff00">
+      <path
+         d="m 18.251984,73.796029 q 2.864933,-1.685254 4.250586,-3.052183 1.404379,-1.366928 1.404379,-2.471706 0,-0.711552 -0.580477,-1.179678 -0.561751,-0.468127 -1.423103,-0.468127 -0.599202,0 -1.348204,0.168526 -0.749002,0.1498 -1.572904,0.449401 z m 1.348204,-12.658133 q 2.097205,-0.243425 3.389234,-0.954977 1.292028,-0.730277 1.292028,-1.610354 0,-1.273304 -1.366929,-2.003581 -1.366928,-0.749002 -3.801185,-0.805177 z m 8.239021,2.228281 q 4.213136,0.262151 6.403967,1.872505 2.190831,1.610354 2.190831,4.456561 0,3.969711 -3.145809,6.048191 -3.145808,2.059756 -10.504752,2.846208 l -16.534218,1.722704 7.78962,-3.651384 -3.74501,-22.657309 -5.3740885,-2.452982 19.1369995,0.992428 q 5.52389,0.280876 7.695995,1.404378 2.190831,1.123503 2.190831,3.539035 0,2.04103 -1.516729,3.501584 -1.498004,1.441829 -4.587637,2.378081 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path71" />
+      <path
+         d="m 35.984605,118.60605 -2.452981,-2.88365 -25.2975409,1.38565 3.4454089,-2.41553 0.917527,-21.327832 -5.0932128,-1.516729 18.2943728,-2.003581 -4.793613,3.482859 3.183259,17.227043 6.703567,-3.40796 2.153381,-4.94341 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path73" />
+      <path
+         d="m 25.517303,139.63527 -2.602782,-7.4713 -2.527881,9.21272 z m 15.111114,10.74817 -16.328242,5.05577 4.175686,-5.59879 -1.179678,-4.13824 -6.066916,0.46813 -1.760155,4.83106 2.640232,2.05976 -17.751346,1.2733 4.3254863,-3.22071 5.7485897,-22.35771 -3.258158,-2.11593 22.020657,0.73028 -5.130663,1.83505 9.006748,20.11071 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path75" />
+      <path
+         d="m 30.189203,164.63419 3.183258,10.03662 q -2.602782,-2.247 -4.681262,-3.42668 -2.059755,-1.1984 -3.389234,-1.1984 -0.992428,0 -1.554179,0.54302 -0.543026,0.5243 -0.543026,1.47928 0,1.19841 1.179678,2.13466 1.198403,0.93625 3.726284,1.70398 5.59879,1.70398 7.56492,3.33306 1.984855,1.61035 1.984855,4.13823 0,4.08206 -4.025885,6.72229 -4.007161,2.64024 -10.317502,2.64024 -3.201983,0 -6.403967,-1.16096 -3.183258,-1.17968 -5.86094,-3.33306 v 4.49402 L 7.7004192,182.72258 q 2.3219058,1.89123 4.5689118,2.90239 2.265731,1.01115 4.100786,1.01115 1.984855,0 3.089633,-0.84263 1.104778,-0.84262 1.104778,-2.34063 0,-1.40438 -0.898803,-2.22828 -0.880077,-0.84263 -3.950985,-1.7976 -4.475287,-1.42311 -6.6661172,-3.37051 -2.1908307,-1.96613 -2.1908307,-4.60636 0,-3.31434 2.9211076,-5.43027 2.9211073,-2.11593 7.6023693,-2.11593 3.089633,0 6.029466,1.10478 2.939833,1.10478 6.048191,3.42668 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path77" />
+      <path
+         d="m 38.765275,201.46734 -9.081649,17.75135 -1.179678,-13.53821 -5.224288,20.74735 7.93942,3.80119 -17.152144,-0.91753 5.523889,-1.72271 -6.272891,-22.2828 -1.77888,16.36569 -3.6701093,-18.12585 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path79" />
+      <path
+         d="M 37.276634,255.37774 35.591379,267.755 4.7512241,266.40679 12.85917,263.57931 9.9755127,243.01921 4.7512241,240.9969 l 29.3421509,-2.00358 1.835055,8.5948 -3.052183,-3.14581 -9.025473,0.0375 -1.366929,5.71114 6.441417,-1.498 1.909955,-2.93984 0.730277,12.95774 -2.04103,-3.22071 -5.71114,-0.76773 -2.265731,6.08564 10.748178,1.34821 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path81" />
+      <path
+         d="m 18.083459,289.79536 q 0.617926,0.33705 1.292028,0.54303 0.674102,0.18725 1.235853,0.18725 0.786452,0 1.385654,-0.88008 0.617927,-0.88008 0.617927,-2.00358 0,-1.38565 -0.917528,-2.43426 -0.917527,-1.0486 -2.883657,-1.89123 z m 19.754926,13.03263 -12.545782,4.21314 1.498003,-2.82748 -7.096793,-8.63225 q -0.430676,-0.0374 -0.898802,-0.11235 -0.449402,-0.0936 -0.936253,-0.18725 l 0.543027,6.66612 4.213136,3.72628 -15.8413917,-1.77888 2.6402319,-1.8725 2.7338568,-20.48521 -5.9171151,-2.56533 14.3808371,-1.6478 q 1.647805,-0.20598 2.827483,-0.28088 1.179678,-0.0936 2.097205,-0.0936 5.692415,0 8.632248,2.34063 2.939832,2.3219 2.939832,6.85337 0,3.76373 -2.509156,6.14181 -2.509157,2.35936 -7.45257,3.25816 z"
+         style="font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC';text-align:center;text-anchor:middle;fill:#ff0000"
+         id="path83" />
+    </g>
+    <g
+       aria-label="2-BIT"
        transform="matrix(0.36254007,0,0,0.56821922,-26.003953,-42.305251)"
        id="text54130"
-       style="font-style:normal;font-weight:normal;font-size:53.3333px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect54132);fill:#000000;fill-opacity:1;stroke:#ffff00;stroke-width:2.20325129;stroke-miterlimit:4;stroke-dasharray:none"><tspan
-         x="88.474609"
-         y="116.39587"
-         id="tspan168476"><tspan
-           style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
-           id="tspan168474">2-BIT</tspan></tspan></text>
+       style="font-size:53.3333px;line-height:1.25;white-space:pre;shape-inside:url(#rect54132);stroke:#ffff00;stroke-width:2.20325">
+      <path
+         d="m 127.95375,96.708381 -2.9427,18.359359 -38.776023,2.39584 18.072903,-22.447906 q 2.1875,-2.682291 2.83854,-4.114581 0.67709,-1.458333 0.67709,-2.942707 0,-1.510416 -0.9375,-2.395832 -0.91146,-0.911458 -2.52604,-0.911458 -2.89063,0 -5.677083,2.552082 -2.760415,2.552082 -5.312497,7.552079 l -5.755205,-15.364574 5.130205,5.546872 q 4.427081,-3.723957 8.64583,-5.494789 4.24479,-1.770832 8.80208,-1.770832 6.74478,0 10.78124,3.046873 4.03646,3.020832 4.03646,8.04687 0,3.880206 -2.05729,6.744788 -2.03125,2.864582 -7.55208,6.276035 l -14.60937,8.95833 23.15103,-5.96354 z"
+         style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
+         id="path42" />
+      <path
+         d="m 146.9902,94.000049 -0.70312,7.994791 -14.34895,2.78645 -1.64063,-11.093741 z"
+         style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
+         id="path44" />
+      <path
+         d="m 163.76102,108.50525 q 3.98438,-2.34375 5.91146,-4.24479 1.95312,-1.90104 1.95312,-3.4375 0,-0.989581 -0.80729,-1.640622 -0.78125,-0.651042 -1.97916,-0.651042 -0.83334,0 -1.875,0.234375 -1.04167,0.208334 -2.1875,0.625 z m 1.875,-17.604157 q 2.91667,-0.338542 4.71354,-1.328125 1.79688,-1.015624 1.79688,-2.239582 0,-1.770832 -1.90104,-2.786456 -1.90104,-1.041666 -5.28646,-1.119791 z m 11.45833,3.098956 q 5.85937,0.364583 8.90624,2.604165 3.04688,2.239582 3.04688,6.197916 0,5.52083 -4.375,8.41145 -4.375,2.86458 -14.60937,3.95833 l -22.99477,2.39583 10.83332,-5.07812 -5.20833,-31.510396 -7.47395,-3.411457 26.61457,1.380208 q 7.68228,0.390625 10.70311,1.953124 3.04688,1.562499 3.04688,4.921872 0,2.83854 -2.10938,4.869788 -2.08333,2.005208 -6.3802,3.30729 z"
+         style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
+         id="path46" />
+      <path
+         d="m 222.74537,115.06774 -31.92707,3.09896 5.36458,-4.01041 2.57813,-29.114569 -9.14062,-7.005204 31.43227,2.630207 -11.6927,3.359373 5.28645,25.911443 z"
+         style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
+         id="path48" />
+      <path
+         d="m 261.72971,77.515684 -12.6302,24.687486 -1.64062,-18.828115 -7.26562,28.854145 11.04166,5.28646 -23.85416,-1.27604 7.68229,-2.39583 -8.72395,-30.989568 -2.47396,22.760408 -5.10416,-25.208323 z"
+         style="font-weight:bold;font-family:'Snap ITC';-inkscape-font-specification:'Snap ITC Bold';fill:#ff0000"
+         id="path50" />
+    </g>
   </g>
 </svg>
