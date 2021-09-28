@@ -33,7 +33,13 @@ module.exports = {
         new CopyPlugin({
             patterns: [
                 { from: 'index.html', to: '.' },
-                { from: 'images', to: 'images' },
+                {
+                    from: 'images',
+                    to: 'images',
+                    globOptions: {
+                        ignore: ['**/_ignore/**/*']
+                    }
+                },
                 { from: 'sounds', to: 'sounds' }
             ]
         })
