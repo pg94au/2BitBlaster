@@ -125,7 +125,7 @@
             $('#gameDiv').width(scaledWidth).height(scaledHeight);
         }
 
-        var scoreboardScale = Math.max($('#containerDiv').height / 640, 0.5);
+        var scoreboardScale = Math.max($('#containerDiv').height() / 640, 0.5);
         $('#statusSpan').css('fontSize', Math.floor(30 * scoreboardScale) + 'px');
         $('#start').css('fontSize', Math.floor(48 * scoreboardScale) + 'px');
         $('#health').find('*').css('width', Math.floor(scoreboardScale*30.0) + 'px').css('height', Math.floor(scoreboardScale*30) + 'px');
