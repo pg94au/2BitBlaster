@@ -23,7 +23,7 @@
     <div style="width: 10px; display: inline-block;"></div>
     <div id="scoreBoardDiv" style="position: relative; display: inline-block; vertical-align: top; height: 100%; width: 300px;">
         <div style="vertical-align: top;">
-            <span id="statusSpan" style="font-size: 30px; font-family: Monaco, Verdana, Sans-serif;">
+            <span id="statusSpan" style="font-size: clamp(16px, 4vh, 28px); font-family: Monaco, Verdana, Sans-serif;">
                 High Score: <label id="highScoreLabel"></label><br/>
                 Score: <label id="scoreLabel"></label><br/>
                 Level: <label id="levelLabel"></label><br/>
@@ -35,7 +35,7 @@
         <div style="position: absolute; bottom: 0;">
             <button id="start"
                     onclick="$('#start').prop('disabled', true).css('color', 'grey').css('border-color', 'white'); game.start()"
-                    style="font-size: 48px; color: red; background-color: black; border-color: yellow;"
+                    style="font-size: clamp(24px, 7vh, 46px); color: red; background-color: black; border-color: yellow;"
                     disabled>
                 START
             </button><br/>
@@ -111,8 +111,6 @@
         if (window.innerHeight > 690) {
             $('#containerDiv').height(640);
             $('#gameDiv').width(480).height(640);
-            $('#statusSpan').css('fontSize', '30px');
-            $('#start').css('fontSize', '48px');
             $('#health').find('*').css('width', '30px').css('height', '30px');
             $('#numLives').find('*').css('background-size', '200px').width(50).height(70);
         }
@@ -126,8 +124,6 @@
         }
 
         var scoreboardScale = Math.max($('#containerDiv').height() / 640, 0.5);
-        $('#statusSpan').css('fontSize', Math.floor(30 * scoreboardScale) + 'px');
-        $('#start').css('fontSize', Math.floor(48 * scoreboardScale) + 'px');
         $('#health').find('*').css('width', Math.floor(scoreboardScale*30.0) + 'px').css('height', Math.floor(scoreboardScale*30) + 'px');
         $('#numLives').find('*').css('background-size', Math.floor(scoreboardScale*200) + 'px').width(Math.floor(scoreboardScale*50)).height(Math.floor(scoreboardScale*70));
     }
