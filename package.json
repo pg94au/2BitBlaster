@@ -4,9 +4,11 @@
   "description": "2-Bit Blaster in TypeScript",
   "main": "main.ts",
   "scripts": {
-    "build": "npx webpack --config webpack.config.js",
+    "build": "npx webpack --config webpack.config.development.js",
+    "prod": "npx webpack --config webpack.config.production.js",
     "test": "npx ts-mocha --reporter spec --paths test/*.spec.[jt]s test/**/*.spec.[jt]s",
-    "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts"
+    "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts",
+    "site": "cd host; node app.js; cd .."
   },
   "repository": {
     "type": "git",
