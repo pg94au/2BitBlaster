@@ -12,7 +12,7 @@ export class PixiRenderer implements Renderer {
     private readonly _containerElement!: HTMLElement;
     private _world!: World;
     private _worldDimensions!: Dimensions;
-    private _renderer!: PIXI.AbstractRenderer;//PIXI.Renderer;
+    private _renderer!: PIXI.Renderer;
     private _stage!: PIXI.Container;
     private _isActiveSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
     private _isActiveTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();
@@ -43,7 +43,7 @@ export class PixiRenderer implements Renderer {
         this._renderer = PIXI.autoDetectRenderer({
             width: this._worldDimensions.width,
             height: this._worldDimensions.height
-        });
+        }) as PIXI.Renderer;
         this._renderer.backgroundColor = 0x000000;
         this._containerElement.appendChild(this._renderer.view);
         this._stage = new PIXI.Container();
