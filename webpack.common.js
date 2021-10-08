@@ -5,9 +5,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: './src/Main.ts',
     devtool: 'inline-source-map',
-    optimization: {
-        minimize: false
-    },
     module: {
         rules: [
             {
@@ -26,10 +23,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('scooby'),
-            BLASTER_VERSION: JSON.stringify(true),
-        }),
         new CopyPlugin({
             patterns: [
                 { from: 'index.html', to: '.' },
@@ -45,7 +38,4 @@ module.exports = {
         })
     ],
     target: "web",
-    node: {
-        fs: 'empty'
-    }
 };
