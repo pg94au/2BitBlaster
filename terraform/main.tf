@@ -25,10 +25,6 @@ resource "aws_cloudfront_distribution" "distribution" {
   origin {
     origin_id = aws_s3_bucket.bucket.id
     domain_name = aws_s3_bucket.bucket.bucket_domain_name
-    origin_shield {
-      enabled = false
-      origin_shield_region = var.region
-    }
   }
   default_root_object = "index.html"
   price_class = "PriceClass_All"
