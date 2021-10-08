@@ -12,7 +12,7 @@ export class PixiRenderer implements Renderer {
     private readonly _containerElement!: HTMLElement;
     private _world!: World;
     private _worldDimensions!: Dimensions;
-    private _renderer!: PIXI.Renderer;
+    private _renderer!: PIXI.AbstractRenderer;//PIXI.Renderer;
     private _stage!: PIXI.Container;
     private _isActiveSprites: Map<string, SpriteDetail> = new Map<string, SpriteDetail>();
     private _isActiveTexts: Map<string, PIXI.Text> = new Map<string, PIXI.Text>();
@@ -31,7 +31,7 @@ export class PixiRenderer implements Renderer {
         loader.load((byLoader, resources) => {
             const resourceNames = Object.getOwnPropertyNames(resources);
             for (const resourceName of resourceNames) {
-                const texture: PIXI.Texture = resources[resourceName]!.texture;
+                const texture: PIXI.Texture = resources[resourceName]!.texture!;
                 this._preloadedImages.set(resourceName, texture);
             }
         });
