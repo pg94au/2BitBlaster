@@ -19,7 +19,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f85da066-f35f-4622-a262-4919d0323786" name="Default Changelist" comment="" />
+    <list default="true" id="41f284ee-707c-422c-af72-62e6cfbe09f6" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,15 +37,16 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1itCnQ2N3Yy1Pki5IMvGB1rp5Gh" />
+  <component name="ProjectId" id="1ivKJODJZfCdq95HnkAyeNiak63" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../BlasterReact" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -52,12 +55,12 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs.mocha.mocha_node_package_dir" value="$PROJECT_DIR$/node_modules/mocha" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor.code.editing" />
     <property name="ts.external.directory.path" value="C:\Work\BlasterTS\node_modules\typescript\lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="npm.Test">
-    <configuration name="Test" type="js.build_tools.npm">
+  <component name="RunManager" selected="Mocha.World.#getActiveExplosions().should return only active explosions and skip inactive ones">
+    <configuration name="Run tests" type="js.build_tools.npm">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
       <scripts>
@@ -67,32 +70,29 @@
       <envs />
       <method v="2" />
     </configuration>
-    <configuration default="true" type="js.build_tools.npm">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
       <package-json value="$PROJECT_DIR$/package.json" />
       <command value="run" />
-      <scripts />
+      <scripts>
+        <script value="build" />
+      </scripts>
       <node-interpreter value="project" />
       <envs />
       <method v="2" />
     </configuration>
-    <configuration name="Shrapnel.#tick().should animate the sprite frames" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+    <configuration name="Mocha Tests" type="mocha-javascript-test-runner" temporary="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
       <ui>bdd</ui>
-      <extra-mocha-options />
-      <test-kind>TEST</test-kind>
-      <test-file>$PROJECT_DIR$/test/shots/Shrapnel.spec.js</test-file>
-      <test-names>
-        <name value="Shrapnel" />
-        <name value="#tick()" />
-        <name value="should animate the sprite frames" />
-      </test-names>
+      <extra-mocha-options>--require ts-node/register</extra-mocha-options>
+      <test-kind>PATTERN</test-kind>
+      <test-pattern>test/**/*.{js,ts}</test-pattern>
       <method v="2" />
     </configuration>
-    <configuration name="Shrapnel.#tick().should move the shrapnel diagonally left and up when specified by the trajectory" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
+    <configuration name="World.#getActiveExplosions().should return only active explosions and skip inactive ones" type="mocha-javascript-test-runner" temporary="true" nameIsGenerated="true">
       <node-interpreter>project</node-interpreter>
       <node-options />
       <mocha-package>$PROJECT_DIR$/node_modules/mocha</mocha-package>
@@ -101,52 +101,56 @@
       <ui>bdd</ui>
       <extra-mocha-options />
       <test-kind>TEST</test-kind>
-      <test-file>$PROJECT_DIR$/test/shots/Shrapnel.spec.js</test-file>
+      <test-file>$PROJECT_DIR$/test/World.spec.ts</test-file>
       <test-names>
-        <name value="Shrapnel" />
-        <name value="#tick()" />
-        <name value="should move the shrapnel diagonally left and up when specified by the trajectory" />
+        <name value="World" />
+        <name value="#getActiveExplosions()" />
+        <name value="should return only active explosions and skip inactive ones" />
       </test-names>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Mocha.Shrapnel.#tick().should animate the sprite frames" />
-      <item itemvalue="Mocha.Shrapnel.#tick().should move the shrapnel diagonally left and up when specified by the trajectory" />
-      <item itemvalue="npm.Test" />
+      <item itemvalue="Mocha.Mocha Tests" />
+      <item itemvalue="Mocha.World.#getActiveExplosions().should return only active explosions and skip inactive ones" />
+      <item itemvalue="npm.Run tests" />
+      <item itemvalue="npm.build" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Mocha.Shrapnel.#tick().should move the shrapnel diagonally left and up when specified by the trajectory" />
-        <item itemvalue="Mocha.Shrapnel.#tick().should animate the sprite frames" />
+        <item itemvalue="Mocha.World.#getActiveExplosions().should return only active explosions and skip inactive ones" />
+        <item itemvalue="npm.build" />
+        <item itemvalue="Mocha.Mocha Tests" />
       </list>
     </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f85da066-f35f-4622-a262-4919d0323786" name="Default Changelist" comment="" />
-      <created>1602717667405</created>
+      <changelist id="41f284ee-707c-422c-af72-62e6cfbe09f6" name="Default Changelist" comment="" />
+      <created>1602782553352</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1602717667405</updated>
-      <workItem from="1602717668761" duration="9426000" />
-      <workItem from="1602805664457" duration="34360000" />
-      <workItem from="1603156202071" duration="123806000" />
+      <updated>1602782553352</updated>
+      <workItem from="1602782554464" duration="82164000" />
+      <workItem from="1605228459235" duration="72101000" />
+      <workItem from="1605666832273" duration="4802000" />
+      <workItem from="1605975223479" duration="10893000" />
+      <workItem from="1606605143171" duration="95000" />
+      <workItem from="1606605285453" duration="622000" />
+      <workItem from="1608829037284" duration="57000" />
+      <workItem from="1608829146948" duration="36000" />
+      <workItem from="1609357488110" duration="74000" />
+      <workItem from="1609357597324" duration="44769000" />
+      <workItem from="1611107185961" duration="3478000" />
+      <workItem from="1612400995395" duration="324000" />
+      <workItem from="1612401359490" duration="2037000" />
+      <workItem from="1612627384113" duration="652000" />
+      <workItem from="1613066574926" duration="28000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.History.Properties">
-    <option name="COLUMN_ORDER">
-      <list>
-        <option value="0" />
-        <option value="2" />
-        <option value="3" />
-        <option value="1" />
-      </list>
-    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -160,118 +164,24 @@
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
-  <component name="WindowStateProjectService">
-    <state x="243" y="71" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603455655349">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="243" y="71" width="1089" height="713" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603455655349" />
-    <state x="824" y="170" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1603237116756">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="824" y="170" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1603237116756" />
-    <state width="931" height="466" key="DebuggerActiveHint" timestamp="1603663829215">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="931" height="466" key="DebuggerActiveHint/0.0.1536.824@0.0.1536.824" timestamp="1603663829215" />
-    <state x="152" y="65" width="1318" height="722" key="DiffContextDialog" timestamp="1603758250094">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="152" y="65" width="1318" height="722" key="DiffContextDialog/0.0.1536.824@0.0.1536.824" timestamp="1603758250094" />
-    <state width="1334" height="242" key="GridCell.Tab.0.bottom" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.0.center" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.0.left" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.0.right" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.1.bottom" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.1.center" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.1.left" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.1.right" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.2.bottom" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.2.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.2.center" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.2.center/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.2.left" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.2.left/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.2.right" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.2.right/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.3.bottom" timestamp="1604240029194">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.3.bottom/0.0.1536.824@0.0.1536.824" timestamp="1604240029194" />
-    <state width="1334" height="242" key="GridCell.Tab.3.center" timestamp="1604240029194">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.3.center/0.0.1536.824@0.0.1536.824" timestamp="1604240029194" />
-    <state width="1334" height="242" key="GridCell.Tab.3.left" timestamp="1604240029193">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.3.left/0.0.1536.824@0.0.1536.824" timestamp="1604240029193" />
-    <state width="1334" height="242" key="GridCell.Tab.3.right" timestamp="1604240029194">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state width="1334" height="242" key="GridCell.Tab.3.right/0.0.1536.824@0.0.1536.824" timestamp="1604240029194" />
-    <state x="645" y="119" key="RollbackChangesDialog" timestamp="1604021734701">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="645" y="119" key="RollbackChangesDialog/0.0.1536.824@0.0.1536.824" timestamp="1604021734701" />
-    <state x="297" y="61" key="SettingsEditor" timestamp="1603455445032">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="297" y="61" key="SettingsEditor/0.0.1536.824@0.0.1536.824" timestamp="1603455445032" />
-    <state x="511" y="139" width="1105" height="763" key="dock-window-1" timestamp="1603071037034">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="511" y="139" width="1105" height="763" key="dock-window-1/0.0.1536.824@0.0.1536.824" timestamp="1603071037034" />
-    <state x="547" y="16" width="579" height="801" key="find.popup" timestamp="1604374121553">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="547" y="16" width="579" height="801" key="find.popup/0.0.1536.824@0.0.1536.824" timestamp="1604374121553" />
-    <state x="451" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1604243567024">
-      <screen x="0" y="0" width="1536" height="824" />
-    </state>
-    <state x="451" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1604243567024" />
-  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/test/shots/Grenade.spec.ts</url>
-          <line>30</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="8" />
+          <url>file://$PROJECT_DIR$/test/World.spec.ts</url>
+          <line>90</line>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/test/World.spec.ts</url>
+          <line>74</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/BlasterTS$Mocha_Tests.dat" NAME="Mocha Tests Coverage Results" MODIFIED="1604448439466" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BlasterTS$ScoreCounter.dat" NAME="ScoreCounter Coverage Results" MODIFIED="1604427861550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="MochaJavaScriptTestRunnerCoverage" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
