@@ -1,6 +1,8 @@
 data "aws_acm_certificate" "certificate" {
   domain      = "2bitblaster.blinkenlights.org"
   types       = ["AMAZON_ISSUED"]
+  # certificates for CloudFront must be in us-east-1
+  provider    = aws.us-east-1
   most_recent = true
 }
 
