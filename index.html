@@ -32,13 +32,8 @@
                 <span id="numLives"></span>
             </span>
         </div>
-        <div style="position: absolute; bottom: 0;">
-            <button id="start"
-                    onclick="$('#start').prop('disabled', true).css('color', 'grey').css('border-color', 'white'); game.start()"
-                    style="font-size: clamp(24px, 7vh, 46px); color: red; background-color: black; border-color: yellow;"
-                    disabled>
-                START
-            </button><br/>
+        <div id="startDiv" style="position: absolute; bottom: 0; height: clamp(25px, 7vh, 48px); border-width: 2px; border-style: solid;">
+            <object id="startSvg" class="emb" data="images/Start.svg" type="image/svg+xml" style="height: 100%; width: 100%; pointer-events: none;"></object><br/>
         </div>
     </div>
 </div>
@@ -105,7 +100,38 @@
         touchFireButton.addEventListener('touchstart', fireButtonTouchEventHandler, false);
         touchFireButton.addEventListener('touchmove', fireButtonTouchEventHandler, false);
         touchFireButton.addEventListener('touchend', fireButtonTouchEventHandler, false);
+
+        enableStartButton();
     });
+
+    function enableStartButton() {
+        $('#startDiv')
+            .on('click', function() {
+                disableStartButton();
+                game.start();
+            })
+            .css('border-color', 'yellow')
+            .css('background-color', 'black')
+            .css('cursor', 'pointer');
+        $('#startSvg').css('cursor', 'pointer');
+        $($('#startSvg')[0].contentDocument.getElementById('startText'))
+            .css('fill', 'red')
+        $($('#startSvg')[0].contentDocument.getElementById('startText')).find('path[class="stroke"]')
+            .css('fill', 'yellow');
+    }
+
+    function disableStartButton() {
+        $('#startDiv')
+            .off()
+            .css('border-color', 'grey')
+            .css('background-color', '#333333')
+            .css('cursor', 'not-allowed');
+        $('#startSvg').css('cursor', 'not-allowed');
+        $($('#startSvg')[0].contentDocument.getElementById('startText'))
+            .css('fill', 'grey');
+        $($('#startSvg')[0].contentDocument.getElementById('startText')).find('path[class="stroke"]')
+            .css('fill', '#666666');
+    }
 
     function resizeDisplay() {
         if (window.innerHeight > 690) {
@@ -150,7 +176,8 @@
 
             $('#health').empty();
             $('#numLives').empty();
-            $('#start').prop('disabled', false).css('color', 'red').css('border-color', 'yellow');
+
+            enableStartButton();
         });
         game.on('health', function(health) {
             $('#health').empty();
