@@ -118,6 +118,7 @@
             .css('fill', 'red')
         $($('#startSvg')[0].contentDocument.getElementById('startText')).find('path[class="stroke"]')
             .css('fill', 'yellow');
+        $('#gameDiv').css('cursor', 'pointer');
     }
 
     function disableStartButton() {
@@ -131,6 +132,7 @@
             .css('fill', 'grey');
         $($('#startSvg')[0].contentDocument.getElementById('startText')).find('path[class="stroke"]')
             .css('fill', '#666666');
+        $('#gameDiv').css('cursor', 'none');
     }
 
     function resizeDisplay() {
