@@ -1,3 +1,8 @@
+output "bucket" {
+    description = "Name of S3 bucket"
+    value       = local.bucket
+}
+
 output "bucket_website_endpoint" {
     description = "Public HTTP endpoint of S3 bucket"
     value       = aws_s3_bucket.bucket.website_endpoint

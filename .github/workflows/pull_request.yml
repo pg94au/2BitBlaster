@@ -50,7 +50,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         AWS_EC2_METADATA_DISABLED: true
       run: |
-        aws s3 sync dist s3://2bittesting --delete
+        aws s3 sync dist s3://$(cd terraform; terraform output --raw bucket) --delete
         echo "Distribution domain name: $(cd terraform; terraform output --raw distribution_domain_name)"
 
     - name: Invalidate cache
