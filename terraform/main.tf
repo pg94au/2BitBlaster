@@ -69,3 +69,9 @@ resource "aws_s3_bucket" "highscore-bucket" {
   acl    = "private"
 }
 
+resource "aws_s3_bucket_public_access_block" "example" {
+  bucket = aws_s3_bucket.highscore-bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+}
