@@ -17,11 +17,51 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2.1.2
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build
-    - run: npm run test
-    - run: npm run lint
+
+    - name: Build
+      run: |
+        npm ci
+        npm run build
+
+    - name: Test
+      run: |
+        npm run test
+        npm run lint
+
+# Pushes to every branch will update this test deployment, clobbering each other.
+    - name: Terraform
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        cd terraform
+        terraform init
+        terraform workspace select test
+        terraform apply --auto-approve
+
+    - name: Deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        AWS_EC2_METADATA_DISABLED: true
+      run: |
+        aws s3 sync dist s3://2bittesting --delete
+        echo "Distribution domain name: $(cd terraform; terraform output --raw distribution_domain_name)"
+
+    - name: Invalidate cache
+      env:
+        AWS_DEFAULT_REGION: ca-central-1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        cd terraform
+        distribution_id=$(terraform output --raw distribution_id)
+        echo "Creating invalidation for $distribution_id"
+        invalidation_id=$(aws cloudfront create-invalidation --distribution-id $distribution_id --paths "/" | jq --raw-output '.Invalidation.Id')
+        echo "Waiting for invalidation for $invalidation_id"
+        aws cloudfront wait invalidation-completed --distribution $distribution_id --id $invalidation_id
