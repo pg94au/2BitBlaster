@@ -61,3 +61,11 @@ resource "aws_cloudfront_distribution" "distribution" {
     }
   }
 }
+
+
+# High score
+resource "aws_s3_bucket" "highscore-bucket" {
+  bucket = "${local.bucket}-highscore"
+  acl    = "private"
+}
+
