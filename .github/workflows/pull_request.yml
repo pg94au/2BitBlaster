@@ -40,8 +40,8 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: |
         cd terraform
-        terraform workspace select test || terraform workspace new test
         terraform init
+        terraform workspace select test || terraform workspace new test
         terraform apply --auto-approve
 
     - name: Deploy
