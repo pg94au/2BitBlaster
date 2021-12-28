@@ -1,5 +1,5 @@
 data "aws_acm_certificate" "certificate" {
-  domain      = "2bitblaster.blinkenlights.org"
+  domain      = local.domain
   types       = ["AMAZON_ISSUED"]
   # certificates for CloudFront must be in us-east-1
   provider    = aws.us-east-1
@@ -7,7 +7,7 @@ data "aws_acm_certificate" "certificate" {
 }
 
 resource "aws_s3_bucket" "bucket" {
-  bucket = "2bitblaster"
+  bucket = local.bucket
   acl    = "public-read"
   website {
     index_document = "index.html"
@@ -21,7 +21,7 @@ resource "aws_s3_bucket" "bucket" {
           "Effect": "Allow",
           "Principal": "*",
           "Action": "s3:GetObject",
-          "Resource": "arn:aws:s3:::2bitblaster/*"
+          "Resource": "arn:aws:s3:::${local.bucket}/*"
       }
   ]
 }
@@ -36,7 +36,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
   default_root_object = "index.html"
   price_class = "PriceClass_All"
-  aliases = [ "2bitblaster.blinkenlights.org" ]
+  aliases = [ local.domain ]
   viewer_certificate {
     acm_certificate_arn = data.aws_acm_certificate.certificate.arn
     ssl_support_method = "sni-only"

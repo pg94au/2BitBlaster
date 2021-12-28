@@ -43,6 +43,7 @@ jobs:
       run: |
         cd terraform
         terraform init
+        terraform workspace select production
         terraform apply --auto-approve
 
     - name: Deploy
