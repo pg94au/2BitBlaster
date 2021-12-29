@@ -22,9 +22,17 @@ variable "domain_map" {
   }
 }
 
+variable "highscore_map" {
+  description = "Base name for high score lambda resources"
+  type = map
+  default = {
+    test       = "2bittesting-highscore"
+    production = "2bitblaster-highscore"
+  }
+}
+
 locals {
-  bucket = lookup(var.bucket_map, terraform.workspace, var.bucket_map["test"])
-#  bucket = var.bucket_map[terraform.workspace]
-  domain = lookup(var.domain_map, terraform.workspace, var.domain_map["test"])
-#  domain = var.domain_map[terraform.workspace]
+  bucket    = lookup(var.bucket_map, terraform.workspace, var.bucket_map["test"])
+  domain    = lookup(var.domain_map, terraform.workspace, var.domain_map["test"])
+  highscore = lookup(var.highscore_map, terraform.workspace, var.highscore_map["test"])
 }

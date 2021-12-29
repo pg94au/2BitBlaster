@@ -6,7 +6,7 @@ exports.handler = async (event) => {
 
     async function retrieveHighScore() {
         var getObjectParams = {
-            Bucket: '2bitblaster-highscore',
+            Bucket: process.env.bucket,
             Key: 'highscore.txt'
         }
 
@@ -19,7 +19,7 @@ exports.handler = async (event) => {
     async function storeHighScore(score) {
         // Make a call to put this object in S3 as the new high score.    
         var putObjectParams = {
-            Bucket: '2bitblaster-highscore',
+            Bucket: process.env.bucket,
             Key: 'highscore.txt',
             Body: candidateHighScore
         };
