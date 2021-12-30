@@ -15,7 +15,7 @@ export class ScoreCounter {
     }
 
     synchronizeHighScore(): void {
-        let highScore = {
+        const highScore = {
             'highScore': this._highScore.toString()
         };
 
