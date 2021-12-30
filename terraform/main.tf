@@ -34,6 +34,17 @@ resource "aws_cloudfront_distribution" "distribution" {
     origin_id = aws_s3_bucket.bucket.id
     domain_name = aws_s3_bucket.bucket.bucket_domain_name
   }
+  origin {
+    origin_id = "highScore"
+    origin_path = "/default"
+    custom_origin_config {
+      http_port = 80
+      https_port = 443
+      origin_protocol_policy = "https-only"
+      origin_ssl_protocols = ["TLSv1.2"]
+    }
+    domain_name = replace(replace(aws_apigatewayv2_api.highscore-api-gateway.api_endpoint, "/^https?:\\/\\//", ""), "/\\/.*$/", "")
+  }
   default_root_object = "index.html"
   price_class = "PriceClass_All"
   aliases = [ local.domain ]
@@ -60,6 +71,23 @@ resource "aws_cloudfront_distribution" "distribution" {
       }
     }
   }
+  ordered_cache_behavior {
+    path_pattern     = "/highScore"
+    allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
+    cached_methods   = ["GET", "HEAD"]
+    target_origin_id = "highScore"
+    cache_policy_id = data.aws_cloudfront_cache_policy.managed-cachingdisabled.id
+
+    min_ttl                = 0
+    default_ttl            = 0
+    max_ttl                = 0
+    compress               = true
+    viewer_protocol_policy = "https-only"
+  }
+}
+
+data "aws_cloudfront_cache_policy" "managed-cachingdisabled" {
+  name = "Managed-CachingDisabled"
 }
 
 
@@ -183,7 +211,7 @@ resource "aws_apigatewayv2_integration" "highscore-api-gateway-integration" {
 resource "aws_apigatewayv2_route" "highscore-api-gateway-route" {
   api_id = aws_apigatewayv2_api.highscore-api-gateway.id
 
-  route_key = "POST /HighScore"
+  route_key = "POST /highScore"
   target    = "integrations/${aws_apigatewayv2_integration.highscore-api-gateway-integration.id}"
 }
 
