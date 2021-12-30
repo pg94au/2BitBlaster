@@ -1,6 +1,7 @@
 import Debug from "debug";
 import {EventEmitter} from 'events';
-import {get, put, Response} from 'superagent';
+import { send } from "process";
+import {get, post, put, Response} from 'superagent';
 
 const debug = Debug("Blaster:ScoreCounter");
 
@@ -14,30 +15,16 @@ export class ScoreCounter {
     }
 
     synchronizeHighScore(): void {
-        let remoteHighScore: number;
-        get('highScore').end(((getError: any, getResult: Response): void => {
-            if (getError || !getResult.ok) {
-                debug('Unable to retrieve high score from server.');
-                remoteHighScore = 0;
-            }
-            else {
-                remoteHighScore = parseInt(getResult.text);
-            }
-
-            if (this._highScore > remoteHighScore) {
-                put('highScore')
-                    .set('Content-Type', 'text/plain')
-                    .send(this._highScore.toString())
-                    .end((putError: any, putResult: Response): void => {
-                        if (putError || !putResult.ok) {
-                            debug('Failed to submit high score to server.');
-                        }
-                    });
-            }
-            else {
-                this._highScore = remoteHighScore;
+        post('highScore')
+            .set('Content-Type', 'text/plain')
+            .send(this._highScore.toString())
+            .end(((postError: any, postResult: Response): void => {
+            if (postError || !postResult.ok) {
+                debug('Unable to post high score to server.');
+                return;
             }
 
+            this._highScore = parseInt(postResult.text);
             this._eventEmitter.emit('highScore', this._highScore);
         }));
     }
