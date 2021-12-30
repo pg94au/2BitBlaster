@@ -15,9 +15,13 @@ export class ScoreCounter {
     }
 
     synchronizeHighScore(): void {
+        let highScore = {
+            'highScore': this._highScore.toString()
+        };
+
         post('highScore')
-            .set('Content-Type', 'text/plain')
-            .send(this._highScore.toString())
+            .set('Content-Type', 'application/json')
+            .send(highScore)
             .end(((postError: any, postResult: Response): void => {
             if (postError || !postResult.ok) {
                 debug('Unable to post high score to server.');
