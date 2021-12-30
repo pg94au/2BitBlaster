@@ -1,3 +1,7 @@
+locals {
+  high_score_path = "/highScore"
+}
+
 data "aws_acm_certificate" "certificate" {
   domain      = local.domain
   types       = ["AMAZON_ISSUED"]
@@ -72,7 +76,7 @@ resource "aws_cloudfront_distribution" "distribution" {
     }
   }
   ordered_cache_behavior {
-    path_pattern     = "/highScore"
+    path_pattern     = local.high_score_path
     allowed_methods  = ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "highScore"
@@ -211,7 +215,7 @@ resource "aws_apigatewayv2_integration" "highscore-api-gateway-integration" {
 resource "aws_apigatewayv2_route" "highscore-api-gateway-route" {
   api_id = aws_apigatewayv2_api.highscore-api-gateway.id
 
-  route_key = "POST /highScore"
+  route_key = "POST ${local.high_score_path}"
   target    = "integrations/${aws_apigatewayv2_integration.highscore-api-gateway-integration.id}"
 }
 
