@@ -1,7 +1,6 @@
 import Debug from "debug";
 import {EventEmitter} from 'events';
-import { send } from "process";
-import {get, post, put, Response} from 'superagent';
+import {post, Response} from 'superagent';
 
 const debug = Debug("Blaster:ScoreCounter");
 
