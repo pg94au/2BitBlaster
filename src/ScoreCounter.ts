@@ -29,7 +29,7 @@ export class ScoreCounter {
                 else {
                     this._highScore = parseInt(postResult.text);
                 }
-                
+
                 this._eventEmitter.emit('highScore', this._highScore);
             }));
     }
