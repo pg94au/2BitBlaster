@@ -6,6 +6,7 @@ import {Clock} from './timing/Clock';
 import {Game} from './Game';
 import {Joystick} from './devices/Joystick';
 import {PixiRenderer} from "./devices/PixiRenderer";
+import {ScoreCounter} from "./ScoreCounter";
 
 Debug.log = console.log.bind(console); // tslint:disable-line
 
@@ -15,6 +16,7 @@ export default class Main {
     public Game: typeof Game = Game;
     public Joystick: typeof Joystick = Joystick;
     public Renderer: typeof PixiRenderer = PixiRenderer;
+    public ScoreCounter: typeof ScoreCounter = ScoreCounter;
 
     constructor() {
         debug("Constructor called.")

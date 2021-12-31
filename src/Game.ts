@@ -47,6 +47,14 @@ export class Game {
         this._clock = clock;
         this._scheduler = new Scheduler(clock);
         this._eventEmitter = new EventEmitter();
+
+        this._scoreCounter = new ScoreCounter();
+        this._scoreCounter.on('score', currentScore => {
+            this._eventEmitter.emit('score', currentScore);
+        });
+        this._scoreCounter.on('highScore', highScore => {
+            this._eventEmitter.emit('highScore', highScore);
+        });
     }
 
     private createDisplay(): void {
@@ -129,7 +137,17 @@ export class Game {
     }
 
     on(e: string, f: (...args: any[]) => void): void {
+        debug(`Game.on ${String(e)}`);
         this._eventEmitter.on(e, f);
+
+        switch(e) {
+            case 'highScore':
+                this._eventEmitter.emit('highScore', this._scoreCounter.highScore);
+                break;
+            case 'score':
+                    this._eventEmitter.emit('score', this._scoreCounter.currentScore);
+                    break;
+            }
     }
 
     start(): void {
@@ -144,13 +162,7 @@ export class Game {
         this._remainingLives = 2;
         this._eventEmitter.emit('remainingLives', this._remainingLives);
 
-        this._scoreCounter = new ScoreCounter();
-        this._scoreCounter.on('score', currentScore => {
-            this._eventEmitter.emit('score', currentScore);
-        });
-        this._scoreCounter.on('highScore', highScore => {
-            this._eventEmitter.emit('highScore', highScore);
-        });
+        this._scoreCounter.reset();
 
         this._world = new World(new Dimensions(480, 640), this._scoreCounter);
 
