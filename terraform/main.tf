@@ -1,4 +1,5 @@
 locals {
+  api_gateway_stage = "default"
   high_score_path = "/highScore"
 }
 
@@ -40,7 +41,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
   origin {
     origin_id = "highScore"
-    origin_path = "/default"
+    origin_path = "/${local.api_gateway_stage}"
     custom_origin_config {
       http_port = 80
       https_port = 443
@@ -200,7 +201,7 @@ resource "aws_apigatewayv2_api" "highscore-api-gateway" {
 resource "aws_apigatewayv2_stage" "highscore-api-gateway-stage" {
   api_id = aws_apigatewayv2_api.highscore-api-gateway.id
 
-  name        = "default"
+  name        = local.api_gateway_stage
   auto_deploy = true
 }
 
