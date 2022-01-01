@@ -1,6 +1,6 @@
 import Debug from "debug";
 import {EventEmitter} from 'events';
-import {get, put, Response} from 'superagent';
+import {post, Response} from 'superagent';
 
 const debug = Debug("Blaster:ScoreCounter");
 
@@ -14,36 +14,39 @@ export class ScoreCounter {
     }
 
     synchronizeHighScore(): void {
-        let remoteHighScore: number;
-        get('highScore').end(((getError: any, getResult: Response): void => {
-            if (getError || !getResult.ok) {
-                debug('Unable to retrieve high score from server.');
-                remoteHighScore = 0;
-            }
-            else {
-                remoteHighScore = parseInt(getResult.text);
-            }
+        debug('ScoreCounter.synchronizeHighScore');
+        const highScore = {
+            'highScore': this._highScore.toString()
+        };
 
-            if (this._highScore > remoteHighScore) {
-                put('highScore')
-                    .set('Content-Type', 'text/plain')
-                    .send(this._highScore.toString())
-                    .end((putError: any, putResult: Response): void => {
-                        if (putError || !putResult.ok) {
-                            debug('Failed to submit high score to server.');
-                        }
-                    });
-            }
-            else {
-                this._highScore = remoteHighScore;
-            }
+        post('highScore')
+            .set('Content-Type', 'application/json')
+            .send(highScore)
+            .end(((postError: any, postResult: Response): void => {
+                if (postError || !postResult.ok) {
+                    debug('Unable to post high score to server.');
+                }
+                else {
+                    this._highScore = parseInt(postResult.text);
+                }
 
-            this._eventEmitter.emit('highScore', this._highScore);
-        }));
+                this._eventEmitter.emit('highScore', this._highScore);
+            }));
+    }
+
+    reset(): void {
+        debug('ScoreCounter.reset');
+
+        this._currentScore = 0;
+        this._eventEmitter.emit('score', this._currentScore);
     }
 
     get currentScore(): number {
         return this._currentScore;
+    }
+
+    get highScore(): number {
+        return this._highScore;
     }
 
     increment(amount: number): void {
@@ -59,7 +62,7 @@ export class ScoreCounter {
     }
 
     on(e: string | symbol, f: (...args: any[]) => void): void {
-        debug('ScoreCounter.on');
+        debug(`ScoreCounter.on ${String(e)}`);
         this._eventEmitter.on(e, f);
 
         switch(e) {

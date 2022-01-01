@@ -28,6 +28,24 @@ describe('ScoreCounter', () => {
             scoreCounter.increment(3);
             expect(scoreUpdate).to.be.equal(3);
         });
+
+        it('increments high score if current score is greater than it', () => {
+            const scoreCounter = new ScoreCounter();
+            scoreCounter.increment(1);
+            scoreCounter.reset();
+            expect(scoreCounter.highScore).to.be.equal(1);
+            scoreCounter.increment(2);
+            expect(scoreCounter.highScore).to.be.equal(2);
+        });
+    });
+
+    describe('#reset()', () => {
+        it('sets the score to zero', () => {
+            const scoreCounter = new ScoreCounter();
+            scoreCounter.increment(1);
+            scoreCounter.reset();
+            expect(scoreCounter.currentScore).to.be.equal(0);
+        });
     });
 
     describe('#on()', () => {
