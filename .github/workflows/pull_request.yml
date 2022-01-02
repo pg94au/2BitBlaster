@@ -33,6 +33,16 @@ jobs:
         npm run test
         npm run lint
 
+    - name: Coverage
+      run: |
+        npm run coverage
+    
+    - name: Archive code coverage
+      uses: actions/upload-artifact@v2
+      with:
+        name: code-coverage-report
+        path: coverage
+
 # Pushes to every branch will update this test deployment, clobbering each other.
     - name: Terraform
       env:
