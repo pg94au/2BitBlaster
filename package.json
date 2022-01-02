@@ -8,6 +8,7 @@
     "prod": "npx webpack --config webpack.config.production.js",
     "test": "npx mocha --require ts-node/register --reporter spec --paths test/*.spec.[jt]s test/**/*.spec.[jt]s",
     "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts",
+    "coverage": "nyc --reporter=html --reporter=text-summary npm run test",
     "site": "cd host; node app.js; cd .."
   },
   "repository": {
