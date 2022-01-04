@@ -191,6 +191,11 @@ resource "aws_lambda_function" "highscore-lambda-function" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "highscore-lambda-cloudwatch-log-group" {
+  name              = "/aws/lambda/${aws_lambda_function.highscore-lambda-function.function_name}"
+  retention_in_days = 14
+}
+
 
 ### API Gateway
 resource "aws_apigatewayv2_api" "highscore-api-gateway" {
