@@ -11,6 +11,8 @@ Latest build hosted at https://2bitblaster.blinkenlights.org
 <br>
 <br>
 
+## Building and Running Locally
+
 **How to Run Locally**
 
 ```git clone ...
@@ -26,3 +28,11 @@ node app.js
 ```
 
 *Now visit http://localhost:3000 in your browser!*
+
+## Cloud Deployment
+
+This project uses GitHub Actions to automatically deploy to AWS using Terraform.  The following diagram depicts this deployment.
+
+![AWS Deployment Diagram](/docs/2-Bit-Blaster-AWS-Deployment.svg)
+
+As depicted, all of the static files related to the site are hosted from an S3 bucket.  High scores are managed by an AWS Lambda function which maintains the high score in a file in another S3 bucket, and is triggered via an HTTP API Gateway.  Both the static site and high score endpoint are exposed as origins defined in a CloudFront CDN.
