@@ -69,5 +69,32 @@ describe('Game', () => {
 
             expect(currentRemainingLives).to.be.below(initialRemainingLives!);
         });
+
+        it('should synchronize the high score when the last remaining life is lost', () => {
+            let highScoreSynchronized = false;
+
+            const game = new Game(joystick, renderer, audioPlayer, clock);
+
+            // Patch score counter with something that we can observe.
+            (game as any)._scoreCounter.synchronizeHighScore = () => { highScoreSynchronized = true; }
+
+            game.start();
+
+            (game as any)._remainingLives = 0;  // Force number of remaining lives to zero.
+
+            clock.addSeconds(1000);
+            game.tick(); // Tick adds player to world.
+            clock.addSeconds(1000);
+            game.tick(); // Tick ensures player is now vulnerable.
+
+            const world = ((game as any)._world as World);
+            const player = world.player!;
+            const shot = new ShotStub(world, player.coordinates);
+            player.hitBy(shot, 1000);
+            game.tick(); // Tick removes the player from the world.
+            game.tick(); // Tick notices the player gone and decrements lives remaining.
+
+            expect(highScoreSynchronized).to.be.true;
+        });
     });
 });
