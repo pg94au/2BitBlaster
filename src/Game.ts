@@ -81,6 +81,9 @@ export class Game {
                 if (this._remainingLives >= 0) {
                     this._eventEmitter.emit('remainingLives', this._remainingLives);
                 }
+                else {
+                    this._scoreCounter.synchronizeHighScore();
+                }
             }
         }
 
@@ -216,7 +219,6 @@ export class Game {
             this._textInterlude = null;
             this._isActive = false;
             this._eventEmitter.emit('gameOver');
-            this._scoreCounter.synchronizeHighScore();
         }
     }
 }
