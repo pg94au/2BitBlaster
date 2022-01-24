@@ -31,16 +31,22 @@ resource "aws_iam_role" "highscore-lambda-role" {
   ]
 }
 EOF
+ managed_policy_arns = [aws_iam_policy.highscore-access-policy.arn]
 }
 
-data "aws_iam_policy" "AmazonS3FullAccess" {
-  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
+resource "aws_iam_policy" "highscore-access-policy" {
+  name = "${local.highscore}-highscore-access-policy"
 
-# Consider limiting the policy to specify only the related high score bucket.
-resource "aws_iam_role_policy_attachment" "highscore-lambda-role-s3-full-access-policy-attachment" {
-  role       = aws_iam_role.highscore-lambda-role.name
-  policy_arn = data.aws_iam_policy.AmazonS3FullAccess.arn
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = ["s3:GetObject", "s3:PutObject"]
+        Effect   = "Allow"
+        Resource = "${aws_s3_bucket.highscore-bucket.arn}/*"
+      },
+    ]
+  })
 }
 
 # Consider narrowing the resource ARN for this policy (not *:*:*).
