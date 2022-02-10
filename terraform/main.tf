@@ -3,6 +3,7 @@ locals {
   high_score_path = "/highScore"
 }
 
+# Certificate for hosting public site through Cloudfront
 data "aws_acm_certificate" "certificate" {
   domain      = local.domain
   types       = ["AMAZON_ISSUED"]
@@ -11,33 +12,64 @@ data "aws_acm_certificate" "certificate" {
   most_recent = true
 }
 
+# S3 Bucket to store static files for site
 resource "aws_s3_bucket" "bucket" {
   bucket = local.bucket
-  acl    = "public-read"
+  acl    = "private"
   website {
     index_document = "index.html"
   }
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-      {
-          "Sid": "PublicReadGetObject",
-          "Effect": "Allow",
-          "Principal": "*",
-          "Action": "s3:GetObject",
-          "Resource": "arn:aws:s3:::${local.bucket}/*"
-      }
-  ]
-}
-POLICY
+  versioning {
+    enabled = false
+  }
 }
 
+# Associate policy to allow Cloudfront to access S3 bucket
+resource "aws_s3_bucket_policy" "bucket-policy" {
+  bucket = aws_s3_bucket.bucket.id
+  policy = data.aws_iam_policy_document.allow-access-from-cloudfront.json
+}
+
+# Policy which allows Cloudfront distribution to access static site S3 bucket
+data "aws_iam_policy_document" "allow-access-from-cloudfront" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.origin-access-identity.iam_arn]
+    }
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "${aws_s3_bucket.bucket.arn}/*"
+    ]
+  }
+}
+
+# Restrict public access to site S3 bucket
+resource "aws_s3_bucket_public_access_block" "bucket-access" {
+  bucket = aws_s3_bucket.bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
+}
+
+# Identity for site Cloudfront distribution
+resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
+  comment = "s3-my-webapp.example.com"
+}
+
+# Cloudfront distribution for site
 resource "aws_cloudfront_distribution" "distribution" {
   enabled = true
   origin {
     origin_id = aws_s3_bucket.bucket.id
     domain_name = aws_s3_bucket.bucket.bucket_domain_name
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path
+    }
   }
   origin {
     origin_id = "highScore"
@@ -91,6 +123,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
 }
 
+# Cloudfront cache policy to disable caching
 data "aws_cloudfront_cache_policy" "managed-cachingdisabled" {
   name = "Managed-CachingDisabled"
 }
