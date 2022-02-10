@@ -3,6 +3,7 @@ locals {
   high_score_path = "/highScore"
 }
 
+# Certificate for hosting public site through Cloudfront
 data "aws_acm_certificate" "certificate" {
   domain      = local.domain
   types       = ["AMAZON_ISSUED"]
@@ -11,33 +12,64 @@ data "aws_acm_certificate" "certificate" {
   most_recent = true
 }
 
+# S3 Bucket to store static files for site
 resource "aws_s3_bucket" "bucket" {
   bucket = local.bucket
-  acl    = "public-read"
+  acl    = "private"
   website {
     index_document = "index.html"
   }
-  policy = <<POLICY
-{
-  "Version": "2012-10-17",
-  "Statement": [
-      {
-          "Sid": "PublicReadGetObject",
-          "Effect": "Allow",
-          "Principal": "*",
-          "Action": "s3:GetObject",
-          "Resource": "arn:aws:s3:::${local.bucket}/*"
-      }
-  ]
-}
-POLICY
+  versioning {
+    enabled = false
+  }
 }
 
+# Associate policy to allow Cloudfront to access S3 bucket
+resource "aws_s3_bucket_policy" "bucket-policy" {
+  bucket = aws_s3_bucket.bucket.id
+  policy = data.aws_iam_policy_document.allow-access-from-cloudfront.json
+}
+
+# Policy which allows Cloudfront distribution to access static site S3 bucket
+data "aws_iam_policy_document" "allow-access-from-cloudfront" {
+  statement {
+    principals {
+      type        = "AWS"
+      identifiers = [aws_cloudfront_origin_access_identity.origin-access-identity.iam_arn]
+    }
+    actions = [
+      "s3:GetObject"
+    ]
+    resources = [
+      "${aws_s3_bucket.bucket.arn}/*"
+    ]
+  }
+}
+
+# Restrict public access to site S3 bucket
+resource "aws_s3_bucket_public_access_block" "bucket-access" {
+  bucket = aws_s3_bucket.bucket.id
+
+  block_public_acls   = true
+  block_public_policy = true
+  ignore_public_acls = true
+  restrict_public_buckets = true
+}
+
+# Identity for site Cloudfront distribution
+resource "aws_cloudfront_origin_access_identity" "origin-access-identity" {
+  comment = "s3-my-webapp.example.com"
+}
+
+# Cloudfront distribution for site
 resource "aws_cloudfront_distribution" "distribution" {
   enabled = true
   origin {
     origin_id = aws_s3_bucket.bucket.id
     domain_name = aws_s3_bucket.bucket.bucket_domain_name
+    s3_origin_config {
+      origin_access_identity = aws_cloudfront_origin_access_identity.origin-access-identity.cloudfront_access_identity_path
+    }
   }
   origin {
     origin_id = "highScore"
@@ -91,145 +123,7 @@ resource "aws_cloudfront_distribution" "distribution" {
   }
 }
 
+# Cloudfront cache policy to disable caching
 data "aws_cloudfront_cache_policy" "managed-cachingdisabled" {
   name = "Managed-CachingDisabled"
-}
-
-
-### High score
-
-# Bucket for lambda
-resource "aws_s3_bucket" "highscore-bucket" {
-  bucket = local.highscore
-  acl    = "private"
-}
-
-resource "aws_s3_bucket_public_access_block" "highscore-bucket-access" {
-  bucket = aws_s3_bucket.highscore-bucket.id
-
-  block_public_acls   = true
-  block_public_policy = true
-  ignore_public_acls = true
-  restrict_public_buckets = true
-}
-
-# Role for lambda
-resource "aws_iam_role" "highscore-lambda-role" {
- name   = "${local.highscore}-lambda-role"
- assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": "sts:AssumeRole",
-      "Principal": {
-        "Service": "lambda.amazonaws.com"
-      },
-      "Effect": "Allow",
-      "Sid": ""
-    }
-  ]
-}
-EOF
-}
-
-data "aws_iam_policy" "AmazonS3FullAccess" {
-  arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
-
-# Consider limiting the policy to specify only the related high score bucket.
-resource "aws_iam_role_policy_attachment" "highscore-lambda-role-s3-full-access-policy-attachment" {
-  role       = aws_iam_role.highscore-lambda-role.name
-  policy_arn = data.aws_iam_policy.AmazonS3FullAccess.arn
-}
-
-# Consider narrowing the resource ARN for this policy (not *:*:*).
-resource "aws_iam_policy" "highscore-lambda-logging-policy" {
-  name         = "${local.highscore}-lambda-logging-policy"
-  path         = "/"
-  description  = "IAM policy for logging from high score lambda"
-  policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Action": [
-        "logs:CreateLogGroup",
-        "logs:CreateLogStream",
-        "logs:PutLogEvents"
-      ],
-      "Resource": "arn:aws:logs:*:*:*",
-      "Effect": "Allow"
-    }
-  ]
-}
-EOF
-}
-
-resource "aws_iam_role_policy_attachment" "highscore-lambda-role-logging-policy-attachment" {
-  role        = aws_iam_role.highscore-lambda-role.name
-  policy_arn  = aws_iam_policy.highscore-lambda-logging-policy.arn
-}
-
-data "archive_file" "highscore-lambda-zip" {
-    type        = "zip"
-    source_dir  = "../aws/lambda/highScore"
-    output_path = "highscore-lambda.zip"
-}
-
-resource "aws_lambda_function" "highscore-lambda-function" {
-  filename = "highscore-lambda.zip"
-  function_name = local.highscore
-  role = aws_iam_role.highscore-lambda-role.arn
-  handler = "index.handler"
-  source_code_hash = "${data.archive_file.highscore-lambda-zip.output_base64sha256}"
-  runtime = "nodejs14.x"
-  environment {
-    variables = {
-      bucket = local.highscore
-    }
-  }
-}
-
-resource "aws_cloudwatch_log_group" "highscore-lambda-cloudwatch-log-group" {
-  name              = "/aws/lambda/${aws_lambda_function.highscore-lambda-function.function_name}"
-  retention_in_days = 14
-}
-
-
-### API Gateway
-resource "aws_apigatewayv2_api" "highscore-api-gateway" {
-  name          = local.highscore
-  protocol_type = "HTTP"
-}
-
-resource "aws_apigatewayv2_stage" "highscore-api-gateway-stage" {
-  api_id = aws_apigatewayv2_api.highscore-api-gateway.id
-
-  name        = local.api_gateway_stage
-  auto_deploy = true
-}
-
-resource "aws_apigatewayv2_integration" "highscore-api-gateway-integration" {
-  api_id = aws_apigatewayv2_api.highscore-api-gateway.id
-
-  integration_uri    = aws_lambda_function.highscore-lambda-function.invoke_arn
-  integration_type   = "AWS_PROXY"
-  integration_method = "POST"
-}
-
-resource "aws_apigatewayv2_route" "highscore-api-gateway-route" {
-  api_id = aws_apigatewayv2_api.highscore-api-gateway.id
-
-  route_key = "POST ${local.high_score_path}"
-  target    = "integrations/${aws_apigatewayv2_integration.highscore-api-gateway-integration.id}"
-}
-
-resource "aws_lambda_permission" "highscore-allow-api-gateway" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.highscore-lambda-function.function_name
-  principal     = "apigateway.amazonaws.com"
-
-  source_arn = "${aws_apigatewayv2_api.highscore-api-gateway.execution_arn}/*/*"
 }
