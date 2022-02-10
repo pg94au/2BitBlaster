@@ -49,7 +49,7 @@ resource "aws_iam_policy" "highscore-access-policy" {
   })
 }
 
-# Consider narrowing the resource ARN for this policy (not *:*:*).
+# Policy to allow high score lambda logging.
 resource "aws_iam_policy" "highscore-lambda-logging-policy" {
   name         = "${local.highscore}-lambda-logging-policy"
   path         = "/"
