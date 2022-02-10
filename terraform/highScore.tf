@@ -64,7 +64,7 @@ resource "aws_iam_policy" "highscore-lambda-logging-policy" {
         "logs:CreateLogStream",
         "logs:PutLogEvents"
       ],
-      "Resource": "arn:aws:logs:*:*:*",
+      "Resource": "${aws_cloudwatch_log_group.highscore-lambda-cloudwatch-log-group.arn}:*",
       "Effect": "Allow"
     }
   ]
