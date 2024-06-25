@@ -1,5 +1,5 @@
 import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda';
-import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
+import { SSMClient, GetParameterCommand, PutParameterCommand } from "@aws-sdk/client-ssm";
 
 export const handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
     console.log(`Event: ${JSON.stringify(event, null, 2)}`);
@@ -23,29 +23,37 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
     }
     console.log(`Candidate high score: ${candidateHighScore}`);
 
-
-
     // Fetch current high score to see if this one is greater.
+    var previousHighScore;
     try {
-        const command = new GetParameterCommand({ Name: '2BitBlaster/HighScore' });
-        const response = await ssmClient.send(command);
-        let previousHighScore = response.Parameter?.Value;
+        const getCommand = new GetParameterCommand({ Name: '2BitBlaster/HighScore' }); //TODO: uniqueness from environment variable?
+        const getResponse = await ssmClient.send(getCommand);
+        previousHighScore = parseInt(getResponse.Parameter?.Value ?? '');
+        if (isNaN(previousHighScore)) previousHighScore = 0;
+
+        if (candidateHighScore > previousHighScore) {
+            console.log('Updating existing high score.');
+            const putCommand = new PutParameterCommand({
+                 Name: '2BitBlaster/HighScore',
+                 Overwrite: true,
+                 Type: 'String',
+                 Value: candidateHighScore.toString()
+                });
+            const putResponse = await ssmClient.send(putCommand);
+
+            // Return the new current high score in the response.
+            console.log('Returning new high score.');
+            return {
+                statusCode: 200,
+                body: candidateHighScore.toString()
+            };
+        }
     }
     catch (error) {
         console.error(`Error retrieving high score: ${error}`);
         return {
             statusCode: 200,
-            body: candidateHighScore
+            body: candidateHighScore.toString()
         };
     }
-
-
-
-
-    return {
-        statusCode: 200,
-        body: JSON.stringify({
-            message: 'hello world',
-        }),
-    };
 };
