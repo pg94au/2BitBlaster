@@ -1,0 +1,10 @@
+name: 2BitBlaster
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: Deployment of 2-Bit Blaster to AWS
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
