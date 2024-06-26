@@ -15,19 +15,20 @@ export class ScoreCounter {
 
     synchronizeHighScore(): void {
         debug('ScoreCounter.synchronizeHighScore');
-        const highScore = {
-            'highScore': this._highScore.toString()
-        };
+        const highScore = this._highScore.toString()
 
         post('highScore')
-            .set('Content-Type', 'application/json')
+            .set('Content-Type', 'text/plain')
             .send(highScore)
             .end(((postError: any, postResult: Response): void => {
                 if (postError || !postResult.ok) {
                     debug('Unable to post high score to server.');
                 }
                 else {
-                    this._highScore = parseInt(postResult.text);
+                    let retrievedScore = parseInt(postResult.text);
+                    if (!isNaN(retrievedScore)) {
+                        this._highScore = retrievedScore;
+                    }
                 }
 
                 this._eventEmitter.emit('highScore', this._highScore);
