@@ -17,15 +17,29 @@ const domainCertificate = aws.acm.getCertificate({
 // Create an S3 bucket
 const siteBucket = new aws.s3.BucketV2("siteBucket", {
     acl: "private",
-    website: {
-        indexDocument: "index.html",
-        errorDocument: "error.html",
+    tags: { name: "siteBucket" }
+});
+
+// Configure website configuration for site bucket
+const siteBucketWebsiteConfiguration = new aws.s3.BucketWebsiteConfigurationV2("siteBucketWebsiteConfiguration", {
+    bucket: siteBucket.id,
+    indexDocument: {
+        suffix: "index.html",
     },
-    versioning: {
-        enabled: false
+    errorDocument: {
+        key: "error.html",
     }
 });
 
+// Disable versioning for site bucket
+const siteBucketVersioning = new aws.s3.BucketVersioningV2("siteBucketVersioning", {
+    bucket: siteBucket.id,
+    versioningConfiguration: {
+        status: "Disabled",
+    },
+});
+
+// Set ACL for site bucket
 const siteBucketAcl = new aws.s3.BucketAclV2("siteBucketAcl", {
     bucket: siteBucket.id,
     acl: "private",
