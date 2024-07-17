@@ -100,12 +100,12 @@ const highScoreSsmPolicyDocument = aws.iam.getPolicyDocument({
         resources: [`arn:aws:ssm:ca-central-1:${accountId}:parameter/2BitBlaster/highScore`],
     }],
 });
-const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-scorelambda-ssm-policy", {
+const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-score-lambda-ssm-policy", {
     name: "2-bit-blaster-high-scorelambda-ssm-policy",
     description: "Policy to allow 2-Bit Blaster high score lambda to access parameter store",
     policy: highScoreSsmPolicyDocument.then(policyDocument => policyDocument.json),
 });
-const highScoreLambdaSsmRolePolicyAttachment = new aws.iam.RolePolicyAttachment("2-bit-blaster-high-scorelambda-ssm-role-policy-attachment", {
+const highScoreLambdaSsmRolePolicyAttachment = new aws.iam.RolePolicyAttachment("2-bit-blaster-high-score-lambda-ssm-role-policy-attachment", {
     role: highScoreLambdaRole.name,
     policyArn: highScoreLambdaSsmPolicy.arn,
 });
