@@ -1,7 +1,5 @@
-import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
-import * as docker from "@pulumi/docker";
 
 
 // Create a docker image repository
@@ -11,46 +9,10 @@ const ecrRepository = new awsx.ecr.Repository(
 );
 
 const highScoreLambdaImage = new awsx.ecr.Image("2-bit-blaster-lambda-image", {
+    imageName: "2-bit-blaster-high-score-lambda-image",
     repositoryUrl: ecrRepository.url,
     context: "../highScores/",
 });
-
-
-// const authToken = aws.ecr.getAuthorizationTokenOutput({
-//     registryId: ecrRepository.repository.registryId,
-// });
-
-// const highScoreLambdaImage = new docker.Image("2-bit-blaster-lambda-image", {
-//     build: {
-//         args: {
-//             BUILDKIT_INLINE_CACHE: "1",
-//         },
-//         cacheFrom: {
-//             images: [pulumi.interpolate`${ecrRepository.repository.repositoryUrl}:latest`],
-//         },
-//         context: "../highScores/",
-//         dockerfile: "Dockerfile",
-//     },
-//     imageName: pulumi.interpolate`${ecrRepository.repository.repositoryUrl}:latest`,
-//     registry: {
-//         password: pulumi.secret(authToken.apply(authToken => authToken.password)),
-//         server: ecrRepository.repository.repositoryUrl,
-//     },
-// });
-
-
-// const highScoreLambdaImage = ecrRepository.buildAndPushImage({
-//     context: ".../highScores",
-// });
-
-// // Define the Docker image
-// const highScoreLambdaImage = new docker.Image("highScoreLambdaImage", {
-//     build: {
-//         context: "../highScores",
-//     },
-//     imageName: "2-bit-blaster-high-score",
-// });
-
 
 // Create role for highScore lambda
 const highScoreLambdaRole = new aws.iam.Role("2-bit-blaster-high-score-lambda-role", {
@@ -82,7 +44,6 @@ const highScoreLambdaSsmRolePolicyAttachment = new aws.iam.RolePolicyAttachment(
     policyArn: highScoreLambdaSsmPolicy.arn,
 });
 
-
 // Create the Lambda function
 const lambda = new aws.lambda.Function("2-bit-blaster-high-score-lambda-function", {
     name: "2-bit-blaster-high-score-lambda-function",
@@ -90,14 +51,3 @@ const lambda = new aws.lambda.Function("2-bit-blaster-high-score-lambda-function
     imageUri: highScoreLambdaImage.imageUri,
     role: highScoreLambdaRole.arn,
 });
-
-
-// // Create lambda function
-// const lambdaFunction = new aws.lambda.Function("highScoreLambda", {
-//     runtime: aws.lambda.NodeJS12dXRuntime,
-//     role: highScoreLambdaRole.arn,
-//     handler: "index.handler",
-//     code: new pulumi.asset.AssetArchive({
-//         ".": new pulumi.asset.FileArchive("./lambda"), // Assumes your Lambda code is in the 'lambda' directory
-//     }),
-// });
