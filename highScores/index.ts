@@ -26,15 +26,17 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
     // Fetch current high score to see if this one is greater.
     var previousHighScore;
     try {
-        const getCommand = new GetParameterCommand({ Name: '2BitBlaster/HighScore' }); //TODO: uniqueness from environment variable?
+        console.log('Getting value from parameter store.');
+        const getCommand = new GetParameterCommand({ Name: '/2BitBlaster/HighScore' }); //TODO: uniqueness from environment variable?
         const getResponse = await ssmClient.send(getCommand);
         previousHighScore = parseInt(getResponse.Parameter?.Value ?? '');
         if (isNaN(previousHighScore)) previousHighScore = 0;
+        console.log(`Previous high score is ${previousHighScore}.`);
 
         if (candidateHighScore > previousHighScore) {
             console.log('Updating existing high score.');
             const putCommand = new PutParameterCommand({
-                 Name: '2BitBlaster/HighScore',
+                 Name: '/2BitBlaster/HighScore',
                  Overwrite: true,
                  Type: 'String',
                  Value: candidateHighScore.toString()
@@ -46,6 +48,13 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
             return {
                 statusCode: 200,
                 body: candidateHighScore.toString()
+            };
+        }
+        else {
+            console.log(`Returning previous higher score of ${previousHighScore}.`);
+            return {
+                statusCode: 200,
+                body: previousHighScore.toString()
             };
         }
     }
