@@ -1,5 +1,5 @@
 import { Context, APIGatewayProxyResult, APIGatewayEvent } from 'aws-lambda';
-import { SSMClient, GetParameterCommand, PutParameterCommand } from "@aws-sdk/client-ssm";
+import { SSMClient, GetParameterCommand, PutParameterCommand, ParameterNotFound } from "@aws-sdk/client-ssm";
 
 export const handler = async (event: APIGatewayEvent, context: Context): Promise<APIGatewayProxyResult> => {
     console.log(`Event: ${JSON.stringify(event, null, 2)}`);
@@ -59,10 +59,29 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
         }
     }
     catch (error) {
-        console.error(`Error retrieving high score: ${error}`);
-        return {
-            statusCode: 200,
-            body: candidateHighScore.toString()
-        };
+        if (error instanceof ParameterNotFound) {
+            console.log(`Setting first high score of ${candidateHighScore}.`);
+            const putCommand = new PutParameterCommand({
+                Name: '/2BitBlaster/HighScore',
+                Overwrite: true,
+                Type: 'String',
+                Value: candidateHighScore.toString()
+               });
+           const putResponse = await ssmClient.send(putCommand);
+
+            // Return the new current high score in the response.
+            console.log('Returning new high score.');
+            return {
+                statusCode: 200,
+                body: candidateHighScore.toString()
+            };
+        }
+        else {
+            console.error(`Error retrieving high score: ${error}`);
+            return {
+                statusCode: 200,
+                body: candidateHighScore.toString()
+            };
+        }
     }
 };
