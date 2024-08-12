@@ -3,7 +3,7 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
 
-const domain = "2bittesting.blinkenlights.org";
+const domain = "testing.blinkenlights.org";
 
 export = async () => {
 
@@ -19,7 +19,7 @@ export = async () => {
         return domainCertificate;
     };
     
-    async function createHighScoreFunction(): Promise<aws.lambda.Function> {
+    async function createHighScoreFunction(api: aws.apigateway.RestApi): Promise<aws.lambda.Function> {
         // Create a docker image repository
         const ecrRepository = new awsx.ecr.Repository(
             "2-bit-blaster-ecr-repository",
@@ -70,100 +70,111 @@ export = async () => {
             role: highScoreLambdaRole.arn,
         });
     
+        // Grant API Gateway permission to invoke the high score lambda function
+        const highScoreLambdaApiPermission = new aws.lambda.Permission("2-bit-blaster-api-gateway-invoke-high-score-permission", {
+            action: "lambda:InvokeFunction",
+            function: highScoreLambda.arn,
+            principal: "apigateway.amazonaws.com",
+            sourceArn: pulumi.interpolate`${api.executionArn}/*/*`,
+        });
+
         return highScoreLambda;
     }
+
+    function createSiteBucket(): aws.s3.BucketV2 {
+        // Create an S3 bucket
+        const siteBucket = new aws.s3.BucketV2(
+            "2-bit-blaster-site-bucket", {
+            tags: { name: "2-bit-blaster-site-bucket" }
+        });
+
+        const siteBucketAclV2 = new aws.s3.BucketAclV2(
+            "2-bit-blaster-site-bucket-acl-v2", {
+            bucket: siteBucket.id,
+            acl: "private"
+        });
+
+        // Configure website configuration for site bucket
+        const siteBucketWebsiteConfiguration = new aws.s3.BucketWebsiteConfigurationV2(
+            "2-bit-blaster-site-bucket-website-configuration", {
+            bucket: siteBucket.id,
+            indexDocument: {
+                suffix: "index.html",
+            },
+            errorDocument: {
+                key: "error.html",
+            }
+        });
+
+        // Disable versioning for site bucket
+        const siteBucketVersioning = new aws.s3.BucketVersioningV2(
+            "2-bit-blaster-site-bucket-versioning", {
+            bucket: siteBucket.id,
+            versioningConfiguration: {
+                status: "Disabled",
+            },
+        });
+
+        // Synchronize files between our build output folder and the static site bucket
+        const siteSyncedFolder = new synced_folder.S3BucketFolder(
+            "2-bit-blaster-site-bucket-folder", {
+            path: "../dist",
+            bucketName: siteBucket.bucket,
+            acl: aws.s3.PrivateAcl
+        });
+
+        return siteBucket;
+    }
+
+    function setupRestApi(api: aws.apigateway.RestApi, highScoreLambda: aws.lambda.Function): aws.apigateway.Integration {
+        // Create a resource for the high score endpoint
+        const highScoreApiGatewayResource = new aws.apigateway.Resource("2-bit-blaster-api-gateway-high-score-resource", {
+            restApi: api.id,
+            parentId: api.rootResourceId,
+            pathPart: "highScore",
+        });
+
+        // Create a method for the resource
+        const highScoreApiGatewayMethod = new aws.apigateway.Method("2-bit-blaster-api-gateway-high-score-method", {
+            restApi: api.id,
+            resourceId: highScoreApiGatewayResource.id,
+            httpMethod: "POST",
+            authorization: "NONE",
+        });
+
+        // Integrate the method with the Lambda function
+        const integration = new aws.apigateway.Integration("2-bit-blaster-api-gateway-high-score-integration", {
+            restApi: api.id,
+            resourceId: highScoreApiGatewayResource.id,
+            httpMethod: highScoreApiGatewayMethod.httpMethod,
+            integrationHttpMethod: "POST",
+            type: "AWS_PROXY",
+            uri: highScoreLambda.invokeArn,
+        });
+
+        return integration;
+    }
+
 
     // Get existing certificate for https hosting
     const siteCertificate = await getSiteCertificate();
 
-
-    // Create an S3 bucket
-    const siteBucket = new aws.s3.BucketV2(
-        "2-bit-blaster-site-bucket", {
-        tags: { name: "2-bit-blaster-site-bucket" }
-    });
-
-    const siteBucketAclV2 = new aws.s3.BucketAclV2(
-        "2-bit-blaster-site-bucket-acl-v2", {
-        bucket: siteBucket.id,
-        acl: "private"
-    });
-
-    // Configure website configuration for site bucket
-    const siteBucketWebsiteConfiguration = new aws.s3.BucketWebsiteConfigurationV2(
-        "2-bit-blaster-site-bucket-website-configuration", {
-        bucket: siteBucket.id,
-        indexDocument: {
-            suffix: "index.html",
-        },
-        errorDocument: {
-            key: "error.html",
-        }
-    });
-
-    // Disable versioning for site bucket
-    const siteBucketVersioning = new aws.s3.BucketVersioningV2(
-        "2-bit-blaster-site-bucket-versioning", {
-        bucket: siteBucket.id,
-        versioningConfiguration: {
-            status: "Disabled",
-        },
-    });
-
-    const siteSyncedFolder = new synced_folder.S3BucketFolder(
-        "2-bit-blaster-site-bucket-folder", {
-        path: "../dist",
-        bucketName: siteBucket.bucket,
-        acl: aws.s3.PrivateAcl
-    });
-
-
-
-    const highScoreLambda = await createHighScoreFunction();
+    const siteBucket = createSiteBucket();
 
     // Create an API Gateway REST API
     const api = new aws.apigateway.RestApi("2-bit-blaster-api-gateway", {
         description: "API Gateway for 2-Bit Blaster",
     });
 
-    // Create a resource for the high score endpoint
-    const highScoreApiGatewayResource = new aws.apigateway.Resource("2-bit-blaster-api-gateway-high-score-resource", {
-        restApi: api.id,
-        parentId: api.rootResourceId,
-        pathPart: "highScore",
-    });
+    const highScoreLambda = await createHighScoreFunction(api);
 
-    // Create a method for the resource
-    const highScoreApiGatewayMethod = new aws.apigateway.Method("2-bit-blaster-api-gateway-high-score-method", {
-        restApi: api.id,
-        resourceId: highScoreApiGatewayResource.id,
-        httpMethod: "POST",
-        authorization: "NONE",
-    });
-
-    // Integrate the method with the Lambda function
-    const integration = new aws.apigateway.Integration("2-bit-blaster-api-gateway-high-score-integration", {
-        restApi: api.id,
-        resourceId: highScoreApiGatewayResource.id,
-        httpMethod: highScoreApiGatewayMethod.httpMethod,
-        integrationHttpMethod: "POST",
-        type: "AWS_PROXY",
-        uri: highScoreLambda.invokeArn,
-    });
-
-    // Grant API Gateway permission to invoke the high score lambda function
-    const highScoreLambdaApiPermission = new aws.lambda.Permission("2-bit-blaster-api-gateway-invoke-high-score-permission", {
-        action: "lambda:InvokeFunction",
-        function: highScoreLambda.arn,
-        principal: "apigateway.amazonaws.com",
-        sourceArn: pulumi.interpolate`${api.executionArn}/*/*`,
-    });
+    const restApiIntegration = setupRestApi(api, highScoreLambda);
 
     // Deploy the REST API
     const deployment = new aws.apigateway.Deployment("2-bit-blaster-api-gateway-deployment", {
         restApi: api.id,
         stageName: "prod",
-    }, { dependsOn: [integration] });
+    }, { dependsOn: [restApiIntegration] });
 
     // Export the URL of the API
     return { apiUrl: deployment.invokeUrl };
