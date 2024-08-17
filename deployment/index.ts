@@ -163,7 +163,95 @@ export = async () => {
         return deployment;
     }
 
+    function createDistribution(siteBucket: aws.s3.BucketV2, deployment: aws.apigateway.Deployment): aws.cloudfront.Distribution {
+        const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
+            name: siteBucket.bucketDomainName, // TODO: Is this really a good name?
+            signingBehavior: "always",
+            signingProtocol: "sigv4",
+            originAccessControlOriginType: "s3"
+        });
 
+        // Create new Cloudfront deployment
+        const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
+            comment: "2-Bit Blaster distribution",
+            enabled: true,
+            isIpv6Enabled: true,
+            defaultRootObject: "index.html",
+            priceClass: "PriceClass_All",
+            aliases: [domain],
+            origins: [{
+                originId: siteBucket.id,
+                domainName: siteBucket.bucketDomainName,
+                originAccessControlId: cloudFrontOriginAccessControl.id
+            },{
+                originId: api.id,
+                domainName: deployment.invokeUrl.apply(u => url.parse(u).host!), // We just want the host portion of this URL.
+                customOriginConfig: {
+                    httpPort: 80,
+                    httpsPort: 443,
+                    originProtocolPolicy: "https-only",
+                    originSslProtocols: ["TLSv1.2"]
+                }
+            }],
+            defaultCacheBehavior: {
+                targetOriginId: siteBucket.id,
+                allowedMethods: ["GET", "HEAD"],
+                cachedMethods: ["GET", "HEAD"],
+                compress: true,
+                viewerProtocolPolicy: "redirect-to-https",
+                forwardedValues: {
+                    queryString: true,
+                    cookies: {
+                        forward: "none"
+                    }
+                }
+            },
+            orderedCacheBehaviors: [{
+                pathPattern: "/highScore",
+                allowedMethods: ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"],
+                cachedMethods: ["GET", "HEAD"],
+                targetOriginId: api.id,
+                cachePolicyId: "4135ea2d-6df8-44a3-9df3-4b5a84be39ad", // AWS Managed CachingDisabled policy
+                minTtl: 0,
+                defaultTtl: 0,
+                maxTtl: 0,
+                compress: true,
+                viewerProtocolPolicy: "https-only"
+            }],
+            restrictions: {
+                geoRestriction: {
+                    restrictionType: "none"
+                }
+            },
+            viewerCertificate: {
+                acmCertificateArn: siteCertificate.arn,
+                sslSupportMethod: "sni-only"
+            }
+        });
+
+        const siteBucketPolicy = new aws.s3.BucketPolicy("2-bit-blaster-site-bucket-policy", {
+            bucket: siteBucket.bucket,
+            policy: pulumi.output({
+                Version: "2008-10-17",
+                Statement: [{
+                    Action: ["s3:GetObject"],
+                    Effect: "Allow",
+                    Resource: pulumi.interpolate`${siteBucket.arn}/*`,
+                    Principal: { "Service": "cloudfront.amazonaws.com" },
+                    Condition: {
+                        StringEquals: {
+                            "AWS:SourceArn": distribution.arn
+                        }
+                    }
+                }],
+            }).apply(JSON.stringify),
+        });
+    
+        return distribution;
+    }
+
+
+    
     // Get existing certificate for https hosting
     const siteCertificate = await getSiteCertificate();
 
@@ -178,90 +266,7 @@ export = async () => {
 
     const deployment = deployApi(api, highScoreLambda);
 
-
-    const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
-        name: siteBucket.bucketDomainName, // TODO: Is this really a good name?
-        signingBehavior: "always",
-        signingProtocol: "sigv4",
-        originAccessControlOriginType: "s3"
-    });
-
-    // Create new Cloudfront deployment
-    const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
-        comment: "2-Bit Blaster distribution",
-        enabled: true,
-        isIpv6Enabled: true,
-        defaultRootObject: "index.html",
-        priceClass: "PriceClass_All",
-        aliases: [domain],
-        origins: [{
-            originId: siteBucket.id,
-            domainName: siteBucket.bucketDomainName,
-            originAccessControlId: cloudFrontOriginAccessControl.id
-        },{
-            originId: api.id,
-            domainName: deployment.invokeUrl.apply(u => url.parse(u).host!), // We just want the host portion of this URL.
-            customOriginConfig: {
-                httpPort: 80,
-                httpsPort: 443,
-                originProtocolPolicy: "https-only",
-                originSslProtocols: ["TLSv1.2"]
-            }
-        }],
-        defaultCacheBehavior: {
-            targetOriginId: siteBucket.id,
-            allowedMethods: ["GET", "HEAD"],
-            cachedMethods: ["GET", "HEAD"],
-            compress: true,
-            viewerProtocolPolicy: "redirect-to-https",
-            forwardedValues: {
-                queryString: true,
-                cookies: {
-                    forward: "none"
-                }
-            }
-        },
-        orderedCacheBehaviors: [{
-            pathPattern: "/highScore",
-            allowedMethods: ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"],
-            cachedMethods: ["GET", "HEAD"],
-            targetOriginId: api.id,
-            cachePolicyId: "4135ea2d-6df8-44a3-9df3-4b5a84be39ad", // AWS Managed CachingDisabled policy
-            minTtl: 0,
-            defaultTtl: 0,
-            maxTtl: 0,
-            compress: true,
-            viewerProtocolPolicy: "https-only"
-        }],
-        restrictions: {
-            geoRestriction: {
-                restrictionType: "none"
-            }
-        },
-        viewerCertificate: {
-            acmCertificateArn: siteCertificate.arn,
-            sslSupportMethod: "sni-only"
-        }
-    });
-
-    const siteBucketPolicy = new aws.s3.BucketPolicy("2-bit-blaster-site-bucket-policy", {
-        bucket: siteBucket.bucket,
-        policy: pulumi.output({
-            Version: "2008-10-17",
-            Statement: [{
-                Action: ["s3:GetObject"],
-                Effect: "Allow",
-                Resource: pulumi.interpolate`${siteBucket.arn}/*`,
-                Principal: { "Service": "cloudfront.amazonaws.com" },
-                Condition: {
-                    StringEquals: {
-                        "AWS:SourceArn": distribution.arn
-                    }
-                }
-            }],
-        }).apply(JSON.stringify),
-    });
-
+    const distribution = createDistribution(siteBucket, deployment);
 
     // Export the URL of the API
     return { 
