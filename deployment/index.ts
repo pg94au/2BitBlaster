@@ -179,8 +179,6 @@ export = async () => {
     }, { dependsOn: [restApiIntegration] });
 
 
-    const domainName = deployment.invokeUrl.apply(u => url.parse(u).host!);
-
     const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
         name: siteBucket.bucketDomainName, // TODO: Is this really a good name?
         signingBehavior: "always",
@@ -264,35 +262,10 @@ export = async () => {
         }).apply(JSON.stringify),
     });
 
-    // TODO: Allow cloudfront to access this S3 bucket (add this policy to bucket)
-    /*
-    {
-        "Version": "2008-10-17",
-        "Id": "PolicyForCloudFrontPrivateContent",
-        "Statement": [
-            {
-                "Sid": "AllowCloudFrontServicePrincipal",
-                "Effect": "Allow",
-                "Principal": {
-                    "Service": "cloudfront.amazonaws.com"
-                },
-                "Action": "s3:GetObject",
-                "Resource": "arn:aws:s3:::2-bit-blaster-site-bucket-6db1759/*",
-                "Condition": {
-                    "StringEquals": {
-                      "AWS:SourceArn": "arn:aws:cloudfront::663866322745:distribution/EOXC3YOIUJLL"
-                    }
-                }
-            }
-        ]
-      }
-    */
-
 
     // Export the URL of the API
     return { 
         apiUrl: deployment.invokeUrl,
         siteDomainName: distribution.domainName,
-        domainName: domainName
      };
 }
