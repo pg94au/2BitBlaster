@@ -2,8 +2,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
+import * as url from 'url';
+import { ManagedPolicies } from "@pulumi/aws/iam";
 
-const domain = "testing.blinkenlights.org";
+const domain = "scratch.blinkenlights.org";
 
 export = async () => {
 
@@ -176,6 +178,121 @@ export = async () => {
         stageName: "prod",
     }, { dependsOn: [restApiIntegration] });
 
+
+    const domainName = deployment.invokeUrl.apply(u => url.parse(u).host!);
+
+    const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
+        name: siteBucket.bucketDomainName, // TODO: Is this really a good name?
+        signingBehavior: "always",
+        signingProtocol: "sigv4",
+        originAccessControlOriginType: "s3"
+    });
+
+    // Create new Cloudfront deployment
+    const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
+        comment: "2-Bit Blaster distribution",
+        enabled: true,
+        isIpv6Enabled: true,
+        defaultRootObject: "index.html",
+        priceClass: "PriceClass_All",
+        aliases: [domain],
+        origins: [{
+            originId: siteBucket.id,
+            domainName: siteBucket.bucketDomainName,
+            originAccessControlId: cloudFrontOriginAccessControl.id
+        },{
+            originId: api.id,
+            domainName: deployment.invokeUrl.apply(u => url.parse(u).host!), // We just want the host portion of this URL.
+            customOriginConfig: {
+                httpPort: 80,
+                httpsPort: 443,
+                originProtocolPolicy: "https-only",
+                originSslProtocols: ["TLSv1.2"]
+            }
+        }],
+        defaultCacheBehavior: {
+            targetOriginId: siteBucket.id,
+            allowedMethods: ["GET", "HEAD"],
+            cachedMethods: ["GET", "HEAD"],
+            compress: true,
+            viewerProtocolPolicy: "redirect-to-https",
+            forwardedValues: {
+                queryString: true,
+                cookies: {
+                    forward: "none"
+                }
+            }
+        },
+        orderedCacheBehaviors: [{
+            pathPattern: "/highScore",
+            allowedMethods: ["GET", "HEAD", "OPTIONS", "PUT", "POST", "PATCH", "DELETE"],
+            cachedMethods: ["GET", "HEAD"],
+            targetOriginId: api.id,
+            cachePolicyId: "4135ea2d-6df8-44a3-9df3-4b5a84be39ad", // AWS Managed CachingDisabled policy
+            minTtl: 0,
+            defaultTtl: 0,
+            maxTtl: 0,
+            compress: true,
+            viewerProtocolPolicy: "https-only"
+        }],
+        restrictions: {
+            geoRestriction: {
+                restrictionType: "none"
+            }
+        },
+        viewerCertificate: {
+            acmCertificateArn: siteCertificate.arn,
+            sslSupportMethod: "sni-only"
+        }
+    });
+
+    const siteBucketPolicy = new aws.s3.BucketPolicy("2-bit-blaster-site-bucket-policy", {
+        bucket: siteBucket.bucket,
+        policy: pulumi.output({
+            Version: "2008-10-17",
+            Statement: [{
+                Action: ["s3:GetObject"],
+                Effect: "Allow",
+                Resource: pulumi.interpolate`${siteBucket.arn}/*`,
+                Principal: { "Service": "cloudfront.amazonaws.com" },
+                Condition: {
+                    StringEquals: {
+                        "AWS:SourceArn": distribution.arn
+                    }
+                }
+            }],
+        }).apply(JSON.stringify),
+    });
+
+    // TODO: Allow cloudfront to access this S3 bucket (add this policy to bucket)
+    /*
+    {
+        "Version": "2008-10-17",
+        "Id": "PolicyForCloudFrontPrivateContent",
+        "Statement": [
+            {
+                "Sid": "AllowCloudFrontServicePrincipal",
+                "Effect": "Allow",
+                "Principal": {
+                    "Service": "cloudfront.amazonaws.com"
+                },
+                "Action": "s3:GetObject",
+                "Resource": "arn:aws:s3:::2-bit-blaster-site-bucket-6db1759/*",
+                "Condition": {
+                    "StringEquals": {
+                      "AWS:SourceArn": "arn:aws:cloudfront::663866322745:distribution/EOXC3YOIUJLL"
+                    }
+                }
+            }
+        ]
+      }
+    */
+
+
     // Export the URL of the API
-    return { apiUrl: deployment.invokeUrl };
+    return { 
+        apiUrl: deployment.invokeUrl,
+        siteDomainName: distribution.domainName,
+        domainName: domainName
+     };
 }
