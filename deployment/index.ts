@@ -128,7 +128,7 @@ export = async () => {
         return siteBucket;
     }
 
-    function setupRestApi(api: aws.apigateway.RestApi, highScoreLambda: aws.lambda.Function): aws.apigateway.Integration {
+    function deployApi(api: aws.apigateway.RestApi, highScoreLambda: aws.lambda.Function): aws.apigateway.Deployment {
         // Create a resource for the high score endpoint
         const highScoreApiGatewayResource = new aws.apigateway.Resource("2-bit-blaster-api-gateway-high-score-resource", {
             restApi: api.id,
@@ -154,7 +154,13 @@ export = async () => {
             uri: highScoreLambda.invokeArn,
         });
 
-        return integration;
+        // Deploy the REST API
+        const deployment = new aws.apigateway.Deployment("2-bit-blaster-api-gateway-deployment", {
+            restApi: api.id,
+            stageName: "prod",
+        }, { dependsOn: [integration] });
+
+        return deployment;
     }
 
 
@@ -170,13 +176,7 @@ export = async () => {
 
     const highScoreLambda = await createHighScoreFunction(api);
 
-    const restApiIntegration = setupRestApi(api, highScoreLambda);
-
-    // Deploy the REST API
-    const deployment = new aws.apigateway.Deployment("2-bit-blaster-api-gateway-deployment", {
-        restApi: api.id,
-        stageName: "prod",
-    }, { dependsOn: [restApiIntegration] });
+    const deployment = deployApi(api, highScoreLambda);
 
 
     const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
