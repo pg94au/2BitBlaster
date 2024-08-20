@@ -3,7 +3,6 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
 import * as url from 'url';
-import { ManagedPolicies } from "@pulumi/aws/iam";
 
 const domain = "scratch.blinkenlights.org";
 
