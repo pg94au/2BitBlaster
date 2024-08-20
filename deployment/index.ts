@@ -3,16 +3,19 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
 import * as url from 'url';
-
-const domain = "scratch.blinkenlights.org";
+import {Config} from "./Config";
 
 export = async () => {
+
+    const provider = new aws.Provider("awsProvider", {
+        region: Config.Region
+    });
 
     const accountId = (await aws.getCallerIdentity({})).accountId;
 
     async function getSiteCertificate(): Promise<aws.acm.GetCertificateResult> {
         const domainCertificate = await aws.acm.getCertificate({
-            domain: domain,
+            domain: Config.Domain,
             statuses: ["ISSUED"],
         }, {
             provider: new aws.Provider("aws", { region: "us-east-1" })
@@ -50,7 +53,7 @@ export = async () => {
             statements: [{
                 effect: "Allow",
                 actions: ["ssm:GetParameter", "ssm:PutParameter"],
-                resources: [`arn:aws:ssm:ca-central-1:${accountId}:parameter/2BitBlaster/HighScore`]
+                resources: [`arn:aws:ssm:${Config.Region}:${accountId}:parameter/2BitBlaster/HighScore`]
             }],
         });
         const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-score-lambda-ssm-policy", {
@@ -177,7 +180,7 @@ export = async () => {
             isIpv6Enabled: true,
             defaultRootObject: "index.html",
             priceClass: "PriceClass_All",
-            aliases: [domain],
+            aliases: [Config.Domain],
             origins: [{
                 originId: siteBucket.id,
                 domainName: siteBucket.bucketDomainName,
