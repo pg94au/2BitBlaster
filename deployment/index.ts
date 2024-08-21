@@ -7,9 +7,7 @@ import {Config} from "./Config";
 
 export = async () => {
 
-    const provider = new aws.Provider("awsProvider", {
-        region: Config.Region
-    });
+    const region = (await aws.getRegion({})).name;
 
     const accountId = (await aws.getCallerIdentity({})).accountId;
 
@@ -27,18 +25,18 @@ export = async () => {
         // Create a docker image repository
         const ecrRepository = new awsx.ecr.Repository(
             "2-bit-blaster-ecr-repository",
-            { name: "2-bit-blaster-ecr-repository" }
+            { /*name: `2-bit-blaster-ecr-repository-${Config.Deployment}`*/ }
         );
     
         const highScoreLambdaImage = new awsx.ecr.Image("2-bit-blaster-lambda-image", {
-            imageName: "2-bit-blaster-high-score-lambda-image",
+            /*imageName: `2-bit-blaster-high-score-lambda-image-${Config.Deployment}`,*/
             repositoryUrl: ecrRepository.url,
             context: "../highScores/",
         });
     
         // Create role for highScore lambda
         const highScoreLambdaRole = new aws.iam.Role("2-bit-blaster-high-score-lambda-role", {
-            name: "2-bit-blaster-high-score-lambda-role",
+            /*name: `2-bit-blaster-high-score-lambda-role-${Config.Deployment}`,*/
             assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({ Service: "lambda.amazonaws.com" }),
         });
     
@@ -53,11 +51,11 @@ export = async () => {
             statements: [{
                 effect: "Allow",
                 actions: ["ssm:GetParameter", "ssm:PutParameter"],
-                resources: [`arn:aws:ssm:${Config.Region}:${accountId}:parameter/2BitBlaster/HighScore`]
+                resources: [`arn:aws:ssm:${region}:${accountId}:parameter/2BitBlaster/HighScore`]
             }],
         });
         const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-score-lambda-ssm-policy", {
-            name: "2-bit-blaster-high-scorelambda-ssm-policy",
+            /*name: `2-bit-blaster-high-scorelambda-ssm-policy-${Config.Deployment}`,*/
             description: "Policy to allow 2-Bit Blaster high score lambda to access parameter store",
             policy: highScoreSsmPolicyDocument.then(policyDocument => policyDocument.json),
         });
@@ -68,7 +66,7 @@ export = async () => {
     
         // Create the Lambda function
         const highScoreLambda = new aws.lambda.Function("2-bit-blaster-high-score-lambda-function", {
-            name: "2-bit-blaster-high-score-lambda-function",
+            /*name: `2-bit-blaster-high-score-lambda-function-${Config.Deployment}`,*/
             packageType: "Image",
             imageUri: highScoreLambdaImage.imageUri,
             role: highScoreLambdaRole.arn,
@@ -175,7 +173,7 @@ export = async () => {
 
         // Create new Cloudfront deployment
         const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
-            comment: "2-Bit Blaster distribution",
+            comment: `2-Bit Blaster distribution (${Config.Deployment})`,
             enabled: true,
             isIpv6Enabled: true,
             defaultRootObject: "index.html",
