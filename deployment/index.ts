@@ -31,6 +31,7 @@ export = async () => {
             imageName: "2-bit-blaster-high-score-lambda-image",
             repositoryUrl: ecrRepository.url,
             context: "../highScores/",
+            platform: "x86_64"
         });
     
         // Create role for highScore lambda
@@ -69,6 +70,7 @@ export = async () => {
             packageType: "Image",
             imageUri: highScoreLambdaImage.imageUri,
             role: highScoreLambdaRole.arn,
+            architectures: ["x86_64"]
         });
     
         // Grant API Gateway permission to invoke the high score lambda function
