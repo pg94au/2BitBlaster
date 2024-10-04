@@ -3,7 +3,6 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
 import * as url from 'url';
-import { ManagedPolicies } from "@pulumi/aws/iam";
 
 const domain = "scratch.blinkenlights.org";
 
@@ -32,6 +31,7 @@ export = async () => {
             imageName: "2-bit-blaster-high-score-lambda-image",
             repositoryUrl: ecrRepository.url,
             context: "../highScores/",
+            platform: "x86_64"
         });
     
         // Create role for highScore lambda
@@ -70,6 +70,7 @@ export = async () => {
             packageType: "Image",
             imageUri: highScoreLambdaImage.imageUri,
             role: highScoreLambdaRole.arn,
+            architectures: ["x86_64"]
         });
     
         // Grant API Gateway permission to invoke the high score lambda function
@@ -157,7 +158,7 @@ export = async () => {
         // Deploy the REST API
         const deployment = new aws.apigateway.Deployment("2-bit-blaster-api-gateway-deployment", {
             restApi: api.id,
-            stageName: "prod",
+            stageName: "default",
         }, { dependsOn: [integration] });
 
         return deployment;
@@ -186,6 +187,7 @@ export = async () => {
             },{
                 originId: api.id,
                 domainName: deployment.invokeUrl.apply(u => url.parse(u).host!), // We just want the host portion of this URL.
+                originPath: deployment.invokeUrl.apply(u => url.parse(u).path!), // Here we just want the path of this URL.
                 customOriginConfig: {
                     httpPort: 80,
                     httpsPort: 443,
@@ -251,7 +253,7 @@ export = async () => {
     }
 
 
-    
+
     // Get existing certificate for https hosting
     const siteCertificate = await getSiteCertificate();
 
