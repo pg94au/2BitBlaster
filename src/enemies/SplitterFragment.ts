@@ -100,6 +100,10 @@ export class SplitterFragment extends Enemy {
         debug('SplitterFragment.tick');
         super.tick();
 
+        if (!this._isActive) {
+            return;
+        }
+
         this._scheduler.executeDueOperations();
 
         this.step();

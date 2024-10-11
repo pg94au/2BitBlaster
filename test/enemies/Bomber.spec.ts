@@ -13,6 +13,7 @@ import {ScoreCounter} from '../../src/ScoreCounter';
 import {AudioPlayerStub} from "../stubs/AudioPlayerStub";
 import {ClockStub} from "../stubs/ClockStub";
 import {WorldStub} from "../stubs/WorldStub";
+import exp from 'constants';
 
 describe('Bomber', () => {
     let audioPlayer: AudioPlayer;
@@ -81,16 +82,15 @@ describe('Bomber', () => {
             expect(scoreCounter.currentScore).to.be.above(0);
         });
 
-        it('should become inactive when it disappears of the side of the screen', () => {
+        it('should become inactive when it disappears off the side of the screen', () => {
             const bomber = new Bomber(audioPlayer, world, clock, 10);
 
-            const lastVisiblePosition = world.dimensions.width + bomber.imageDetails.frameWidth - 1;
+            const lastVisiblePosition = world.dimensions.width + (bomber.imageDetails.frameWidth / 2) - 1;
 
             while (bomber.coordinates.x < lastVisiblePosition) {
                 bomber.tick();
+                expect(bomber.isActive).to.be.equal(bomber.coordinates.x < lastVisiblePosition);
             }
-
-            expect(bomber.isActive).to.be.false;
         });
     });
 });

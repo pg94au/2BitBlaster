@@ -71,6 +71,10 @@ export class Bomber extends Enemy {
         debug('Bomber.tick');
         super.tick();
 
+        if (!this._isActive) {
+            return;
+        }
+
         this._scheduler.executeDueOperations();
 
         for (let i = 0; i < 3; i++) {

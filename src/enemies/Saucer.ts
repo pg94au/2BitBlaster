@@ -87,6 +87,10 @@ export class Saucer extends Enemy {
         debug('Saucer.tick');
         super.tick();
 
+        if (!this._isActive) {
+            return;
+        }
+
         this._scheduler.executeDueOperations();
 
         this.step();

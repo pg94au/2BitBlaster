@@ -81,6 +81,10 @@ export class Probe extends Enemy {
         debug('Probe.tick');
         super.tick();
 
+        if (!this._isActive) {
+            return;
+        }
+
         this._scheduler.executeDueOperations();
 
         this.step();
