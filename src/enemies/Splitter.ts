@@ -91,14 +91,16 @@ export class Splitter extends Enemy {
         debug('Splitter.tick');
         super.tick();
 
-        this._scheduler.executeDueOperations();
+        if (this._isActive) {
+            this._scheduler.executeDueOperations();
 
-        this.step();
+            this.step();
 
-        // Check if this Splitter has collided with any active enemies.
-        const player = this._world.player;
-        if (player) {
-            this._hitArbiter.attemptToHit(player);
+            // Check if this Splitter has collided with any active enemies.
+            const player = this._world.player;
+            if (player) {
+                this._hitArbiter.attemptToHit(player);
+            }
         }
 
         if (this._health <= 0) {
