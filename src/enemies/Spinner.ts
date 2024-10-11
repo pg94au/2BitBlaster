@@ -95,6 +95,10 @@ export class Spinner extends Enemy {
         debug('Spinner.tick');
         super.tick();
 
+        if (!this._isActive) {
+            return;
+        }
+
         this._scheduler.executeDueOperations();
 
         this.step();
