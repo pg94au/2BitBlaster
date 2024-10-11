@@ -7,6 +7,9 @@ This is a work in progress...
 <br>
 <br>
 
+<img src=/docs/screenshot.jpg width=800/>
+<br>
+
 Latest build hosted at https://2bitblaster.blinkenlights.org
 <br>
 <br>
