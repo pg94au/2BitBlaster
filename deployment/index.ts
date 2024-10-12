@@ -22,9 +22,10 @@ export = async () => {
     
     async function createHighScoreFunction(api: aws.apigateway.RestApi): Promise<aws.lambda.Function> {
         // Create a docker image repository
-        const ecrRepository = new awsx.ecr.Repository(
-            "2-bit-blaster-ecr-repository",
-            { name: "2-bit-blaster-ecr-repository" }
+        const ecrRepository = new awsx.ecr.Repository("2-bit-blaster-ecr-repository", { 
+                name: "2-bit-blaster-ecr-repository",
+                tags: { domain: domain}
+            }
         );
     
         const highScoreLambdaImage = new awsx.ecr.Image("2-bit-blaster-lambda-image", {
@@ -38,12 +39,13 @@ export = async () => {
         const highScoreLambdaRole = new aws.iam.Role("2-bit-blaster-high-score-lambda-role", {
             name: "2-bit-blaster-high-score-lambda-role",
             assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({ Service: "lambda.amazonaws.com" }),
+            tags: { domain: domain }
         });
     
         // Attach the AWSLambdaBasicExecutionRole policy to the role
         new aws.iam.RolePolicyAttachment("2-bit-blaster-high-score-lambda-basic-execution-role-policy-attachment", {
             role: highScoreLambdaRole,
-            policyArn: aws.iam.ManagedPolicies.AWSLambdaBasicExecutionRole,
+            policyArn: aws.iam.ManagedPolicies.AWSLambdaBasicExecutionRole
         });
     
         // Attach a policy to allow access to SSM Parameter Store
@@ -52,16 +54,17 @@ export = async () => {
                 effect: "Allow",
                 actions: ["ssm:GetParameter", "ssm:PutParameter"],
                 resources: [`arn:aws:ssm:ca-central-1:${accountId}:parameter/2BitBlaster/HighScore`]
-            }],
+            }]
         });
         const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-score-lambda-ssm-policy", {
             name: "2-bit-blaster-high-scorelambda-ssm-policy",
             description: "Policy to allow 2-Bit Blaster high score lambda to access parameter store",
             policy: highScoreSsmPolicyDocument.then(policyDocument => policyDocument.json),
+            tags: { domain: domain }
         });
         const highScoreLambdaSsmRolePolicyAttachment = new aws.iam.RolePolicyAttachment("2-bit-blaster-high-score-lambda-ssm-role-policy-attachment", {
             role: highScoreLambdaRole.name,
-            policyArn: highScoreLambdaSsmPolicy.arn,
+            policyArn: highScoreLambdaSsmPolicy.arn
         });
     
         // Create the Lambda function
@@ -70,7 +73,8 @@ export = async () => {
             packageType: "Image",
             imageUri: highScoreLambdaImage.imageUri,
             role: highScoreLambdaRole.arn,
-            architectures: ["x86_64"]
+            architectures: ["x86_64"],
+            tags: { domain: domain }
         });
     
         // Grant API Gateway permission to invoke the high score lambda function
@@ -78,7 +82,7 @@ export = async () => {
             action: "lambda:InvokeFunction",
             function: highScoreLambda.arn,
             principal: "apigateway.amazonaws.com",
-            sourceArn: pulumi.interpolate`${api.executionArn}/*/*`,
+            sourceArn: pulumi.interpolate`${api.executionArn}/*/*`
         });
 
         return highScoreLambda;
@@ -88,7 +92,7 @@ export = async () => {
         // Create an S3 bucket
         const siteBucket = new aws.s3.BucketV2(
             "2-bit-blaster-site-bucket", {
-            tags: { name: "2-bit-blaster-site-bucket" }
+            tags: { domain: domain }
         });
 
         const siteBucketAclV2 = new aws.s3.BucketAclV2(
@@ -115,7 +119,7 @@ export = async () => {
             bucket: siteBucket.id,
             versioningConfiguration: {
                 status: "Disabled",
-            },
+            }
         });
 
         // Synchronize files between our build output folder and the static site bucket
@@ -134,7 +138,7 @@ export = async () => {
         const highScoreApiGatewayResource = new aws.apigateway.Resource("2-bit-blaster-api-gateway-high-score-resource", {
             restApi: api.id,
             parentId: api.rootResourceId,
-            pathPart: "highScore",
+            pathPart: "highScore"
         });
 
         // Create a method for the resource
@@ -142,7 +146,7 @@ export = async () => {
             restApi: api.id,
             resourceId: highScoreApiGatewayResource.id,
             httpMethod: "POST",
-            authorization: "NONE",
+            authorization: "NONE"
         });
 
         // Integrate the method with the Lambda function
@@ -152,13 +156,13 @@ export = async () => {
             httpMethod: highScoreApiGatewayMethod.httpMethod,
             integrationHttpMethod: "POST",
             type: "AWS_PROXY",
-            uri: highScoreLambda.invokeArn,
+            uri: highScoreLambda.invokeArn
         });
 
         // Deploy the REST API
         const deployment = new aws.apigateway.Deployment("2-bit-blaster-api-gateway-deployment", {
             restApi: api.id,
-            stageName: "default",
+            stageName: "default"
         }, { dependsOn: [integration] });
 
         return deployment;
@@ -228,7 +232,8 @@ export = async () => {
             viewerCertificate: {
                 acmCertificateArn: siteCertificate.arn,
                 sslSupportMethod: "sni-only"
-            }
+            },
+            tags: { domain: domain }
         });
 
         const siteBucketPolicy = new aws.s3.BucketPolicy("2-bit-blaster-site-bucket-policy", {
@@ -245,7 +250,7 @@ export = async () => {
                             "AWS:SourceArn": distribution.arn
                         }
                     }
-                }],
+                }]
             }).apply(JSON.stringify),
         });
     
