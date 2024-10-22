@@ -1,0 +1,4 @@
+encryptionsalt: v1:ge8ko5Of+aw=:v1:cLIo4vLMMcS9c9VK:vTjz5e/C/WYudEJpIBjnzaAciA8rbQ==
+config:
+  aws:profile: default
+  2BitBlaster:domian: 2bitblaster.blinkenlights.org

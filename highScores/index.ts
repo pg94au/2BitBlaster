@@ -7,6 +7,9 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
 
     const ssmClient = new SSMClient({ region: process.env.AWS_REGION });
  
+    let parameterPath = process.env.PARAMETER_PATH;
+    console.log(`Parameter path: $(parameterPath)`);
+
     console.log('Checking posted score.');    
     var candidateHighScore;
     let highScore = parseInt(event.body ?? '');
@@ -27,7 +30,7 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
     var previousHighScore;
     try {
         console.log('Getting value from parameter store.');
-        const getCommand = new GetParameterCommand({ Name: '/2BitBlaster/HighScore' }); //TODO: uniqueness from environment variable?
+        const getCommand = new GetParameterCommand({ Name: parameterPath });
         const getResponse = await ssmClient.send(getCommand);
         previousHighScore = parseInt(getResponse.Parameter?.Value ?? '');
         if (isNaN(previousHighScore)) previousHighScore = 0;
@@ -36,7 +39,7 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
         if (candidateHighScore > previousHighScore) {
             console.log('Updating existing high score.');
             const putCommand = new PutParameterCommand({
-                 Name: '/2BitBlaster/HighScore',
+                 Name: parameterPath,
                  Overwrite: true,
                  Type: 'String',
                  Value: candidateHighScore.toString()
@@ -62,7 +65,7 @@ export const handler = async (event: APIGatewayEvent, context: Context): Promise
         if (error instanceof ParameterNotFound) {
             console.log(`Setting first high score of ${candidateHighScore}.`);
             const putCommand = new PutParameterCommand({
-                Name: '/2BitBlaster/HighScore',
+                Name: parameterPath,
                 Overwrite: true,
                 Type: 'String',
                 Value: candidateHighScore.toString()

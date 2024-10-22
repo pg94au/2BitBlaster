@@ -4,7 +4,9 @@ import * as awsx from "@pulumi/awsx";
 import * as synced_folder from "@pulumi/synced-folder";
 import * as url from 'url';
 
-const domain = "scratch.blinkenlights.org";
+const config = new pulumi.Config();
+const domain = config.require("domain");
+const stackName = pulumi.getStack();
 
 export = async () => {
 
@@ -23,7 +25,7 @@ export = async () => {
     async function createHighScoreFunction(api: aws.apigateway.RestApi): Promise<aws.lambda.Function> {
         // Create a docker image repository
         const ecrRepository = new awsx.ecr.Repository("2-bit-blaster-ecr-repository", { 
-                name: "2-bit-blaster-ecr-repository",
+                name: `2-bit-blaster-ecr-repository-${stackName.toLowerCase()}`,
                 tags: { domain: domain}
             }
         );
@@ -37,7 +39,7 @@ export = async () => {
     
         // Create role for highScore lambda
         const highScoreLambdaRole = new aws.iam.Role("2-bit-blaster-high-score-lambda-role", {
-            name: "2-bit-blaster-high-score-lambda-role",
+            name: `2-bit-blaster-high-score-lambda-role-${stackName}`,
             assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal({ Service: "lambda.amazonaws.com" }),
             tags: { domain: domain }
         });
@@ -53,11 +55,11 @@ export = async () => {
             statements: [{
                 effect: "Allow",
                 actions: ["ssm:GetParameter", "ssm:PutParameter"],
-                resources: [`arn:aws:ssm:ca-central-1:${accountId}:parameter/2BitBlaster/HighScore`]
+                resources: [`arn:aws:ssm:ca-central-1:${accountId}:parameter/${stackName}/HighScore`]
             }]
         });
         const highScoreLambdaSsmPolicy = new aws.iam.Policy("2-bit-blaster-high-score-lambda-ssm-policy", {
-            name: "2-bit-blaster-high-scorelambda-ssm-policy",
+            name: `2-bit-blaster-high-scorelambda-ssm-policy-${stackName}`,
             description: "Policy to allow 2-Bit Blaster high score lambda to access parameter store",
             policy: highScoreSsmPolicyDocument.then(policyDocument => policyDocument.json),
             tags: { domain: domain }
@@ -69,11 +71,16 @@ export = async () => {
     
         // Create the Lambda function
         const highScoreLambda = new aws.lambda.Function("2-bit-blaster-high-score-lambda-function", {
-            name: "2-bit-blaster-high-score-lambda-function",
+            name: `2-bit-blaster-high-score-lambda-function-${stackName}`,
             packageType: "Image",
             imageUri: highScoreLambdaImage.imageUri,
             role: highScoreLambdaRole.arn,
             architectures: ["x86_64"],
+            environment: {
+                variables: {
+                    PARAMETER_PATH: `/${stackName}/HighScore`
+                }
+            },
             tags: { domain: domain }
         });
     
@@ -93,12 +100,6 @@ export = async () => {
         const siteBucket = new aws.s3.BucketV2(
             "2-bit-blaster-site-bucket", {
             tags: { domain: domain }
-        });
-
-        const siteBucketAclV2 = new aws.s3.BucketAclV2(
-            "2-bit-blaster-site-bucket-acl-v2", {
-            bucket: siteBucket.id,
-            acl: "private"
         });
 
         // Configure website configuration for site bucket
@@ -178,7 +179,7 @@ export = async () => {
 
         // Create new Cloudfront deployment
         const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
-            comment: "2-Bit Blaster distribution",
+            comment: `2-Bit Blaster distribution [${domain}]`,
             enabled: true,
             isIpv6Enabled: true,
             defaultRootObject: "index.html",
@@ -266,7 +267,7 @@ export = async () => {
 
     // Create an API Gateway REST API
     const api = new aws.apigateway.RestApi("2-bit-blaster-api-gateway", {
-        description: "API Gateway for 2-Bit Blaster",
+        description: `API Gateway for 2-Bit Blaster [${stackName}]`,
     });
 
     const highScoreLambda = await createHighScoreFunction(api);
