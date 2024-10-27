@@ -68,7 +68,7 @@ export = async () => {
             role: highScoreLambdaRole.name,
             policyArn: highScoreLambdaSsmPolicy.arn
         });
-    
+
         // Create the Lambda function
         const highScoreLambda = new aws.lambda.Function("2-bit-blaster-high-score-lambda-function", {
             name: `2-bit-blaster-high-score-lambda-function-${stackName}`,
@@ -83,7 +83,14 @@ export = async () => {
             },
             tags: { domain: domain }
         });
-    
+
+        // Create log group for Lambda function
+        const logGroup = new aws.cloudwatch.LogGroup("2-bit-blaster-high-score-lambda-log-group", {
+            name: pulumi.interpolate`/aws/lambda/${highScoreLambda.name}`,
+            retentionInDays: 7,
+            tags: { domain: domain }
+        });
+
         // Grant API Gateway permission to invoke the high score lambda function
         const highScoreLambdaApiPermission = new aws.lambda.Permission("2-bit-blaster-api-gateway-invoke-high-score-permission", {
             action: "lambda:InvokeFunction",
