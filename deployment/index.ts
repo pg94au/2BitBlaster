@@ -31,7 +31,7 @@ export = async () => {
         );
     
         const highScoreLambdaImage = new awsx.ecr.Image("2-bit-blaster-lambda-image", {
-            imageName: "2-bit-blaster-high-score-lambda-image",
+            imageName: `2-bit-blaster-high-score-lambda-image-${stackName}`,
             repositoryUrl: ecrRepository.url,
             context: "../highScores/",
             platform: "x86_64"
@@ -105,7 +105,7 @@ export = async () => {
     function createSiteBucket(): aws.s3.BucketV2 {
         // Create an S3 bucket
         const siteBucket = new aws.s3.BucketV2(
-            "2-bit-blaster-site-bucket", {
+            `2-bit-blaster-site-bucket-${stackName}`, {
             tags: { domain: domain }
         });
 
@@ -178,7 +178,7 @@ export = async () => {
 
     function createDistribution(siteBucket: aws.s3.BucketV2, deployment: aws.apigateway.Deployment): aws.cloudfront.Distribution {
         const cloudFrontOriginAccessControl = new aws.cloudfront.OriginAccessControl("2-bit-blaster-origin-access-control", {
-            name: siteBucket.bucketDomainName, // TODO: Is this really a good name?
+            name: siteBucket.bucketDomainName,
             signingBehavior: "always",
             signingProtocol: "sigv4",
             originAccessControlOriginType: "s3"
@@ -186,7 +186,7 @@ export = async () => {
 
         // Create new Cloudfront deployment
         const distribution = new aws.cloudfront.Distribution("2-bit-blaster-distribution", {
-            comment: `2-Bit Blaster distribution [${domain}]`,
+            comment: `2-Bit Blaster distribution [${stackName}]`,
             enabled: true,
             isIpv6Enabled: true,
             defaultRootObject: "index.html",
