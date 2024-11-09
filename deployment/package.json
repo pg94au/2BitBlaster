@@ -10,8 +10,5 @@
         "@pulumi/awsx": "^2.0.2",
         "@pulumi/pulumi": "^3.113.0",
         "@pulumi/synced-folder": "^0.11.1"
-    },
-    "scripts": {
-        "postinstall": "cd deployment && npm ci"
     }
 }
