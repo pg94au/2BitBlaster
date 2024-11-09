@@ -54,6 +54,6 @@ jobs:
       uses: pulumi/actions@v6
       with:
         command: preview
-        stack-name: 2BitBlaster # When using an individual account, only use stack-name.
+        stack-name: pg94au/2BitBlaster
       env:
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
