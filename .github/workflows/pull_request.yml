@@ -55,5 +55,6 @@ jobs:
       with:
         command: preview
         stack-name: pg94au/2BitBlaster/2BitBlaster
+        work-dir: deployment
       env:
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
