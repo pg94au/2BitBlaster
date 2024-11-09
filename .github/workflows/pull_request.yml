@@ -42,3 +42,18 @@ jobs:
       with:
         name: code-coverage-report
         path: coverage
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-region: ${{ secrets.AWS_REGION }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    - name: Pulumi Preview
+      uses: pulumi/actions@v6
+      with:
+        command: preview
+        stack-name: 2BitBlaster # When using an individual account, only use stack-name.
+      env:
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
