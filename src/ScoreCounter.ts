@@ -25,7 +25,7 @@ export class ScoreCounter {
                     debug('Unable to post high score to server.');
                 }
                 else {
-                    let retrievedScore = parseInt(postResult.text);
+                    const retrievedScore = parseInt(postResult.text);
                     if (!isNaN(retrievedScore)) {
                         this._highScore = retrievedScore;
                     }
