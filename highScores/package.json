@@ -1,0 +1,19 @@
+{
+  "name": "highscores",
+  "version": "1.0.0",
+  "description": "Manages the high score list for the game.",
+  "main": "index.js",
+  "scripts": {
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2022 --outdir=dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.140",
+    "esbuild": "^0.21.5"
+  },
+  "dependencies": {
+    "@aws-sdk/client-ssm": "^3.600.0"
+  }
+}

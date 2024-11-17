@@ -1,0 +1,3 @@
+config:
+  2BitBlaster:domain: 2bittesting.blinkenlights.org
+  2BitBlaster:region: ca-central-1

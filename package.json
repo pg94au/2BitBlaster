@@ -9,7 +9,8 @@
     "test": "npx mocha --require ts-node/register --reporter spec --paths test/*.spec.[jt]s test/**/*.spec.[jt]s",
     "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts",
     "coverage": "nyc --reporter=html --reporter=text-summary npm run test",
-    "site": "cd host; node app.js; cd .."
+    "site": "cd host; node app.js; cd ..",
+    "postinstall": "(cd deployment && npm ci); (cd highScores && npm ci);"
   },
   "repository": {
     "type": "git",
