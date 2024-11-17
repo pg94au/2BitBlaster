@@ -12,17 +12,17 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [20.x]
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Update Build number
       run: sed -i 's;\(Copyright.*\);\1 [Build ${{ github.run_number }} (${{ github.sha }})];g' index.html
 
     - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2.1.2
+      uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
     
@@ -36,34 +36,19 @@ jobs:
         npm run test
         npm run lint
 
-    - name: Terraform
+        - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+    - name: Pulumi Preview
+      uses: pulumi/actions@v6
+      with:
+        command: preview
+        stack-name: pg94au/2BitBlaster/2BitBlaster
+        work-dir: deployment
       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        cd terraform
-        terraform init
-        terraform workspace select production
-        terraform apply --auto-approve
-
-    - name: Deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_EC2_METADATA_DISABLED: true
-      run: |
-        aws s3 sync dist s3://$(cd terraform; terraform output --raw bucket) --delete
-        echo "Distribution domain name: $(cd terraform; terraform output --raw distribution_domain_name)"
-
-    - name: Invalidate cache
-      env:
-        AWS_DEFAULT_REGION: ca-central-1
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        cd terraform
-        distribution_id=$(terraform output --raw distribution_id)
-        echo "Creating invalidation for $distribution_id"
-        invalidation_id=$(aws cloudfront create-invalidation --distribution-id $distribution_id --paths "/" | jq --raw-output '.Invalidation.Id')
-        echo "Waiting for invalidation for $invalidation_id"
-        aws cloudfront wait invalidation-completed --distribution $distribution_id --id $invalidation_id
+        PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
