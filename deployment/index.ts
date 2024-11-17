@@ -337,6 +337,7 @@ export = async () => {
     // Export the URL of the API
     return { 
         apiUrl: deployment.invokeUrl,
+        distributionId: distribution.id,
         siteDomainName: distribution.domainName
      };
 }
