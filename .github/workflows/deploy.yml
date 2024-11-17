@@ -1,4 +1,4 @@
-name: Merge to main
+name: Deploy
 
 on: workflow_dispatch
 
