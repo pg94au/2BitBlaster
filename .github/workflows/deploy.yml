@@ -37,6 +37,7 @@ jobs:
   
     - name: Pulumi Up
       uses: pulumi/actions@v6
+      id: pulumi
       with:
         command: up
         stack-name: pg94au/2BitBlaster/2BitBlaster
@@ -44,3 +45,15 @@ jobs:
       env:
         PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
         PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
+
+    - name: Invalidate Cache
+      env:
+        AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        distribution_id=${{ steps.pulumi.outputs.distributionId }}
+        echo "Creating invalidation for $distribution_id"
+        invalidation_id=$(aws cloudfront create-invalidation --distribution-id $distribution_id --paths "/" | jq --raw-output '.Invalidation.Id')
+        echo "Waiting for invalidation for $invalidation_id"
+        aws cloudfront wait invalidation-completed --distribution $distribution_id --id $invalidation_id
