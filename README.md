@@ -34,8 +34,8 @@ node app.js
 
 ## Cloud Deployment
 
-This project uses GitHub Actions to automatically deploy to AWS using Terraform.  The following diagram depicts this deployment.
+This project uses GitHub Actions to deploy to AWS using Pulumi.  The following diagram depicts deployed stack.
 
 ![AWS Deployment Diagram](/docs/2-Bit-Blaster-AWS-Deployment.svg)
 
-As depicted, all of the static files related to the site are hosted from an S3 bucket.  High scores are managed by an AWS Lambda function which maintains the high score in a file in another S3 bucket, and is triggered via an HTTP API Gateway.  Both the static site and high score endpoint are exposed as origins defined in a CloudFront CDN.
+As depicted, all of the static files related to the site are hosted from an S3 bucket.  High scores are managed by an AWS Lambda function which maintains the high score as a parameter value in Parameter Store, and is triggered via an HTTP API Gateway.  Both the static site and high score endpoint are exposed as origins defined in a CloudFront CDN.
