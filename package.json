@@ -10,7 +10,7 @@
     "lint": "tslint src/*.ts src/**/*.ts test/*.ts test/**/*.ts",
     "coverage": "nyc --reporter=html --reporter=text-summary npm run test",
     "site": "cd host; node app.js; cd ..",
-    "postinstall": "(cd deployment && npm ci); (cd highScores && npm ci);"
+    "postinstall": "npm --prefix deployment ci && npm --prefix highScores ci"
   },
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "@types/uuid": "^8.3.4",
     "chai": "^4.3.6",
     "copy-webpack-plugin": "^10.2.4",
-    "mocha": "^9.2.2",
+    "mocha": "^11.0.1",
     "node-window-polyfill": "^1.0.2",
     "nyc": "^15.1.0",
     "ts-loader": "^9.2.6",
