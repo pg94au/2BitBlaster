@@ -22,6 +22,7 @@ import {SplitterWave} from './waves/SplitterWave';
 import {StarField} from './StarField';
 import {TextInterlude} from './TextInterlude';
 import {World} from './World';
+import { ZigZagWave } from "./waves/ZigZagWave";
 
 export class Game {
     private readonly _joystick: Joystick;
@@ -92,7 +93,7 @@ export class Game {
         if (this._isActive) {
             setTimeout(() => {
                 global.requestAnimationFrame(() => { this.tick() });
-            }, 1000/30);
+            }, 1000/40);
         }
         else {
             debug('ticker: Ticker stopping because game is over.');
@@ -177,6 +178,7 @@ export class Game {
             this._clock,
             [
                 new Level([
+                    new ZigZagWave(this._audioPlayer, this._world, this._clock),
                     new SpinnerWave(this._audioPlayer, this._world, this._clock),
                     new SimpleWave(this._audioPlayer, this._world, this._clock)
                 ]),
