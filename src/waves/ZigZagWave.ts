@@ -14,7 +14,6 @@ export class ZigZagWave implements Wave {
     private readonly _audioPlayer: AudioPlayer;
     private readonly _world: World;
     private readonly _clock: Clock;
-    private _addNextEnemyAt: Date = new Date();
     private _numberOfEnemiesLeftToDeploy: number = 15;
 
     private readonly _scheduler: Scheduler;
@@ -63,7 +62,6 @@ export class ZigZagWave implements Wave {
     }
 
     deployZagger(): void {
-        //TODO: Don't think we need this if statement if we stop re-scheduling...
         if (this._numberOfEnemiesLeftToDeploy > 0) {
             const worldDimensions = this._world.dimensions;
             const zaggerStartingPoint = new Point(
