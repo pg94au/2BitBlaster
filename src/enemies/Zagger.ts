@@ -19,16 +19,19 @@ import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
 import {World} from "../World";
+import { State } from "pixi.js";
 
 export class Zagger extends Enemy {
     public static readonly InitialHealth: number = 1;
 
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
+    private readonly _homePosition: Point;
     private _currentFrame: number = 0;
     private _currentPath!: PathEntry[];
     private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
+    private _state: Zagger.State;
 
     constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startingPoint: Point, homePosition: Point) {
         super(audioPlayer, world, startingPoint, Zagger.InitialHealth);
@@ -36,8 +39,10 @@ export class Zagger extends Enemy {
 
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
+        this._homePosition = homePosition;
 
         this.prepareEntryPath(homePosition);
+        this._state = Zagger.State.Entering;
         this.advanceCurrentFrame();
     }
 
@@ -106,46 +111,47 @@ export class Zagger extends Enemy {
         this._world.addActor(bomb);
     }
 
+    public swoop(): void {
+        // Determine our downward swooping path.
+        const lowestPoint = new Point(200, 600); // Not really what we want...
+        const linePath = new LinePath(this._location, lowestPoint, []);
+        this._currentPath = linePath.getPath(100);
+        this._pathPosition = 0;
+        this._state = Zagger.State.Swooping;
+    }
+
     private step(): void {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
+
+            switch (this._state) {
+                case Zagger.State.Entering:
+                    this._state = Zagger.State.Waiting;
+                    break;
+                case Zagger.State.Swooping:
+                    this._scheduler.scheduleOperation(
+                        'enter',
+                        3000,
+                        () => {
+                            // Determine our path back to our home position after.
+                            const worldDimensions = this._world.dimensions;
+                            const zaggerStartingPoint = new Point(
+                                Math.floor(random(0, worldDimensions.width-50)),
+                                -20
+                            );
+                            const linePath = new LinePath(zaggerStartingPoint, this._homePosition, []);
+                            this._currentPath = linePath.getPath(20);
+                            this._pathPosition = 0;
+                            this._state = Zagger.State.Entering;
+                        }
+                    );
+                    this._state = Zagger.State.Waiting;
+                    break;
+            }
+
+            // Possibly at some random chance drop bombs?
+
             return;
-            //let nextPath: PathEntry[];
-
-            // What do we do once we reach home...
-            // if (this._currentPathTemplate === Zagger._floatAroundPathTemplate) {
-            //     if (random(0, 1) > 0.5) {
-            //         if (this._location.x < this._world.dimensions.width / 2) {
-            //             nextPath = Zagger._flyRightPathTemplate;
-            //         }
-            //         else {
-            //             nextPath = Zagger._flyLeftPathTemplate;
-            //         }
-            //     }
-            //     else {
-            //         if (this._location.y < this._world.dimensions.height / 2) {
-            //             if (random(0, 1) > 0.5) {
-            //                 nextPath = Zagger._flyDownPathTemplate;
-            //             }
-            //             else {
-            //                 if (this._location.x < this._world.dimensions.width / 2) {
-            //                     nextPath = Zagger._diveRightPathTemplate;
-            //                 }
-            //                 else {
-            //                     nextPath = Zagger._diveLeftPathTemplate;
-            //                 }
-            //             }
-            //         }
-            //         else {
-            //             nextPath = Zagger._flyUpPathTemplate;
-            //         }
-            //     }
-            // }
-            // else {
-            //     nextPath = Zagger._floatAroundPathTemplate;
-            // }
-
-            //     this.prepareNextPath(nextPath);
         }
 
         // Follow the current path.
@@ -165,10 +171,12 @@ export class Zagger extends Enemy {
         this._currentPath = linePath.getPath(20);
         this._pathPosition = 0;
     }
+}
 
-    private prepareNextPath(pathTemplate: PathEntry[]): void {
-        this._currentPathTemplate = pathTemplate;
-        this._currentPath = SplinePath.translatePath(pathTemplate, this._location.x, this._location.y);
-        this._pathPosition = 0;
+export module Zagger {
+    export enum State {
+        Entering,
+        Swooping,
+        Waiting
     }
 }

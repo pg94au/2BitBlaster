@@ -44,9 +44,26 @@ export class ZigZagWave implements Wave {
         debug('ZigZagWave.tick');
 
         this._scheduler.executeDueOperations();
+
+        if (this._numberOfEnemiesLeftToDeploy == 0) {
+            this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
+        }
+    }
+
+    scheduleNextSwoop() : void {
+        if (this._world.activeEnemies.length > 0) {
+            const timeTillSwoop = random(1000, 5000);
+            const zagger = this._world.activeEnemies[Math.floor(random(0, this._world.activeEnemies.length))] as Zagger;
+            this._scheduler.scheduleOperation(
+                'next swoop',
+                timeTillSwoop,
+                () => zagger.swoop()
+            );
+        }
     }
 
     deployZagger(): void {
+        //TODO: Don't think we need this if statement if we stop re-scheduling...
         if (this._numberOfEnemiesLeftToDeploy > 0) {
             const worldDimensions = this._world.dimensions;
             const zaggerStartingPoint = new Point(
