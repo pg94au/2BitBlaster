@@ -44,7 +44,7 @@ export class ZigZagWave implements Wave {
 
         this._scheduler.executeDueOperations();
 
-        if (this._numberOfEnemiesLeftToDeploy == 0) {
+        if (this._numberOfEnemiesLeftToDeploy === 0) {
             this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
         }
     }

@@ -19,7 +19,6 @@ import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
 import {World} from "../World";
-import { State } from "pixi.js";
 
 export class Zagger extends Enemy {
     public static readonly InitialHealth: number = 1;
