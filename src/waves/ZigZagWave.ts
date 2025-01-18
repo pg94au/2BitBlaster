@@ -52,7 +52,8 @@ export class ZigZagWave implements Wave {
     scheduleNextSwoop() : void {
         if (this._world.activeEnemies.length > 0) {
             const timeTillSwoop = random(1000, 5000);
-            const zagger = this._world.activeEnemies[Math.floor(random(0, this._world.activeEnemies.length))] as Zagger;
+            const inactiveZaggers = this._world.activeEnemies.filter(enemy => (enemy as Zagger).state !== Zagger.State.Swooping);
+            const zagger = inactiveZaggers[random(inactiveZaggers.length-1)] as Zagger;
             this._scheduler.scheduleOperation(
                 'next swoop',
                 timeTillSwoop,

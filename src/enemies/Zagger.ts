@@ -45,6 +45,10 @@ export class Zagger extends Enemy {
         this.advanceCurrentFrame();
     }
 
+    get state(): Zagger.State {
+        return this._state;
+    }
+
     get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
             'saucer_explosion',
@@ -112,7 +116,7 @@ export class Zagger extends Enemy {
 
     public swoop(): void {
         // Determine our downward swooping path.
-        const lowestPoint = new Point(200, 600); // Not really what we want...
+        const lowestPoint = new Point(Math.floor(random(10, 430)), 650);
         const linePath = new LinePath(this._location, lowestPoint, []);
         this._currentPath = linePath.getPath(100);
         this._pathPosition = 0;
