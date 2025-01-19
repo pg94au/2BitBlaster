@@ -117,11 +117,24 @@ export class Zagger extends Enemy {
     public swoop(): void {
         if (random(0, 1) === 0) {
             // Swoop down and off the screen.
-            const lowestPoint = new Point(Math.floor(random(10, 430)), 650);
-            const linePath = new LinePath(this._location, lowestPoint, []);
-            this._currentPath = linePath.getPath(100);
-            this._pathPosition = 0;
-            this._state = Zagger.State.Swooping;
+            const lowestPoint = new Point(Math.floor(random(10, 430)), 660);
+            const turns = random(0, 1);
+            switch (turns) {
+                case 0:
+                    const linePath = new LinePath(this._location, lowestPoint, []);
+                    this._currentPath = linePath.getPath(100);
+                    this._pathPosition = 0;
+                    this._state = Zagger.State.Swooping;
+                    break;
+                case 1:
+                    const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
+                    const path1 = new LinePath(this._location, midPoint, []);
+                    const path2 = new LinePath(midPoint, lowestPoint, []);
+                    this._currentPath = path1.getPath(50).concat(path2.getPath(50)); //TODO: LinePath should support multiple points.
+                    this._pathPosition = 0;
+                    this._state = Zagger.State.Swooping;
+                    break;
+            }
         }
         else {
             // Swwop and return to home.
