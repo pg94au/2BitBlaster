@@ -115,12 +115,23 @@ export class Zagger extends Enemy {
     }
 
     public swoop(): void {
-        // Determine our downward swooping path.
-        const lowestPoint = new Point(Math.floor(random(10, 430)), 650);
-        const linePath = new LinePath(this._location, lowestPoint, []);
-        this._currentPath = linePath.getPath(100);
-        this._pathPosition = 0;
-        this._state = Zagger.State.Swooping;
+        if (random(0, 1) === 0) {
+            // Swoop down and off the screen.
+            const lowestPoint = new Point(Math.floor(random(10, 430)), 650);
+            const linePath = new LinePath(this._location, lowestPoint, []);
+            this._currentPath = linePath.getPath(100);
+            this._pathPosition = 0;
+            this._state = Zagger.State.Swooping;
+        }
+        else {
+            // Swwop and return to home.
+            const lowestPoint = new Point(Math.floor(random(10, 430)), 580);
+            const swoopDownPath = new LinePath(this._location, lowestPoint, []);
+            const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, []);
+            this._currentPath = swoopDownPath.getPath(100).concat(swoopReturnPath.getPath(100));
+            this._pathPosition = 0;
+            this._state = Zagger.State.SwoopAndReturn;
+        }
     }
 
     private step(): void {
@@ -129,6 +140,9 @@ export class Zagger extends Enemy {
 
             switch (this._state) {
                 case Zagger.State.Entering:
+                    this._state = Zagger.State.Waiting;
+                    break;
+                case Zagger.State.SwoopAndReturn:
                     this._state = Zagger.State.Waiting;
                     break;
                 case Zagger.State.Swooping:
@@ -179,6 +193,7 @@ export class Zagger extends Enemy {
 export module Zagger {
     export enum State {
         Entering,
+        SwoopAndReturn,
         Swooping,
         Waiting
     }
