@@ -26,7 +26,7 @@ export class LineSegmentPath {
 
         const stepSize = 1.0 / numberOfSteps;
 
-        var totalLength: number = 0;
+        let totalLength: number = 0;
         for (let i = 0; i < this._points.length - 1; i++) {
             totalLength += this.getSegmentLength(this._points[i], this._points[i + 1]);
         }
