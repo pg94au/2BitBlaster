@@ -43,6 +43,10 @@ export class Point {
         return new Point(this._x + count, this._y);
     }
 
+    equals(other: Point): boolean {
+        return this._x === other._x && this._y === other._y;
+    }
+
     toString(): string {
         return 'Point(x=' + this._x + ', y=' + this._y + ')';
     }
