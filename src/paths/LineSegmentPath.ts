@@ -21,7 +21,17 @@ export class LineSegmentPath {
         return Math.sqrt(dx * dx + dy * dy);
     }
 
-    getPath(numberOfSteps: number): PathEntry[] {
+    getPathForSpeed(speed: number): PathEntry[] {
+        let lineLength = 0.0;
+        for (let i = 0; i < this._points.length - 1; i++) {
+            lineLength += this.getSegmentLength(this._points[i], this._points[i + 1]);
+        }
+        const numberOfSteps = Math.max(Math.floor(lineLength / speed), 1);
+
+        return this.getPathForSteps(numberOfSteps);
+    }
+
+    getPathForSteps(numberOfSteps: number): PathEntry[] {
         const path: PathEntry[] = [];
 
         const stepSize = 1.0 / numberOfSteps;
@@ -40,7 +50,7 @@ export class LineSegmentPath {
             const segmentNumberOfSteps = Math.round(segmentLength / totalLength * numberOfSteps);
 
             const linePath = new LinePath(this._points[i], this._points[i + 1], []);
-            const segmentPath = linePath.getPath(segmentNumberOfSteps);
+            const segmentPath = linePath.getPathForSteps(segmentNumberOfSteps);
 
             // The end of each segment is the same as the start of the next segment, so we don't want to duplicate it.
             path.pop();
