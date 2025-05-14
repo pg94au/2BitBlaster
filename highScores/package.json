@@ -11,7 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.140",
-    "esbuild": "^0.21.5"
+    "esbuild": "^0.25.0"
   },
   "dependencies": {
     "@aws-sdk/client-ssm": "^3.600.0"
