@@ -18,11 +18,11 @@ export class LinePath {
     }
 
     getPathForSpeed(speed: number): PathEntry[] {
-        var lineLength = Math.sqrt(
+        const lineLength = Math.sqrt(
             Math.pow(this._end.x - this._start.x, 2) +
             Math.pow(this._end.y - this._start.y, 2)
         );
-        var numberOfSteps = Math.max(Math.floor(lineLength / speed), 1);
+        const numberOfSteps = Math.max(Math.floor(lineLength / speed), 1);
 
         return this.getPathForSteps(numberOfSteps);
     }
