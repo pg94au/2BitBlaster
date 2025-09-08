@@ -19,6 +19,7 @@ import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
 import {SplinePath} from '../paths/SplinePath';
 import {World} from "../World";
+import { LineSegmentPath } from "../paths/LineSegmentPath";
 
 export class Zagger extends Enemy {
     public static readonly InitialHealth: number = 1;
@@ -118,30 +119,35 @@ export class Zagger extends Enemy {
         if (random(0, 1) === 0) {
             // Swoop down and off the screen.
             const lowestPoint = new Point(Math.floor(random(10, 430)), 660);
-            const turns = random(0, 1);
+            const turns = random(0, 2);
             switch (turns) {
                 case 0:
                     const linePath = new LinePath(this._location, lowestPoint, []);
-                    this._currentPath = linePath.getPath(100);
+                    this._currentPath = linePath.getPathForSpeed(5);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
                 case 1:
                     const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
-                    const path1 = new LinePath(this._location, midPoint, []);
-                    const path2 = new LinePath(midPoint, lowestPoint, []);
-                    this._currentPath = path1.getPath(50).concat(path2.getPath(50)); //TODO: LinePath should support multiple points.
+                    this._currentPath = new LineSegmentPath([this._location, midPoint, lowestPoint], []).getPathForSpeed(5);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
-            }
+                case 2:
+                    const midPoint1 = new Point(Math.floor(random(10, 430)), random(300, 400));
+                    const midPoint2 = new Point(Math.floor(random(10, 430)), random(400, 500));
+                    this._currentPath = new LineSegmentPath([this._location, midPoint1, midPoint2, lowestPoint], []).getPathForSpeed(5);
+                    this._pathPosition = 0;
+                    this._state = Zagger.State.Swooping;
+                    break;
+              }
         }
         else {
             // Swwop and return to home.
             const lowestPoint = new Point(Math.floor(random(10, 430)), 580);
             const swoopDownPath = new LinePath(this._location, lowestPoint, []);
             const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, []);
-            this._currentPath = swoopDownPath.getPath(100).concat(swoopReturnPath.getPath(100));
+            this._currentPath = swoopDownPath.getPathForSpeed(5).concat(swoopReturnPath.getPathForSpeed(5));
             this._pathPosition = 0;
             this._state = Zagger.State.SwoopAndReturn;
         }
@@ -170,7 +176,7 @@ export class Zagger extends Enemy {
                                 -20
                             );
                             const linePath = new LinePath(zaggerStartingPoint, this._homePosition, []);
-                            this._currentPath = linePath.getPath(20);
+                            this._currentPath = linePath.getPathForSteps(20);
                             this._pathPosition = 0;
                             this._state = Zagger.State.Entering;
                         }
@@ -198,7 +204,7 @@ export class Zagger extends Enemy {
 
     private prepareEntryPath(homePosition: Point): void {
         const linePath = new LinePath(this._location, homePosition, []);
-        this._currentPath = linePath.getPath(20);
+        this._currentPath = linePath.getPathForSteps(20);
         this._pathPosition = 0;
     }
 }
