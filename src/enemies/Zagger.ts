@@ -52,9 +52,9 @@ export class Zagger extends Enemy {
 
     get explosionProperties(): ExplosionProperties {
         return new ExplosionProperties(
-            'saucer_explosion',
-            4,
-            80,
+            'spider_explosion',
+            5,
+            52,
             0.8,
             'saucer_explosion'
         );
