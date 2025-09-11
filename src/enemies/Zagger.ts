@@ -65,7 +65,7 @@ export class Zagger extends Enemy {
     }
 
     getCollisionMask(actor: Actor): Bounds[] {
-        return [new Bounds(-20, 20, -20, 20)];
+        return [new Bounds(-40, 40, -25, 25)];
     }
 
     getDamageAgainst(target: Actor): number {
@@ -73,7 +73,7 @@ export class Zagger extends Enemy {
     }
 
     get imageDetails(): ImageDetails {
-        return new ImageDetails('saucer', 4, 80, this._currentFrame);
+        return new ImageDetails('spider', 3, 95, this._currentFrame);
     }
 
     hitBy(actor: Actor, damage: number): boolean {
@@ -101,7 +101,7 @@ export class Zagger extends Enemy {
     }
 
     private advanceCurrentFrame(): void {
-        this._currentFrame = (this._currentFrame + 1) % 4;
+        this._currentFrame = (this._currentFrame + 1) % 3;
 
         this._scheduler.scheduleOperation(
             'advanceCurrentFrame',
@@ -118,7 +118,7 @@ export class Zagger extends Enemy {
     public swoop(): void {
         if (random(0, 1) === 0) {
             // Swoop down and off the screen.
-            const lowestPoint = new Point(Math.floor(random(10, 430)), 660);
+            const lowestPoint = new Point(Math.floor(random(10, 430)), 670);
             const turns = random(0, 2);
             switch (turns) {
                 case 0:
