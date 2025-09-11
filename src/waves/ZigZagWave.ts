@@ -79,7 +79,7 @@ export class ZigZagWave implements Wave {
 
             this._scheduler.scheduleOperation(
                 'deploy',
-                250,
+                100,
                 () => { this.deployZagger() }
             );
         }

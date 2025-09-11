@@ -204,7 +204,7 @@ export class Zagger extends Enemy {
 
     private prepareEntryPath(homePosition: Point): void {
         const linePath = new LinePath(this._location, homePosition, []);
-        this._currentPath = linePath.getPathForSteps(20);
+        this._currentPath = linePath.getPathForSteps(10);
         this._pathPosition = 0;
     }
 }
