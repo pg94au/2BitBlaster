@@ -43,10 +43,6 @@ export class ZigZagWave implements Wave {
         debug('ZigZagWave.tick');
 
         this._scheduler.executeDueOperations();
-
-        if (this._numberOfEnemiesLeftToDeploy === 0) {
-            this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
-        }
     }
 
     scheduleNextSwoop() : void {
@@ -57,7 +53,10 @@ export class ZigZagWave implements Wave {
             this._scheduler.scheduleOperation(
                 'next swoop',
                 timeTillSwoop,
-                () => zagger.swoop()
+                () => {
+                    this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
+                    zagger.swoop();
+                }
             );
         }
     }
@@ -79,9 +78,12 @@ export class ZigZagWave implements Wave {
 
             this._scheduler.scheduleOperation(
                 'deploy',
-                100,
+                50,
                 () => { this.deployZagger() }
             );
+        }
+        else {
+            this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
         }
     }
 }
