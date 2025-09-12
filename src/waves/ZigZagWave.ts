@@ -15,6 +15,7 @@ export class ZigZagWave implements Wave {
     private readonly _world: World;
     private readonly _clock: Clock;
     private _numberOfEnemiesLeftToDeploy: number = 15;
+    private readonly _swoopers: Map<number, Zagger> = new Map<number, Zagger>();
 
     private readonly _scheduler: Scheduler;
 
@@ -45,20 +46,29 @@ export class ZigZagWave implements Wave {
         this._scheduler.executeDueOperations();
     }
 
-    scheduleNextSwoop() : void {
-        if (this._world.activeEnemies.length > 0) {
-            const timeTillSwoop = random(1000, 5000);
-            const waitingZaggers = this._world.activeEnemies.filter(enemy => (enemy as Zagger).state === Zagger.State.Waiting);
-            const zagger = waitingZaggers[random(waitingZaggers.length-1)] as Zagger;
-            this._scheduler.scheduleOperation(
-                'next swoop',
-                timeTillSwoop,
-                () => {
-                    this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
-                    zagger.swoop();
-                }
-            );
+    scheduleNextSwoop(swoopIndex: number) : void {
+        // If no swooper has been chosen yet, or if the last chosen swooper is dead or waiting, schedule a new swoop.
+        if (!this._swoopers.has(swoopIndex) || (!this._world.activeEnemies.includes(this._swoopers.get(swoopIndex)!) || this._swoopers.get(swoopIndex)!.state === Zagger.State.Waiting)) {
+            if (this._world.activeEnemies.length > 0) {
+                const timeTillSwoop = random(100, 1000);
+                this._scheduler.scheduleOperation(
+                    `next swoop ${swoopIndex}`,
+                    timeTillSwoop,
+                    () => {
+                        const waitingZaggers = this._world.activeEnemies.filter(enemy => (enemy as Zagger).state === Zagger.State.Waiting);
+                        const zagger = waitingZaggers[random(waitingZaggers.length-1)] as Zagger;
+                        this._swoopers.set(swoopIndex, zagger);
+
+                        zagger.swoop();
+
+                        this.scheduleNextSwoop(swoopIndex);
+                    }
+                );
+            }
         }
+
+        // TODO: This could be done such that we pass a callback to the swoop method, which gets called when the swoop is complete (or die).  We wouldn't have to call this repeatedly.
+        this._scheduler.scheduleOperation(`next swoop ${swoopIndex}`, 0, () => this.scheduleNextSwoop(swoopIndex));
     }
 
     deployZagger(): void {
@@ -83,7 +93,9 @@ export class ZigZagWave implements Wave {
             );
         }
         else {
-            this._scheduler.scheduleOperation('next swoop', 0, () => this.scheduleNextSwoop());
+            // Get two swoopers going right away, then let them get re-scheduled as they finish.
+            this._scheduler.scheduleOperation('next swoop 1', 0, () => this.scheduleNextSwoop(0));
+            this._scheduler.scheduleOperation('next swoop 2', 500, () => this.scheduleNextSwoop(1));
         }
     }
 }
