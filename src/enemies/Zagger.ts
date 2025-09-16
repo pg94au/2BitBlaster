@@ -56,7 +56,7 @@ export class Zagger extends Enemy {
             5,
             52,
             0.8,
-            'saucer_explosion'
+            'spider_explosion'
         );
     }
 
