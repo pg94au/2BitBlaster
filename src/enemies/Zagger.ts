@@ -4,7 +4,6 @@ import {random} from 'underscore';
 
 import {Actor} from "../Actor";
 import {AudioPlayer} from "../devices/AudioPlayer";
-import {Bomb} from '../shots/Bomb';
 import {Bounds} from '../Bounds';
 import {Clock} from "../timing/Clock";
 import {Enemy} from './Enemy';
@@ -12,24 +11,24 @@ import {ExplosionProperties} from '../ExplosionProperties';
 import {HitArbiter} from '../HitArbiter';
 import {ImageDetails} from '../ImageDetails';
 import {LinePath} from '../paths/LinePath';
+import {LineSegmentPath} from "../paths/LineSegmentPath";
 import {PathAction} from '../paths/PathAction';
 import {PathEntry} from "../paths/PathEntry";
 import {Point} from '../Point';
 import {ScheduledAction} from '../paths/ScheduledAction';
 import {Scheduler} from '../timing/Scheduler';
-import {SplinePath} from '../paths/SplinePath';
+import {Web} from '../shots/Web';
 import {World} from "../World";
-import { LineSegmentPath } from "../paths/LineSegmentPath";
 
 export class Zagger extends Enemy {
     public static readonly InitialHealth: number = 1;
 
+    private readonly _clock: Clock;
     private readonly _scheduler: Scheduler;
     private readonly _hitArbiter: HitArbiter;
     private readonly _homePosition: Point;
     private _currentFrame: number = 0;
     private _currentPath!: PathEntry[];
-    private _currentPathTemplate!: PathEntry[];
     private _pathPosition!: number;
     private _state: Zagger.State;
 
@@ -37,6 +36,7 @@ export class Zagger extends Enemy {
         super(audioPlayer, world, startingPoint, Zagger.InitialHealth);
         debug('Zagger constructor');
 
+        this._clock = clock;
         this._scheduler = new Scheduler(clock);
         this._hitArbiter = new HitArbiter(this);
         this._homePosition = homePosition;
@@ -93,7 +93,7 @@ export class Zagger extends Enemy {
 
         this.step();
 
-        // Check if this saucer has collided with any active enemies.
+        // Check if this enemy has hit the player.
         const player = this._world.player;
         if (player) {
             this._hitArbiter.attemptToHit(player);
@@ -110,9 +110,9 @@ export class Zagger extends Enemy {
         );
     }
 
-    private dropBomb(): void {
-        const bomb = new Bomb(this._audioPlayer, this._world, this._location);
-        this._world.addActor(bomb);
+    private dropWeb(): void {
+        const web = new Web(this._audioPlayer, this._clock, this._world, this._location);
+        this._world.addActor(web);
     }
 
     public swoop(): void {
@@ -122,41 +122,44 @@ export class Zagger extends Enemy {
             const turns = random(0, 2);
             switch (turns) {
                 case 0:
-                    const linePath = new LinePath(this._location, lowestPoint, []);
-                    this._currentPath = linePath.getPathForSpeed(5);
+                    const linePath = new LinePath(this._location, lowestPoint, [new ScheduledAction(0.50, PathAction.Fire)]);
+                    this._currentPath = linePath.getPathForSpeed(8);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
                 case 1:
                     const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
-                    this._currentPath = new LineSegmentPath([this._location, midPoint, lowestPoint], []).getPathForSpeed(5);
+                    this._currentPath = new LineSegmentPath([this._location, midPoint, lowestPoint], [new ScheduledAction(0.50, PathAction.Fire)]).getPathForSpeed(8);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
                 case 2:
                     const midPoint1 = new Point(Math.floor(random(10, 430)), random(300, 400));
                     const midPoint2 = new Point(Math.floor(random(10, 430)), random(400, 500));
-                    this._currentPath = new LineSegmentPath([this._location, midPoint1, midPoint2, lowestPoint], []).getPathForSpeed(5);
+                    this._currentPath = new LineSegmentPath([this._location, midPoint1, midPoint2, lowestPoint], [new ScheduledAction(0.50, PathAction.Fire)]).getPathForSpeed(8);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
               }
         }
         else {
-            // Swwop and return to home.
-            const lowestPoint = new Point(Math.floor(random(10, 430)), 580);
+            // Swoop and return to home.
+            const lowestPoint = new Point(Math.floor(random(10, 430)), 500);
             const swoopDownPath = new LinePath(this._location, lowestPoint, []);
-            const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, []);
-            this._currentPath = swoopDownPath.getPathForSpeed(5).concat(swoopReturnPath.getPathForSpeed(5));
+            const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, [new ScheduledAction(0.50, PathAction.Fire)]);
+            this._currentPath = swoopDownPath.getPathForSpeed(8).concat(swoopReturnPath.getPathForSpeed(8));
             this._pathPosition = 0;
             this._state = Zagger.State.SwoopAndReturn;
+        }
+
+        if (random(0, 1) === 0) {
+            this.dropWeb();
         }
     }
 
     private step(): void {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
-
             switch (this._state) {
                 case Zagger.State.Entering:
                     this._state = Zagger.State.Waiting;
@@ -175,19 +178,25 @@ export class Zagger extends Enemy {
                                 Math.floor(random(0, worldDimensions.width-50)),
                                 -20
                             );
+                            // TODO: We might be able to call prepareEntryPath here instead.
                             const linePath = new LinePath(zaggerStartingPoint, this._homePosition, []);
-                            this._currentPath = linePath.getPathForSteps(20);
+                            this._currentPath = linePath.getPathForSteps(10);
                             this._pathPosition = 0;
                             this._state = Zagger.State.Entering;
                         }
                     );
-                    this._state = Zagger.State.Waiting;
+                    //this._state = Zagger.State.Waiting;
+                    this._state = Zagger.State.SwoopComplete;
                     break;
             }
 
-            // Possibly at some random chance drop bombs?
-
             return;
+        }
+
+        // Drop shots at random times while waiting.
+        //if (this._state != Zagger.State.Entering && this._location.y < 500 && random(0, 100) === 0) {
+        if (this._state === Zagger.State.Waiting && random(0, 100) === 0) {
+            this.dropWeb();
         }
 
         // Follow the current path.
@@ -196,7 +205,7 @@ export class Zagger extends Enemy {
                 this._location = this._currentPath[this._pathPosition].location!;
                 break;
             case PathAction.Fire:
-                this.dropBomb();
+                this.dropWeb();
                 break;
         }
         this._pathPosition++;
@@ -213,6 +222,7 @@ export module Zagger {
     export enum State {
         Entering,
         SwoopAndReturn,
+        SwoopComplete,
         Swooping,
         Waiting
     }

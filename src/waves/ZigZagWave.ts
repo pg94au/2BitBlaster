@@ -56,12 +56,22 @@ export class ZigZagWave implements Wave {
                     timeTillSwoop,
                     () => {
                         const waitingZaggers = this._world.activeEnemies.filter(enemy => (enemy as Zagger).state === Zagger.State.Waiting);
-                        const zagger = waitingZaggers[random(waitingZaggers.length-1)] as Zagger;
-                        this._swoopers.set(swoopIndex, zagger);
+                        if (waitingZaggers.length > 0) {
+                            const zagger = waitingZaggers[random(waitingZaggers.length-1)] as Zagger;
+                            this._swoopers.set(swoopIndex, zagger);
 
-                        zagger.swoop();
+                            zagger.swoop();
 
-                        this.scheduleNextSwoop(swoopIndex);
+                            this.scheduleNextSwoop(swoopIndex);
+                        }
+                        else {
+                            // No waiting zaggers, so try again later.
+                            this._scheduler.scheduleOperation(
+                                `next swoop ${swoopIndex}`,
+                                500,
+                                () => this.scheduleNextSwoop(swoopIndex)
+                            );
+                        }
                     }
                 );
             }
@@ -96,6 +106,7 @@ export class ZigZagWave implements Wave {
             // Get two swoopers going right away, then let them get re-scheduled as they finish.
             this._scheduler.scheduleOperation('next swoop 1', 0, () => this.scheduleNextSwoop(0));
             this._scheduler.scheduleOperation('next swoop 2', 500, () => this.scheduleNextSwoop(1));
+            this._scheduler.scheduleOperation('next swoop 3', 1000, () => this.scheduleNextSwoop(2));
         }
     }
 }
