@@ -178,7 +178,6 @@ export class Game {
             this._clock,
             [
                 new Level([
-                    new ZigZagWave(this._audioPlayer, this._world, this._clock),
                     new SpinnerWave(this._audioPlayer, this._world, this._clock),
                     new SimpleWave(this._audioPlayer, this._world, this._clock)
                 ]),
@@ -190,6 +189,11 @@ export class Game {
                     new SimpleWave(this._audioPlayer, this._world, this._clock),
                     new SecondWave(this._audioPlayer, this._world, this._clock),
                     new SplitterWave(this._audioPlayer, this._world, this._clock)
+                ]),
+                new Level([
+                    new SpinnerWave(this._audioPlayer, this._world, this._clock),
+                    new SpinnerWave2(this._audioPlayer, this._world, this._clock),
+                    new ZigZagWave(this._audioPlayer, this._world, this._clock)
                 ])
             ]
         );
