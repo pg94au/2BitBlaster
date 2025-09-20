@@ -218,7 +218,7 @@ export class Zagger extends Enemy {
     }
 }
 
-export module Zagger {
+export namespace Zagger {
     export enum State {
         Entering,
         SwoopAndReturn,

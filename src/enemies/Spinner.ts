@@ -255,7 +255,7 @@ export class Spinner extends Enemy {
     }
 }
 
-export module Spinner {
+export namespace Spinner {
     export enum Bias {
         Left,
         Right
