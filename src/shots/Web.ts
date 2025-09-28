@@ -30,7 +30,9 @@ export class Web extends Shot {
     }
 
     getCollisionMask(actor: Actor): Bounds[] {
-        return [new Bounds(-5, 5, -5, 5)];
+        const offset = this._currentFrame / 10.0 * 45;
+
+        return [new Bounds(-offset, offset, -offset, offset)];
     }
 
     getDamageAgainst(actor: Actor): number {
@@ -50,9 +52,8 @@ export class Web extends Shot {
             this._firstTick = false;
         }
 
-        //this._currentFrame = 1;//(this._currentFrame + 1) % 4; // TODO: schedule growing size
         this._scheduler.scheduleOperation(
-            'incraseSize',
+            'increaseSize',
             250,
             () => { this._currentFrame = Math.min(this._currentFrame + 1, 9); }
         );
