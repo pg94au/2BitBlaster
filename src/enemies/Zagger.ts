@@ -123,20 +123,26 @@ export class Zagger extends Enemy {
             switch (turns) {
                 case 0:
                     const linePath = new LinePath(this._location, lowestPoint, [new ScheduledAction(0.50, PathAction.Fire)]);
-                    this._currentPath = linePath.getPathForSpeed(8);
+                    this._currentPath = linePath.getPathForSpeed(10);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
                 case 1:
                     const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
-                    this._currentPath = new LineSegmentPath([this._location, midPoint, lowestPoint], [new ScheduledAction(0.50, PathAction.Fire)]).getPathForSpeed(8);
+                    this._currentPath = new LineSegmentPath(
+                        [this._location, midPoint, lowestPoint],
+                        [new ScheduledAction(0.25, PathAction.Fire), new ScheduledAction(0.55, PathAction.Fire)]
+                    ).getPathForSpeed(10);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
                 case 2:
                     const midPoint1 = new Point(Math.floor(random(10, 430)), random(300, 400));
                     const midPoint2 = new Point(Math.floor(random(10, 430)), random(400, 500));
-                    this._currentPath = new LineSegmentPath([this._location, midPoint1, midPoint2, lowestPoint], [new ScheduledAction(0.50, PathAction.Fire)]).getPathForSpeed(8);
+                    this._currentPath = new LineSegmentPath(
+                        [this._location, midPoint1, midPoint2, lowestPoint],
+                        [new ScheduledAction(0.30, PathAction.Fire), new ScheduledAction(0.60, PathAction.Fire)]
+                    ).getPathForSpeed(10);
                     this._pathPosition = 0;
                     this._state = Zagger.State.Swooping;
                     break;
@@ -147,7 +153,7 @@ export class Zagger extends Enemy {
             const lowestPoint = new Point(Math.floor(random(10, 430)), 500);
             const swoopDownPath = new LinePath(this._location, lowestPoint, []);
             const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, [new ScheduledAction(0.50, PathAction.Fire)]);
-            this._currentPath = swoopDownPath.getPathForSpeed(8).concat(swoopReturnPath.getPathForSpeed(8));
+            this._currentPath = swoopDownPath.getPathForSpeed(8).concat(swoopReturnPath.getPathForSpeed(10));
             this._pathPosition = 0;
             this._state = Zagger.State.SwoopAndReturn;
         }
@@ -194,8 +200,7 @@ export class Zagger extends Enemy {
         }
 
         // Drop shots at random times while waiting.
-        //if (this._state != Zagger.State.Entering && this._location.y < 500 && random(0, 100) === 0) {
-        if (this._state === Zagger.State.Waiting && random(0, 100) === 0) {
+        if (this._state === Zagger.State.Waiting && random(0, 30) === 0) {
             this.dropWeb();
         }
 

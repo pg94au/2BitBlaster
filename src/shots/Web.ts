@@ -59,7 +59,7 @@ export class Web extends Shot {
         );
         this._scheduler.executeDueOperations();
 
-        const speed = 10;
+        const speed = 12;
         for (let step = 0; step < speed; step++) {
             this.move(Direction.Down);
 
