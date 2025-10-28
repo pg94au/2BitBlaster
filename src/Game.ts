@@ -16,13 +16,13 @@ import {Scheduler} from './timing/Scheduler';
 import {ScoreCounter} from './ScoreCounter';
 import {SecondWave} from './waves/SecondWave';
 import {SimpleWave} from './waves/SimpleWave';
+import {SpiderWave} from "./waves/SpiderWave";
 import {SpinnerWave} from './waves/SpinnerWave';
 import {SpinnerWave2} from './waves/SpinnerWave2';
 import {SplitterWave} from './waves/SplitterWave';
 import {StarField} from './StarField';
 import {TextInterlude} from './TextInterlude';
 import {World} from './World';
-import { ZigZagWave } from "./waves/ZigZagWave";
 
 export class Game {
     private readonly _joystick: Joystick;
@@ -193,7 +193,7 @@ export class Game {
                 new Level([
                     new SpinnerWave(this._audioPlayer, this._world, this._clock),
                     new SpinnerWave2(this._audioPlayer, this._world, this._clock),
-                    new ZigZagWave(this._audioPlayer, this._world, this._clock)
+                    new SpiderWave(this._audioPlayer, this._world, this._clock)
                 ])
             ]
         );

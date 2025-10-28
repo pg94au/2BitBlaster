@@ -20,7 +20,7 @@ import {Scheduler} from '../timing/Scheduler';
 import {Web} from '../shots/Web';
 import {World} from "../World";
 
-export class Zagger extends Enemy {
+export class Spider extends Enemy {
     public static readonly InitialHealth: number = 1;
 
     private readonly _clock: Clock;
@@ -30,11 +30,11 @@ export class Zagger extends Enemy {
     private _currentFrame: number = 0;
     private _currentPath!: PathEntry[];
     private _pathPosition!: number;
-    private _state: Zagger.State;
+    private _state: Spider.State;
 
     constructor(audioPlayer: AudioPlayer, world: World, clock: Clock, startingPoint: Point, homePosition: Point) {
-        super(audioPlayer, world, startingPoint, Zagger.InitialHealth);
-        debug('Zagger constructor');
+        super(audioPlayer, world, startingPoint, Spider.InitialHealth);
+        debug('Spider constructor');
 
         this._clock = clock;
         this._scheduler = new Scheduler(clock);
@@ -42,11 +42,11 @@ export class Zagger extends Enemy {
         this._homePosition = homePosition;
 
         this.prepareEntryPath(homePosition);
-        this._state = Zagger.State.Entering;
+        this._state = Spider.State.Entering;
         this.advanceCurrentFrame();
     }
 
-    get state(): Zagger.State {
+    get state(): Spider.State {
         return this._state;
     }
 
@@ -82,7 +82,7 @@ export class Zagger extends Enemy {
     }
 
     tick(): void {
-        debug('Zagger.tick');
+        debug('Spider.tick');
         super.tick();
 
         if (!this._isActive) {
@@ -122,21 +122,24 @@ export class Zagger extends Enemy {
             const turns = random(0, 2);
             switch (turns) {
                 case 0:
+                    console.log('we are here 3');
                     const linePath = new LinePath(this._location, lowestPoint, [new ScheduledAction(0.50, PathAction.Fire)]);
                     this._currentPath = linePath.getPathForSpeed(10);
                     this._pathPosition = 0;
-                    this._state = Zagger.State.Swooping;
+                    this._state = Spider.State.Swooping;
                     break;
                 case 1:
+                    console.log('we are here 4');
                     const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
                     this._currentPath = new LineSegmentPath(
                         [this._location, midPoint, lowestPoint],
                         [new ScheduledAction(0.25, PathAction.Fire), new ScheduledAction(0.55, PathAction.Fire)]
                     ).getPathForSpeed(10);
                     this._pathPosition = 0;
-                    this._state = Zagger.State.Swooping;
+                    this._state = Spider.State.Swooping;
                     break;
                 case 2:
+                    console.log('we are here 5');
                     const midPoint1 = new Point(Math.floor(random(10, 430)), random(300, 400));
                     const midPoint2 = new Point(Math.floor(random(10, 430)), random(400, 500));
                     this._currentPath = new LineSegmentPath(
@@ -144,21 +147,23 @@ export class Zagger extends Enemy {
                         [new ScheduledAction(0.30, PathAction.Fire), new ScheduledAction(0.60, PathAction.Fire)]
                     ).getPathForSpeed(10);
                     this._pathPosition = 0;
-                    this._state = Zagger.State.Swooping;
+                    this._state = Spider.State.Swooping;
                     break;
               }
         }
         else {
+            console.log('we are here 6');
             // Swoop and return to home.
             const lowestPoint = new Point(Math.floor(random(10, 430)), 500);
             const swoopDownPath = new LinePath(this._location, lowestPoint, []);
             const swoopReturnPath = new LinePath(lowestPoint, this._homePosition, [new ScheduledAction(0.50, PathAction.Fire)]);
             this._currentPath = swoopDownPath.getPathForSpeed(8).concat(swoopReturnPath.getPathForSpeed(10));
             this._pathPosition = 0;
-            this._state = Zagger.State.SwoopAndReturn;
+            this._state = Spider.State.SwoopAndReturn;
         }
 
         if (random(0, 1) === 0) {
+            console.log('we are here 1');
             this.dropWeb();
         }
     }
@@ -167,41 +172,35 @@ export class Zagger extends Enemy {
         // Choose the next path to follow once we've reach the end of the current path.
         if (this._pathPosition >= this._currentPath.length) {
             switch (this._state) {
-                case Zagger.State.Entering:
-                    this._state = Zagger.State.Waiting;
+                case Spider.State.Entering:
+                    this._state = Spider.State.Waiting;
                     break;
-                case Zagger.State.SwoopAndReturn:
-                    this._state = Zagger.State.Waiting;
+                case Spider.State.SwoopAndReturn:
+                    this._state = Spider.State.Waiting;
                     break;
-                case Zagger.State.Swooping:
+                case Spider.State.Swooping:
                     this._scheduler.scheduleOperation(
                         'enter',
                         3000,
                         () => {
                             // Determine our path back to our home position after.
                             const worldDimensions = this._world.dimensions;
-                            const zaggerStartingPoint = new Point(
+                            const spiderStartingPoint = new Point(
                                 Math.floor(random(0, worldDimensions.width-50)),
                                 -20
                             );
                             // TODO: We might be able to call prepareEntryPath here instead.
-                            const linePath = new LinePath(zaggerStartingPoint, this._homePosition, []);
+                            const linePath = new LinePath(spiderStartingPoint, this._homePosition, []);
                             this._currentPath = linePath.getPathForSteps(10);
                             this._pathPosition = 0;
-                            this._state = Zagger.State.Entering;
+                            this._state = Spider.State.Entering;
                         }
                     );
-                    //this._state = Zagger.State.Waiting;
-                    this._state = Zagger.State.SwoopComplete;
+                    this._state = Spider.State.SwoopComplete;
                     break;
             }
 
             return;
-        }
-
-        // Drop shots at random times while waiting.
-        if (this._state === Zagger.State.Waiting && random(0, 30) === 0) {
-            this.dropWeb();
         }
 
         // Follow the current path.
@@ -223,7 +222,7 @@ export class Zagger extends Enemy {
     }
 }
 
-export namespace Zagger {
+export namespace Spider {
     export enum State {
         Entering,
         SwoopAndReturn,
