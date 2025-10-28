@@ -122,14 +122,12 @@ export class Spider extends Enemy {
             const turns = random(0, 2);
             switch (turns) {
                 case 0:
-                    console.log('we are here 3');
                     const linePath = new LinePath(this._location, lowestPoint, [new ScheduledAction(0.50, PathAction.Fire)]);
                     this._currentPath = linePath.getPathForSpeed(10);
                     this._pathPosition = 0;
                     this._state = Spider.State.Swooping;
                     break;
                 case 1:
-                    console.log('we are here 4');
                     const midPoint = new Point(Math.floor(random(10, 430)), random(300, 500));
                     this._currentPath = new LineSegmentPath(
                         [this._location, midPoint, lowestPoint],
@@ -139,7 +137,6 @@ export class Spider extends Enemy {
                     this._state = Spider.State.Swooping;
                     break;
                 case 2:
-                    console.log('we are here 5');
                     const midPoint1 = new Point(Math.floor(random(10, 430)), random(300, 400));
                     const midPoint2 = new Point(Math.floor(random(10, 430)), random(400, 500));
                     this._currentPath = new LineSegmentPath(
@@ -152,7 +149,6 @@ export class Spider extends Enemy {
               }
         }
         else {
-            console.log('we are here 6');
             // Swoop and return to home.
             const lowestPoint = new Point(Math.floor(random(10, 430)), 500);
             const swoopDownPath = new LinePath(this._location, lowestPoint, []);
@@ -163,7 +159,6 @@ export class Spider extends Enemy {
         }
 
         if (random(0, 1) === 0) {
-            console.log('we are here 1');
             this.dropWeb();
         }
     }
