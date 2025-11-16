@@ -16,6 +16,7 @@ import {Scheduler} from './timing/Scheduler';
 import {ScoreCounter} from './ScoreCounter';
 import {SecondWave} from './waves/SecondWave';
 import {SimpleWave} from './waves/SimpleWave';
+import {SpiderWave} from "./waves/SpiderWave";
 import {SpinnerWave} from './waves/SpinnerWave';
 import {SpinnerWave2} from './waves/SpinnerWave2';
 import {SplitterWave} from './waves/SplitterWave';
@@ -92,7 +93,7 @@ export class Game {
         if (this._isActive) {
             setTimeout(() => {
                 global.requestAnimationFrame(() => { this.tick() });
-            }, 1000/30);
+            }, 1000/40);
         }
         else {
             debug('ticker: Ticker stopping because game is over.');
@@ -188,6 +189,11 @@ export class Game {
                     new SimpleWave(this._audioPlayer, this._world, this._clock),
                     new SecondWave(this._audioPlayer, this._world, this._clock),
                     new SplitterWave(this._audioPlayer, this._world, this._clock)
+                ]),
+                new Level([
+                    new SpinnerWave(this._audioPlayer, this._world, this._clock),
+                    new SpinnerWave2(this._audioPlayer, this._world, this._clock),
+                    new SpiderWave(this._audioPlayer, this._world, this._clock)
                 ])
             ]
         );

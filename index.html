@@ -82,12 +82,15 @@
             { name: 'probe_explosion', url: 'images/probe_explosion.png' },
             { name: 'saucer', url: 'images/saucer.png' },
             { name: 'saucer_explosion', url: 'images/saucer_explosion.png' },
+            { name: 'spider', url: 'images/spider.png' },
+            { name: 'spider_explosion', url: 'images/spider_explosion.png' },
             { name: 'spinner', url: 'images/spinner.png' },
             { name: 'splitter', url: 'images/splitter.png' },
             { name: 'splitter_fragment', url: 'images/splitter_fragment.png' },
             { name: 'splitter_left_separation', url: 'images/splitter_left_separation.png' },
             { name: 'splitter_right_separation', url: 'images/splitter_right_separation.png' },
-            { name: 'star', url: 'images/star.png' }
+            { name: 'star', url: 'images/star.png' },
+            { name: 'web', url: 'images/web.png' }
         ];
         renderer.preLoadImages(images, onImagesLoaded);
 
@@ -165,7 +168,8 @@
             { name: 'player_explosion', url: 'sounds/player_explosion.mp3' },
             { name: 'player_hit', url: 'sounds/player_hit.mp3' },
             { name: 'probe_explosion', url: 'sounds/probe_explosion.mp3' },
-            { name: 'saucer_explosion', url: 'sounds/saucer_explosion.mp3' }
+            { name: 'saucer_explosion', url: 'sounds/saucer_explosion.mp3' },
+            { name: 'spider_explosion', url: 'sounds/spider_explosion.mp3' }
         ];
         audioPlayer.preLoadSounds(sounds, onSoundsLoaded, function(errors) {
             alert('Failed to load sounds: ' + JSON.stringify(errors));
